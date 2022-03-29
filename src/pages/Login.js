@@ -30,38 +30,35 @@ const Login = () => {
 
     return (
         <React.Fragment>
-        <Paper square={true} sx={{ backgroundColor:'primary.main', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Card sx={{ width:['30%'], padding: 5, '& .MuiTextField-root': { m: 1.5, width: 320 }, borderRadius: 35 + 'px' }}>
-            <Grid container direction='column' justifyContent='center' alignItems='center'>
+            <Paper square={true} sx={{ backgroundColor: 'primary.main', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <Card sx={{ width: ['80%', '60%', '40%', '30%'], padding: 5, borderRadius: 35 + 'px' }}>
+                    <Grid container direction='column' justifyContent='center' alignItems='center'>
                         <Typography variant='h4' fontWeight='600' color='secondary.main' textAlign='center'>
                             Welcome
                         </Typography>
-                        
-                        <TextField label="Nickname or Email" sx={{ width: '320px!important' }} onChange={(event) => setUniqueIdentifier(event.target.value)}></TextField>
 
-                        <Grid item xs={12}>
-                            <TextField
-                                type="password"
-                                label="Password"
-                                onChange={(event) => setPassword(event.target.value)}
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <Lock />
-                                        </InputAdornment>
-                                    ),
-                                }}
+                        <TextField label="Nickname or Email" sx={{ width: '80%!important', mt: 2 }} onChange={(event) => setUniqueIdentifier(event.target.value)}></TextField>
 
-                            />
-                        </Grid>
+                        <TextField sx={{ width: '80%', mt: 4 }}
+                            type="password"
+                            label="Password"
+                            onChange={(event) => setPassword(event.target.value)}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <Lock />
+                                    </InputAdornment>
+                                ),
+                            }}
 
+                        />
 
                         {loading && <CircularProgress />}
                         <Button variant="contained" color="primary" sx={{ mt: 2, }} size="large" onClick={() => { authenticate() }}>Login</Button>
                     </Grid>
-            </Card>
-        </Paper>
-    </React.Fragment>
+                </Card>
+            </Paper>
+        </React.Fragment>
     )
 
 
