@@ -6,6 +6,7 @@ import { SnackBarContextProvider } from './context/snack-bar-context';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Yatawaki from './pages/Yatawaki';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Routes>
         <Route path="/" element={<Login/>} />
         <Route path="/register" element={<Register/>} />
+        <Route path="/yatawaki" element={<Yatawaki/>} />
 
         </Routes>
       </BrowserRouter>

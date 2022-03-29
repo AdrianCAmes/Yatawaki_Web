@@ -3,6 +3,7 @@ import { Lock } from "@mui/icons-material";
 import React from "react";
 import UserApi from "../apis/user-apis";
 import SnackBarContext from "../context/snack-bar-context";
+import { useNavigate } from "react-router-dom";
 
 
 const Login = () => {
@@ -11,12 +12,19 @@ const Login = () => {
     const [loading, setLoading] = React.useState(false);
 
     const snackBarContext = React.useContext(SnackBarContext);
+    const navigate = useNavigate()
 
     const authenticate = async () => {
         setLoading(true)
         UserApi.authenticate(uniqueIdentifier, password)
             .then(response => {
-                console.log(response)
+                console.log(response);
+                window.localStorage.setItem('jwt', response.data.jwt);
+                snackBarContext.onOpen({
+                    severity: "success",
+                    message: "Welcome!"
+                });
+                navigate('/yatawaki');
             })
             .catch(err => {
                 snackBarContext.onOpen({

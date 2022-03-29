@@ -3,6 +3,7 @@ import { Lock } from "@mui/icons-material";
 import React from "react";
 import UserApi from "../apis/user-apis";
 import SnackBarContext from "../context/snack-bar-context";
+import { useNavigate } from "react-router-dom";
 
 
 const Register = () => {
@@ -15,12 +16,18 @@ const Register = () => {
 
     const [loading, setLoading] = React.useState(false);
     const snackBarContext = React.useContext(SnackBarContext);
+    const navigate = useNavigate()
 
     const register = async () => {
         setLoading(true)
         UserApi.register(nickname, password, firstname, lastname, mail, birthDate)
             .then(response => {
-                console.log(response)
+                console.log(response);
+                snackBarContext.onOpen({
+                    severity: "success",
+                    message: "Successfully Registered"
+                });
+                navigate('/');
             })
             .catch(err => {
                 snackBarContext.onOpen({
@@ -45,7 +52,7 @@ const Register = () => {
                         <TextField label="First Name" sx={{ width: '80%!important', mt: 2 }} onChange={(event) => setFirstname(event.target.value)}></TextField>
                         <TextField label="Last Name" sx={{ width: '80%!important', mt: 2 }} onChange={(event) => setLastname(event.target.value)}></TextField>
                         <TextField label="Mail" sx={{ width: '80%!important', mt: 2 }} onChange={(event) => setMail(event.target.value)}></TextField>
-                        <TextField label="Birthday" type="date" sx={{ width: '80%!important', mt: 2 }} InputLabelProps={{ shrink: true, }} onChange={(event) => setBirthDate(event.target.value)}/>
+                        <TextField label="Birthday" type="date" sx={{ width: '80%!important', mt: 2 }} InputLabelProps={{ shrink: true, }} onChange={(event) => setBirthDate(event.target.value)} />
                         <TextField sx={{ width: '80%', mt: 2 }}
                             type="password"
                             label="Password"
