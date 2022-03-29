@@ -1,24 +1,26 @@
-import logo from './logo.svg';
+import theme from './themes/Theme'
 import './App.css';
+import { ThemeProvider } from '@mui/system';
+import { CssBaseline } from '@mui/material';
+import { SnackBarContextProvider } from './context/snack-bar-context';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Login from './pages/Login';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <SnackBarContextProvider>
+      <BrowserRouter>
+        <Routes>
+        <Route path="/" element={<Login/>} />
+
+        </Routes>
+      </BrowserRouter>
+
+
+      </SnackBarContextProvider>
+    </ThemeProvider>
   );
 }
 
