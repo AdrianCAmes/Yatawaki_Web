@@ -1,10 +1,45 @@
  /* Shared */
+ @font-face {
+     font-family: 'Kubots';
+     src: url(./fonts/KubotsExtraLight-EaE1z.ttf);
+ }
 
-/* end Shared */
+ @font-face {
+     font-family: 'SFP';
+     src: url(./fonts/SFPRODISPLAYREGULAR.OTF);
+ }
+
+ html * {
+     font-family: 'SFP' !important;
+ }
+
+ .title-font {
+     font-family: 'Kubots' !important;
+     font-weight: 1000 !important;
+ }
+
+ /* end Shared */
 
 
-/* Login */
+ /* SplashScreen */
 
+ .title-logo {
+     font-size: 240px !important;
+     color: #FF5E5B;
+     line-height: 200px!important;
+ }
 
+ .title-button {
+     font-size: 50px !important;
+     color: #FFF;
+ }
 
-/* end Login */
+ .image-upc {
+     position: absolute;
+     right: 30px;
+     bottom: 30px;
+     height: 100px;
+     width: 100px;
+ }
+
+ /* end SplashScreen */
