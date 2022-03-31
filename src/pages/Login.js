@@ -1,13 +1,12 @@
 import { CircularProgress, Grid, InputAdornment, Paper, TextField, Typography } from "@mui/material";
 import { Lock } from "@mui/icons-material";
 import React from "react";
-import UserApi from "../apis/user-apis";
 import SnackBarContext from "../context/snack-bar-context";
 import { useNavigate } from "react-router-dom";
-import slider1 from '../assets/slider-1.png';
 import logo_upc from '../assets/Logo UPC.png';
 import { Box } from "@mui/system";
 import ImageAutoSlider from "../components/ImageAutoSlider";
+import AuthApi from "../apis/auth-apis";
 
 let buttonStyle = { width: '400px', height: '70px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '30px' };
 
@@ -21,13 +20,12 @@ const Login = () => {
 
     const authenticate = async () => {
         setLoading(true)
-        UserApi.authenticate(uniqueIdentifier, password)
+        AuthApi.authenticate(uniqueIdentifier, password)
             .then(response => {
-                console.log(response);
                 window.localStorage.setItem('jwt', response.data.jwt);
                 snackBarContext.onOpen({
                     severity: "success",
-                    message: "Welcome!"
+                    message: "Bienvenido!"
                 });
                 navigate('/yatawaki');
             })
@@ -56,11 +54,11 @@ const Login = () => {
 
                     <Grid item xs={7} container direction='column' justifyContent='center' alignItems='center'>
 
-                        <TextField placeholder="Escribe tu usuario" sx={{ width: '80%!important', mt: 2 }} onChange={(event) => setUniqueIdentifier(event.target.value)}></TextField>
+                        <TextField placeholder="Escribe tu usuario" sx={{ width: '80%!important', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setUniqueIdentifier(event.target.value)}></TextField>
 
-                        <TextField sx={{ width: '80%', mt: 4 }}
+                        <TextField sx={{ width: '80%', mt: 4, backgroundColor: '#FFF' }}
                             type="password"
-                            label="Password"
+                            label="Contraseña"
                             onChange={(event) => setPassword(event.target.value)}
                             InputProps={{
                                 startAdornment: (

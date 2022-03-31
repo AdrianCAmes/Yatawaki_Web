@@ -4,10 +4,6 @@ const uri = 'user/';
 
 
 const UserApi = {
-    authenticate: (uniqueIdentifier, password) => apiInstance.post(`${uri}authenticate`, {
-        uniqueIdentifier: uniqueIdentifier,
-        password: password,
-    }),
     register: (nickname, password, firstname, lastname, mail, birthDate) => apiInstance.post(`${uri}register`, {
         nickname: nickname,
         password: password, 

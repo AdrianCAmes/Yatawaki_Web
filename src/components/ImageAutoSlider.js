@@ -11,7 +11,7 @@ export default function ImageAutoSlider() {
 
     React.useEffect(() => {
         const interval = setInterval(() => {
-            if (currentIndex == images.length - 1) {
+            if (currentIndex === images.length - 1) {
                 setCurrentIndex(0);
             } else {
                 setCurrentIndex(currentIndex + 1);
