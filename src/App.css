@@ -26,7 +26,7 @@
  .title-logo {
      font-size: 240px !important;
      color: #FF5E5B;
-     line-height: 200px!important;
+     line-height: 200px !important;
  }
 
  .title-button {
@@ -43,3 +43,14 @@
  }
 
  /* end SplashScreen */
+
+ /* Login */
+
+ .title-login {
+     font-size: 180px !important;
+     color: #FF5E5B;
+     line-height: 200px !important;
+     padding-top: 50px!important;
+ }
+
+ /* end Login */

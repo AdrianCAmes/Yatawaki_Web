@@ -5,11 +5,19 @@ import { useNavigate } from "react-router-dom";
 import logo_upc from '../assets/Logo UPC.png';
 
 
-let buttonStyle = { width: '500px', height: '120px', borderRadius: '20px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' };
+let buttonStyle = { width: '500px', height: '120px', borderRadius: '20px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', };
 
 const Splashscreen = () => {
 
     const navigate = useNavigate()
+
+    const navigateLogin = () => {
+        navigate(`/login`);
+    }
+
+    const navigateRegister = () => {
+        navigate(`/register`);
+    }
 
 
     return (
@@ -19,18 +27,18 @@ const Splashscreen = () => {
                     <Typography className="title-font title-logo" > YATAWAKI</Typography>
                     <Grid container direction="row" justifyContent="center" alignItems="center" sx={{ mt: 9 }}>
                         <Grid item>
-                            <Box variant="contained" color="secondary" sx={buttonStyle}>
+                            <Box onClick={() => { navigateRegister() }} sx={buttonStyle}>
                                 <Typography className="title-font title-button" > REGISTRATE</Typography>
                             </Box>
                         </Grid>
                         <Grid item>
-                            <Box sx={buttonStyle}>
-                                <Typography className="title-font title-button"> LOGIN</Typography>
+                            <Box sx={buttonStyle} onClick={() => { navigateLogin() }}>
+                                <Typography className="title-font title-button" > LOGIN</Typography>
                             </Box>
                         </Grid>
                     </Grid>
                     <img src={logo_upc} alt="Logo" className="image-upc" />
-                    
+
                 </Grid>
             </Paper>
         </React.Fragment>
