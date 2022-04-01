@@ -16,7 +16,7 @@ export default function ImageAutoSlider() {
             } else {
                 setCurrentIndex(currentIndex + 1);
             }
-        }, 2000);
+        }, 4000);
         return () => {
             clearInterval(interval);
         };
@@ -24,7 +24,7 @@ export default function ImageAutoSlider() {
 
     return (
 
-        <img style={{height:'100%', maxHeight: '400px', width:'auto', objectFit:'contain' }} src={images[currentIndex]} />
+        <img className="img-slider" src={images[currentIndex]} />
 
     )
 }
