@@ -23,9 +23,9 @@ export default function ImageAutoSlider() {
     }, [currentIndex])
 
     return (
-        <div>
-            <img style={{ maxHeight: '500px', maxWidth: '500px' }} src={images[currentIndex]} />
-        </div>
+
+        <img style={{height:'100%', maxHeight: '400px', width:'auto', objectFit:'contain' }} src={images[currentIndex]} />
+
     )
 }
 

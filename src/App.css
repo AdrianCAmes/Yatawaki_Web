@@ -1,4 +1,8 @@
  /* Shared */
+html, body, #app, #app>div, #root {
+  height: 100vh;
+}
+
  @font-face {
      font-family: 'Kubots';
      src: url(./fonts/KubotsExtraLight-EaE1z.ttf);
