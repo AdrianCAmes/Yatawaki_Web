@@ -107,11 +107,11 @@
  }
 
  @media only screen and (max-height: 700px) {
-    .container-height {
-        margin-top: 65px!important;
-        max-height: 150px;
-    }
-}
+     .container-height {
+         margin-top: 65px !important;
+         max-height: 150px;
+     }
+ }
 
  @media only screen and (max-width: 1200px) {
 
@@ -170,9 +170,51 @@
 
  /* AppBar */
  .title-appbar {
-    font-size: 8vw !important;
-    color: #FF5E5B;
-    line-height: 10px !important;
-}
+     font-size: 7vw !important;
+     color: #FF5E5B;
+     line-height: 10px !important;
+ }
+
+ .star-five {
+     margin: 50px 0;
+     position: relative;
+     display: block;
+     color: #4285F4;
+     width: 0px;
+     height: 0px;
+     border-right: 100px solid transparent;
+     border-bottom: 70px solid #4285F4;
+     border-left: 100px solid transparent;
+     transform: rotate(35deg);
+ }
+
+ .star-five:before {
+     border-bottom: 80px solid #4285F4;
+     border-left: 30px solid transparent;
+     border-right: 30px solid transparent;
+     position: absolute;
+     height: 0;
+     width: 0;
+     top: -45px;
+     left: -65px;
+     display: block;
+     content: '';
+     transform: rotate(-35deg);
+ }
+
+ .star-five:after {
+     position: absolute;
+     display: block;
+     color: #4285F4;
+     top: 3px;
+     left: -105px;
+     width: 0px;
+     height: 0px;
+     border-right: 100px solid transparent;
+     border-bottom: 70px solid #4285F4;
+     border-left: 100px solid transparent;
+     transform: rotate(-70deg);
+     content: '';
+ }
 
  /* end AppBar */
