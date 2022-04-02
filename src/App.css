@@ -167,3 +167,12 @@
  }
 
  /* end Login */
+
+ /* AppBar */
+ .title-appbar {
+    font-size: 8vw !important;
+    color: #FF5E5B;
+    line-height: 10px !important;
+}
+
+ /* end AppBar */

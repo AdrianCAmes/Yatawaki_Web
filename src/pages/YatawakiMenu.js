@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import UserUnlockableApi from "../apis/user-unlockable-apis";
 import GameContext from "../context/game-context";
 import SnackBarContext from "../context/snack-bar-context";
+import AppBarYatawaki from "./components/AppBarYatawaki";
 import SelectInstrumentsDialog from "./components/SelectInstrumentsDialog";
 import SymphonySlider from "./components/SymphonySlider";
 
@@ -28,7 +29,7 @@ const YatawakiMenu = () => {
 
 
     const childCallback = (value) => {
-        //setIndex(value);
+        setIndex(value);
         //utilizar para mostrar current index
     }
 
@@ -68,7 +69,8 @@ const YatawakiMenu = () => {
     return (
         <React.Fragment>
             {loading ? <CircularProgress /> : <Paper square={true} sx={{ backgroundColor: 'primary.light', height: '100vh' }} elevation={0}>
-                <Box sx={{ backgroundColor: 'primary.main', height: '100px' }}>{index} {gameContext.userId}</Box>
+
+                <AppBarYatawaki></AppBarYatawaki>
 
                 <SelectInstrumentsDialog open={openDialog} handleClose={handleCloseDialog}></SelectInstrumentsDialog>
 

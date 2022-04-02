@@ -12,7 +12,7 @@ const SelectInstrumentsDialog = (props) => {
     const mountedRef = React.useRef(true)
 
 
-    const crearLoteUsuarios = async () => {
+    const findInstruments = async () => {
         setMostrarProgreso(true)
 
     }
