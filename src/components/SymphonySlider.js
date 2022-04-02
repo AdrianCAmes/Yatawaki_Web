@@ -30,7 +30,7 @@ const SymphonySlider = (props) => {
             {props.slides.map((slide, index) => {
                 return (
                     <div className={index === current ? 'slide active' : 'slide'} key={index}>
-                        {index === current && (<img className="image" src={slide.image} alt="ha" />)}
+                        {index === current && (<img className="image" onClick={() => {props.selectSlider(current)}} src={`data:image/jpeg;base64,${slide.icon}`} alt="ha" />)}
                         
                     </div>
                 )

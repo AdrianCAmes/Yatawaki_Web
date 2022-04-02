@@ -7,6 +7,7 @@ import logo_upc from '../assets/Logo UPC.png';
 import { Box } from "@mui/system";
 import ImageAutoSlider from "../components/ImageAutoSlider";
 import AuthApi from "../apis/auth-apis";
+import GameContext from "../context/game-context";
 
 let buttonStyle = { width: '400px', height: '70px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '30px' };
 
@@ -16,6 +17,7 @@ const Login = () => {
     const [loading, setLoading] = React.useState(false);
 
     const snackBarContext = React.useContext(SnackBarContext);
+    const gameContext = React.useContext(GameContext);
     const navigate = useNavigate()
 
     const authenticate = async () => {
@@ -27,6 +29,7 @@ const Login = () => {
                     severity: "success",
                     message: "Bienvenido!"
                 });
+                gameContext.updateUser(1);
                 navigate('/menu')
             })
             .catch(err => {
