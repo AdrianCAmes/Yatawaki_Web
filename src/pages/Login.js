@@ -27,6 +27,7 @@ const Login = () => {
                     severity: "success",
                     message: "Bienvenido!"
                 });
+                navigate('/menu')
             })
             .catch(err => {
                 snackBarContext.onOpen({

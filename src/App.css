@@ -45,6 +45,95 @@
 
  /* end SliderImg */
 
+ /* SymphonySlider */
+
+ .slider {
+     position: relative;
+     top: 30px;
+     height: 50vh;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+ }
+
+ .image {
+     max-height: 350px;
+     max-width: 600px;
+     border-radius: 10px;
+ }
+
+ .right-arrow {
+     position: absolute;
+     top: 50%;
+     right: 200px;
+     font-size: 4rem !important;
+     color: #FFB5B4;
+     z-index: 10;
+     cursor: pointer;
+     user-select: none;
+ }
+
+ .left-arrow {
+     position: absolute;
+     top: 50%;
+     left: 200px;
+     font-size: 4rem !important;
+     color: #FFB5B4;
+     z-index: 10;
+     cursor: pointer;
+     user-select: none;
+ }
+
+ .slide {
+     opacity: 0;
+     transition-duration: 2s ease;
+ }
+
+ .slide.active {
+     opacity: 1;
+     transition-duration: 2s;
+     transform: scale(1.08);
+ }
+
+ .container-height {
+     max-height: 250px;
+     margin-bottom: 20px;
+ }
+
+ @media only screen and (max-height: 800px) {
+     .container-height {
+         max-height: 200px;
+     }
+ }
+
+ @media only screen and (max-height: 700px) {
+    .container-height {
+        margin-top: 65px!important;
+        max-height: 150px;
+    }
+}
+
+ @media only screen and (max-width: 1200px) {
+
+     .image {
+         max-height: 300px;
+     }
+
+     .right-arrow {
+         right: 100px;
+     }
+
+     .left-arrow {
+         left: 100px;
+     }
+
+ }
+
+
+ /* end SymphonySlider */
+
+
+
  /* SplashScreen */
 
  .title-logo {

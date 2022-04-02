@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Splashscreen from './pages/Splashscreen';
+import YatawakiMenu from './pages/YatawakiMenu';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" element={<Splashscreen/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/register" element={<Register/>} />
+        <Route path="/menu" element={<YatawakiMenu/>} />
 
         </Routes>
       </BrowserRouter>
