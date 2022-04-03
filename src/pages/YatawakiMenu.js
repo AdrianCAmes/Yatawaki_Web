@@ -16,8 +16,9 @@ const YatawakiMenu = () => {
     const [openDialog, setOpenDialog] = React.useState(false);
     const gameContext = React.useContext(GameContext);
     const snackBarContext = React.useContext(SnackBarContext);
-    const [loading, setLoading] = React.useState(false);
+    const [loading, setLoading] = React.useState(true);
     const [loader, setLoader] = React.useState(true);
+    const mountedRef = React.useRef(true)
 
     const handleClickOpenDialog = () => {
         setOpenDialog(true);
@@ -44,6 +45,7 @@ const YatawakiMenu = () => {
         UserUnlockableApi.findSymphoniesByUser()
             .then(response => {
                 setSymphonies(response.data);
+                setLoading(false);
             })
             .catch(err => {
                 snackBarContext.onOpen({ severity: "error", message: err });
@@ -57,9 +59,10 @@ const YatawakiMenu = () => {
 
     React.useEffect(() => {
         findSymphonies();
-
-        setLoading(false)
-        setLoader(false)
+        setLoader(false);
+        return () => {
+            mountedRef.current = false
+        }
 
     }, [loader]);
 

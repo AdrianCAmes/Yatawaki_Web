@@ -29,7 +29,7 @@ const Login = () => {
                     severity: "success",
                     message: "Bienvenido!"
                 });
-                gameContext.updateUser(1);
+                gameContext.updateUsername(uniqueIdentifier);
                 navigate('/menu')
             })
             .catch(err => {

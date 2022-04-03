@@ -16,7 +16,7 @@ const UserApi = {
         mail: mail,
         role: PLAYER
     }),
-    resume: () => apiInstance.get(`${uri}Doppelganger/resume`, getHeaderToken()),
+    resume: (username) => apiInstance.get(`${uri}${username}/resume`, getHeaderToken()),
 }
 
 export default UserApi;
