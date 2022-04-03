@@ -21,6 +21,11 @@ const AppBarYatawaki = () => {
         setAnchorElUser(event.currentTarget);
     };
 
+    const logout = () => {
+       window.localStorage.clear();
+       navigate('/');
+    };
+
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
@@ -28,9 +33,10 @@ const AppBarYatawaki = () => {
 
     const getUserResume = async () => {
         setLoading(true);
-        UserApi.resume()
+        UserApi.resume(gameContext.username)
             .then(response => {
-                setResume(response.data)
+                setResume(response.data);
+                gameContext.updateUser(response.data.id);
             })
             .catch(err => {
                 console.log(err);
@@ -88,7 +94,7 @@ const AppBarYatawaki = () => {
                             <MenuItem>
                                 <Typography textAlign="center">Mis estadisticas</Typography>
                             </MenuItem>
-                            <MenuItem>
+                            <MenuItem onClick={() => {logout()}}>
                                 <Typography textAlign="center">Cerrar Sesion</Typography>
                             </MenuItem>
                         </Menu>
