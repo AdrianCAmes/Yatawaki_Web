@@ -66,8 +66,8 @@
  }
 
  .image {
-     max-height: 350px;
-     max-width: 600px;
+     max-height: 450px;
+     max-width: 700px;
      border-radius: 10px;
  }
 
@@ -129,11 +129,11 @@
      }
 
      .right-arrow {
-         right: 100px;
+         right: 50px;
      }
 
      .left-arrow {
-         left: 100px;
+         left: 50px;
      }
 
  }
