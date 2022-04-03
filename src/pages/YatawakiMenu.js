@@ -42,7 +42,9 @@ const YatawakiMenu = () => {
     const findSymphonies = async () => {
         setLoading(true);
 
-        UserUnlockableApi.findSymphoniesByUser()
+        if (gameContext.userId == 0 || !gameContext.userId) return;
+
+        UserUnlockableApi.findSymphoniesByUser(gameContext.userId)
             .then(response => {
                 setSymphonies(response.data);
                 setLoading(false);
@@ -64,7 +66,7 @@ const YatawakiMenu = () => {
             mountedRef.current = false
         }
 
-    }, [loader]);
+    }, [loader, gameContext.userId]);
 
 
 
