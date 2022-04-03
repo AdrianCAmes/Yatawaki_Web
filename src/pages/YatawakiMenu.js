@@ -88,7 +88,7 @@ const YatawakiMenu = () => {
 
     return (
         <React.Fragment>
-            {loading ? <CircularProgress /> : <Paper square={true} sx={{ backgroundColor: 'primary.light', height: '100vh' }} elevation={0}>
+            {loading ? <CircularProgress style={{position:'absolute', right:'50%', top:'50%'}} /> : <Paper square={true} sx={{ backgroundColor: 'primary.light', height: '100vh' }} elevation={0}>
 
                 <AppBarYatawaki></AppBarYatawaki>
 
