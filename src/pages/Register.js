@@ -1,4 +1,4 @@
-import { Box, Button, Card, Checkbox, CircularProgress, FormControlLabel, Grid, InputAdornment, Paper, TextField, Typography } from "@mui/material";
+import { Box, Checkbox, CircularProgress, Divider, FormControlLabel, Grid, InputAdornment, Paper, TextField, Typography } from "@mui/material";
 import { Lock } from "@mui/icons-material";
 import React from "react";
 import UserApi from "../apis/user-apis";
@@ -6,15 +6,16 @@ import SnackBarContext from "../context/snack-bar-context";
 import { useNavigate } from "react-router-dom";
 import ImageAutoSlider from "../components/ImageAutoSlider";
 import logo_upc from '../assets/Logo UPC.png';
+import googleIcon from '../assets/google.png';
+import { height } from "@mui/system";
 
-let buttonStyle = { width: '400px', height: '70px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '30px' };
+let buttonStyle = { width: ['300px', '300px', '400px'], height: '70px', borderRadius: '15px', mx: 'auto', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '30px' };
 
 const Register = () => {
     const [nickname, setNickname] = React.useState(null);
     const [firstname, setFirstname] = React.useState(null);
     const [lastname, setLastname] = React.useState(null);
     const [mail, setMail] = React.useState(null);
-    const [birthDate, setBirthDate] = React.useState(null);
     const [password, setPassword] = React.useState(null);
 
     const [nicknameError, setNicknameError] = React.useState(false);
@@ -44,10 +45,29 @@ const Register = () => {
             errorExist = true;
         }
 
+
         if (errorExist) {
             snackBarContext.onOpen({
                 severity: "error",
                 message: "Completa todas los campos"
+            });
+        } else if (!/[a-zA-Z]/.test(password)) {
+            setPasswordError(true);
+            snackBarContext.onOpen({
+                severity: "error",
+                message: "Tu contraseña no tiene letras"
+            });
+        } else if (!/\d/.test(password)) {
+            setPasswordError(true);
+            snackBarContext.onOpen({
+                severity: "error",
+                message: "Tu contraseña no tiene numeros"
+            });
+        } else if (password.length < 8) {
+            setPasswordError(true);
+            snackBarContext.onOpen({
+                severity: "error",
+                message: "Por favor ingresa mas de 8 caracteres"
             });
         } else if (terms === false) {
             snackBarContext.onOpen({
@@ -55,10 +75,9 @@ const Register = () => {
                 message: "Por favor acepte los términos y condiciones"
             });
         } else {
-            setLoading(true)
-            UserApi.register(nickname, password, firstname, lastname, mail, birthDate)
+            setLoading(true);
+            UserApi.register(nickname, password, firstname, lastname, mail)
                 .then(response => {
-                    console.log(response);
                     snackBarContext.onOpen({
                         severity: "success",
                         message: "Registrado correctamente"
@@ -108,36 +127,44 @@ const Register = () => {
 
     return (
         <React.Fragment>
-            <Paper square={true} sx={{ backgroundColor: 'primary.light', height: '100vh' }}>
+            <Paper square={true} sx={{ backgroundColor: 'primary.light', height: '100%' }} elevation={0}>
                 <Typography textAlign='center' className="title-font title-login" >REGISTRO</Typography>
 
-                <Grid container justifyContent='center' alignItems='center'>
+                <Grid container justifyContent='center' alignItems='center' height='60vh'>
                     <Grid item xs={5} >
-                        <Box height='80%' width='80%' sx={{ justifyContent: 'center', alignContent: 'center', display: 'flex' }}>
+                        <Box sx={{ justifyContent: 'center', alignContent: 'center', display: 'flex', height: '400px' }}>
                             <ImageAutoSlider></ImageAutoSlider>
                         </Box>
 
                     </Grid>
 
-                    <Grid item xs={7} container direction='column' justifyContent='center' alignItems='center'>
+                    <Grid item xs={7}>
 
                         {step === 1 ? (
-                            <div style={{ width: '90%' }}>
-                                <TextField error={firstnameError} placeholder="Ingresa tu nombre" sx={{ width: '80%!important', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setFirstname(event.target.value)}></TextField>
-                                <TextField error={lastnameError} placeholder="Ingresa tu apelido" sx={{ width: '80%!important', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setLastname(event.target.value)}></TextField>
-                                <TextField error={mailError} placeholder="Ingresa tu correo electronico" sx={{ width: '80%!important', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setMail(event.target.value)}></TextField>
+                            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
 
-                                <Box sx={buttonStyle} onClick={() => { nextStep() }}>
+                                <div className="hover" style={{ width: '80%', height:'50px', display: 'flex', justifyContent: 'start', alignItems: 'center', backgroundColor:'#FFFFFF', borderRadius:'10px', border: '1px solid #C3D8EE' }}>
+                                    <img style={{ height: '35px', marginLeft:'10px' }} src={googleIcon} />
+                                    <Typography marginLeft='20px' color='#757575'>Registrate con Google</Typography>
+                                </div>
+
+                                <Divider sx={{ width: '80%', mt: 2, }}>O</Divider>
+
+                                <TextField error={firstnameError} placeholder="Ingresa tu nombre" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setFirstname(event.target.value)}></TextField>
+                                <TextField error={lastnameError} placeholder="Ingresa tu apelido" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setLastname(event.target.value)}></TextField>
+                                <TextField error={mailError} placeholder="Ingresa tu correo electronico" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setMail(event.target.value)}></TextField>
+
+                                <Box className="hover" sx={buttonStyle} onClick={() => { nextStep() }}>
                                     <Typography className="title-button"> Siguiente</Typography>
                                 </Box>
                             </div>
                         ) : null}
 
                         {step === 2 ? (
-                            <div style={{ width: '90%' }}>
-                                <TextField error={nicknameError} placeholder="Ingresa tu usuario" sx={{ width: '80%!important', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setNickname(event.target.value)}></TextField>
+                            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                                <TextField error={nicknameError} placeholder="Ingresa tu usuario" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setNickname(event.target.value)}></TextField>
 
-                                <TextField sx={{ width: '80%', mt: 4, backgroundColor: '#FFF' }} type="password" error={passwordError} label="Contraseña" onChange={(event) => setPassword(event.target.value)}
+                                <TextField sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} type="password" error={passwordError} label="Contraseña" onChange={(event) => setPassword(event.target.value)}
                                     InputProps={{
                                         startAdornment: (
                                             <InputAdornment position="start">
@@ -148,10 +175,12 @@ const Register = () => {
 
                                 />
 
-                                <FormControlLabel control={<Checkbox checked={terms} onClick={() => { setTerms(!terms) }} />} label="Estoy de acuerdo con los términos y condiciones" />
+                                <div style={{ width: '80%' }}>
+                                    <FormControlLabel sx={{ alignSelf: 'self-start' }} control={<Checkbox checked={terms} onClick={() => { setTerms(!terms) }} />} label="Estoy de acuerdo con los términos y condiciones" />
 
+                                </div>
                                 {loading && <CircularProgress />}
-                                <Box sx={buttonStyle} onClick={() => { register() }}>
+                                <Box className="hover" sx={buttonStyle} onClick={() => { register() }}>
                                     <Typography className="title-button"> Registrarme</Typography>
                                 </Box>
                             </div>

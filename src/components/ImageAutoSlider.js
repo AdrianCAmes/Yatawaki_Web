@@ -16,16 +16,16 @@ export default function ImageAutoSlider() {
             } else {
                 setCurrentIndex(currentIndex + 1);
             }
-        }, 2000);
+        }, 4000);
         return () => {
             clearInterval(interval);
         };
     }, [currentIndex])
 
     return (
-        <div>
-            <img style={{ maxHeight: '500px', maxWidth: '500px' }} src={images[currentIndex]} />
-        </div>
+
+        <img className="img-slider" src={images[currentIndex]} />
+
     )
 }
 

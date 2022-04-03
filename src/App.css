@@ -1,4 +1,8 @@
  /* Shared */
+ html, body, #app, #app>div, #root {
+     height: 100vh;
+ }
+
  @font-face {
      font-family: 'Kubots';
      src: url(./fonts/KubotsExtraLight-EaE1z.ttf);
@@ -18,7 +22,124 @@
      font-weight: 1000 !important;
  }
 
+ .hover {
+     cursor: pointer;
+ }
+
+ .hover:hover {
+     opacity: 0.9;
+ }
+
  /* end Shared */
+
+ /* SliderImg */
+ @keyframes fade {
+     0%, 100% {
+         opacity: 0
+     }
+
+     90% {
+         opacity: 1
+     }
+ }
+
+ .img-slider {
+     height: 100%;
+     max-height: 400px;
+     width: auto;
+     object-fit: contain;
+     animation: fade 4s infinite;
+ }
+
+ /* end SliderImg */
+
+ /* SymphonySlider */
+
+ .slider {
+     position: relative;
+     top: 30px;
+     height: 50vh;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+ }
+
+ .image {
+     max-height: 350px;
+     max-width: 600px;
+     border-radius: 10px;
+ }
+
+ .right-arrow {
+     position: absolute;
+     top: 50%;
+     right: 200px;
+     font-size: 4rem !important;
+     color: #FFB5B4;
+     z-index: 10;
+     cursor: pointer;
+     user-select: none;
+ }
+
+ .left-arrow {
+     position: absolute;
+     top: 50%;
+     left: 200px;
+     font-size: 4rem !important;
+     color: #FFB5B4;
+     z-index: 10;
+     cursor: pointer;
+     user-select: none;
+ }
+
+ .slide {
+     opacity: 0;
+     transition-duration: 2s ease;
+ }
+
+ .slide.active {
+     opacity: 1;
+     transition-duration: 2s;
+     transform: scale(1.08);
+ }
+
+ .container-height {
+     max-height: 250px;
+     margin-bottom: 20px;
+ }
+
+ @media only screen and (max-height: 800px) {
+     .container-height {
+         max-height: 200px;
+     }
+ }
+
+ @media only screen and (max-height: 700px) {
+     .container-height {
+         margin-top: 65px !important;
+         max-height: 150px;
+     }
+ }
+
+ @media only screen and (max-width: 1200px) {
+
+     .image {
+         max-height: 300px;
+     }
+
+     .right-arrow {
+         right: 100px;
+     }
+
+     .left-arrow {
+         left: 100px;
+     }
+
+ }
+
+
+ /* end SymphonySlider */
+
 
 
  /* SplashScreen */
@@ -50,7 +171,58 @@
      font-size: 180px !important;
      color: #FF5E5B;
      line-height: 200px !important;
-     padding-top: 50px!important;
+     padding-top: 50px !important;
  }
 
  /* end Login */
+
+ /* AppBar */
+ .title-appbar {
+     font-size: 7vw !important;
+     color: #FF5E5B;
+     line-height: 10px !important;
+ }
+
+ .star-five {
+     margin: 50px 0;
+     position: relative;
+     display: block;
+     color: #4285F4;
+     width: 0px;
+     height: 0px;
+     border-right: 100px solid transparent;
+     border-bottom: 70px solid #4285F4;
+     border-left: 100px solid transparent;
+     transform: rotate(35deg);
+ }
+
+ .star-five:before {
+     border-bottom: 80px solid #4285F4;
+     border-left: 30px solid transparent;
+     border-right: 30px solid transparent;
+     position: absolute;
+     height: 0;
+     width: 0;
+     top: -45px;
+     left: -65px;
+     display: block;
+     content: '';
+     transform: rotate(-35deg);
+ }
+
+ .star-five:after {
+     position: absolute;
+     display: block;
+     color: #4285F4;
+     top: 3px;
+     left: -105px;
+     width: 0px;
+     height: 0px;
+     border-right: 100px solid transparent;
+     border-bottom: 70px solid #4285F4;
+     border-left: 100px solid transparent;
+     transform: rotate(-70deg);
+     content: '';
+ }
+
+ /* end AppBar */

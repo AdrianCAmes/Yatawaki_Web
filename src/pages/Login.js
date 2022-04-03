@@ -7,6 +7,7 @@ import logo_upc from '../assets/Logo UPC.png';
 import { Box } from "@mui/system";
 import ImageAutoSlider from "../components/ImageAutoSlider";
 import AuthApi from "../apis/auth-apis";
+import GameContext from "../context/game-context";
 
 let buttonStyle = { width: '400px', height: '70px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '30px' };
 
@@ -16,10 +17,11 @@ const Login = () => {
     const [loading, setLoading] = React.useState(false);
 
     const snackBarContext = React.useContext(SnackBarContext);
+    const gameContext = React.useContext(GameContext);
     const navigate = useNavigate()
 
     const authenticate = async () => {
-        setLoading(true)
+        setLoading(true);
         AuthApi.authenticate(uniqueIdentifier, password)
             .then(response => {
                 window.localStorage.setItem('jwt', response.data.jwt);
@@ -27,12 +29,13 @@ const Login = () => {
                     severity: "success",
                     message: "Bienvenido!"
                 });
-                navigate('/yatawaki');
+                gameContext.updateUser(1);
+                navigate('/menu')
             })
             .catch(err => {
                 snackBarContext.onOpen({
                     severity: "error",
-                    message: err
+                    message: "Por favor, ingresa las credenciales correctas"
                 });
                 console.log(err);
             })
@@ -41,12 +44,12 @@ const Login = () => {
 
     return (
         <React.Fragment>
-            <Paper square={true} sx={{ backgroundColor: 'primary.light', height: '100vh' }}>
+            <Paper square={true} sx={{ backgroundColor: 'primary.light', height: '100vh' }} elevation={0}>
                 <Typography textAlign='center' className="title-font title-login" >LOG IN</Typography>
 
                 <Grid container justifyContent='center' alignItems='center'>
                     <Grid item xs={5} >
-                        <Box height='80%' width='80%' sx={{justifyContent:'center', alignContent:'center', display:'flex'}}>
+                        <Box sx={{justifyContent:'center', alignContent:'center', display:'flex', height:'400px'}}>
                             <ImageAutoSlider></ImageAutoSlider>
                         </Box>
 
@@ -71,7 +74,7 @@ const Login = () => {
                         />
 
                         {loading && <CircularProgress />}
-                        <Box sx={buttonStyle} onClick={() => { authenticate() }}>
+                        <Box className="hover" sx={buttonStyle} onClick={() => { authenticate() }}>
                             <Typography className="title-button"> Iniciar</Typography>
                         </Box>
                     </Grid>

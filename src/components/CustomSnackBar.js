@@ -7,8 +7,8 @@ const CustomSnackBar = (props) => {
   const { open, severity, onClose } = props;
 
   return (
-    <Snackbar open={open} autoHideDuration={5000} onClose={onClose} 
-      anchorOrigin={{ horizontal: "center", vertical: "bottom" }}>
+    <Snackbar open={open} autoHideDuration={5000} onClose={onClose}
+     anchorOrigin={{ horizontal: "center", vertical: "bottom" }}>
       <Alert onClose={onClose} severity={severity}>
         <AlertTitle>{titleCase(severity)}</AlertTitle>
         {props.children}
