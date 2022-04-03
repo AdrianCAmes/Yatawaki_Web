@@ -43,7 +43,6 @@ const YatawakiMenu = () => {
 
         UserUnlockableApi.findSymphoniesByUser()
             .then(response => {
-                console.log(response.data);
                 setSymphonies(response.data);
             })
             .catch(err => {

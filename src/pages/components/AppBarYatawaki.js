@@ -30,7 +30,6 @@ const AppBarYatawaki = () => {
         setLoading(true);
         UserApi.resume()
             .then(response => {
-                console.log(response.data);
                 setResume(response.data)
             })
             .catch(err => {

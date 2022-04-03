@@ -1,4 +1,4 @@
-import { Box, Checkbox, CircularProgress, FormControlLabel, Grid, InputAdornment, Paper, TextField, Typography } from "@mui/material";
+import { Box, Checkbox, CircularProgress, Divider, FormControlLabel, Grid, InputAdornment, Paper, TextField, Typography } from "@mui/material";
 import { Lock } from "@mui/icons-material";
 import React from "react";
 import UserApi from "../apis/user-apis";
@@ -6,6 +6,8 @@ import SnackBarContext from "../context/snack-bar-context";
 import { useNavigate } from "react-router-dom";
 import ImageAutoSlider from "../components/ImageAutoSlider";
 import logo_upc from '../assets/Logo UPC.png';
+import googleIcon from '../assets/google.png';
+import { height } from "@mui/system";
 
 let buttonStyle = { width: ['300px', '300px', '400px'], height: '70px', borderRadius: '15px', mx: 'auto', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '30px' };
 
@@ -76,7 +78,6 @@ const Register = () => {
             setLoading(true);
             UserApi.register(nickname, password, firstname, lastname, mail)
                 .then(response => {
-                    console.log(response);
                     snackBarContext.onOpen({
                         severity: "success",
                         message: "Registrado correctamente"
@@ -129,7 +130,7 @@ const Register = () => {
             <Paper square={true} sx={{ backgroundColor: 'primary.light', height: '100%' }} elevation={0}>
                 <Typography textAlign='center' className="title-font title-login" >REGISTRO</Typography>
 
-                <Grid container justifyContent='center' alignItems='center'>
+                <Grid container justifyContent='center' alignItems='center' height='60vh'>
                     <Grid item xs={5} >
                         <Box sx={{ justifyContent: 'center', alignContent: 'center', display: 'flex', height: '400px' }}>
                             <ImageAutoSlider></ImageAutoSlider>
@@ -137,15 +138,23 @@ const Register = () => {
 
                     </Grid>
 
-                    <Grid item xs={7} >
+                    <Grid item xs={7}>
 
                         {step === 1 ? (
                             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+
+                                <div className="hover" style={{ width: '80%', height:'50px', display: 'flex', justifyContent: 'start', alignItems: 'center', backgroundColor:'#FFFFFF', borderRadius:'10px', border: '1px solid #C3D8EE' }}>
+                                    <img style={{ height: '35px', marginLeft:'10px' }} src={googleIcon} />
+                                    <Typography marginLeft='20px' color='#757575'>Registrate con Google</Typography>
+                                </div>
+
+                                <Divider sx={{ width: '80%', mt: 2, }}>O</Divider>
+
                                 <TextField error={firstnameError} placeholder="Ingresa tu nombre" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setFirstname(event.target.value)}></TextField>
                                 <TextField error={lastnameError} placeholder="Ingresa tu apelido" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setLastname(event.target.value)}></TextField>
                                 <TextField error={mailError} placeholder="Ingresa tu correo electronico" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setMail(event.target.value)}></TextField>
 
-                                <Box sx={buttonStyle} onClick={() => { nextStep() }}>
+                                <Box className="hover" sx={buttonStyle} onClick={() => { nextStep() }}>
                                     <Typography className="title-button"> Siguiente</Typography>
                                 </Box>
                             </div>
@@ -166,12 +175,12 @@ const Register = () => {
 
                                 />
 
-                                <div style={{ width: '80%'}}>
-                                    <FormControlLabel sx={{ alignSelf: 'self-start'}} control={<Checkbox checked={terms} onClick={() => { setTerms(!terms) }} />} label="Estoy de acuerdo con los términos y condiciones" />
+                                <div style={{ width: '80%' }}>
+                                    <FormControlLabel sx={{ alignSelf: 'self-start' }} control={<Checkbox checked={terms} onClick={() => { setTerms(!terms) }} />} label="Estoy de acuerdo con los términos y condiciones" />
 
                                 </div>
                                 {loading && <CircularProgress />}
-                                <Box sx={buttonStyle} onClick={() => { register() }}>
+                                <Box className="hover" sx={buttonStyle} onClick={() => { register() }}>
                                     <Typography className="title-button"> Registrarme</Typography>
                                 </Box>
                             </div>

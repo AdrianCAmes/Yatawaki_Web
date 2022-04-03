@@ -27,12 +27,12 @@ const Splashscreen = () => {
                     <Typography className="title-font title-logo" > YATAWAKI</Typography>
                     <Grid container direction="row" justifyContent="center" alignItems="center" sx={{ mt: 9 }}>
                         <Grid item>
-                            <Box onClick={() => { navigateRegister() }} sx={buttonStyle}>
+                            <Box className="hover" onClick={() => { navigateRegister() }} sx={buttonStyle}>
                                 <Typography className="title-font title-button" > REGISTRATE</Typography>
                             </Box>
                         </Grid>
                         <Grid item>
-                            <Box sx={buttonStyle} onClick={() => { navigateLogin() }}>
+                            <Box className="hover" sx={buttonStyle} onClick={() => { navigateLogin() }}>
                                 <Typography className="title-font title-button" > LOGIN</Typography>
                             </Box>
                         </Grid>

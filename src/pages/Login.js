@@ -74,7 +74,7 @@ const Login = () => {
                         />
 
                         {loading && <CircularProgress />}
-                        <Box sx={buttonStyle} onClick={() => { authenticate() }}>
+                        <Box className="hover" sx={buttonStyle} onClick={() => { authenticate() }}>
                             <Typography className="title-button"> Iniciar</Typography>
                         </Box>
                     </Grid>
