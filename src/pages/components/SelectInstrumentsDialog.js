@@ -1,15 +1,10 @@
 import { Box, Dialog, Typography } from "@mui/material";
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import SnackBarContext from "../../context/snack-bar-context";
 import InstrumentCard from "./InstrumentCard";
 
 const SelectInstrumentsDialog = (props) => {
 
-    const [mostrarProgreso, setMostrarProgreso] = React.useState(false);
 
-    const snackBarContext = React.useContext(SnackBarContext);
-    const navigate = useNavigate();
     const mountedRef = React.useRef(true)
 
 

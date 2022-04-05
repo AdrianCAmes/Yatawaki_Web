@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import ImageAutoSlider from "../components/ImageAutoSlider";
 import logo_upc from '../assets/Logo UPC.png';
 import googleIcon from '../assets/google.png';
-import { height } from "@mui/system";
 
 let buttonStyle = { width: ['300px', '300px', '400px'], height: '70px', borderRadius: '15px', mx: 'auto', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '30px' };
 
@@ -144,7 +143,7 @@ const Register = () => {
                             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
 
                                 <div className="hover" style={{ width: '80%', height:'50px', display: 'flex', justifyContent: 'start', alignItems: 'center', backgroundColor:'#FFFFFF', borderRadius:'10px', border: '1px solid #C3D8EE' }}>
-                                    <img style={{ height: '35px', marginLeft:'10px' }} src={googleIcon} />
+                                    <img style={{ height: '35px', marginLeft:'10px' }} src={googleIcon} alt="google"/>
                                     <Typography marginLeft='20px' color='#757575'>Registrate con Google</Typography>
                                 </div>
 

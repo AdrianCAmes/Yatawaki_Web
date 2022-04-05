@@ -1,7 +1,7 @@
 import { Box, CircularProgress, Paper } from "@mui/material";
 import React, { useState } from "react";
 import SymphonyApis from "../apis/symphony-apis";
-import UserUnlockableApi from "../apis/user-unlockable-apis";
+import UserApi from "../apis/user-apis";
 import GameContext from "../context/game-context";
 import SnackBarContext from "../context/snack-bar-context";
 import AppBarYatawaki from "./components/AppBarYatawaki";
@@ -12,6 +12,7 @@ import SymphonySlider from "./components/SymphonySlider";
 
 const YatawakiMenu = () => {
     const [index, setIndex] = useState(0);
+    const [resume, setResume] = useState([]);
     const [symphonies, setSymphonies] = React.useState([]);
     const [instruments, setInstruments] = React.useState([]);
 
@@ -19,7 +20,6 @@ const YatawakiMenu = () => {
     const gameContext = React.useContext(GameContext);
     const snackBarContext = React.useContext(SnackBarContext);
     const [loading, setLoading] = React.useState(true);
-    const [loader, setLoader] = React.useState(true);
     const mountedRef = React.useRef(true)
 
     const handleCloseDialog = () => {
@@ -37,25 +37,21 @@ const YatawakiMenu = () => {
         setOpenDialog(true);
     }
 
-    const findSymphonies = async () => {
+    const getUserResume = async () => {
         setLoading(true);
-
-        if (gameContext.userId == 0 || !gameContext.userId) return;
-
-        UserUnlockableApi.findSymphoniesByUser(gameContext.userId)
+        UserApi.resume(gameContext.username)
             .then(response => {
-                setSymphonies(response.data);
-                setLoading(false);
+                console.log(response.data);
+                setResume(response.data);
+                setSymphonies(response.data.symphonies);
+                gameContext.updateUser(response.data.id);
             })
             .catch(err => {
-                snackBarContext.onOpen({ severity: "error", message: err });
                 console.log(err);
             })
-            .finally(() => {
-                setLoading(false);
-            })
-
+            .finally(() => setLoading(false))
     }
+
 
     const findInstruments = async (symphonyId) => {
         setLoading(true);
@@ -76,21 +72,21 @@ const YatawakiMenu = () => {
     }
 
     React.useEffect(() => {
-        findSymphonies();
-        setLoader(false);
+        getUserResume();
+
         return () => {
             mountedRef.current = false
         }
 
-    }, [loader, gameContext.userId]);
+    }, [gameContext.username]);
 
 
 
     return (
         <React.Fragment>
-            {loading ? <CircularProgress style={{position:'absolute', right:'50%', top:'50%'}} /> : <Paper square={true} sx={{ backgroundColor: 'primary.light', height: '100vh' }} elevation={0}>
+            {loading || gameContext.username === '' ? <CircularProgress style={{position:'absolute', right:'50%', top:'50%'}} /> : <Paper square={true} sx={{ backgroundColor: 'primary.light', height: '100vh' }} elevation={0}>
 
-                <AppBarYatawaki></AppBarYatawaki>
+                <AppBarYatawaki resume={resume}></AppBarYatawaki>
 
                 <SelectInstrumentsDialog open={openDialog} handleClose={handleCloseDialog} instruments={instruments}></SelectInstrumentsDialog>
 

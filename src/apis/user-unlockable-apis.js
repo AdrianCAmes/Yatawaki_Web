@@ -1,5 +1,4 @@
 import apiInstance from "../config/api-instance";
-import { PLAYER } from "../utils/consts";
 
 const uri = 'user-unlockable/';
 

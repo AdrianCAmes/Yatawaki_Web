@@ -24,7 +24,7 @@ export default function ImageAutoSlider() {
 
     return (
 
-        <img className="img-slider" src={images[currentIndex]} />
+        <img className="img-slider" src={images[currentIndex]} alt="icon" />
 
     )
 }
