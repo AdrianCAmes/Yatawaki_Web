@@ -1,6 +1,6 @@
 
 import { ArrowBackIosRounded } from "@mui/icons-material";
-import { Avatar, Grid, Paper, Typography } from "@mui/material";
+import { Avatar, Grid, Paper, Tab, Tabs, tabsClasses, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import UserApi from "../apis/user-apis";
@@ -14,12 +14,14 @@ import { Box } from "@mui/system";
 function DataTwoColumns(props) {
     const label = props.label;
     const value = props.value;
+    const sizeLabel = props.sizeLabel;
+    const sizeValue = props.sizeValue;
     return (
         <React.Fragment>
-            <Grid item xs={4} sx={{ marginBottom: '10px' }}>
+            <Grid item xs={sizeLabel} sx={{ marginBottom: '10px' }}>
                 <Typography fontWeight={600} fontSize="20px">{label}:</Typography>
             </Grid>
-            <Grid item xs={8} sx={{ marginBottom: '10px' }}>
+            <Grid item xs={sizeValue} sx={{ marginBottom: '10px' }}>
                 <Typography fontSize="20px">{value}</Typography>
             </Grid>
         </React.Fragment>
@@ -29,26 +31,53 @@ function DataTwoColumns(props) {
 DataTwoColumns.propTypes = {
     label: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
+    sizeLabel: PropTypes.number,
+    sizeValue: PropTypes.number
 };
+
+DataTwoColumns.defaultProps = {
+    sizeLabel: 4,
+    sizeValue: 8
+};
+
 let buttonStyle = { width: '180px', height: '40px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '30px' };
 
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box sx={{ p: 3 }}>
+                    {children}
+                </Box>
+            )}
+        </div>
+    );
+}
 
 const Perfil = () => {
-
+    const [value, setValue] = React.useState(0);
     const [loading, setLoading] = React.useState(true);
     const [profile, setProfile] = React.useState(null);
+    const [achievements, setAchievements] = React.useState([]);
+    const [avatars, setAvatars] = React.useState([]);
+    const [symphonies, setSymphonies] = React.useState([]);
 
     const navigate = useNavigate()
     const snackBarContext = React.useContext(SnackBarContext);
     const gameContext = React.useContext(GameContext);
 
-    const navigateLogin = () => {
-        navigate(`/login`);
-    }
 
-    const navigateRegister = () => {
-        navigate(`/register`);
-    }
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
 
     const getUser = async () => {
         setLoading(true);
@@ -75,7 +104,7 @@ const Perfil = () => {
     }
 
     React.useEffect(() => {
-        //getUserUnlockables();
+        getUserUnlockables();
         getUser();
 
     }, [gameContext.userId]);
@@ -115,6 +144,31 @@ const Perfil = () => {
                         <Typography className="button-perfil"> Editar</Typography>
                     </Box>
                 </div>
+
+                <Typography fontWeight={600} className="title-font subtitle-perfil" sx={{ marginBottom: '30px' }}>ESTADÍSTICAS DEL JUGADOR</Typography>
+                <div style={{ width: '90%', backgroundColor: '#E8E8E0', borderRadius: '20px', padding: '30px' }}>
+                    <Grid container>
+                        <Grid item xs={5}>
+                            <Grid container>
+                                <DataTwoColumns sizeLabel={6} sizeValue={6} label='Rango' value={'--'}></DataTwoColumns>
+                                <DataTwoColumns sizeLabel={6} sizeValue={6} label='Experiencia' value={'--'}></DataTwoColumns>
+                            </Grid>
+                        </Grid>
+                        <div style={{ borderLeft: '1px solid lightgrey', height: '90px', mx: '10px', marginRight: '30px' }}></div>
+
+                        <Grid item xs={5}>
+                            <Grid container>
+                                <DataTwoColumns sizeLabel={6} sizeValue={6} label='Monedas' value={profile ? profile.coinsOwned : '--'}></DataTwoColumns>
+                                <DataTwoColumns sizeLabel={6} sizeValue={6} label='Notas' value={profile ? profile.notesOwned : '--'}></DataTwoColumns>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </div>
+
+
+
+
+
 
             </Paper>
         </React.Fragment>
