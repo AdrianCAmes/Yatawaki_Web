@@ -41,7 +41,6 @@ const YatawakiMenu = () => {
         setLoading(true);
         UserApi.resume(gameContext.username)
             .then(response => {
-                console.log(response.data);
                 setResume(response.data);
                 setSymphonies(response.data.symphonies);
                 gameContext.updateUser(response.data.id);

@@ -22,6 +22,10 @@ const AppBarYatawaki = (props) => {
        navigate('/');
     };
 
+    const toPerfil = () => {
+        navigate('/perfil');
+     };
+
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
@@ -60,8 +64,8 @@ const AppBarYatawaki = (props) => {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            <MenuItem>
-                                <Typography textAlign="center">Editar Perfil</Typography>
+                            <MenuItem onClick={() => {toPerfil()}}>
+                                <Typography textAlign="center">Perfil</Typography>
                             </MenuItem>
                             <MenuItem>
                                 <Typography textAlign="center">Mis instrumentos</Typography>
