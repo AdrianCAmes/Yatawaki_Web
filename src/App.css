@@ -227,3 +227,25 @@
  }
 
  /* end AppBar */
+
+
+ /* Perfil */
+ .title-perfil {
+    font-size: 80px !important;
+    color: #FF5E5B;
+    text-align: center;
+    margin-top: 20px!important;
+    margin-bottom: 50px!important;
+}
+
+.subtitle-perfil {
+    font-size: 30px !important;
+    color: #FF5E5B;
+}
+
+.button-perfil {
+    font-size: 30px !important;
+    color: #FFF;
+}
+
+ /* end Perfil */
