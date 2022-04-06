@@ -10,6 +10,7 @@ import SnackBarContext from "../context/snack-bar-context";
 import avatar from '../assets/avatar.png';
 import PropTypes from 'prop-types';
 import { Box } from "@mui/system";
+import { AvatarCard, SymphonyCard } from "./components/ObjectCard";
 
 function DataTwoColumns(props) {
     const label = props.label;
@@ -96,6 +97,8 @@ const Perfil = () => {
         UserUnlockableApi.findUserUnlockable(gameContext.userId)
             .then(response => {
                 console.log(response.data);
+                setSymphonies(response.data.symphonies);
+                setAvatars(response.data.avatars);
             })
             .catch(err => {
                 console.log(err);
@@ -165,9 +168,41 @@ const Perfil = () => {
                     </Grid>
                 </div>
 
+                <Typography fontWeight={600} className="title-font subtitle-perfil" sx={{ my: '30px' }}>OBJETOS DESBLOQUEADOS</Typography>
+                <Tabs value={value} onChange={handleChange} variant="scrollable" scrollButtons="auto"
+                    sx={{
+                        [`& .${tabsClasses.scrollButtons}`]: { '&.Mui-disabled': { opacity: 0.3 }, },
+                    }}>
+                    <Tab label="LOGROS" />
+                    <Tab label="SINFONIAS" />
+                    <Tab label="AVATARS" />
+                </Tabs>
+                <TabPanel value={value} index={0}>
+                    <div style={{ width: '90%', backgroundColor: '#E8E8E0', borderRadius: '20px', padding: '30px', display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
+
+                    </div>
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                    <div style={{ width: '90%', backgroundColor: '#E8E8E0', borderRadius: '20px', padding: '30px', display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
+                        {symphonies.map((symphony, idx) => (
+                            <SymphonyCard key={idx} symphony={symphony}></SymphonyCard>
+                        ))}
+                    </div>
+                </TabPanel>
+                <TabPanel value={value} index={2}>
+                <div style={{ width: '90%', backgroundColor: '#E8E8E0', borderRadius: '20px', padding: '30px', display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
+                        {avatars.map((avatar, idx) => (
+                            <AvatarCard key={idx} avatar={avatar}></AvatarCard>
+                        ))}
+                    </div>
+                </TabPanel>
 
 
-
+                <div style={{ display: 'flex', justifyContent: 'end' }}>
+                    <Box className="hover" sx={buttonStyle}>
+                        <Typography className="button-perfil"> Ir a Tienda</Typography>
+                    </Box>
+                </div>
 
 
             </Paper>
