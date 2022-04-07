@@ -5,7 +5,7 @@ import UserApi from "../apis/user-apis";
 import GameContext from "../context/game-context";
 import SnackBarContext from "../context/snack-bar-context";
 import AppBarYatawaki from "./components/AppBarYatawaki";
-import SelectInstrumentsDialog from "./components/SelectInstrumentsDialog";
+import SymphonyInstrumentsDialog from "./components/SymphonyInstrumentsDialog";
 import SymphonySlider from "./components/SymphonySlider";
 
 
@@ -14,7 +14,6 @@ const YatawakiMenu = () => {
     const [index, setIndex] = useState(0);
     const [resume, setResume] = useState([]);
     const [symphonies, setSymphonies] = React.useState([]);
-    const [instruments, setInstruments] = React.useState([]);
 
     const [openDialog, setOpenDialog] = React.useState(false);
     const gameContext = React.useContext(GameContext);
@@ -57,7 +56,7 @@ const YatawakiMenu = () => {
 
         SymphonyApis.findInstrumentsBySymphonyId(symphonyId)
             .then(response => {
-                setInstruments(response.data)
+                gameContext.updateInstruments(response.data);
                 setLoading(false);
             })
             .catch(err => {
@@ -87,7 +86,7 @@ const YatawakiMenu = () => {
 
                 <AppBarYatawaki resume={resume}></AppBarYatawaki>
 
-                <SelectInstrumentsDialog open={openDialog} handleClose={handleCloseDialog} instruments={instruments}></SelectInstrumentsDialog>
+                <SymphonyInstrumentsDialog open={openDialog} handleClose={handleCloseDialog}></SymphonyInstrumentsDialog>
 
 
                 <SymphonySlider slides={symphonies} passToParent={childCallback} selectSlider={selectSlider} />
