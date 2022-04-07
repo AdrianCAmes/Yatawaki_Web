@@ -5,7 +5,8 @@ const GameContext = createContext({
     userId: 0,
     updateUser: null,
     username: '',
-    updateUsername: '',
+    updateUsername: null,
+    logout: null
 })
 
 export default GameContext;
@@ -22,19 +23,29 @@ export const GameContextProvider = (props) => {
         setUsername(usernameRequest);
     };
 
+    const logout = () => {
+        setUsername('');
+        setUserId(0);
+    };
+
+    // SI QUIERE RECARGAR LA PAGINA Y PERSISTIR DATA
+
     useEffect(() => {
         if (localStorage.getItem('userId')) {
             setUserId(localStorage.getItem('userId'));
-        }
+        } 
         if (localStorage.getItem('username')) {
             setUsername(localStorage.getItem('username'));
-        }
+        }  
     }, []);
 
     useEffect(() => {
         localStorage.setItem('userId', userId);
+    }, [userId]);
+
+    useEffect(() => {
         localStorage.setItem('username', username);
-    }, [userId, username]);
+    }, [username]);
 
 
     return (
@@ -43,6 +54,7 @@ export const GameContextProvider = (props) => {
             updateUser: updateUserId,
             username: username,
             updateUsername: updateUsername,
+            logout: logout
         }}>
             {props.children}
         </GameContext.Provider>

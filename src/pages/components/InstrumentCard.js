@@ -15,7 +15,7 @@ const InstrumentCard = (props) => {
                 </Grid>
                 <Grid item>
                     <div style={{ border: '1px solid #000', borderRadius: '10px', padding:'10px', height: '160px',  width:'120px', display:'flex', justifyContent:'center' }}>
-                        <img height='140px' src={`data:image/jpeg;base64,${props.instrument.icon}`} />
+                        <img height='140px' src={`data:image/jpeg;base64,${props.instrument.icon}`} alt="img" />
                     </div>
                 </Grid>
             </Grid>

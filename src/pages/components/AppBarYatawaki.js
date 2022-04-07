@@ -1,57 +1,36 @@
-import { Avatar, Box, Dialog, Grid, IconButton, Menu, MenuItem, Tooltip, Typography } from "@mui/material";
+import { Avatar, Box, Grid, IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import GameContext from "../../context/game-context";
-import SnackBarContext from "../../context/snack-bar-context";
 import UserStats from "./UserStats";
 import avatar from '../../assets/Logo UPC.png';
-import UserApi from "../../apis/user-apis";
+import GameContext from "../../context/game-context";
 
-const AppBarYatawaki = () => {
+const AppBarYatawaki = (props) => {
 
-    const [resume, setResume] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-    const [loading, setLoading] = React.useState(false);
     const gameContext = React.useContext(GameContext);
+
     const navigate = useNavigate();
-    const mountedRef = React.useRef(true)
 
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
     };
 
     const logout = () => {
-       window.localStorage.clear();
+       gameContext.logout();
+       window.localStorage.removeItem('jwt');
        navigate('/');
     };
+
+    const toPerfil = () => {
+        navigate('/perfil');
+     };
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
 
 
-    const getUserResume = async () => {
-        setLoading(true);
-        UserApi.resume(gameContext.username)
-            .then(response => {
-                setResume(response.data);
-                gameContext.updateUser(response.data.id);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-            .finally(() => setLoading(false))
-    }
-
-    React.useEffect(() => {
-
-        getUserResume();
-
-        return () => {
-            mountedRef.current = false
-        }
-    }, []);
 
     return (
         <React.Fragment>
@@ -63,11 +42,11 @@ const AppBarYatawaki = () => {
                         </Typography>
                     </Grid>
                     <Grid item xs={5}>
-                        <UserStats resume={resume}></UserStats>
+                        <UserStats resume={props.resume}></UserStats>
                     </Grid>
                     <Grid item xs={2} align="center">
                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                            <Avatar sx={{ height: '80px', width: '80px' }} alt="Remy Sharp" src={resume ? `data:image/jpeg;base64,${resume.icon}` : avatar} />
+                            <Avatar sx={{ height: '80px', width: '80px' }} alt="Remy Sharp" src={props.resume ? `data:image/jpeg;base64,${props.resume.icon}` : avatar} />
                         </IconButton>
                         <Menu
                             sx={{ mt: '45px' }}
@@ -85,8 +64,8 @@ const AppBarYatawaki = () => {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            <MenuItem>
-                                <Typography textAlign="center">Editar Perfil</Typography>
+                            <MenuItem onClick={() => {toPerfil()}}>
+                                <Typography textAlign="center">Perfil</Typography>
                             </MenuItem>
                             <MenuItem>
                                 <Typography textAlign="center">Mis instrumentos</Typography>

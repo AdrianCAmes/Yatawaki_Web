@@ -1,18 +1,11 @@
 import { AddBox, Star } from "@mui/icons-material";
-import { Box, Dialog, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import GameContext from "../../context/game-context";
 import solIcon from "../../assets/sol.png"
 import monedaIcon from "../../assets/moneda.png"
-import SnackBarContext from "../../context/snack-bar-context";
 
 const UserStats = (props) => {
-
-    const [mostrarProgreso, setMostrarProgreso] = React.useState(false);
-
-    const gameContext = React.useContext(GameContext);
-    const navigate = useNavigate();
+ 
     const mountedRef = React.useRef(true)
 
 
@@ -55,14 +48,14 @@ const UserStats = (props) => {
                     <div style={{ backgroundColor: '#D8D8D8', borderRadius: '10px', height: '45px', width: '90%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingRight: '3px', paddingLeft: '4px' }}>
                         <AddBox style={{ color: '#34A853', fontSize: "55px", marginLeft:'-15px' }}></AddBox>
                         <Typography style={{ fontSize: '30px', fontWeight: '600' }}> {props.resume ? props.resume.notesOwned : '-'}</Typography>
-                        <img width='30px' src={solIcon} />
+                        <img width='30px' src={solIcon} alt="clave" />
                     </div>
                 </Grid>
                 <Grid item xs={4}>
                     <div style={{ backgroundColor: '#D8D8D8', borderRadius: '10px', height: '45px', width: '90%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingRight: '3px', paddingLeft: '4px' }}>
                         <AddBox style={{ color: '#34A853', fontSize: "55px", marginLeft:'-15px' }}></AddBox>
                         <Typography style={{ fontSize: '30px', fontWeight: '600' }}> {props.resume ? props.resume.coinsOwned : '-'}</Typography>
-                        <img width='30px' src={monedaIcon} />
+                        <img width='30px' src={monedaIcon} alt="moneda" />
                     </div>
                 </Grid>
             </Grid>

@@ -9,6 +9,7 @@ import Register from './pages/Register';
 import Splashscreen from './pages/Splashscreen';
 import YatawakiMenu from './pages/YatawakiMenu';
 import { GameContextProvider } from './context/game-context';
+import Perfil from './pages/Perfil';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/menu" element={<YatawakiMenu />} />
+              <Route path="/perfil" element={<Perfil />} />
 
             </Routes>
           </BrowserRouter>
