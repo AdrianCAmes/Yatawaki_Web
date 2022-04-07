@@ -17,7 +17,7 @@ const UserApi = {
         role: PLAYER
     }),
     resume: (username) => apiInstance.get(`${uri}${username}/resume`, getHeaderToken()),
-    getUserById: (userId) => apiInstance.get(`${uri}${userId}`, getHeaderToken())
+    getUserProfileById: (userId) => apiInstance.get(`${uri}${userId}/profile`, getHeaderToken())
 }
 
 export default UserApi;

@@ -7,7 +7,7 @@ import UserApi from "../apis/user-apis";
 import UserUnlockableApi from "../apis/user-unlockable-apis";
 import GameContext from "../context/game-context";
 import SnackBarContext from "../context/snack-bar-context";
-import avatar from '../assets/avatar.png';
+import avatar from '../assets/sol.png';
 import PropTypes from 'prop-types';
 import { Box } from "@mui/system";
 import { AchievementCard, AvatarCard, SymphonyCard } from "./components/ObjectCard";
@@ -120,9 +120,8 @@ const Perfil = () => {
 
     const getUser = async () => {
         setLoading(true);
-        UserApi.getUserById(gameContext.userId)
+        UserApi.getUserProfileById(gameContext.userId)
             .then(response => {
-                console.log(response.data);
                 setProfile(response.data);
             })
             .catch(err => {
@@ -165,8 +164,8 @@ const Perfil = () => {
                 <Grid container>
                     <Grid item xs={4} align="center">
                         {/* src={profile ? `data:image/jpeg;base64,${profile.icon}` : avatar} */}
-                        <Avatar sx={{ height: '150px', width: '150px', border: '1px solid #777', padding: '1px' }} alt="avatar" src={avatar} />
-                        <Typography sx={{ marginTop: '15px', fontWeight: '600', fontSize: '23px' }}>Amadeus Mozart</Typography>
+                        <Avatar sx={{ height: '150px', width: '150px', border: '1px solid #777', padding: '1px' }} alt="avatar"  src={profile ? `data:image/jpeg;base64,${profile.avatar.icon}`: null} />
+                        <Typography sx={{ marginTop: '15px', fontWeight: '600', fontSize: '23px' }}>{profile ? profile.avatar.name : '--'}</Typography>
                     </Grid>
                     <Grid item xs={8}>
                         <Typography fontWeight={600} className="title-font subtitle-perfil" sx={{ marginBottom: '30px' }}>DATOS PERSONALES</Typography>
@@ -192,8 +191,8 @@ const Perfil = () => {
                     <Grid container>
                         <Grid item xs={5}>
                             <Grid container>
-                                <DataTwoColumns sizeLabel={6} sizeValue={6} label='Rango' value={'--'}></DataTwoColumns>
-                                <DataTwoColumns sizeLabel={6} sizeValue={6} label='Experiencia' value={'--'}></DataTwoColumns>
+                                <DataTwoColumns sizeLabel={6} sizeValue={6} label='Rango' value={profile ? `${profile.userRank.rank.name} (${profile.userRank.rank.level})` : '--'}></DataTwoColumns>
+                                <DataTwoColumns sizeLabel={6} sizeValue={6} label='Experiencia' value={profile ? profile.userRank.currentExperience : '--'}></DataTwoColumns>
                             </Grid>
                         </Grid>
                         <div style={{ borderLeft: '1px solid lightgrey', height: '90px', mx: '10px', marginRight: '30px' }}></div>
