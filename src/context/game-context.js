@@ -28,6 +28,8 @@ export const GameContextProvider = (props) => {
         setUserId(0);
     };
 
+    // SI QUIERE RECARGAR LA PAGINA Y PERSISTIR DATA
+
     useEffect(() => {
         if (localStorage.getItem('userId')) {
             setUserId(localStorage.getItem('userId'));

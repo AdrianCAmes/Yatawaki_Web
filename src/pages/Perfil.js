@@ -1,6 +1,6 @@
 
 import { ArrowBackIosRounded } from "@mui/icons-material";
-import { Avatar, Grid, Paper, Tab, Tabs, tabsClasses, Typography } from "@mui/material";
+import { Avatar, Grid, Paper, Tab, Tabs, tabsClasses, Typography, withStyles } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import UserApi from "../apis/user-apis";
@@ -10,7 +10,8 @@ import SnackBarContext from "../context/snack-bar-context";
 import avatar from '../assets/avatar.png';
 import PropTypes from 'prop-types';
 import { Box } from "@mui/system";
-import { AvatarCard, SymphonyCard } from "./components/ObjectCard";
+import { AchievementCard, AvatarCard, SymphonyCard } from "./components/ObjectCard";
+import styled from "@emotion/styled";
 
 function DataTwoColumns(props) {
     const label = props.label;
@@ -63,6 +64,37 @@ function TabPanel(props) {
     );
 }
 
+const CustomTabs = styled(Tabs)({
+    borderBottom: '1px solid #e8e8e8',
+    '& .MuiTabs-indicator': {
+        backgroundColor: '#FFF49B!important',
+    },
+});
+
+const CustomTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }) => ({
+    textTransform: 'none',
+    minWidth: 0,
+    [theme.breakpoints.up('sm')]: {
+        minWidth: 0,
+    },
+    fontWeight: '600!important',
+    marginRight: theme.spacing(1),
+    color: 'rgba(0, 0, 0, 0.85)',
+    fontFamily: 'Kubots!important',
+    fontSize: '25px',
+    '&:hover': {
+        color: '#FF5E5B',
+        opacity: 1,
+    },
+    '&.Mui-selected': {
+        color: '#FF5E5B',
+        fontWeight: theme.typography.fontWeightMedium,
+    },
+    '&.Mui-focusVisible': {
+        backgroundColor: '#d1eaff',
+    },
+}));
+
 const Perfil = () => {
     const [value, setValue] = React.useState(0);
     const [loading, setLoading] = React.useState(true);
@@ -80,10 +112,17 @@ const Perfil = () => {
         setValue(newValue);
     };
 
+
+    const toHome = () => {
+        navigate('/menu')
+    };
+
+
     const getUser = async () => {
         setLoading(true);
         UserApi.getUserById(gameContext.userId)
             .then(response => {
+                console.log(response.data);
                 setProfile(response.data);
             })
             .catch(err => {
@@ -96,9 +135,9 @@ const Perfil = () => {
         setLoading(true);
         UserUnlockableApi.findUserUnlockable(gameContext.userId)
             .then(response => {
-                console.log(response.data);
                 setSymphonies(response.data.symphonies);
                 setAvatars(response.data.avatars);
+                setAchievements(response.data.achievements);
             })
             .catch(err => {
                 console.log(err);
@@ -116,7 +155,7 @@ const Perfil = () => {
     return (
         <React.Fragment>
             <Paper square={true} sx={{ backgroundColor: 'primary.light', padding: '40px' }} elevation={0}>
-                <div className="hover" style={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
+                <div className="hover" onClick={() => { toHome() }} style={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
                     <ArrowBackIosRounded fontSize="medium" />
                     <Typography fontWeight={600} fontSize={24} sx={{ marginLeft: '10px' }}>Atrás</Typography>
                 </div>
@@ -169,31 +208,33 @@ const Perfil = () => {
                 </div>
 
                 <Typography fontWeight={600} className="title-font subtitle-perfil" sx={{ my: '30px' }}>OBJETOS DESBLOQUEADOS</Typography>
-                <Tabs value={value} onChange={handleChange} variant="scrollable" scrollButtons="auto"
+                <CustomTabs value={value} onChange={handleChange} variant="scrollable" scrollButtons="auto"
                     sx={{
                         [`& .${tabsClasses.scrollButtons}`]: { '&.Mui-disabled': { opacity: 0.3 }, },
                     }}>
-                    <Tab label="LOGROS" />
-                    <Tab label="SINFONIAS" />
-                    <Tab label="AVATARS" />
-                </Tabs>
+                    <CustomTab label="LOGROS" />
+                    <CustomTab label="SINFONIAS" />
+                    <CustomTab label="AVATARS" />
+                </CustomTabs>
                 <TabPanel value={value} index={0}>
-                    <div style={{ width: '90%', backgroundColor: '#E8E8E0', borderRadius: '20px', padding: '30px', display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
-
+                    <div style={{ width: '90%', backgroundColor: '#E8E8E0', borderRadius: '20px', padding: '30px', display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap' }}>
+                        {achievements.length > 0 ? achievements.map((achievement, idx) => (
+                            <AchievementCard key={idx} achievement={achievement}></AchievementCard>
+                        )) : <Typography>No cuentas con logros</Typography>}
                     </div>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <div style={{ width: '90%', backgroundColor: '#E8E8E0', borderRadius: '20px', padding: '30px', display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
-                        {symphonies.map((symphony, idx) => (
+                    <div style={{ width: '90%', backgroundColor: '#E8E8E0', borderRadius: '20px', padding: '30px', display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap' }}>
+                        {symphonies.length > 0 ? symphonies.map((symphony, idx) => (
                             <SymphonyCard key={idx} symphony={symphony}></SymphonyCard>
-                        ))}
+                        )) : <Typography>No cuentas con sinfonias</Typography>}
                     </div>
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                <div style={{ width: '90%', backgroundColor: '#E8E8E0', borderRadius: '20px', padding: '30px', display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
-                        {avatars.map((avatar, idx) => (
-                            <AvatarCard key={idx} avatar={avatar}></AvatarCard>
-                        ))}
+                    <div style={{ width: '90%', backgroundColor: '#E8E8E0', borderRadius: '20px', padding: '30px', display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap' }}>
+                        {avatars.length > 0 ? avatars.map((avatar1, idx) => (
+                            <AvatarCard key={idx} avatar={avatar1}></AvatarCard>
+                        )) : <Typography>No cuentas con avatars</Typography>}
                     </div>
                 </TabPanel>
 
