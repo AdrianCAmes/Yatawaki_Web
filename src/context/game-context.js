@@ -6,7 +6,10 @@ const GameContext = createContext({
     updateUser: null,
     username: '',
     updateUsername: null,
-    logout: null
+    logout: null,
+    instruments: [],
+    updateInstruments: null,
+    updateInstrumentsByIndex: null
 })
 
 export default GameContext;
@@ -14,10 +17,23 @@ export default GameContext;
 export const GameContextProvider = (props) => {
     const [userId, setUserId] = useState(0);
     const [username, setUsername] = useState('');
+    const [instruments, setInstruments] = useState([]);
 
     const updateUserId = (userIdRequest) => {
         setUserId(userIdRequest);
     };
+
+    const updateInstruments = (instrumentsR) => {
+        setInstruments(instrumentsR);
+    };
+
+    const updateInstrumentsByIndex = (intrumentR, idx) => {
+        let copyInstruments = [...instruments]; // copying the old datas array
+        copyInstruments[idx] = intrumentR;
+        setInstruments(copyInstruments);
+    };
+
+
 
     const updateUsername = (usernameRequest) => {
         setUsername(usernameRequest);
@@ -33,10 +49,10 @@ export const GameContextProvider = (props) => {
     useEffect(() => {
         if (localStorage.getItem('userId')) {
             setUserId(localStorage.getItem('userId'));
-        } 
+        }
         if (localStorage.getItem('username')) {
             setUsername(localStorage.getItem('username'));
-        }  
+        }
     }, []);
 
     useEffect(() => {
@@ -54,7 +70,10 @@ export const GameContextProvider = (props) => {
             updateUser: updateUserId,
             username: username,
             updateUsername: updateUsername,
-            logout: logout
+            logout: logout,
+            instruments: instruments,
+            updateInstruments: updateInstruments,
+            updateInstrumentsByIndex: updateInstrumentsByIndex
         }}>
             {props.children}
         </GameContext.Provider>
