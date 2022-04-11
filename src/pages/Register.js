@@ -1,5 +1,5 @@
 import { Box, Checkbox, CircularProgress, Divider, FormControlLabel, Grid, InputAdornment, Paper, TextField, Typography } from "@mui/material";
-import { Lock } from "@mui/icons-material";
+import { ArrowBackIosRounded, Lock } from "@mui/icons-material";
 import React from "react";
 import UserApi from "../apis/user-apis";
 import SnackBarContext from "../context/snack-bar-context";
@@ -123,10 +123,17 @@ const Register = () => {
         }
 
     }
+    const toSplashscreen = () => {
+        navigate('/')
+    };
 
     return (
         <React.Fragment>
             <Paper square={true} sx={{ backgroundColor: 'primary.light', height: '100%' }} elevation={0}>
+                <div className="hover" onClick={() => { toSplashscreen() }} style={{ display: 'flex', justifyContent: 'start', alignItems: 'center', margin:'20px', position:'absolute' }}>
+                    <ArrowBackIosRounded fontSize="medium" />
+                    <Typography fontWeight={600} fontSize={24} sx={{ marginLeft: '10px' }}>Atrás</Typography>
+                </div>
                 <Typography textAlign='center' className="title-font title-login" >REGISTRO</Typography>
 
                 <Grid container justifyContent='center' alignItems='center' height='60vh'>
@@ -142,8 +149,8 @@ const Register = () => {
                         {step === 1 ? (
                             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
 
-                                <div className="hover" style={{ width: '80%', height:'50px', display: 'flex', justifyContent: 'start', alignItems: 'center', backgroundColor:'#FFFFFF', borderRadius:'10px', border: '1px solid #C3D8EE' }}>
-                                    <img style={{ height: '35px', marginLeft:'10px' }} src={googleIcon} alt="google"/>
+                                <div className="hover" style={{ width: '80%', height: '50px', display: 'flex', justifyContent: 'start', alignItems: 'center', backgroundColor: '#FFFFFF', borderRadius: '10px', border: '1px solid #C3D8EE' }}>
+                                    <img style={{ height: '35px', marginLeft: '10px' }} src={googleIcon} alt="google" />
                                     <Typography marginLeft='20px' color='#757575'>Registrate con Google</Typography>
                                 </div>
 
@@ -161,6 +168,10 @@ const Register = () => {
 
                         {step === 2 ? (
                             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                                <div className="hover" onClick={() => { setStep(1) }} style={{ display: 'flex', justifyContent: 'start', alignItems: 'center', width: '80%' }}>
+                                    <ArrowBackIosRounded fontSize="small" />
+                                    <Typography fontWeight={600} fontSize={20} sx={{ marginLeft: '10px' }}>Regresar a datos personales</Typography>
+                                </div>
                                 <TextField error={nicknameError} placeholder="Ingresa tu usuario" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setNickname(event.target.value)}></TextField>
 
                                 <TextField sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} type="password" error={passwordError} label="Contraseña" onChange={(event) => setPassword(event.target.value)}
