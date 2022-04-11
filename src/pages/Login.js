@@ -1,5 +1,5 @@
 import { CircularProgress, Grid, InputAdornment, Paper, TextField, Typography } from "@mui/material";
-import { Lock } from "@mui/icons-material";
+import { ArrowBackIosRounded, Lock } from "@mui/icons-material";
 import React from "react";
 import SnackBarContext from "../context/snack-bar-context";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +19,10 @@ const Login = () => {
     const snackBarContext = React.useContext(SnackBarContext);
     const gameContext = React.useContext(GameContext);
     const navigate = useNavigate()
+
+    const toRegister = () => {
+        navigate('/register')
+    };
 
     const authenticate = async () => {
         setLoading(true);
@@ -41,15 +45,22 @@ const Login = () => {
             })
             .finally(() => setLoading(false))
     }
+    const toSplashscreen = () => {
+        navigate('/')
+    };
 
     return (
         <React.Fragment>
             <Paper square={true} sx={{ backgroundColor: 'primary.light', height: '100vh' }} elevation={0}>
+                <div className="hover" onClick={() => { toSplashscreen() }} style={{ display: 'flex', justifyContent: 'start', alignItems: 'center', margin: '20px', position: 'absolute' }}>
+                    <ArrowBackIosRounded fontSize="medium" />
+                    <Typography fontWeight={600} fontSize={24} sx={{ marginLeft: '10px' }}>Atrás</Typography>
+                </div>
                 <Typography textAlign='center' className="title-font title-login" >LOG IN</Typography>
 
                 <Grid container justifyContent='center' alignItems='center'>
                     <Grid item xs={5} >
-                        <Box sx={{justifyContent:'center', alignContent:'center', display:'flex', height:'400px'}}>
+                        <Box sx={{ justifyContent: 'center', alignContent: 'center', display: 'flex', height: '400px' }}>
                             <ImageAutoSlider></ImageAutoSlider>
                         </Box>
 
@@ -74,6 +85,10 @@ const Login = () => {
                         />
 
                         {loading && <CircularProgress />}
+                        <div className="hover" onClick={() => { toRegister() }} style={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
+                            <Typography fontWeight={600} fontSize={24} sx={{ marginTop: '10px' }}>{uniqueIdentifier == null || uniqueIdentifier == '' ? '¿Aún no estás registrado?' : '¿Olvidaste tu contraseña?'}</Typography>
+                        </div>
+
                         <Box className="hover" sx={buttonStyle} onClick={() => { authenticate() }}>
                             <Typography className="title-button"> Iniciar</Typography>
                         </Box>
