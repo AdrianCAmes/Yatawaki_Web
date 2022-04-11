@@ -200,7 +200,6 @@ const Perfil = () => {
                             <Grid item xs={5}>
                                 <Grid container>
                                     <DataTwoColumns sizeLabel={6} sizeValue={6} label='Monedas' value={profile ? profile.coinsOwned : '--'}></DataTwoColumns>
-                                    <DataTwoColumns sizeLabel={6} sizeValue={6} label='Notas' value={profile ? profile.notesOwned : '--'}></DataTwoColumns>
                                 </Grid>
                             </Grid>
                         </Grid>
