@@ -252,11 +252,11 @@
 
  /* Game Resume */
  .height-size {
-     font-size: 120px!important;
+     font-size: 9vw!important;
  }
 
  .height-size2 {
-     font-size: 70px!important;
+     font-size: 2.8vw!important;
  }
 
  @media only screen and (max-height: 800px) {
@@ -269,5 +269,15 @@
          font-size: 50px!important;
      }
  }
+
+ @media only screen and (max-width: 1300px) {
+    .height-size {
+        font-size: 11vw!important;
+    }
+   
+    .height-size2 {
+        font-size: 4vw!important;
+    }
+}
 
  /* end Game Resume */
