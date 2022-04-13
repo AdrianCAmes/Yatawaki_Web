@@ -36,12 +36,12 @@ const AppBarYatawaki = (props) => {
         <React.Fragment>
             <Box sx={{ height: '100px!important', padding: '20px' }}>
                 <Grid container justifyContent='space-between' alignItems='center' sx={{ height: '100%!important' }}>
-                    <Grid item xs={5}>
+                    <Grid item xs={6}>
                         <Typography className="title-font title-appbar">
                             YATAWAKI
                         </Typography>
                     </Grid>
-                    <Grid item xs={5}>
+                    <Grid item xs={4}>
                         <UserStats resume={props.resume}></UserStats>
                     </Grid>
                     <Grid item xs={2} align="center">

@@ -31,7 +31,7 @@ const UserStats = (props) => {
     return (
         <React.Fragment>
             <Grid container spacing={3} justifyContent='space-between' alignItems='center'>
-                <Grid item xs={4}>
+                <Grid item xs={6}>
                     <div style={{ backgroundColor: '#D8D8D8', borderRadius: '10px', height: '45px', width: '90%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingRight: '20px', paddingLeft: '4px' }}>
                         <div >
                             <Star style={{ color: '#4285F4', fontSize: "50px", marginTop: '35px' }}></Star>
@@ -39,19 +39,9 @@ const UserStats = (props) => {
                         </div>
                         <Typography style={{ fontSize: '30px', fontWeight: '600' }}> {props.resume ? props.resume.currentExperience : '-'}</Typography>
                         <div></div>
-
-
-
                     </div>
                 </Grid>
-                <Grid item xs={4}>
-                    <div style={{ backgroundColor: '#D8D8D8', borderRadius: '10px', height: '45px', width: '90%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingRight: '3px', paddingLeft: '4px' }}>
-                        <AddBox style={{ color: '#34A853', fontSize: "55px", marginLeft:'-15px' }}></AddBox>
-                        <Typography style={{ fontSize: '30px', fontWeight: '600' }}> {props.resume ? props.resume.notesOwned : '-'}</Typography>
-                        <img width='30px' src={solIcon} alt="clave" />
-                    </div>
-                </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={6}>
                     <div style={{ backgroundColor: '#D8D8D8', borderRadius: '10px', height: '45px', width: '90%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingRight: '3px', paddingLeft: '4px' }}>
                         <AddBox style={{ color: '#34A853', fontSize: "55px", marginLeft:'-15px' }}></AddBox>
                         <Typography style={{ fontSize: '30px', fontWeight: '600' }}> {props.resume ? props.resume.coinsOwned : '-'}</Typography>
