@@ -11,6 +11,7 @@ import YatawakiMenu from './pages/YatawakiMenu';
 import { GameContextProvider } from './context/game-context';
 import Perfil from './pages/Perfil';
 import Game from './pages/Game';
+import GameResume from './pages/GameResume';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route path="/menu" element={<YatawakiMenu />} />
               <Route path="/perfil" element={<Perfil />} />
               <Route path="/game" element={<Game />} />
+              <Route path="/game-resume" element={<GameResume />} />
 
             </Routes>
           </BrowserRouter>
