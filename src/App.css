@@ -231,21 +231,43 @@
 
  /* Perfil */
  .title-perfil {
-    font-size: 80px !important;
-    color: #FF5E5B;
-    text-align: center;
-    margin-top: 20px!important;
-    margin-bottom: 50px!important;
-}
+     font-size: 80px !important;
+     color: #FF5E5B;
+     text-align: center;
+     margin-top: 20px !important;
+     margin-bottom: 50px !important;
+ }
 
-.subtitle-perfil {
-    font-size: 30px !important;
-    color: #FF5E5B;
-}
+ .subtitle-perfil {
+     font-size: 30px !important;
+     color: #FF5E5B;
+ }
 
-.button-perfil {
-    font-size: 25px !important;
-    color: #FFF;
-}
+ .button-perfil {
+     font-size: 25px !important;
+     color: #FFF;
+ }
 
  /* end Perfil */
+
+ /* Game Resume */
+ .height-size {
+     font-size: 120px!important;
+ }
+
+ .height-size2 {
+     font-size: 70px!important;
+ }
+
+ @media only screen and (max-height: 800px) {
+     .height-size {
+         font-size: 100px!important;
+         line-height: 60px!important;
+     }
+
+     .height-size2 {
+         font-size: 50px!important;
+     }
+ }
+
+ /* end Game Resume */
