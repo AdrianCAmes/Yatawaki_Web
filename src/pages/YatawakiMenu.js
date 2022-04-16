@@ -42,7 +42,7 @@ const YatawakiMenu = () => {
             .then(response => {
                 setResume(response.data);
                 setSymphonies(response.data.symphonies);
-                gameContext.updateUser(response.data.id);
+                gameContext.updateUser(response.data.idUser);
             })
             .catch(err => {
                 console.log(err);
