@@ -1,7 +1,8 @@
 
 
-import { Avatar, Grid, Typography } from "@mui/material";
+import { Avatar, Box, Grid, Typography } from "@mui/material";
 import React from "react";
+import moneda from "../../assets/moneda.png";
 
 
 const SymphonyCard = (props) => {
@@ -61,8 +62,34 @@ const AchievementCard = (props) => {
     )
 }
 
+let buttonStyle = { width: '150px', height: '50px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '10px' };
+
+const ItemCard = (props) => {
+    return (
+        <React.Fragment>
+            <Grid container direction='column' alignItems='center' justifyContent='center' xs={5} sx={{ p: '20px', backgroundColor: '#D8D8D899', borderRadius: '15px', height:'300px' }}>
+                <Grid item>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <Avatar sx={{ height: '100px', width: '100px', border: '1px solid #777', padding: '1px' }} alt="avatar" src={`data:image/jpeg;base64,${props.item.icon}`} />
+                    </div>
+                </Grid>
+                <Grid item>
+                    <Typography align="center" style={{ fontSize: '16px', marginTop: '10px' }}>{props.item.description}</Typography>
+                </Grid>
+                <Grid item>
+                    <Box sx={buttonStyle}>
+                        <img src={moneda} height="35px" width="35px" />
+                        <Typography marginLeft="10px">{props.item ? props.item.coinsCost : '--'}</Typography>
+                    </Box>
+                </Grid>
+            </Grid>
+        </React.Fragment>
+    )
+}
+
 export {
     SymphonyCard,
     AvatarCard,
-    AchievementCard
+    AchievementCard,
+    ItemCard
 };

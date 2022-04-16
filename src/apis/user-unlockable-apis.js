@@ -9,7 +9,8 @@ const getHeaderToken = () =>  {
 
 const UserUnlockableApi = {
     findSymphoniesByUser: (userId) => apiInstance.get(`${uri}user/${userId}/symphonies`, getHeaderToken()),
-    findUserUnlockable: (userId) => apiInstance.get(`${uri}user/${userId}/filtered`, getHeaderToken())
+    findUserUnlockable: (userId) => apiInstance.get(`${uri}user/${userId}/filtered`, getHeaderToken()),
+    findUserMarket: (userId) => apiInstance.get(`${uri}user/${userId}/market`, getHeaderToken())
 }
 
 export default UserUnlockableApi;
