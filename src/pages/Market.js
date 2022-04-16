@@ -9,7 +9,7 @@ import GameContext from "../context/game-context";
 import SnackBarContext from "../context/snack-bar-context";
 import PropTypes from 'prop-types';
 import { Box } from "@mui/system";
-import { AchievementCard, AvatarCard, SymphonyCard } from "./components/ObjectCard";
+import { AchievementCard, AvatarCard, ItemCard, SymphonyCard } from "./components/ObjectCard";
 import styled from "@emotion/styled";
 
 function DataTwoColumns(props) {
@@ -94,7 +94,7 @@ const CustomTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }
     },
 }));
 
-const Perfil = () => {
+const Market = () => {
     const [value, setValue] = React.useState(0);
     const [loading, setLoading] = React.useState(true);
     const [profile, setProfile] = React.useState(null);
@@ -113,33 +113,18 @@ const Perfil = () => {
 
 
     const toHome = () => {
-        navigate('/menu')
-    };
-
-    const toMarket = () => {
-        navigate('/market')
+        navigate('/perfil')
     };
 
 
-    const getUser = async () => {
+    const getMarket = async () => {
         setLoading(true);
-        UserApi.getUserProfileById(gameContext.userId)
+        UserUnlockableApi.findUserMarket(gameContext.userId)
             .then(response => {
-                setProfile(response.data);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-            .finally(() => setLoading(false))
-    }
-
-    const getUserUnlockables = async () => {
-        setLoading(true);
-        UserUnlockableApi.findUserUnlockable(gameContext.userId)
-            .then(response => {
-                setSymphonies(response.data.symphonies);
-                setAvatars(response.data.avatars);
+                console.log(response.data);
                 setAchievements(response.data.achievements);
+                setAvatars(response.data.avatars);
+                setSymphonies(response.data.symphonies);
             })
             .catch(err => {
                 console.log(err);
@@ -148,10 +133,9 @@ const Perfil = () => {
     }
 
     React.useEffect(() => {
-        getUserUnlockables();
-        getUser();
+        getMarket();
 
-    }, [gameContext.userId]);
+    }, []);
 
 
     return (
@@ -163,53 +147,8 @@ const Perfil = () => {
                         <Typography fontWeight={600} fontSize={24} sx={{ marginLeft: '10px' }}>Atrás</Typography>
                     </div>
 
-                    <Typography className="title-font title-perfil">PERFIL DE JUGADOR</Typography>
+                    <Typography className="title-font title-perfil">TIENDA DE OBJECTOS</Typography>
 
-                    <Grid container>
-                        <Grid item xs={4} align="center">
-                            {/* src={profile ? `data:image/jpeg;base64,${profile.icon}` : avatar} */}
-                            <Avatar sx={{ height: '150px', width: '150px', border: '1px solid #777', padding: '1px' }} alt="avatar" src={profile ? `data:image/jpeg;base64,${profile.avatar.icon}` : null} />
-                            <Typography sx={{ marginTop: '15px', fontWeight: '600', fontSize: '23px' }}>{profile ? profile.avatar.name : '--'}</Typography>
-                        </Grid>
-                        <Grid item xs={8}>
-                            <Typography fontWeight={600} className="title-font subtitle-perfil" sx={{ marginBottom: '30px' }}>DATOS PERSONALES</Typography>
-                            <div style={{ width: '90%', backgroundColor: '#E8E8E0', borderRadius: '20px', padding: '30px' }}>
-                                <Grid container>
-                                    <DataTwoColumns label='Nombres' value={profile ? profile.firstname : '--'}></DataTwoColumns>
-                                    <DataTwoColumns label='Apellidos' value={profile ? profile.lastname : '--'}></DataTwoColumns>
-                                    <DataTwoColumns label='Correo' value={profile ? profile.mail : '--'}></DataTwoColumns>
-                                    <DataTwoColumns label='Nickname' value={profile ? profile.nickname : '--'}></DataTwoColumns>
-                                </Grid>
-                            </div>
-                        </Grid>
-                    </Grid>
-
-                    <div style={{ display: 'flex', justifyContent: 'end' }}>
-                        <Box className="hover" sx={buttonStyle}>
-                            <Typography className="button-perfil"> Editar</Typography>
-                        </Box>
-                    </div>
-
-                    <Typography fontWeight={600} className="title-font subtitle-perfil" sx={{ marginBottom: '30px' }}>ESTADÍSTICAS DEL JUGADOR</Typography>
-                    <div style={{ width: '90%', backgroundColor: '#E8E8E0', borderRadius: '20px', padding: '30px' }}>
-                        <Grid container>
-                            <Grid item xs={5}>
-                                <Grid container>
-                                    <DataTwoColumns sizeLabel={6} sizeValue={6} label='Rango' value={profile ? `${profile.userRank.rank.name} (${profile.userRank.rank.level})` : '--'}></DataTwoColumns>
-                                    <DataTwoColumns sizeLabel={6} sizeValue={6} label='Experiencia' value={profile ? profile.userRank.currentExperience : '--'}></DataTwoColumns>
-                                </Grid>
-                            </Grid>
-                            <div style={{ borderLeft: '1px solid lightgrey', height: '90px', mx: '10px', marginRight: '30px' }}></div>
-
-                            <Grid item xs={5}>
-                                <Grid container>
-                                    <DataTwoColumns sizeLabel={6} sizeValue={6} label='Monedas' value={profile ? profile.coinsOwned : '--'}></DataTwoColumns>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </div>
-
-                    <Typography fontWeight={600} className="title-font subtitle-perfil" sx={{ my: '30px' }}>OBJETOS DESBLOQUEADOS</Typography>
                     <CustomTabs value={value} onChange={handleChange} variant="scrollable" scrollButtons="auto"
                         sx={{
                             [`& .${tabsClasses.scrollButtons}`]: { '&.Mui-disabled': { opacity: 0.3 }, },
@@ -219,33 +158,26 @@ const Perfil = () => {
                         <CustomTab label="AVATARS" />
                     </CustomTabs>
                     <TabPanel value={value} index={0}>
-                        <div style={{ width: '90%', backgroundColor: '#E8E8E0', borderRadius: '20px', padding: '30px', display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap' }}>
+                        <div style={{ width: '100%', borderRadius: '20px', padding: '30px', display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap' }}>
                             {achievements.length > 0 ? achievements.map((achievement, idx) => (
-                                <AchievementCard key={idx} achievement={achievement}></AchievementCard>
+                                <ItemCard key={idx} item={achievement}></ItemCard>
                             )) : <Typography>No cuentas con logros</Typography>}
                         </div>
                     </TabPanel>
                     <TabPanel value={value} index={1}>
-                        <div style={{ width: '90%', backgroundColor: '#E8E8E0', borderRadius: '20px', padding: '30px', display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap' }}>
+                        <div style={{ width: '100%', borderRadius: '20px', padding: '30px', display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap' }}>
                             {symphonies.length > 0 ? symphonies.map((symphony, idx) => (
-                                <SymphonyCard key={idx} symphony={symphony}></SymphonyCard>
+                                <ItemCard key={idx} item={symphony}></ItemCard>
                             )) : <Typography>No cuentas con sinfonias</Typography>}
                         </div>
                     </TabPanel>
                     <TabPanel value={value} index={2}>
-                        <div style={{ width: '90%', backgroundColor: '#E8E8E0', borderRadius: '20px', padding: '30px', display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap' }}>
+                        <div style={{ width: '100%', borderRadius: '20px', padding: '30px', display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap' }}>
                             {avatars.length > 0 ? avatars.map((avatar1, idx) => (
-                                <AvatarCard key={idx} avatar={avatar1}></AvatarCard>
+                                <ItemCard key={idx} item={avatar1}></ItemCard>
                             )) : <Typography>No cuentas con avatars</Typography>}
                         </div>
                     </TabPanel>
-
-
-                    <div style={{ display: 'flex', justifyContent: 'end' }} onClick={() => {toMarket()}}>
-                        <Box className="hover" sx={buttonStyle}>
-                            <Typography className="button-perfil"> Ir a Tienda</Typography>
-                        </Box>
-                    </div>
 
 
                 </Paper>
@@ -256,4 +188,4 @@ const Perfil = () => {
 
 }
 
-export default Perfil;
+export default Market;

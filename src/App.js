@@ -12,6 +12,7 @@ import { GameContextProvider } from './context/game-context';
 import Perfil from './pages/Perfil';
 import Game from './pages/Game';
 import GameResume from './pages/GameResume';
+import Market from './pages/Market';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
               <Route path="/perfil" element={<Perfil />} />
               <Route path="/game" element={<Game />} />
               <Route path="/game-resume" element={<GameResume />} />
+              <Route path="/market" element={<Market />} />
 
             </Routes>
           </BrowserRouter>
