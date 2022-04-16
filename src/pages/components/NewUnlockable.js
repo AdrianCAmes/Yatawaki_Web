@@ -24,11 +24,11 @@ const NewUnlockable = (props) => {
             <Typography className="title-font height-size2" lineHeight='50px'>Has desbloqueado un objeto</Typography>
             <div style={{ height: '50vh', width: '50vw', marginTop: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
                 <img src={fondo} style={{ objectFit: 'contain', width: '100%', height: '100%' }} />
-                <img src={unlockable} style={{ position: 'absolute', maxHeight: '30vh', maxWidth: '20vh', height: '50%', width: '50%' }} />
+                <img src={props.unlockable ? `data:image/jpeg;base64,${props.unlockable.icon}` : null} style={{ position: 'absolute', maxHeight: '30vh', maxWidth: '20vh', height: '50%', width: '50%' }} />
             </div>
 
             <Box height='50px' width='50vw' style={{ borderRadius: '20px', backgroundColor: '#00CECB', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', marginTop: '30px' }}>
-                <Typography className="title-font" fontSize='40px'>Frederic Chopin Avatar</Typography>
+                <Typography className="title-font" fontSize='40px'>{props.unlockable ? props.unlockable.name : null}</Typography>
             </Box>
         </React.Fragment >
     )

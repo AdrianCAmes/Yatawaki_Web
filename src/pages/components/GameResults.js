@@ -61,27 +61,27 @@ const GameResults = (props) => {
                 <Grid item xs={6} padding="10px">
                     <Box height='50px' width='90%' style={buttonStyle}>
                         <Grid container justifyContent='center'>
-                            <DataTwoColumns label='Puntos' value='1250'></DataTwoColumns>
+                            <DataTwoColumns label='Puntos' value={props.results.points}></DataTwoColumns>
                         </Grid>
                     </Box>
                     <Box height='50px' width='90%' style={buttonStyle}>
                         <Grid container justifyContent='center'>
-                            <DataTwoColumns label='Gestos completados' value='16'></DataTwoColumns>
+                            <DataTwoColumns label='Gestos completados' value={props.results.gesturesCompleted}></DataTwoColumns>
                         </Grid>
                     </Box>
                     <Box height='50px' width='90%' style={buttonStyle}>
                         <Grid container justifyContent='center'>
-                            <DataTwoColumns label='Porcentaje de precisión' value='93%'></DataTwoColumns>
+                            <DataTwoColumns label='Porcentaje de precisión' value={`${props.results.accuracyRate}%`}></DataTwoColumns>
                         </Grid>
                     </Box>
                     <Box height='50px' width='90%' style={buttonStyle}>
                         <Grid container justifyContent='center'>
-                            <DataTwoColumns label='Monedas' value='+25'></DataTwoColumns>
+                            <DataTwoColumns label='Monedas' value={`+${props.results.gainedCoins}`}></DataTwoColumns>
                         </Grid>
                     </Box>
                     <Box height='50px' width='90%' style={buttonStyle}>
                         <Grid container justifyContent='center'>
-                            <DataTwoColumns label='Experiencia' value='+320'></DataTwoColumns>
+                            <DataTwoColumns label='Experiencia' value={`+${props.results.gainedExperience}`}></DataTwoColumns>
                         </Grid>
                     </Box>
                 </Grid>
