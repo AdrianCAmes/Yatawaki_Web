@@ -3,9 +3,10 @@
 import { ArrowBackIosRounded, ArrowForwardIosRounded, MusicNote, VolumeOff } from "@mui/icons-material";
 import { Avatar } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import * as Tone from "tone";
-import chopin from "../../assets/songs/Chopin - Nocturne op.9 No.2.mp3"
-import mozart from "../../assets/songs/mozart.mp3"
+import chopin from "../../assets/songs/Chopin - Nocturne op.9 No.2.mp3";
+import mozart from "../../assets/songs/mozart.mp3";
+
+let audios = [chopin, mozart];
 
 const SymphonySlider = (props) => {
     const [current, setCurrent] = useState(0);
@@ -14,7 +15,7 @@ const SymphonySlider = (props) => {
 
     props.passToParent(current);
 
-    const [audioElement, setAudioElement] = useState(new Audio(chopin));
+    const [audioElement, setAudioElement] = useState(new Audio(mozart));
 
 
 
@@ -27,14 +28,13 @@ const SymphonySlider = (props) => {
     }
     const nextSlide = () => {
         setCurrent(current === length - 1 ? 0 : current + 1);
-        setAudioElement(new Audio(mozart));
+        setAudioElement(new Audio(audios[current % 2]));
 
     }
 
     const prevSlide = () => {
         setCurrent(current === 0 ? length - 1 : current - 1);
-        setAudioElement(new Audio(mozart));
-
+        setAudioElement(new Audio(audios[current % 2]));
     }
 
     useEffect(() => {
