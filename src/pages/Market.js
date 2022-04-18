@@ -135,7 +135,7 @@ const Market = () => {
     React.useEffect(() => {
         getMarket();
 
-    }, []);
+    }, [gameContext.userId]);
 
 
     return (

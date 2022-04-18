@@ -13,6 +13,7 @@ import Perfil from './pages/Perfil';
 import Game from './pages/Game';
 import GameResume from './pages/GameResume';
 import Market from './pages/Market';
+import Prueba from './pages/Prueba';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
               <Route path="/game" element={<Game />} />
               <Route path="/game-resume" element={<GameResume />} />
               <Route path="/market" element={<Market />} />
+              <Route path="/prueba" element={<Prueba />} />
 
             </Routes>
           </BrowserRouter>
