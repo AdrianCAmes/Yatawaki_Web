@@ -14,7 +14,7 @@ const SymphonyCard = (props) => {
                 </Grid>
                 <Grid item>
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <img style={{ borderRadius: '10px', maxHeight: '160px', width: '160px', }} src={`data:image/jpeg;base64,${props.symphony.icon}`} alt="img" />
+                        <img style={{ borderRadius: '10px', maxHeight: '160px', width: '160px', }} src={props.symphony.icon} alt="img" />
                     </div>
                 </Grid>
                 <Grid item>
@@ -34,7 +34,7 @@ const AvatarCard = (props) => {
                 </Grid>
                 <Grid item>
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <Avatar sx={{ height: '100px', width: '100px', border: '1px solid #777', padding: '1px' }} alt="avatar" src={`data:image/jpeg;base64,${props.avatar.icon}`} />
+                        <Avatar sx={{ height: '100px', width: '100px', border: '1px solid #777', padding: '1px' }} alt="avatar" src={props.avatar.icon} />
                     </div>
                 </Grid>
                 <Grid item>
@@ -51,7 +51,7 @@ const AchievementCard = (props) => {
             <Grid container direction='column' alignItems='center' xs={3} sx={{ p: '20px' }}>
                 <Grid item>
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <Avatar sx={{ height: '100px', width: '100px', border: '1px solid #777', padding: '1px' }} alt="avatar" src={`data:image/jpeg;base64,${props.achievement.icon}`} />
+                        <Avatar sx={{ height: '100px', width: '100px', border: '1px solid #777', padding: '1px' }} alt="avatar" src={props.achievement.icon} />
                     </div>
                 </Grid>
                 <Grid item>
@@ -70,7 +70,7 @@ const ItemCard = (props) => {
             <Grid container direction='column' alignItems='center' justifyContent='center' xs={5} sx={{ p: '20px', backgroundColor: '#D8D8D899', borderRadius: '15px', height:'300px' }}>
                 <Grid item>
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <Avatar sx={{ height: '100px', width: '100px', border: '1px solid #777', padding: '1px' }} alt="avatar" src={`data:image/jpeg;base64,${props.item.icon}`} />
+                        <Avatar sx={{ height: '100px', width: '100px', border: '1px solid #777', padding: '1px' }} alt="avatar" src={props.item.icon} />
                     </div>
                 </Grid>
                 <Grid item>

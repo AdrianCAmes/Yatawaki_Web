@@ -3,10 +3,6 @@
 import { ArrowBackIosRounded, ArrowForwardIosRounded, MusicNote, VolumeOff } from "@mui/icons-material";
 import { Avatar } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import chopin from "../../assets/songs/Chopin - Nocturne op.9 No.2.mp3";
-import mozart from "../../assets/songs/mozart.mp3";
-
-let audios = [chopin, mozart];
 
 const SymphonySlider = (props) => {
     const [current, setCurrent] = useState(0);
@@ -15,11 +11,11 @@ const SymphonySlider = (props) => {
 
     props.passToParent(current);
 
-    const [audioElement, setAudioElement] = useState(new Audio(mozart));
-
+    const [audioElement, setAudioElement] = useState(new Audio());
 
 
     const playMusic = () => {
+        setAudioElement(new Audio(props.slides[current].previewTrack));
         setPlay(true);
     }
 
@@ -27,14 +23,14 @@ const SymphonySlider = (props) => {
         setPlay(false);
     }
     const nextSlide = () => {
+        setAudioElement(new Audio(props.slides[current === length - 1 ? 0 : current + 1].previewTrack));
         setCurrent(current === length - 1 ? 0 : current + 1);
-        setAudioElement(new Audio(audios[current % 2]));
 
     }
 
     const prevSlide = () => {
+        setAudioElement(new Audio(props.slides[current === 0 ? length - 1 : current - 1].previewTrack));
         setCurrent(current === 0 ? length - 1 : current - 1);
-        setAudioElement(new Audio(audios[current % 2]));
     }
 
     useEffect(() => {
@@ -53,7 +49,7 @@ const SymphonySlider = (props) => {
                 return (
                     <div className={index === current ? 'slide active' : 'slide'} key={index}>
 
-                        {index === current && (<img className="image hover" onClick={() => { props.selectSlider(current) }} src={`data:image/jpeg;base64,${slide.icon}`} alt="ha" />)}
+                        {index === current && (<img className="image hover" onClick={() => { props.selectSlider(current) }} src={slide.icon} alt="ha" />)}
                         {play ?
                             <Avatar className="hover" style={{ position: 'absolute', top: '10px', left: '10px' }}>
                                 <VolumeOff onClick={() => { pause() }} />
