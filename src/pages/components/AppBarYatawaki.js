@@ -46,7 +46,7 @@ const AppBarYatawaki = (props) => {
                     </Grid>
                     <Grid item xs={2} align="center">
                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                            <Avatar sx={{ height: '80px', width: '80px' }} alt="Remy Sharp" src={props.resume ? `data:image/jpeg;base64,${props.resume.icon}` : avatar} />
+                            <Avatar sx={{ height: '80px', width: '80px' }} alt="Remy Sharp" src={props.resume ? props.resume.icon : avatar} />
                         </IconButton>
                         <Menu
                             sx={{ mt: '45px' }}

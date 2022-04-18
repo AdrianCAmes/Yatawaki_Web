@@ -167,8 +167,7 @@ const Perfil = () => {
 
                     <Grid container>
                         <Grid item xs={4} align="center">
-                            {/* src={profile ? `data:image/jpeg;base64,${profile.icon}` : avatar} */}
-                            <Avatar sx={{ height: '150px', width: '150px', border: '1px solid #777', padding: '1px' }} alt="avatar" src={profile ? `data:image/jpeg;base64,${profile.avatar.icon}` : null} />
+                            <Avatar sx={{ height: '150px', width: '150px', border: '1px solid #777', padding: '1px' }} alt="avatar" src={profile ? profile.avatar.icon : null} />
                             <Typography sx={{ marginTop: '15px', fontWeight: '600', fontSize: '23px' }}>{profile ? profile.avatar.name : '--'}</Typography>
                         </Grid>
                         <Grid item xs={8}>
