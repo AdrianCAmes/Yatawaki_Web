@@ -18,6 +18,7 @@ import { AudioContextProvider } from './context/audio-context-controller';
 import Timer from './pages/Timer';
 import { PoseContextProvider } from './context/pose-controller';
 
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -37,6 +38,7 @@ function App() {
               <Route path="/prueba" element={<Prueba />} />
               <Route path="/timer-prueba" element={<Timer />} />
 
+              <Route path="/edit-perfil" element={<EditarPerfil />}/>
             </Routes>
           </BrowserRouter>
 

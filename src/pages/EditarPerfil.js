@@ -1,6 +1,6 @@
 
 import { ArrowBackIosRounded } from "@mui/icons-material";
-import { Avatar, CircularProgress, Grid, Paper, Tab, Tabs, tabsClasses, Typography } from "@mui/material";
+import { Avatar, CircularProgress, Grid, Paper, Tab, Tabs, tabsClasses, TextField, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import UserApi from "../apis/user-apis";
@@ -11,6 +11,8 @@ import PropTypes from 'prop-types';
 import { Box } from "@mui/system";
 import { AchievementCard, AvatarCard, SymphonyCard } from "./components/ObjectCard";
 import styled from "@emotion/styled";
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 function DataTwoColumns(props) {
     const label = props.label;
@@ -27,6 +29,13 @@ function DataTwoColumns(props) {
             </Grid>
         </React.Fragment>
     )
+}
+
+const Edit = () => {
+    const [nickname, setNickname] = React.useState(null);
+    const [firstname, setFirstname] = React.useState(null);
+    const [lastname, setLastname] = React.useState(null);
+    const [mail, setMail] = React.useState(null);
 }
 
 DataTwoColumns.propTypes = {
@@ -102,6 +111,11 @@ const Perfil = () => {
     const [avatars, setAvatars] = React.useState([]);
     const [symphonies, setSymphonies] = React.useState([]);
 
+    const [firstname, setFirstname] = React.useState('');
+    const [lastname, setLastname] = React.useState('');
+    const [mail, setMail] = React.useState('');
+    const [nickname, setNickname] = React.useState('');
+
     const navigate = useNavigate()
     const snackBarContext = React.useContext(SnackBarContext);
     const gameContext = React.useContext(GameContext);
@@ -116,13 +130,21 @@ const Perfil = () => {
         navigate('/menu')
     };
 
-    const toMarket = () => {
-        navigate('/market')
+    const toPerfil = () => {
+        navigate('/perfil')
     };
 
-    const toEditPerfil = () => {
-        navigate('/edit-perfil')
-    };
+
+    const updateUser = async () => {
+        console.log(gameContext.userId)
+        UserApi.updateuser(gameContext.userId, firstname, lastname, nickname, mail)
+        .then(response => {
+            console.log(response.data);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
 
     const getUser = async () => {
         setLoading(true);
@@ -166,29 +188,43 @@ const Perfil = () => {
                         <Typography fontWeight={600} fontSize={24} sx={{ marginLeft: '10px' }}>Atrás</Typography>
                     </div>
 
-                    <Typography className="title-font title-perfil">PERFIL DE JUGADOR</Typography>
+                    <Typography className="title-font title-perfil">EDITAR PERFIL DE JUGADOR</Typography>
 
                     <Grid container>
                         <Grid item xs={4} align="center">
-                            <Avatar sx={{ height: '150px', width: '150px', border: '1px solid #777', padding: '1px' }} alt="avatar" src={profile ? profile.avatar.icon : null} />
+                            {/* src={profile ? `data:image/jpeg;base64,${profile.icon}` : avatar} */}
+                            <Avatar sx={{ height: '150px', width: '150px', border: '1px solid #777', padding: '1px' }} alt="avatar" src={profile ? `data:image/jpeg;base64,${profile.avatar.icon}` : null} />
                             <Typography sx={{ marginTop: '15px', fontWeight: '600', fontSize: '23px' }}>{profile ? profile.avatar.name : '--'}</Typography>
                         </Grid>
                         <Grid item xs={8}>
                             <Typography fontWeight={600} className="title-font subtitle-perfil" sx={{ marginBottom: '30px' }}>DATOS PERSONALES</Typography>
                             <div style={{ width: '90%', backgroundColor: '#E8E8E0', borderRadius: '20px', padding: '30px' }}>
                                 <Grid container>
-                                    <DataTwoColumns label='Nombres' value={profile ? profile.firstname : '--'}></DataTwoColumns>
-                                    <DataTwoColumns label='Apellidos' value={profile ? profile.lastname : '--'}></DataTwoColumns>
-                                    <DataTwoColumns label='Correo' value={profile ? profile.mail : '--'}></DataTwoColumns>
-                                    <DataTwoColumns label='Nickname' value={profile ? profile.nickname : '--'}></DataTwoColumns>
+                                <TextField 
+                                onChange={(event) => setFirstname(event.target.value)}
+                                placeholder="Nombre..." sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} ></TextField>
+                                <TextField 
+                                onChange={(event) => setLastname(event.target.value)}
+                                placeholder="Apellido..." sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} ></TextField>
+                                <TextField 
+                                onChange={(event) => setMail(event.target.value)}
+                                placeholder="Correo..." sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }}></TextField>
+                                <TextField 
+                                onChange={(event) => setNickname(event.target.value)}
+                                placeholder="Nickname..." sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }}></TextField>
                                 </Grid>
                             </div>
                         </Grid>
                     </Grid>
 
                     <div style={{ display: 'flex', justifyContent: 'end' }}>
-                        <Box className="hover" onClick={() => { toEditPerfil() }}  sx={buttonStyle}>
-                            <Typography className="button-perfil"> Editar</Typography>
+                        <Box className="hover" sx={buttonStyle}>
+                            <button onClick={() => { updateUser() }}> 
+                                <Typography className="button-perfil"> Aceptar</Typography>
+                            </button>
+                        </Box>
+                        <Box className="hover"  onClick={() => { toPerfil() }}  sx={buttonStyle}>
+                            <Typography className="button-perfil"> Cancelar</Typography>
                         </Box>
                     </div>
 
@@ -243,7 +279,7 @@ const Perfil = () => {
                     </TabPanel>
 
 
-                    <div style={{ display: 'flex', justifyContent: 'end' }} onClick={() => {toMarket()}}>
+                    <div style={{ display: 'flex', justifyContent: 'end' }}>
                         <Box className="hover" sx={buttonStyle}>
                             <Typography className="button-perfil"> Ir a Tienda</Typography>
                         </Box>
