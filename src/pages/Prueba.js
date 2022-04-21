@@ -35,6 +35,9 @@ const Prueba = () => {
     const bajarVelocidad = () => {
         audioController.decreasePlaybackRate();
     }
+    const setBPM = () => {
+        audioController.setBPM(120);
+    }
 
     const setSongs = () => {
         let songs = [{ "name": "chopin", "url": chopin }, { "name": "mozart", "url": mozart }]
@@ -64,6 +67,9 @@ const Prueba = () => {
                 </Button>
                 <Button variant="contained" onClick={() => { bajarVelocidad() }}>
                     bajar velocidad
+                </Button>
+                <Button variant="contained" onClick={() => { setBPM() }}>
+                    SET BTM 120
                 </Button>
                 <Button variant="contained" onClick={() => { setSongs() }}>
                     canciones

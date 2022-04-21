@@ -8,7 +8,8 @@ const AudioContext = createContext({
     decreaseVolume: null,
     increasePlaybackRate: null,
     decreasePlaybackRate: null,
-    setSongs: null
+    setSongs: null,
+    setBPM: null
 
 })
 
@@ -17,24 +18,24 @@ export default AudioContext;
 export const AudioContextProvider = (props) => {
 
     const players = new Tone.Players().toDestination();
-    let songs_array = [];
+    let songsArray = [];
 
     players.volume.value = -10;
     players.playbackRate = 1;
+    const initialBpm = 100;
 
     const setSongs = (songs) => {
-        songs_array = songs;
+        songsArray = songs;
         for (let song of songs) {
             players.add(song.name, song.url);
         }
         console.log('added songs');
-
     }
 
     const start = () => {
 
         if (players.loaded) {
-            for (let song of songs_array) {
+            for (let song of songsArray) {
                 players.player(song.name).start();
             }
             console.log('started!');
@@ -60,12 +61,21 @@ export const AudioContextProvider = (props) => {
     }
 
     const increasePlaybackRate = () => {
-        for (let song of songs_array) {
+        for (let song of songsArray) {
             players.player(song.name).playbackRate = players.player(song.name).playbackRate + 0.5;
         }
     }
+
+    const setBPM = (bpm) => {
+        let newPlaybackRate = bpm / initialBpm;
+        console.log('newPlaybackRate: ' + newPlaybackRate.toString())
+        for (let song of songsArray) {
+            players.player(song.name).playbackRate = newPlaybackRate;
+        }
+    }
+
     const decreasePlaybackRate = () => {
-        for (let song of songs_array) {
+        for (let song of songsArray) {
             players.player(song.name).playbackRate = players.player(song.name).playbackRate - 0.5;
         }
     }
@@ -87,7 +97,8 @@ export const AudioContextProvider = (props) => {
             decreaseVolume: decreaseVolume,
             increasePlaybackRate: increasePlaybackRate,
             decreasePlaybackRate: decreasePlaybackRate,
-            setSongs: setSongs
+            setSongs: setSongs,
+            setBPM: setBPM
         }}>
             {props.children}
         </AudioContext.Provider>
