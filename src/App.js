@@ -14,6 +14,7 @@ import Game from './pages/Game';
 import GameResume from './pages/GameResume';
 import Market from './pages/Market';
 import Prueba from './pages/Prueba';
+import { AudioContextProvider } from './context/audio-context-controller';
 
 function App() {
   return (
@@ -31,7 +32,11 @@ function App() {
               <Route path="/game" element={<Game />} />
               <Route path="/game-resume" element={<GameResume />} />
               <Route path="/market" element={<Market />} />
-              <Route path="/prueba" element={<Prueba />} />
+              <Route path="/prueba" element={
+                <AudioContextProvider>
+                  <Prueba />
+                </AudioContextProvider>
+              } />
 
             </Routes>
           </BrowserRouter>

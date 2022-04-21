@@ -1,61 +1,46 @@
 import { Button, Paper } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as Tone from "tone";
 import chopin from "../assets/songs/Chopin - Nocturne op.9 No.2.mp3"
+import mozart from "../assets/songs/mozart.mp3"
+import AudioController from "../context/audio-context-controller";
 
 
 
 const Prueba = () => {
 
-    const buffer = new Tone.Buffer(chopin);
-    const player = new Tone.Player(buffer).toDestination();
-    player.volume.value = -10;
+    const audioController = React.useContext(AudioController);
+    const [started, setStarted] = useState(false);
 
-    //velocidad
-    player.playbackRate = 1;
-
-
-    //verificar si player.state == "stoped" para verficiar si la cancion ha terminado
-
-    //Agregar filtros
-    const pitchShift = new Tone.PitchShift(4).toDestination();
-    const filter = new Tone.Filter("E5").toDestination();
-
-    const start = () => {
-        player.start();
-        console.log(player.state);
-
+    const start = async () => {
+        await Tone.start();
+        audioController.start();
+        setStarted(true);
     }
+
     const stop = () => {
-        //player.stop("+0.5"); // stops the source 0.5 seconds from now
-        player.stop(); // stops the source 0.5 seconds from now
-        console.log(player.state);
+        audioController.stop();
+        setStarted(false);
     }
 
     const aumentarVolumen = () => {
-        player.volume.value = player.volume.value + 5;
+        audioController.increaseVolume();
     }
     const bajarVolumen = () => {
-        player.volume.value = player.volume.value - 5;
-        console.log(player.volume.value);
-
+        audioController.decreaseVolume();
     }
     const aumentarVelocidad = () => {
-        player.playbackRate = player.playbackRate + 0.5;
-
+        audioController.increasePlaybackRate();
     }
     const bajarVelocidad = () => {
-        player.playbackRate = player.playbackRate - 0.5;
-
-    }
-    const filters = () => {
-        //agregar filtros
-        player.fan(pitchShift);
+        audioController.decreasePlaybackRate();
     }
 
-    const checkTime = () => {
-        console.log(buffer.loaded);
+    const setSongs = () => {
+        let songs = [{ "name": "chopin", "url": chopin }, { "name": "mozart", "url": mozart }]
+        audioController.setSongs(songs);
     }
+
 
 
 
@@ -80,12 +65,12 @@ const Prueba = () => {
                 <Button variant="contained" onClick={() => { bajarVelocidad() }}>
                     bajar velocidad
                 </Button>
-                <Button variant="contained" onClick={() => { filters() }}>
-                    filters
+                <Button variant="contained" onClick={() => { setSongs() }}>
+                    canciones
                 </Button>
-                <Button variant="contained" onClick={() => { checkTime() }}>
-                    a
-                </Button>
+
+
+                {started ? 'activo' : 'pausa'}
 
 
             </Paper>
