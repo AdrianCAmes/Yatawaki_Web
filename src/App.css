@@ -252,32 +252,144 @@
 
  /* Game Resume */
  .height-size {
-     font-size: 9vw!important;
+     font-size: 9vw !important;
  }
 
  .height-size2 {
-     font-size: 2.8vw!important;
+     font-size: 2.8vw !important;
  }
 
  @media only screen and (max-height: 800px) {
      .height-size {
-         font-size: 100px!important;
-         line-height: 60px!important;
+         font-size: 100px !important;
+         line-height: 60px !important;
      }
 
      .height-size2 {
-         font-size: 50px!important;
+         font-size: 50px !important;
      }
  }
 
  @media only screen and (max-width: 1300px) {
-    .height-size {
-        font-size: 11vw!important;
+     .height-size {
+         font-size: 11vw !important;
+     }
+
+     .height-size2 {
+         font-size: 4vw !important;
+     }
+ }
+
+ /* end Game Resume */
+
+/* Game animation */
+
+.piano {
+    transform: rotate(0deg)
+}
+
+.pianoAnimation {
+    animation: fadePiano 3s infinite;
+}
+
+
+@keyframes fadePiano {
+    0% {
+        transform: rotate(0deg) scale(1)
     }
-   
-    .height-size2 {
-        font-size: 4vw!important;
+
+    40% {
+        transform: rotate(-5deg) scale(1.2)
+    }
+
+    60% {
+        transform: rotate(5deg) scale(1.2)
+    }
+
+    100% {
+        transform: rotate(0deg) scale(1)
     }
 }
 
- /* end Game Resume */
+.violin {
+    transform: rotate(70deg)
+}
+
+.violinAnimation {
+    animation: fadeViolin 1.5s infinite;
+}
+
+
+@keyframes fadeViolin {
+    0% {
+        transform: rotate(70deg) scale(1)
+    }
+
+    40% {
+        transform: rotate(80deg) scale(1.1)
+    }
+
+    60% {
+        transform: rotate(60deg) scale(1.1)
+    }
+
+    100% {
+        transform: rotate(70deg) scale(1)
+    }
+}
+
+.guitar {
+    transform: rotate(-20deg)
+}
+
+.guitarAnimation {
+    animation: fadeGuitar 1.5s infinite;
+}
+
+
+@keyframes fadeGuitar {
+    0% {
+        transform: rotate(-20deg) scale(1)
+    }
+
+    40% {
+        transform: rotate(-30deg) scale(1.1)
+    }
+
+    60% {
+        transform: rotate(-10deg) scale(1.1)
+    }
+
+    100% {
+        transform: rotate(-20deg) scale(1)
+    }
+}
+
+.chello {
+    transform: rotate(40deg)
+}
+
+.chelloAnimation {
+    animation: fadeChello 1.5s infinite;
+}
+
+
+@keyframes fadeChello {
+    0% {
+        transform: rotate(40deg) scale(1)
+    }
+
+    40% {
+        transform: rotate(50deg) scale(1.1)
+    }
+
+    60% {
+        transform: rotate(30deg) scale(1.1)
+    }
+
+    100% {
+        transform: rotate(40deg) scale(1)
+    }
+}
+
+/* end Game animations */

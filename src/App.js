@@ -29,14 +29,10 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/menu" element={<YatawakiMenu />} />
               <Route path="/perfil" element={<Perfil />} />
-              <Route path="/game" element={<Game />} />
+              <Route path="/game" element={<AudioContextProvider><Game /></AudioContextProvider>} />
               <Route path="/game-resume" element={<GameResume />} />
               <Route path="/market" element={<Market />} />
-              <Route path="/prueba" element={
-                <AudioContextProvider>
-                  <Prueba />
-                </AudioContextProvider>
-              } />
+              <Route path="/prueba" element={<Prueba />} />
 
             </Routes>
           </BrowserRouter>

@@ -6,6 +6,7 @@ import chello from '../assets/chello.png';
 import oboe from '../assets/oboe.png';
 import arpa from '../assets/arpa.png';
 import calibracion from '../assets/calibracion.png';
+import guitar from '../assets/guitar.png';
 import { PauseRounded } from "@mui/icons-material";
 import { Box } from "@mui/system";
 
@@ -24,49 +25,35 @@ const Game = () => {
         { "nombre": "Viola", "asset": viola },
         { "nombre": "Chello", "asset": chello },
         { "nombre": "Oboe", "asset": oboe },
+        { "nombre": "Guitar", "asset": guitar },
     ]
 
     const renderSwitch = (param) => {
         switch (param.nombre) {
             case 'Piano':
                 return <div>
-                    <img style={{ position: 'absolute', left: '16%', top: '44%', height: '170px', transform: 'rotate(-60deg)' }} src={param.asset} ></img>
+                    <img id="hola" style={{ position: 'absolute', left: '8%', top: '15%', height: '230px', }} src={param.asset} className="piano pianoAnimation" ></img>
                 </div>
-            case 'Harp':
+            case 'Guitar':
                 return <div>
-                    <img style={{ position: 'absolute', left: '20%', top: '28%', height: '160px', transform: 'rotate(-40deg)' }} src={param.asset} ></img>
-                </div>
-            case 'Oboe':
-                return <div>
-                    <img style={{ position: 'absolute', left: '42%', top: '18%', height: '100px', transform: 'rotate(-45deg)' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '52%', top: '18%', height: '100px', transform: 'rotate(-45deg)' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '47%', top: '18%', height: '100px', transform: 'rotate(-45deg)' }} src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '52%', top: '29%', height: '170px' }} className="guitar guitarAnimation" src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '62%', top: '10%', height: '170px' }} className="guitar guitarAnimation" src={param.asset} ></img>
                 </div>
             case 'Violin':
                 return <div>
-                    <img style={{ position: 'absolute', left: '26%', top: '56%', height: '130px', transform: 'rotate(60deg)' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '29%', top: '46%', height: '130px', transform: 'rotate(80deg)' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '35%', top: '38%', height: '130px', transform: 'rotate(100deg)' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '34%', top: '62%', height: '130px', transform: 'rotate(60deg)' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '36%', top: '55%', height: '130px', transform: 'rotate(80deg)' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '39%', top: '50%', height: '130px', transform: 'rotate(100deg)' }} src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '18%', top: '45%', height: '180px' }} className="violin violinAnimation" src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '25%', top: '30%', height: '180px' }} className="violin violinAnimation" src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '34%', top: '17%', height: '180px' }} className="violin violinAnimation" src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '28%', top: '60%', height: '180px' }} className="violin violinAnimation" src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '32%', top: '48%', height: '180px' }} className="violin violinAnimation" src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '39%', top: '36%', height: '180px' }} className="violin violinAnimation" src={param.asset} ></img>
                 </div>
-            case 'Viola':
-                return <div>
-                    <img style={{ position: 'absolute', left: '41%', top: '34%', height: '150px', transform: 'rotate(120deg)' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '44%', top: '45%', height: '150px', transform: 'rotate(120deg) ' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '47%', top: '32%', height: '150px', transform: 'rotate(130deg) ' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '50%', top: '45%', height: '150px', transform: 'rotate(140deg) ' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '53%', top: '34%', height: '150px', transform: 'rotate(140deg) ' }} src={param.asset} ></img>
-                </div>;
             case 'Chello':
                 return <div>
-                    <img style={{ position: 'absolute', left: '54%', top: '46%', height: '200px', transform: 'rotate(30deg)' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '58%', top: '56%', height: '200px', transform: 'rotate(45deg)' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '61%', top: '29%', height: '200px', transform: 'rotate(30deg)' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '69%', top: '41%', height: '200px', transform: 'rotate(45deg)' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '59%', top: '67%', height: '200px', transform: 'rotate(60deg)' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '73%', top: '56%', height: '200px', transform: 'rotate(60deg)' }} src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '58%', top: '43%', height: '220px' }} className="chello chelloAnimation" src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '62%', top: '60%', height: '220px' }} className="chello chelloAnimation" src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '70%', top: '20%', height: '220px' }} className="chello chelloAnimation" src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '75%', top: '43%', height: '220px' }} className="chello chelloAnimation" src={param.asset} ></img>
                 </div>;
             default:
                 return '';
@@ -75,7 +62,7 @@ const Game = () => {
 
     const URL = "https://teachablemachine.withgoogle.com/models/F6a7piIOE/";
     let model, webcam, ctx, labelContainer, maxPredictions;
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
     const [loading, setLoading] = React.useState(true);
 
     const init = async () => {
@@ -148,17 +135,17 @@ const Game = () => {
 
     return (
         <React.Fragment>
-            <Paper square={true} sx={{ backgroundColor: 'primary.light', height: '100%', width: '100%', padding:'20px' }}>
+            <Paper square={true} sx={{ backgroundColor: 'primary.light', height: '100%', width: '100%', padding: '10px' }} elevation={0}>
                 <Dialog PaperProps={{ style: { borderRadius: '50px', backgroundColor: '#FFED66', padding: '30px', display: 'flex', alignItems: 'center' } }} open={open} onClose={() => { setOpen(false) }} fullWidth maxWidth="lg">
 
-                    <div style={{ width: '100%', marginBottom:'20px' }}>
+                    <div style={{ width: '100%', marginBottom: '20px' }}>
                         <Typography fontWeight='600' fontSize="30px!important"> Calibra tu cuerpo con la cámara web:</Typography>
                     </div>
 
                     {loading ? <Box className="hover" sx={buttonStyle} onClick={() => { init() }}>
                         <Typography className="title-button" fontSize="30px!important" > Iniciar</Typography>
                     </Box> : ''}
-                    {loading && <CircularProgress style={{marginTop:'30px'}}></CircularProgress>}
+                    {loading && <CircularProgress style={{ marginTop: '30px' }}></CircularProgress>}
 
                     <canvas style={{ height: '300px!important', width: '300px!important' }} id="canvas"></canvas>
                     {!loading && <img style={{ position: 'absolute', height: '400px', width: '400px', top: '95px' }} src={calibracion} />}
