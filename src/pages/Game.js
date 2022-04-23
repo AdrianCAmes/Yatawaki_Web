@@ -1,5 +1,5 @@
 import { CircularProgress, Dialog, Paper, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import piano from '../assets/piano.png';
 import viola from '../assets/viola.png';
 import chello from '../assets/chello.png';
@@ -28,32 +28,38 @@ const Game = () => {
         { "nombre": "Guitar", "asset": guitar },
     ]
 
+    const [animatePiano, setAnimatePiano] = useState(true);
+    const [animateViolin, setAnimateViolin] = useState(true);
+    const [animateChello, setAnimateChello] = useState(true);
+    const [animateGuitar, setAnimateGuitar] = useState(true);
+
+
     const renderSwitch = (param) => {
         switch (param.nombre) {
             case 'Piano':
                 return <div>
-                    <img id="hola" style={{ position: 'absolute', left: '8%', top: '15%', height: '230px', }} src={param.asset} className="piano pianoAnimation" ></img>
+                    <img id="hola" style={{ position: 'absolute', left: '8%', top: '15%', height: '230px', }} src={param.asset} className={`piano ${animatePiano ? "pianoAnimation" : ""}`} ></img>
                 </div>
             case 'Guitar':
                 return <div>
-                    <img style={{ position: 'absolute', left: '52%', top: '29%', height: '170px' }} className="guitar guitarAnimation" src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '62%', top: '10%', height: '170px' }} className="guitar guitarAnimation" src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '52%', top: '29%', height: '170px' }} className={`guitar ${animateGuitar ? "guitarAnimation" : ""}`} src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '62%', top: '10%', height: '170px' }} className={`guitar ${animateGuitar ? "guitarAnimation" : ""}`} src={param.asset} ></img>
                 </div>
             case 'Violin':
                 return <div>
-                    <img style={{ position: 'absolute', left: '18%', top: '45%', height: '180px' }} className="violin violinAnimation" src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '25%', top: '30%', height: '180px' }} className="violin violinAnimation" src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '34%', top: '17%', height: '180px' }} className="violin violinAnimation" src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '28%', top: '60%', height: '180px' }} className="violin violinAnimation" src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '32%', top: '48%', height: '180px' }} className="violin violinAnimation" src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '39%', top: '36%', height: '180px' }} className="violin violinAnimation" src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '18%', top: '45%', height: '180px' }} className={`violin ${animateViolin ? "violinAnimation" : ""}`} src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '25%', top: '30%', height: '180px' }} className={`violin ${animateViolin ? "violinAnimation" : ""}`} src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '34%', top: '17%', height: '180px' }} className={`violin ${animateViolin ? "violinAnimation" : ""}`} src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '28%', top: '60%', height: '180px' }} className={`violin ${animateViolin ? "violinAnimation" : ""}`} src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '32%', top: '48%', height: '180px' }} className={`violin ${animateViolin ? "violinAnimation" : ""}`} src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '39%', top: '36%', height: '180px' }} className={`violin ${animateViolin ? "violinAnimation" : ""}`} src={param.asset} ></img>
                 </div>
             case 'Chello':
                 return <div>
-                    <img style={{ position: 'absolute', left: '58%', top: '43%', height: '220px' }} className="chello chelloAnimation" src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '62%', top: '60%', height: '220px' }} className="chello chelloAnimation" src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '70%', top: '20%', height: '220px' }} className="chello chelloAnimation" src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '75%', top: '43%', height: '220px' }} className="chello chelloAnimation" src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '58%', top: '43%', height: '220px' }} className={`chello ${animateChello ? "chelloAnimation" : ""}`} src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '62%', top: '60%', height: '220px' }} className={`chello ${animateChello ? "chelloAnimation" : ""}`} src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '70%', top: '20%', height: '220px' }} className={`chello ${animateChello ? "chelloAnimation" : ""}`} src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '75%', top: '43%', height: '220px' }} className={`chello ${animateChello ? "chelloAnimation" : ""}`} src={param.asset} ></img>
                 </div>;
             default:
                 return '';
@@ -61,8 +67,8 @@ const Game = () => {
     }
 
     const URL = "https://teachablemachine.withgoogle.com/models/F6a7piIOE/";
-    let model, webcam, ctx, labelContainer, maxPredictions;
-    const [open, setOpen] = React.useState(false);
+    let model, webcam, ctx, ctx2, labelContainer, maxPredictions;
+    const [open, setOpen] = React.useState(true);
     const [loading, setLoading] = React.useState(true);
 
     const init = async () => {
@@ -84,9 +90,12 @@ const Game = () => {
         window.requestAnimationFrame(loop);
 
         // append/get elements to the DOM
-        const canvas = document.getElementById("canvas");
-        canvas.width = size; canvas.height = size;
-        ctx = canvas.getContext("2d");
+        const canvas = document.getElementsByClassName("canvas");
+        console.log(canvas)
+        canvas[1].width = size; canvas[1].height = size;
+        canvas[0].width = 250; canvas[0].height = 250;
+        ctx = canvas[0].getContext("2d");
+        ctx2 = canvas[1].getContext("2d");
         labelContainer = document.getElementById("label-container");
         for (let i = 0; i < maxPredictions; i++) { // and class labels
             labelContainer.appendChild(document.createElement("div"));
@@ -121,11 +130,14 @@ const Game = () => {
     const drawPose = async (pose) => {
         if (webcam.canvas) {
             ctx.drawImage(webcam.canvas, 0, 0);
+            ctx2.drawImage(webcam.canvas, 0, 0);
             // draw the keypoints and skeleton
             if (pose) {
                 const minPartConfidence = 0.5;
                 tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx);
+                tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx2);
                 tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx);
+                tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx2);
             }
         }
     }
@@ -147,7 +159,7 @@ const Game = () => {
                     </Box> : ''}
                     {loading && <CircularProgress style={{ marginTop: '30px' }}></CircularProgress>}
 
-                    <canvas style={{ height: '300px!important', width: '300px!important' }} id="canvas"></canvas>
+                    <canvas style={{ height: '300px!important', width: '300px!important' }} className="canvas"></canvas>
                     {!loading && <img style={{ position: 'absolute', height: '400px', width: '400px', top: '95px' }} src={calibracion} />}
                     <div id="label-container"></div>
                     {!loading ? <Box className="hover" sx={buttonStyle} onClick={() => { setOpen(false) }}>
@@ -168,6 +180,7 @@ const Game = () => {
                 {instruments.map((instrument, idx) => (
                     <div>{renderSwitch(instrument)}</div>
                 ))}
+                <canvas style={{position:'absolute', left:'40%', top:'62%', borderRadius:'30px' }} className="canvas"></canvas>
             </Paper>
         </React.Fragment>
     )

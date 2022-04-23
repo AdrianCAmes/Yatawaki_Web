@@ -312,29 +312,29 @@
 }
 
 .violin {
-    transform: rotate(70deg)
+    transform: rotate(0deg) scaleX(-1)
 }
 
 .violinAnimation {
-    animation: fadeViolin 1.5s infinite;
+    animation: fadeViolin 1.8s infinite;
 }
 
 
 @keyframes fadeViolin {
     0% {
-        transform: rotate(70deg) scale(1)
+        transform: rotate(0deg) scale(1) scaleX(-1)
     }
 
     40% {
-        transform: rotate(80deg) scale(1.1)
+        transform: rotate(10deg) scale(1.1) scaleX(-1)
     }
 
     60% {
-        transform: rotate(60deg) scale(1.1)
+        transform: rotate(-10deg) scale(1.1) scaleX(-1)
     }
 
     100% {
-        transform: rotate(70deg) scale(1)
+        transform: rotate(0deg) scale(1) scaleX(-1)
     }
 }
 
@@ -343,7 +343,7 @@
 }
 
 .guitarAnimation {
-    animation: fadeGuitar 1.5s infinite;
+    animation: fadeGuitar 1.8s infinite;
 }
 
 
@@ -370,7 +370,7 @@
 }
 
 .chelloAnimation {
-    animation: fadeChello 1.5s infinite;
+    animation: fadeChello 1.8s infinite;
 }
 
 
