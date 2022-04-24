@@ -438,4 +438,22 @@
     }
 }
 
+
+
+.canvasAnimation {
+    animation: canvas 2s;
+}
+
+@keyframes canvas {
+    0% {
+        opacity: 0.5;
+        transform: scale(0)
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1)
+    }
+}
+
  /* end Game animations */

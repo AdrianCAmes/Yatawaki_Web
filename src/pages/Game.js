@@ -1,4 +1,4 @@
-import { CircularProgress, Dialog, Paper, Typography } from "@mui/material";
+import { CircularProgress, Dialog, LinearProgress, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
 import piano from '../assets/piano.png';
 import viola from '../assets/viola.png';
@@ -28,10 +28,10 @@ const Game = () => {
         { "nombre": "Guitar", "asset": guitar },
     ]
 
-    const [animatePiano, setAnimatePiano] = useState(true);
-    const [animateViolin, setAnimateViolin] = useState(true);
-    const [animateChello, setAnimateChello] = useState(true);
-    const [animateGuitar, setAnimateGuitar] = useState(true);
+    const [animatePiano, setAnimatePiano] = useState(false);
+    const [animateViolin, setAnimateViolin] = useState(false);
+    const [animateChello, setAnimateChello] = useState(false);
+    const [animateGuitar, setAnimateGuitar] = useState(false);
 
     const animateLeft = () => {
         setAnimateViolin(true);
@@ -52,6 +52,32 @@ const Game = () => {
         setAnimateGuitar(false);
         setAnimateChello(false);
     }
+
+    const startGame = () => {
+        setOpen(false);
+        animateLeft(true);
+        animateRight(true);
+        setTimerOn(true);
+    }
+
+    const [time, setTime] = useState(0);
+    const [timerOn, setTimerOn] = useState(false);
+    const [percentage, setPercentage] = useState(0);
+    const songDuration = 120; //segundos
+
+    React.useEffect(() => {
+        let interval = null;
+
+        if (timerOn) {
+            interval = setInterval(() => {
+                setTime((prevTime) => prevTime + 10);
+            }, 10);
+        } else if (!timerOn) {
+            clearInterval(interval);
+        }
+
+        return () => clearInterval(interval);
+    }, [timerOn]);
 
 
     const renderSwitch = (param) => {
@@ -182,29 +208,35 @@ const Game = () => {
                     <canvas style={{ height: '300px!important', width: '300px!important' }} className="canvas"></canvas>
                     {!loading && <img style={{ position: 'absolute', height: '400px', width: '400px', top: '95px' }} src={calibracion} />}
                     <div id="label-container"></div>
-                    {!loading ? <Box className="hover" sx={buttonStyle} onClick={() => { setOpen(false) }}>
+                    {!loading ? <Box className="hover" sx={buttonStyle} onClick={() => { startGame() }}>
                         <Typography className="title-button" fontSize="30px!important" > Realizado</Typography>
                     </Box> : ''}
                 </Dialog>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Typography fontWeight='600' fontSize='30px' style={{ flex: 1, display: 'flex' }}> Ahora tocando: Symphony No. 9</Typography>
-                    <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> 0% Completado</Typography>
+                    {/* <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {("0" + Math.floor((time / 60000) % 60)).slice(-2)}:{("0" + Math.floor((time / 1000) % 60)).slice(-2)}</Typography> */}
+                    {/* <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {Math.floor((time / 1000))}-</Typography> */}
+
+                    <Box sx={{ width: '30%' }}>
+                        <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {Math.round((Math.floor((time / 1000)) / songDuration) * 100)}%</Typography>
+
+                        <LinearProgress variant="determinate" value={(Math.floor((time / 1000)) / songDuration) * 100} style={{ height: '10px', borderRadius: 5 }} />
+                    </Box>
                     <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
                         <Box className="hover" style={{ backgroundColor: '#FF5E5B', borderRadius: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50px', width: '50px' }}>
                             <PauseRounded style={{ color: '#FFF', fontSize: '50px' }} />
                         </Box>
                     </div>
                 </div>
-                <div style={{ position: 'absolute', left: '50%', top: '50%', fontSize: '60px', lineHeight: '0px' }}>.</div>
                 {instruments.map((instrument, idx) => (
-                    <div>{renderSwitch(instrument)}</div>
+                    <div key={idx}>{renderSwitch(instrument)}</div>
                 ))}
-                <canvas style={{position:'absolute', left:'40%', top:'62%', borderRadius:'30px' }} className="canvas"></canvas>
-                <button style={{position:'absolute', left:'40%', top:'62%', borderRadius:'30px' }} onClick={() => { stopAnimationLeft()}}>stop left</button>
-                <button style={{position:'absolute', left:'40%', top:'66%', borderRadius:'30px' }} onClick={() => { animateLeft()}}>start Left</button>
-                <button style={{position:'absolute', left:'45%', top:'62%', borderRadius:'30px' }} onClick={() => { stopAnimationRight()}}>stop Right</button>
-                <button style={{position:'absolute', left:'45%', top:'66%', borderRadius:'30px' }} onClick={() => { animateRight()}}>start right</button>
+                <canvas style={{ position: 'absolute', left: '40%', top: '62%', borderRadius: '30px', visibility: !open ? 'visible': 'hidden' }} className={`canvas ${!open ? "canvasAnimation" : ""}`}></canvas>
+                <button style={{ position: 'absolute', left: '40%', top: '62%', borderRadius: '30px' }} onClick={() => { stopAnimationLeft() }}>stop left</button>
+                <button style={{ position: 'absolute', left: '40%', top: '66%', borderRadius: '30px' }} onClick={() => { animateLeft() }}>start Left</button>
+                <button style={{ position: 'absolute', left: '45%', top: '62%', borderRadius: '30px' }} onClick={() => { stopAnimationRight() }}>stop Right</button>
+                <button style={{ position: 'absolute', left: '45%', top: '66%', borderRadius: '30px' }} onClick={() => { animateRight() }}>start right</button>
 
             </Paper>
         </React.Fragment>
