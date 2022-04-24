@@ -9,8 +9,8 @@ const AudioContext = createContext({
     increasePlaybackRate: null,
     decreasePlaybackRate: null,
     setSongs: null,
-    setBPM: null
-
+    setBPM: null,
+    setInitialBpm: null
 })
 
 export default AudioContext;
@@ -22,14 +22,19 @@ export const AudioContextProvider = (props) => {
 
     players.volume.value = -10;
     players.playbackRate = 1;
-    const initialBpm = 100;
+    let initialBpm = 100;
 
     const setSongs = (songs) => {
         songsArray = songs;
         for (let song of songs) {
-            players.add(song.name, song.url);
+            players.add(song.name, song.audio);
         }
         console.log('added songs');
+    }
+
+    const setInitialBpm = (bpm) => {
+        initialBpm = bpm;
+        console.log(initialBpm, 'initial BPM seted')
     }
 
     const start = () => {
@@ -60,9 +65,45 @@ export const AudioContextProvider = (props) => {
         players.volume.value = players.volume.value - 5;
     }
 
+    const increaseVolumeRight = () => {
+        for (let song of songsArray) {
+           if (song.position === "R") {
+                players.player(song.name).volume.value = players.player(song.name).volume.value + 5
+           }
+        }
+    }
+    const decreaseVolumeRight = () => {
+        for (let song of songsArray) {
+           if (song.position === "R") {
+                players.player(song.name).volume.value = players.player(song.name).volume.value - 5
+           }
+        }
+    }
+
+    const increaseVolumeLeft = () => {
+        for (let song of songsArray) {
+           if (song.position === "L") {
+                players.player(song.name).volume.value = players.player(song.name).volume.value + 5
+           }
+        }
+    }
+    const decreaseVolumeLeft = () => {
+        for (let song of songsArray) {
+           if (song.position === "L") {
+                players.player(song.name).volume.value = players.player(song.name).volume.value - 5
+           }
+        }
+    }
+
     const increasePlaybackRate = () => {
         for (let song of songsArray) {
             players.player(song.name).playbackRate = players.player(song.name).playbackRate + 0.5;
+        }
+    }
+
+    const decreasePlaybackRate = () => {
+        for (let song of songsArray) {
+            players.player(song.name).playbackRate = players.player(song.name).playbackRate - 0.5;
         }
     }
 
@@ -74,11 +115,6 @@ export const AudioContextProvider = (props) => {
         }
     }
 
-    const decreasePlaybackRate = () => {
-        for (let song of songsArray) {
-            players.player(song.name).playbackRate = players.player(song.name).playbackRate - 0.5;
-        }
-    }
 
     //Agregar filtros
     const pitchShift = new Tone.PitchShift(4).toDestination();
@@ -98,7 +134,8 @@ export const AudioContextProvider = (props) => {
             increasePlaybackRate: increasePlaybackRate,
             decreasePlaybackRate: decreasePlaybackRate,
             setSongs: setSongs,
-            setBPM: setBPM
+            setBPM: setBPM,
+            setInitialBpm: setInitialBpm,
         }}>
             {props.children}
         </AudioContext.Provider>
