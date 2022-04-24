@@ -12,11 +12,14 @@ import { Box } from "@mui/system";
 
 import '@tensorflow/tfjs'
 import * as tmPose from '@teachablemachine/pose'
+import { useNavigate } from "react-router-dom";
 
 let buttonStyle = { width: '150px', height: '50px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '20px' };
 
 
 const Game = () => {
+    const navigate = useNavigate()
+
 
     let instruments = [
         { "nombre": "Piano", "asset": piano },
@@ -27,6 +30,11 @@ const Game = () => {
         { "nombre": "Oboe", "asset": oboe },
         { "nombre": "Guitar", "asset": guitar },
     ]
+
+
+    const toRegister = () => {
+        navigate('/login')
+    };
 
     const [animatePiano, setAnimatePiano] = useState(false);
     const [animateViolin, setAnimateViolin] = useState(false);
@@ -55,29 +63,43 @@ const Game = () => {
 
     const startGame = () => {
         setOpen(false);
-        animateLeft(true);
-        animateRight(true);
+        animateLeft();
+        animateRight();
         setTimerOn(true);
     }
 
     const [time, setTime] = useState(0);
-    const [timerOn, setTimerOn] = useState(false);
-    const [percentage, setPercentage] = useState(0);
+    const [timerOn, setTimerOn] = useState(true);
     const songDuration = 120; //segundos
+    const initialBPM = 120; //bpm
+    const [speed, setSpeed] = useState(10);
+
+    const changeSpeed = (newBpm) => {
+        setSpeed((newBpm * 10) / initialBPM)
+        console.log((newBpm * 10) / initialBPM)
+    }
 
     React.useEffect(() => {
         let interval = null;
 
         if (timerOn) {
+            //default speed = 10
             interval = setInterval(() => {
-                setTime((prevTime) => prevTime + 10);
+                setTime((prevTime) => prevTime + speed);
             }, 10);
         } else if (!timerOn) {
             clearInterval(interval);
         }
 
         return () => clearInterval(interval);
-    }, [timerOn]);
+    }, [timerOn, speed]);
+
+    // Cuando termine el juego dirigir a resumen
+    // React.useEffect(() => {
+    //     if (Math.round((Math.floor((time / 1000)) / songDuration) * 100) > 100) {
+    //         toRegister()
+    //     }
+    // }, [time]);
 
 
     const renderSwitch = (param) => {
@@ -215,12 +237,13 @@ const Game = () => {
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Typography fontWeight='600' fontSize='30px' style={{ flex: 1, display: 'flex' }}> Ahora tocando: Symphony No. 9</Typography>
-                    {/* <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {("0" + Math.floor((time / 60000) % 60)).slice(-2)}:{("0" + Math.floor((time / 1000) % 60)).slice(-2)}</Typography> */}
-                    {/* <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {Math.floor((time / 1000))}-</Typography> */}
+
 
                     <Box sx={{ width: '30%' }}>
                         <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {Math.round((Math.floor((time / 1000)) / songDuration) * 100)}%</Typography>
-
+                        {/* <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {("0" + Math.floor((time / 60000) % 60)).slice(-2)}:{("0" + Math.floor((time / 1000) % 60)).slice(-2)}</Typography> */}
+                        {/* <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {Math.floor((time / 1000))}-</Typography> */}
+                        {/* <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {Math.floor((time / 1000))} segundos</Typography> */}
                         <LinearProgress variant="determinate" value={(Math.floor((time / 1000)) / songDuration) * 100} style={{ height: '10px', borderRadius: 5 }} />
                     </Box>
                     <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
@@ -232,11 +255,14 @@ const Game = () => {
                 {instruments.map((instrument, idx) => (
                     <div key={idx}>{renderSwitch(instrument)}</div>
                 ))}
-                <canvas style={{ position: 'absolute', left: '40%', top: '62%', borderRadius: '30px', visibility: !open ? 'visible': 'hidden' }} className={`canvas ${!open ? "canvasAnimation" : ""}`}></canvas>
+                <canvas style={{ position: 'absolute', left: '40%', top: '62%', borderRadius: '30px', visibility: !open ? 'visible' : 'hidden' }} className={`canvas ${!open ? "canvasAnimation" : ""}`}></canvas>
                 <button style={{ position: 'absolute', left: '40%', top: '62%', borderRadius: '30px' }} onClick={() => { stopAnimationLeft() }}>stop left</button>
                 <button style={{ position: 'absolute', left: '40%', top: '66%', borderRadius: '30px' }} onClick={() => { animateLeft() }}>start Left</button>
                 <button style={{ position: 'absolute', left: '45%', top: '62%', borderRadius: '30px' }} onClick={() => { stopAnimationRight() }}>stop Right</button>
                 <button style={{ position: 'absolute', left: '45%', top: '66%', borderRadius: '30px' }} onClick={() => { animateRight() }}>start right</button>
+                <button style={{ position: 'absolute', left: '50%', top: '66%', borderRadius: '30px' }} onClick={() => { changeSpeed(200) }}>hightBPM</button>
+                <button style={{ position: 'absolute', left: '50%', top: '62%', borderRadius: '30px' }} onClick={() => { changeSpeed(initialBPM) }}>restartBPM</button>
+                <button style={{ position: 'absolute', left: '50%', top: '70%', borderRadius: '30px' }} onClick={() => { changeSpeed(80) }}>lowBPM</button>
 
             </Paper>
         </React.Fragment>
