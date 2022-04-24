@@ -33,6 +33,26 @@ const Game = () => {
     const [animateChello, setAnimateChello] = useState(true);
     const [animateGuitar, setAnimateGuitar] = useState(true);
 
+    const animateLeft = () => {
+        setAnimateViolin(true);
+        setAnimatePiano(true);
+    }
+
+    const animateRight = () => {
+        setAnimateGuitar(true);
+        setAnimateChello(true);
+    }
+
+    const stopAnimationLeft = () => {
+        setAnimateViolin(false);
+        setAnimatePiano(false);
+    }
+
+    const stopAnimationRight = () => {
+        setAnimateGuitar(false);
+        setAnimateChello(false);
+    }
+
 
     const renderSwitch = (param) => {
         switch (param.nombre) {
@@ -181,6 +201,11 @@ const Game = () => {
                     <div>{renderSwitch(instrument)}</div>
                 ))}
                 <canvas style={{position:'absolute', left:'40%', top:'62%', borderRadius:'30px' }} className="canvas"></canvas>
+                <button style={{position:'absolute', left:'40%', top:'62%', borderRadius:'30px' }} onClick={() => { stopAnimationLeft()}}>stop left</button>
+                <button style={{position:'absolute', left:'40%', top:'66%', borderRadius:'30px' }} onClick={() => { animateLeft()}}>start Left</button>
+                <button style={{position:'absolute', left:'45%', top:'62%', borderRadius:'30px' }} onClick={() => { stopAnimationRight()}}>stop Right</button>
+                <button style={{position:'absolute', left:'45%', top:'66%', borderRadius:'30px' }} onClick={() => { animateRight()}}>start right</button>
+
             </Paper>
         </React.Fragment>
     )
