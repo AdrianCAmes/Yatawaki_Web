@@ -252,32 +252,208 @@
 
  /* Game Resume */
  .height-size {
-     font-size: 9vw!important;
+     font-size: 9vw !important;
  }
 
  .height-size2 {
-     font-size: 2.8vw!important;
+     font-size: 2.8vw !important;
  }
 
  @media only screen and (max-height: 800px) {
      .height-size {
-         font-size: 100px!important;
-         line-height: 60px!important;
+         font-size: 100px !important;
+         line-height: 60px !important;
      }
 
      .height-size2 {
-         font-size: 50px!important;
+         font-size: 50px !important;
      }
  }
 
  @media only screen and (max-width: 1300px) {
-    .height-size {
-        font-size: 11vw!important;
+     .height-size {
+         font-size: 11vw !important;
+     }
+
+     .height-size2 {
+         font-size: 4vw !important;
+     }
+ }
+
+ /* end Game Resume */
+
+ /* Game animation */
+
+ .piano {
+     transform: rotate(0deg);
+     animation: fadePiano2 1s;
+ }
+
+ .pianoAnimation {
+     animation: fadePiano 3s infinite;
+ }
+
+
+ @keyframes fadePiano {
+     0% {
+         transform: rotate(0deg) scale(1)
+     }
+
+     40% {
+         transform: rotate(-5deg) scale(1.2)
+     }
+
+     60% {
+         transform: rotate(5deg) scale(1.2)
+     }
+
+     100% {
+         transform: rotate(0deg) scale(1)
+     }
+ }
+
+ @keyframes fadePiano2 {
+     from {
+         transform: rotate(-5deg) scale(1.2)
+     }
+
+     to {
+         transform: rotate(0deg) scale(1)
+     }
+ }
+
+ .violin {
+     transform: rotate(0deg) scaleX(-1);
+     animation: fadeViolin2 1s;
+
+ }
+
+ .violinAnimation {
+     animation: fadeViolin 1.8s infinite;
+ }
+
+
+ @keyframes fadeViolin {
+     0% {
+         transform: rotate(0deg) scale(1) scaleX(-1)
+     }
+
+     40% {
+         transform: rotate(10deg) scale(1.1) scaleX(-1)
+     }
+
+     60% {
+         transform: rotate(-10deg) scale(1.1) scaleX(-1)
+     }
+
+     100% {
+         transform: rotate(0deg) scale(1) scaleX(-1)
+     }
+ }
+
+ @keyframes fadeViolin2 {
+     from {
+         transform: rotate(5deg) scale(1.2) scaleX(-1)
+     }
+
+     to {
+         transform: rotate(0deg) scale(1) scaleX(-1)
+     }
+ }
+
+ .guitar {
+     transform: rotate(-20deg);
+     animation: fadeGuitar2 1s;
+
+ }
+
+ .guitarAnimation {
+     animation: fadeGuitar 1.8s infinite;
+ }
+
+
+ @keyframes fadeGuitar {
+     0% {
+         transform: rotate(-20deg) scale(1)
+     }
+
+     40% {
+         transform: rotate(-30deg) scale(1.1)
+     }
+
+     60% {
+         transform: rotate(-10deg) scale(1.1)
+     }
+
+     100% {
+         transform: rotate(-20deg) scale(1)
+     }
+ }
+
+ @keyframes fadeGuitar2 {
+    from {
+        transform: rotate(-25deg) scale(1.1);
     }
-   
-    .height-size2 {
-        font-size: 4vw!important;
+
+    to {
+        transform: rotate(-20deg) scale(1);
     }
 }
 
- /* end Game Resume */
+ .chello {
+     transform: rotate(40deg);
+     animation: fadeChello2 1s;
+ }
+
+ .chelloAnimation {
+     animation: fadeChello 1.8s infinite;
+ }
+
+
+ @keyframes fadeChello {
+     0% {
+         transform: rotate(40deg) scale(1)
+     }
+
+     40% {
+         transform: rotate(50deg) scale(1.1)
+     }
+
+     60% {
+         transform: rotate(30deg) scale(1.1)
+     }
+
+     100% {
+         transform: rotate(40deg) scale(1)
+     }
+ }
+
+ @keyframes fadeChello2 {
+    from {
+        transform: rotate(45deg) scale(1);
+    }
+
+    to {
+        transform: rotate(40deg) scale(1);
+    }
+}
+
+
+
+.canvasAnimation {
+    animation: canvas 2s;
+}
+
+@keyframes canvas {
+    0% {
+        opacity: 0.5;
+        transform: scale(0)
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1)
+    }
+}
+
+ /* end Game animations */

@@ -1,80 +1,158 @@
-import { CircularProgress, Dialog, Paper, Typography } from "@mui/material";
-import React from "react";
+import { CircularProgress, Dialog, LinearProgress, Paper, Typography } from "@mui/material";
+import React, { useState } from "react";
 import piano from '../assets/piano.png';
 import viola from '../assets/viola.png';
 import chello from '../assets/chello.png';
 import oboe from '../assets/oboe.png';
 import arpa from '../assets/arpa.png';
 import calibracion from '../assets/calibracion.png';
+import guitar from '../assets/guitar.png';
 import { PauseRounded } from "@mui/icons-material";
 import { Box } from "@mui/system";
-
+import chopin from "../assets/songs/Chopin - Nocturne op.9 No.2.mp3"
+import mozart from "../assets/songs/mozart.mp3"
 import '@tensorflow/tfjs'
 import * as tmPose from '@teachablemachine/pose'
+import { useNavigate } from "react-router-dom";
+import AudioController from "../context/audio-context-controller";
 
 let buttonStyle = { width: '150px', height: '50px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '20px' };
 
 
 const Game = () => {
+    const navigate = useNavigate();
+    const audioController = React.useContext(AudioController);
 
-    let instruments = [
-        { "nombre": "Piano", "asset": piano },
-        { "nombre": "Harp", "asset": arpa },
-        { "nombre": "Violin", "asset": viola },
-        { "nombre": "Viola", "asset": viola },
-        { "nombre": "Chello", "asset": chello },
-        { "nombre": "Oboe", "asset": oboe },
-    ]
+
+    let response = {
+        "name": "Symphony n9",
+        "initialBpm": 120,
+        "songDuration": 120,
+        "instruments": [
+            { "name": "Piano", "image": piano, "position": "L", "audio": chopin },
+            { "name": "Violin", "image": viola, "position": "L", "audio": chopin },
+            { "name": "Chello", "image": chello, "position": "R", "audio": mozart },
+            { "name": "Guitar", "image": guitar, "position": "R", "audio": mozart },
+        ]
+    }
+
+    //progreso de la cancion
+    const [time, setTime] = useState(0);
+    const [timerOn, setTimerOn] = useState(false);
+    const songDuration = 120; //segundos
+    const initialBPM = 120; //bpm
+    const [speed, setSpeed] = useState(10);
+
+    //estados de animaciones
+    const [animatePiano, setAnimatePiano] = useState(false);
+    const [animateViolin, setAnimateViolin] = useState(false);
+    const [animateChello, setAnimateChello] = useState(false);
+    const [animateGuitar, setAnimateGuitar] = useState(false);
+
+    const animateLeft = () => {
+        setAnimateViolin(true);
+        setAnimatePiano(true);
+    }
+
+    const animateRight = () => {
+        setAnimateGuitar(true);
+        setAnimateChello(true);
+    }
+
+    const stopAnimationLeft = () => {
+        setAnimateViolin(false);
+        setAnimatePiano(false);
+    }
+
+    const stopAnimationRight = () => {
+        setAnimateGuitar(false);
+        setAnimateChello(false);
+    }
+
+    const toRegister = () => {
+        navigate('/login')
+    };
+
+    const startGame = () => {
+        setOpen(false);
+        animateLeft();
+        animateRight();
+        setTimerOn(true);
+        audioController.start();
+    }
+
+    const setVariablesGame = () => {
+        console.log("empezando el juego...");
+        audioController.setSongs(response.instruments);
+        audioController.setInitialBpm(response.initialBpm);
+    }
+
+    const changeSpeed = (newBpm) => {
+        setSpeed((newBpm * 10) / initialBPM);
+        audioController.setBPM(newBpm);
+        console.log((newBpm * 10) / initialBPM)
+    }
+
+    React.useEffect(() => {
+        let interval = null;
+
+        if (timerOn) {
+            //default speed = 10
+            interval = setInterval(() => {
+                setTime((prevTime) => prevTime + speed);
+            }, 10);
+        } else if (!timerOn) {
+            clearInterval(interval);
+        }
+
+        return () => clearInterval(interval);
+    }, [timerOn, speed]);
+
+
+    // Cuando el porcentaje sea 100%, dirigir a resumen
+    // React.useEffect(() => {
+    //     if (Math.round((Math.floor((time / 1000)) / songDuration) * 100) > 100) {
+    //         toRegister()
+    //     }
+    // }, [time]);
+
 
     const renderSwitch = (param) => {
-        switch (param.nombre) {
+        switch (param.name) {
             case 'Piano':
                 return <div>
-                    <img style={{ position: 'absolute', left: '16%', top: '44%', height: '170px', transform: 'rotate(-60deg)' }} src={param.asset} ></img>
+                    <img id="hola" style={{ position: 'absolute', left: '8%', top: '15%', height: '230px', }} src={param.image} className={`piano ${animatePiano ? "pianoAnimation" : ""}`} ></img>
                 </div>
-            case 'Harp':
+            case 'Guitar':
                 return <div>
-                    <img style={{ position: 'absolute', left: '20%', top: '28%', height: '160px', transform: 'rotate(-40deg)' }} src={param.asset} ></img>
-                </div>
-            case 'Oboe':
-                return <div>
-                    <img style={{ position: 'absolute', left: '42%', top: '18%', height: '100px', transform: 'rotate(-45deg)' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '52%', top: '18%', height: '100px', transform: 'rotate(-45deg)' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '47%', top: '18%', height: '100px', transform: 'rotate(-45deg)' }} src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '52%', top: '29%', height: '170px' }} className={`guitar ${animateGuitar ? "guitarAnimation" : ""}`} src={param.image} ></img>
+                    <img style={{ position: 'absolute', left: '62%', top: '10%', height: '170px' }} className={`guitar ${animateGuitar ? "guitarAnimation" : ""}`} src={param.image} ></img>
                 </div>
             case 'Violin':
                 return <div>
-                    <img style={{ position: 'absolute', left: '26%', top: '56%', height: '130px', transform: 'rotate(60deg)' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '29%', top: '46%', height: '130px', transform: 'rotate(80deg)' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '35%', top: '38%', height: '130px', transform: 'rotate(100deg)' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '34%', top: '62%', height: '130px', transform: 'rotate(60deg)' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '36%', top: '55%', height: '130px', transform: 'rotate(80deg)' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '39%', top: '50%', height: '130px', transform: 'rotate(100deg)' }} src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '18%', top: '45%', height: '180px' }} className={`violin ${animateViolin ? "violinAnimation" : ""}`} src={param.image} ></img>
+                    <img style={{ position: 'absolute', left: '25%', top: '30%', height: '180px' }} className={`violin ${animateViolin ? "violinAnimation" : ""}`} src={param.image} ></img>
+                    <img style={{ position: 'absolute', left: '34%', top: '17%', height: '180px' }} className={`violin ${animateViolin ? "violinAnimation" : ""}`} src={param.image} ></img>
+                    <img style={{ position: 'absolute', left: '28%', top: '60%', height: '180px' }} className={`violin ${animateViolin ? "violinAnimation" : ""}`} src={param.image} ></img>
+                    <img style={{ position: 'absolute', left: '32%', top: '48%', height: '180px' }} className={`violin ${animateViolin ? "violinAnimation" : ""}`} src={param.image} ></img>
+                    <img style={{ position: 'absolute', left: '39%', top: '36%', height: '180px' }} className={`violin ${animateViolin ? "violinAnimation" : ""}`} src={param.image} ></img>
                 </div>
-            case 'Viola':
-                return <div>
-                    <img style={{ position: 'absolute', left: '41%', top: '34%', height: '150px', transform: 'rotate(120deg)' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '44%', top: '45%', height: '150px', transform: 'rotate(120deg) ' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '47%', top: '32%', height: '150px', transform: 'rotate(130deg) ' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '50%', top: '45%', height: '150px', transform: 'rotate(140deg) ' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '53%', top: '34%', height: '150px', transform: 'rotate(140deg) ' }} src={param.asset} ></img>
-                </div>;
             case 'Chello':
                 return <div>
-                    <img style={{ position: 'absolute', left: '54%', top: '46%', height: '200px', transform: 'rotate(30deg)' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '58%', top: '56%', height: '200px', transform: 'rotate(45deg)' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '61%', top: '29%', height: '200px', transform: 'rotate(30deg)' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '69%', top: '41%', height: '200px', transform: 'rotate(45deg)' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '59%', top: '67%', height: '200px', transform: 'rotate(60deg)' }} src={param.asset} ></img>
-                    <img style={{ position: 'absolute', left: '73%', top: '56%', height: '200px', transform: 'rotate(60deg)' }} src={param.asset} ></img>
+                    <img style={{ position: 'absolute', left: '58%', top: '43%', height: '220px' }} className={`chello ${animateChello ? "chelloAnimation" : ""}`} src={param.image} ></img>
+                    <img style={{ position: 'absolute', left: '62%', top: '60%', height: '220px' }} className={`chello ${animateChello ? "chelloAnimation" : ""}`} src={param.image} ></img>
+                    <img style={{ position: 'absolute', left: '70%', top: '20%', height: '220px' }} className={`chello ${animateChello ? "chelloAnimation" : ""}`} src={param.image} ></img>
+                    <img style={{ position: 'absolute', left: '75%', top: '43%', height: '220px' }} className={`chello ${animateChello ? "chelloAnimation" : ""}`} src={param.image} ></img>
                 </div>;
             default:
                 return '';
         }
     }
 
+    //modelo
+
     const URL = "https://teachablemachine.withgoogle.com/models/F6a7piIOE/";
-    let model, webcam, ctx, labelContainer, maxPredictions;
+    let model, webcam, ctx, ctx2, labelContainer, maxPredictions;
     const [open, setOpen] = React.useState(true);
     const [loading, setLoading] = React.useState(true);
 
@@ -97,9 +175,12 @@ const Game = () => {
         window.requestAnimationFrame(loop);
 
         // append/get elements to the DOM
-        const canvas = document.getElementById("canvas");
-        canvas.width = size; canvas.height = size;
-        ctx = canvas.getContext("2d");
+        const canvas = document.getElementsByClassName("canvas");
+        console.log(canvas)
+        canvas[1].width = size; canvas[1].height = size;
+        canvas[0].width = 250; canvas[0].height = 250;
+        ctx = canvas[0].getContext("2d");
+        ctx2 = canvas[1].getContext("2d");
         labelContainer = document.getElementById("label-container");
         for (let i = 0; i < maxPredictions; i++) { // and class labels
             labelContainer.appendChild(document.createElement("div"));
@@ -112,7 +193,6 @@ const Game = () => {
         await predict();
         window.requestAnimationFrame(loop);
     }
-
 
     const predict = async () => {
         // Prediction #1: run input through posenet
@@ -134,53 +214,77 @@ const Game = () => {
     const drawPose = async (pose) => {
         if (webcam.canvas) {
             ctx.drawImage(webcam.canvas, 0, 0);
+            ctx2.drawImage(webcam.canvas, 0, 0);
             // draw the keypoints and skeleton
             if (pose) {
                 const minPartConfidence = 0.5;
                 tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx);
+                tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx2);
                 tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx);
+                tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx2);
             }
         }
     }
+
+    //seteo variables iniciales de juego
+    React.useEffect(() => {
+        setVariablesGame();
+    }, []);
 
 
 
 
     return (
         <React.Fragment>
-            <Paper square={true} sx={{ backgroundColor: 'primary.light', height: '100%', width: '100%', padding:'20px' }}>
+            <Paper square={true} sx={{ backgroundColor: 'primary.light', height: '100%', width: '100%', padding: '10px' }} elevation={0}>
                 <Dialog PaperProps={{ style: { borderRadius: '50px', backgroundColor: '#FFED66', padding: '30px', display: 'flex', alignItems: 'center' } }} open={open} onClose={() => { setOpen(false) }} fullWidth maxWidth="lg">
 
-                    <div style={{ width: '100%', marginBottom:'20px' }}>
+                    <div style={{ width: '100%', marginBottom: '20px' }}>
                         <Typography fontWeight='600' fontSize="30px!important"> Calibra tu cuerpo con la cámara web:</Typography>
                     </div>
 
                     {loading ? <Box className="hover" sx={buttonStyle} onClick={() => { init() }}>
                         <Typography className="title-button" fontSize="30px!important" > Iniciar</Typography>
                     </Box> : ''}
-                    {loading && <CircularProgress style={{marginTop:'30px'}}></CircularProgress>}
+                    {loading && <CircularProgress style={{ marginTop: '30px' }}></CircularProgress>}
 
-                    <canvas style={{ height: '300px!important', width: '300px!important' }} id="canvas"></canvas>
+                    <canvas style={{ height: '300px!important', width: '300px!important' }} className="canvas"></canvas>
                     {!loading && <img style={{ position: 'absolute', height: '400px', width: '400px', top: '95px' }} src={calibracion} />}
                     <div id="label-container"></div>
-                    {!loading ? <Box className="hover" sx={buttonStyle} onClick={() => { setOpen(false) }}>
+                    {!loading ? <Box className="hover" sx={buttonStyle} onClick={() => { startGame() }}>
                         <Typography className="title-button" fontSize="30px!important" > Realizado</Typography>
                     </Box> : ''}
                 </Dialog>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Typography fontWeight='600' fontSize='30px' style={{ flex: 1, display: 'flex' }}> Ahora tocando: Symphony No. 9</Typography>
-                    <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> 0% Completado</Typography>
+                    <Typography fontWeight='600' fontSize='30px' style={{ flex: 1, display: 'flex' }}> Ahora tocando: {response.name}</Typography>
+
+
+                    <Box sx={{ width: '30%' }}>
+                        <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {Math.round((Math.floor((time / 1000)) / songDuration) * 100)}%</Typography>
+                        {/* <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {("0" + Math.floor((time / 60000) % 60)).slice(-2)}:{("0" + Math.floor((time / 1000) % 60)).slice(-2)}</Typography> */}
+                        {/* <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {Math.floor((time / 1000))}-</Typography> */}
+                        {/* <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {Math.floor((time / 1000))} segundos</Typography> */}
+                        <LinearProgress variant="determinate" value={(Math.floor((time / 1000)) / songDuration) * 100} style={{ height: '10px', borderRadius: 5 }} />
+                    </Box>
                     <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
                         <Box className="hover" style={{ backgroundColor: '#FF5E5B', borderRadius: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50px', width: '50px' }}>
                             <PauseRounded style={{ color: '#FFF', fontSize: '50px' }} />
                         </Box>
                     </div>
                 </div>
-                <div style={{ position: 'absolute', left: '50%', top: '50%', fontSize: '60px', lineHeight: '0px' }}>.</div>
-                {instruments.map((instrument, idx) => (
-                    <div>{renderSwitch(instrument)}</div>
+                {response.instruments.map((instrument, idx) => (
+                    <div key={idx}>{renderSwitch(instrument)}</div>
                 ))}
+                <canvas style={{ position: 'absolute', left: '40%', top: '62%', borderRadius: '30px', visibility: !open ? 'visible' : 'hidden' }} className={`canvas ${!open ? "canvasAnimation" : ""}`}></canvas>
+                <button style={{ position: 'absolute', left: '40%', top: '62%', borderRadius: '30px' }} onClick={() => { stopAnimationLeft() }}>stop left</button>
+                <button style={{ position: 'absolute', left: '40%', top: '66%', borderRadius: '30px' }} onClick={() => { animateLeft() }}>start Left</button>
+                <button style={{ position: 'absolute', left: '45%', top: '62%', borderRadius: '30px' }} onClick={() => { stopAnimationRight() }}>stop Right</button>
+                <button style={{ position: 'absolute', left: '45%', top: '66%', borderRadius: '30px' }} onClick={() => { animateRight() }}>start right</button>
+                <button style={{ position: 'absolute', left: '50%', top: '66%', borderRadius: '30px' }} onClick={() => { changeSpeed(200) }}>hightBPM</button>
+                <button style={{ position: 'absolute', left: '50%', top: '62%', borderRadius: '30px' }} onClick={() => { changeSpeed(initialBPM) }}>restartBPM</button>
+                <button style={{ position: 'absolute', left: '50%', top: '70%', borderRadius: '30px' }} onClick={() => { changeSpeed(80) }}>lowBPM</button>
+
             </Paper>
         </React.Fragment>
     )
