@@ -2,7 +2,8 @@ import React, { createContext, useEffect, useState } from "react";
 
 const PoseContext = createContext({
     checkPunzada: null,
-    checkTriangulo: null
+    checkTriangulo: null,
+    checkCruz: null
 })
 
 export default PoseContext;
@@ -15,6 +16,9 @@ export const PoseContextProvider = (props) => {
 
     let arrayVerificarTriangulo = ['', '', '', '', ''];
     let arraySegundosVerificarTriangulo = ['', '', '', '', ''];
+
+    let arrayVerificarCruz = ['','','','','',''];
+    let arraySegundosVerificarCruz = ['','','','','',''];
 
     let timerOn = true
     //REGLA GENERAL: En cada paso verificar el anterior completo y el actual vacio :) Menos en el primero
@@ -118,6 +122,68 @@ export const PoseContextProvider = (props) => {
 
     }
 
+    const checkCruz = (value) => {
+        let timeString = ("0" + Math.floor((time / 60000) % 60)).slice(-2) + ":" + ("0" + Math.floor((time / 1000) % 60)).slice(-2) + ":" + ("0" + ((time / 10) % 100)).slice(-2)
+        
+        //verificamos movimientos
+        if (arrayVerificarCruz[0] == 'LHM' && arrayVerificarCruz[1] == 'LHL' && arrayVerificarCruz[2] == 'LHR' && arrayVerificarCruz[3] == 'LHM' && arrayVerificarCruz[4] == 'LHU' && arrayVerificarCruz[5] == 'LHM') {
+            alert('patron cuadrado encontrado');
+            arrayVerificarCruz = ['','','','','',''];
+            arraySegundosVerificarCruz = ['','','','','',''];
+            return true;
+        }
+
+        if (value) {
+            //1. Primera posicion
+            //Llenamos el arreglo cuando esta vacio
+            if (arrayVerificarCruz[0] == '' && value == 'LHM') {
+                arrayVerificarCruz[0] = 'LHM';
+                arraySegundosVerificarCruz[0] = timeString
+            }
+
+            if (arrayVerificarCruz[0] == 'LHM' && value == 'LHM' && arrayVerificarCruz[1] == '') {
+                arraySegundosVerificarCruz[0] = timeString
+            }
+
+            //2. Segunda posicion
+            if (arrayVerificarCruz[0] == 'LHM' && arrayVerificarCruz[1] == '' && value == 'LHL') {
+                arrayVerificarCruz[1] = 'LHL';
+                arraySegundosVerificarCruz[1] = timeString
+            }
+
+
+            //3. Tercera posicion
+            if (arrayVerificarCruz[1] == 'LHL' && arrayVerificarCruz[2] == '' && value == 'LHR') {
+                arrayVerificarCruz[2] = 'LHR';
+                arraySegundosVerificarCruz[2] = timeString;
+            }
+
+            //4. Cuarta posicion
+            if (arrayVerificarCruz[2] == 'LHR' && arrayVerificarCruz[3] == '' && value == 'LHM') {
+                arrayVerificarCruz[3] = 'LHM';
+                arraySegundosVerificarCruz[3] = timeString;
+            }
+
+            //5. Quinta posicion
+            if (arrayVerificarCruz[3] == 'LHM' && arrayVerificarCruz[4] == '' && value == 'LHU') {
+                arrayVerificarCruz[4] = 'LHU';
+                arraySegundosVerificarCruz[4] = timeString;
+            }
+
+            //6. Quinta posicion
+            if (arrayVerificarCruz[4] == 'LHU' && arrayVerificarCruz[4] == '' && value == 'LHM') {
+                arrayVerificarCruz[5] = 'LHM';
+                arraySegundosVerificarCruz[5] = timeString;
+            }
+        }
+
+        console.log(
+        arraySegundosVerificarCruz[0], arraySegundosVerificarCruz[1], arraySegundosVerificarCruz[2], arraySegundosVerificarCruz[3], arraySegundosVerificarCruz[4], arraySegundosVerificarCruz[5], 
+            '-', 
+        arrayVerificarCruz[0], arrayVerificarCruz[1], arrayVerificarCruz[2], arrayVerificarCruz[3], arrayVerificarCruz[4], arrayVerificarCruz[5]);
+
+    }
+
     React.useEffect(() => {
         let interval = null;
 
@@ -137,7 +203,8 @@ export const PoseContextProvider = (props) => {
     return (
         <PoseContext.Provider value={{
             checkPunzada: checkPunzada,
-            checkTriangulo: checkTriangulo
+            checkTriangulo: checkTriangulo,
+            checkCruz: checkCruz,
 
         }}>
             {props.children}
