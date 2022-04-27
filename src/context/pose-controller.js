@@ -17,6 +17,7 @@ export const PoseContextProvider = (props) => {
     let arraySegundosVerificarTriangulo = ['', '', '', '', ''];
 
     let timerOn = true
+    //REGLA GENERAL: En cada paso verificar el anterior completo y el actual vacio :) Menos en el primero
 
     const checkPunzada = (value) => {
         let timeString = ("0" + Math.floor((time / 60000) % 60)).slice(-2) + ":" + ("0" + Math.floor((time / 1000) % 60)).slice(-2) + ":" + ("0" + ((time / 10) % 100)).slice(-2)
@@ -32,7 +33,7 @@ export const PoseContextProvider = (props) => {
         if (value) {
             //1. Primera posicion
             //Llenamos el arreglo cuando esta vacio
-            if (arrayVerificarPunzada[0] == '' && arrayVerificarPunzada[1] == '' && value == 'LHM') {
+            if (arrayVerificarPunzada[0] == '' && value == 'LHM') {
                 arrayVerificarPunzada[0] = 'LHM';
                 arraySegundosVerificarPunzada[0] = timeString
             }
@@ -43,21 +44,21 @@ export const PoseContextProvider = (props) => {
             }
 
             //2. Segunda posicion
-            if (arrayVerificarPunzada[1] == '' && arrayVerificarPunzada[2] == '' && arrayVerificarPunzada[0] == 'LHM' && value == 'LHU') {
+            if (arrayVerificarPunzada[1] == '' && arrayVerificarPunzada[0] == 'LHM' && value == 'LHU') {
                 arrayVerificarPunzada[1] = 'LHU';
                 arraySegundosVerificarPunzada[1] = timeString
             }
 
 
             //3. Tercera posicion
-            if (arrayVerificarPunzada[2] == '' && arrayVerificarPunzada[0] == 'LHM' && arrayVerificarPunzada[1] == 'LHU' && value == 'LHM') {
+            if (arrayVerificarPunzada[2] == '' && arrayVerificarPunzada[1] == 'LHU' && value == 'LHM') {
                 arrayVerificarPunzada[2] = 'LHM';
                 arraySegundosVerificarPunzada[2] = timeString;
             }
         }
 
 
-        //console.log(arraySegundosVerificarPunzada[0], arraySegundosVerificarPunzada[1], arraySegundosVerificarPunzada[2], '-', arrayVerificarPunzada[0], arrayVerificarPunzada[1], arrayVerificarPunzada[2]);
+        console.log(arraySegundosVerificarPunzada[0], arraySegundosVerificarPunzada[1], arraySegundosVerificarPunzada[2], '-', arrayVerificarPunzada[0], arrayVerificarPunzada[1], arrayVerificarPunzada[2]);
 
     }
 
