@@ -45,7 +45,7 @@ export const PoseContextProvider = (props) => {
             console.log(timeToString(timeDifference), 'time difference')
             let newBPM = timetoBPM(timeToSeconds(timeDifference), 'punzada')
             console.log(newBPM, 'new BPM')
-            alert('patron encontrado');
+            //alert('patron encontrado');
             arrayVerificarPunzada = ['', '', ''];
             arraySegundosVerificarPunzada = [0, 0, 0];
 

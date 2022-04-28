@@ -264,11 +264,11 @@ const Game = () => {
 
                 console.log(aux);
                 if (aux.length > 0) {
-                    let plumada = poseContext.checkPunzada(aux[0]);
-                    if (plumada) {
+                    let plumadaBPM = poseContext.checkPunzada(aux[0]);
+                    if (plumadaBPM) {
                         alert('BPM a punto de cambiar')
-                        audioController.setBPM(plumada);
-                        setSpeed((plumada * 10) / initialBPM);
+                        audioController.setBPM(plumadaBPM);
+                        setSpeed((plumadaBPM * 10) / initialBPM);
                     }
                     //poseContext.checkTriangulo(aux[0]);
                     //poseContext.checkCruz(aux[0]);
