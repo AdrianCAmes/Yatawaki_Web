@@ -3,7 +3,10 @@ import React, { createContext, useEffect, useState } from "react";
 const PoseContext = createContext({
     checkPunzada: null,
     checkTriangulo: null,
-    checkCruz: null
+    checkCruz: null,
+    checkPunzadaRight: null,
+    checkTrianguloRight: null,
+    checkCruzRight: null,
 })
 
 export default PoseContext;
@@ -19,6 +22,15 @@ export const PoseContextProvider = (props) => {
 
     let arrayVerificarCruz = ['', '', '', '', '', ''];
     let arraySegundosVerificarCruz = [0, 0, 0, 0, 0, 0];
+
+    let arrayVerificarPunzadaRight = ['', '', ''];
+    let arraySegundosVerificarPunzadaRight = [0, 0, 0];
+
+    let arrayVerificarTrianguloRight = ['', '', '', '', ''];
+    let arraySegundosVerificarTrianguloRight = [0, 0, 0, 0, 0];
+
+    let arrayVerificarCruzRight = ['', '', '', '', '', ''];
+    let arraySegundosVerificarCruzRight = [0, 0, 0, 0, 0, 0];
 
     let timerOn = true
     //REGLA GENERAL: En cada paso verificar el anterior completo y el actual vacio :) Menos en el primero
@@ -36,10 +48,10 @@ export const PoseContextProvider = (props) => {
             alert('patron encontrado');
             arrayVerificarPunzada = ['', '', ''];
             arraySegundosVerificarPunzada = [0, 0, 0];
-        
+
             arrayVerificarTriangulo = ['', '', '', '', ''];
             arraySegundosVerificarTriangulo = [0, 0, 0, 0, 0];
-        
+
             arrayVerificarCruz = ['', '', '', '', '', ''];
             arraySegundosVerificarCruz = [0, 0, 0, 0, 0, 0];
             return newBPM;
@@ -90,10 +102,10 @@ export const PoseContextProvider = (props) => {
             alert('patron triangulo encontrado');
             arrayVerificarPunzada = ['', '', ''];
             arraySegundosVerificarPunzada = [0, 0, 0];
-        
+
             arrayVerificarTriangulo = ['', '', '', '', ''];
             arraySegundosVerificarTriangulo = [0, 0, 0, 0, 0];
-        
+
             arrayVerificarCruz = ['', '', '', '', '', ''];
             arraySegundosVerificarCruz = [0, 0, 0, 0, 0, 0];
             return true;
@@ -157,10 +169,10 @@ export const PoseContextProvider = (props) => {
             alert('patron cruz encontrado');
             arrayVerificarPunzada = ['', '', ''];
             arraySegundosVerificarPunzada = [0, 0, 0];
-        
+
             arrayVerificarTriangulo = ['', '', '', '', ''];
             arraySegundosVerificarTriangulo = [0, 0, 0, 0, 0];
-        
+
             arrayVerificarCruz = ['', '', '', '', '', ''];
             arraySegundosVerificarCruz = [0, 0, 0, 0, 0, 0];
             return true;
@@ -217,6 +229,199 @@ export const PoseContextProvider = (props) => {
 
     }
 
+    const checkPunzadaRight = (value) => {
+
+        //verificamos movimientos
+        if (arrayVerificarPunzada[0] == 'RHM' && arrayVerificarPunzada[1] == 'RHU' && arrayVerificarPunzada[2] == 'RHM') {
+            let timeDifference = arraySegundosVerificarPunzadaRight[2] - arraySegundosVerificarPunzadaRight[0]
+            console.log(timeToString(arraySegundosVerificarPunzadaRight[0]), timeToString(arraySegundosVerificarPunzadaRight[1]), timeToString(arraySegundosVerificarPunzadaRight[2]), '-', arrayVerificarPunzadaRight[0], arrayVerificarPunzadaRight[1], arrayVerificarPunzadaRight[2]);
+
+            console.log(timeToString(timeDifference), 'time difference')
+            let newBPM = timetoBPM(timeToSeconds(timeDifference), 'punzada')
+            console.log(newBPM, 'new BPM')
+            alert('patron encontrado');
+            arrayVerificarPunzadaRight = ['', '', ''];
+            arraySegundosVerificarPunzadaRight = [0, 0, 0];
+
+            arrayVerificarTrianguloRight = ['', '', '', '', ''];
+            arraySegundosVerificarTrianguloRight = [0, 0, 0, 0, 0];
+
+            arrayVerificarCruzRight = ['', '', '', '', '', ''];
+            arraySegundosVerificarCruzRight = [0, 0, 0, 0, 0, 0];
+            return newBPM;
+        }
+
+        if (value) {
+            //1. Primera posicion
+            //Llenamos el arreglo cuando esta vacio
+            if (arrayVerificarPunzadaRight[0] == '' && value == 'RHM') {
+                arrayVerificarPunzadaRight[0] = 'RHM';
+                arraySegundosVerificarPunzadaRight[0] = time
+            }
+
+            //Si encuentra un nuevo LHM, y no se ha llenado la siguiente posicion, actualizamos el tiempo
+            if (arrayVerificarPunzadaRight[0] == 'RHM' && value == 'RHM' && arrayVerificarPunzadaRight[1] == '') {
+                arraySegundosVerificarPunzadaRight[0] = time
+            }
+
+            //2. Segunda posicion
+            if (arrayVerificarPunzadaRight[1] == '' && arrayVerificarPunzadaRight[0] == 'RHM' && value == 'RHU') {
+                arrayVerificarPunzadaRight[1] = 'RHU';
+                arraySegundosVerificarPunzadaRight[1] = time
+            }
+
+
+            //3. Tercera posicion
+            if (arrayVerificarPunzadaRight[2] == '' && arrayVerificarPunzadaRight[1] == 'RHU' && value == 'RHM') {
+                arrayVerificarPunzadaRight[2] = 'RHM';
+                arraySegundosVerificarPunzadaRight[2] = time;
+            }
+        }
+
+
+        //console.log(timeToString(arraySegundosVerificarPunzada[0]), timeToString(arraySegundosVerificarPunzada[1]), timeToString(arraySegundosVerificarPunzada[2]), '-', arrayVerificarPunzada[0], arrayVerificarPunzada[1], arrayVerificarPunzada[2]);
+
+    }
+
+    const checkTrianguloRight = (value) => {
+
+        //verificamos movimientos
+        if (arrayVerificarTrianguloRight[0] == 'RHM' && arrayVerificarTrianguloRight[1] == 'RHR' && arrayVerificarTrianguloRight[2] == 'RHM' && arrayVerificarTrianguloRight[3] == 'RHU' && arrayVerificarTrianguloRight[4] == 'RHM') {
+            let timeDifference = arraySegundosVerificarTrianguloRight[4] - arraySegundosVerificarTrianguloRight[0]
+            console.log(timeToString(arraySegundosVerificarTrianguloRight[0]), timeToString(arraySegundosVerificarTrianguloRight[1]), timeToString(arraySegundosVerificarTrianguloRight[2]), timeToString(arraySegundosVerificarTrianguloRight[3]), timeToString(arraySegundosVerificarTrianguloRight[4]), '-', arrayVerificarTrianguloRight[0], arrayVerificarTrianguloRight[1], arrayVerificarTrianguloRight[2], arrayVerificarTrianguloRight[3], arrayVerificarTrianguloRight[4]);
+
+            console.log(timeToString(timeDifference), 'time difference')
+            console.log(timetoBPM(timeToSeconds(timeDifference), 'triangulo'), 'new BPM')
+            alert('patron triangulo encontrado');
+            arrayVerificarPunzadaRight = ['', '', ''];
+            arraySegundosVerificarPunzadaRight = [0, 0, 0];
+
+            arrayVerificarTrianguloRight = ['', '', '', '', ''];
+            arraySegundosVerificarTrianguloRight = [0, 0, 0, 0, 0];
+
+            arrayVerificarCruzRight = ['', '', '', '', '', ''];
+            arraySegundosVerificarCruzRight = [0, 0, 0, 0, 0, 0];
+            return true;
+        }
+
+        if (value) {
+            //1. Primera posicion
+            //Llenamos el arreglo cuando esta vacio
+            if (arrayVerificarTrianguloRight[0] == '' && value == 'RHM') {
+                arrayVerificarTrianguloRight[0] = 'RHM';
+                arraySegundosVerificarTrianguloRight[0] = time
+            }
+
+            //Si encuentra un nuevo LHM, y no se ha llenado la siguiente posicion, actualizamos el tiempo
+            if (arrayVerificarTrianguloRight[0] == 'RHM' && value == 'RHM' && arrayVerificarTrianguloRight[1] == '') {
+                arraySegundosVerificarTrianguloRight[0] = time
+            }
+
+            //2. Segunda posicion
+            if (arrayVerificarTrianguloRight[0] == 'RHM' && arrayVerificarTrianguloRight[1] == '' && value == 'RHR') {
+                arrayVerificarTrianguloRight[1] = 'RHR';
+                arraySegundosVerificarTrianguloRight[1] = time
+            }
+
+
+            //3. Tercera posicion
+            if (arrayVerificarTrianguloRight[1] == 'RHR' && arrayVerificarTrianguloRight[2] == '' && value == 'RHM') {
+                arrayVerificarTrianguloRight[2] = 'RHM';
+                arraySegundosVerificarTrianguloRight[2] = time;
+            }
+
+            //4. Cuarta posicion
+            if (arrayVerificarTrianguloRight[2] == 'RHM' && arrayVerificarTrianguloRight[3] == '' && value == 'RHU') {
+                arrayVerificarTrianguloRight[3] = 'RHU';
+                arraySegundosVerificarTrianguloRight[3] = time;
+            }
+
+            //5. Quinta posicion
+            if (arrayVerificarTrianguloRight[3] == 'RHU' && arrayVerificarTrianguloRight[4] == '' && value == 'RHM') {
+                arrayVerificarTrianguloRight[4] = 'RHM';
+                arraySegundosVerificarTrianguloRight[4] = time;
+            }
+        }
+
+
+        //console.log(timeToString(arraySegundosVerificarTrianguloRight[0]), timeToString(arraySegundosVerificarTrianguloRight[1]), timeToString(arraySegundosVerificarTrianguloRight[2]), timeToString(arraySegundosVerificarTrianguloRight[3]), timeToString(arraySegundosVerificarTrianguloRight[4]), '-', arrayVerificarTrianguloRight[0], arrayVerificarTrianguloRight[1], arrayVerificarTrianguloRight[2], arrayVerificarTrianguloRight[3], arrayVerificarTrianguloRight[4]);
+
+    }
+
+    const checkCruzRight = (value) => {
+
+        //verificamos movimientos
+        if (arrayVerificarCruzRight[0] == 'RHM' && arrayVerificarCruzRight[1] == 'RHL' && arrayVerificarCruzRight[2] == 'RHR' && arrayVerificarCruzRight[3] == 'RHM' && arrayVerificarCruzRight[4] == 'RHU' && arrayVerificarCruzRight[5] == 'RHM') {
+            let timeDifference = arraySegundosVerificarCruzRight[5] - arraySegundosVerificarCruzRight[0]
+            console.log(
+                timeToString(arraySegundosVerificarCruzRight[0]), timeToString(arraySegundosVerificarCruzRight[1]), timeToString(arraySegundosVerificarCruzRight[2]), timeToString(arraySegundosVerificarCruzRight[3]), timeToString(arraySegundosVerificarCruzRight[4]), timeToString(arraySegundosVerificarCruzRight[5]),
+                '-',
+                arrayVerificarCruzRight[0], arrayVerificarCruzRight[1], arrayVerificarCruzRight[2], arrayVerificarCruzRight[3], arrayVerificarCruzRight[4], arrayVerificarCruzRight[5]);
+            console.log(timeToString(timeDifference), 'time difference')
+            console.log(timetoBPM(timeToSeconds(timeDifference), 'cruz'), 'new BPM')
+            alert('patron cruz encontrado');
+            arrayVerificarPunzadaRight = ['', '', ''];
+            arraySegundosVerificarPunzadaRight = [0, 0, 0];
+
+            arrayVerificarTrianguloRight = ['', '', '', '', ''];
+            arraySegundosVerificarTrianguloRight = [0, 0, 0, 0, 0];
+
+            arrayVerificarCruzRight = ['', '', '', '', '', ''];
+            arraySegundosVerificarCruzRight = [0, 0, 0, 0, 0, 0];
+            return true;
+        }
+
+        if (value) {
+            //1. Primera posicion
+            //Llenamos el arreglo cuando esta vacio
+            if (arrayVerificarCruzRight[0] == '' && value == 'RHM') {
+                arrayVerificarCruzRight[0] = 'RHM';
+                arraySegundosVerificarCruzRight[0] = time
+            }
+
+            if (arrayVerificarCruzRight[0] == 'RHM' && value == 'RHM' && arrayVerificarCruzRight[1] == '') {
+                arraySegundosVerificarCruzRight[0] = time
+            }
+
+            //2. Segunda posicion
+            if (arrayVerificarCruzRight[0] == 'RHM' && arrayVerificarCruzRight[1] == '' && value == 'RHL') {
+                arrayVerificarCruzRight[1] = 'RHL';
+                arraySegundosVerificarCruzRight[1] = time
+            }
+
+
+            //3. Tercera posicion
+            if (arrayVerificarCruzRight[1] == 'RHL' && arrayVerificarCruzRight[2] == '' && value == 'RHR') {
+                arrayVerificarCruzRight[2] = 'RHR';
+                arraySegundosVerificarCruzRight[2] = time;
+            }
+
+            //4. Cuarta posicion
+            if (arrayVerificarCruzRight[2] == 'RHR' && arrayVerificarCruzRight[3] == '' && value == 'RHM') {
+                arrayVerificarCruzRight[3] = 'RHM';
+                arraySegundosVerificarCruzRight[3] = time;
+            }
+
+            //5. Quinta posicion
+            if (arrayVerificarCruzRight[3] == 'RHM' && arrayVerificarCruzRight[4] == '' && value == 'RHU') {
+                arrayVerificarCruzRight[4] = 'RHU';
+                arraySegundosVerificarCruzRight[4] = time;
+            }
+
+            //6. Quinta posicion
+            if (arrayVerificarCruzRight[4] == 'RHU' && arrayVerificarCruzRight[5] == '' && value == 'RHM') {
+                arrayVerificarCruzRight[5] = 'RHM';
+                arraySegundosVerificarCruzRight[5] = time;
+            }
+        }
+
+        // console.log(
+        //     timeToString(arraySegundosVerificarCruzRight[0]), timeToString(arraySegundosVerificarCruzRight[1]), timeToString(arraySegundosVerificarCruzRight[2]), timeToString(arraySegundosVerificarCruzRight[3]), timeToString(arraySegundosVerificarCruzRight[4]), timeToString(arraySegundosVerificarCruzRight[5]),
+        //     '-',
+        //     arrayVerificarCruzRight[0], arrayVerificarCruzRight[1], arrayVerificarCruzRight[2], arrayVerificarCruzRight[3], arrayVerificarCruzRight[4], arrayVerificarCruzRight[5]);
+
+    }
+
     const timeToString = (timeInt) => {
         return ("0" + Math.floor((timeInt / 60000) % 60)).slice(-2) + ":" + ("0" + Math.floor((timeInt / 1000) % 60)).slice(-2) + ":" + ("0" + ((timeInt / 10) % 100)).slice(-2)
     }
@@ -262,6 +467,9 @@ export const PoseContextProvider = (props) => {
             checkPunzada: checkPunzada,
             checkTriangulo: checkTriangulo,
             checkCruz: checkCruz,
+            checkPunzadaRight: checkPunzadaRight,
+            checkTrianguloRight: checkTrianguloRight,
+            checkCruzRight: checkCruzRight,
 
         }}>
             {props.children}
