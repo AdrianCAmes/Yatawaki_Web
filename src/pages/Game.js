@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import piano from '../assets/piano.png';
 import viola from '../assets/viola.png';
 import chello from '../assets/chello.png';
-import oboe from '../assets/oboe.png';
-import arpa from '../assets/arpa.png';
 import calibracion from '../assets/calibracion.png';
 import guitar from '../assets/guitar.png';
 import { PauseRounded } from "@mui/icons-material";
@@ -15,6 +13,7 @@ import '@tensorflow/tfjs'
 import * as tmPose from '@teachablemachine/pose'
 import { useNavigate } from "react-router-dom";
 import AudioController from "../context/audio-context-controller";
+import PoseContext from "../context/pose-controller";
 
 let buttonStyle = { width: '150px', height: '50px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '20px' };
 
@@ -22,6 +21,7 @@ let buttonStyle = { width: '150px', height: '50px', borderRadius: '15px', mx: '4
 const Game = () => {
     const navigate = useNavigate();
     const audioController = React.useContext(AudioController);
+    const poseContext = React.useContext(PoseContext);
 
 
     let response = {
@@ -151,20 +151,27 @@ const Game = () => {
 
     //modelo
 
-    const URL = "https://teachablemachine.withgoogle.com/models/F6a7piIOE/";
-    let model, webcam, ctx, ctx2, labelContainer, maxPredictions;
+    const URLRight = "https://teachablemachine.withgoogle.com/models/DpJQ3G2-Y/";
+    const URLLeft = "https://teachablemachine.withgoogle.com/models/fRIw5b4gL/";
+    let modelRight, webcam, ctx, ctx2, labelContainerRight, maxPredictionsRight, modelLeft, labelContainerLeft, maxPredictionsLeft;
     const [open, setOpen] = React.useState(true);
     const [loading, setLoading] = React.useState(true);
 
     const init = async () => {
-        const modelURL = URL + "model.json";
-        const metadataURL = URL + "metadata.json";
+        const modelURLRight = URLRight + "model.json";
+        const metadataURLRight = URLRight + "metadata.json";
+
+        const modelURLLeft = URLLeft + "model.json";
+        const metadataURLLeft = URLLeft + "metadata.json";
 
         // load the model and metadata
         // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
         // Note: the pose library adds a tmPose object to your window (window.tmPose)
-        model = await tmPose.load(modelURL, metadataURL);
-        maxPredictions = model.getTotalClasses();
+        modelRight = await tmPose.load(modelURLRight, metadataURLRight);
+        maxPredictionsRight = modelRight.getTotalClasses();
+        //modelRight.predict
+        modelLeft = await tmPose.load(modelURLLeft, metadataURLLeft);
+        maxPredictionsLeft = modelLeft.getTotalClasses();
 
         // Convenience function to setup a webcam
         const size = 400;
@@ -176,14 +183,13 @@ const Game = () => {
 
         // append/get elements to the DOM
         const canvas = document.getElementsByClassName("canvas");
-        console.log(canvas)
         canvas[1].width = size; canvas[1].height = size;
         canvas[0].width = 250; canvas[0].height = 250;
         ctx = canvas[0].getContext("2d");
         ctx2 = canvas[1].getContext("2d");
-        labelContainer = document.getElementById("label-container");
-        for (let i = 0; i < maxPredictions; i++) { // and class labels
-            labelContainer.appendChild(document.createElement("div"));
+        labelContainerRight = document.getElementById("label-container");
+        for (let i = 0; i < maxPredictionsRight + maxPredictionsLeft + 1; i++) { // and class labels
+            labelContainerRight.appendChild(document.createElement("div"));
         }
         setLoading(false);
     }
@@ -191,20 +197,39 @@ const Game = () => {
     const loop = async () => {
         webcam.update(); // update the webcam frame
         await predict();
+        webcam.update();
+        await predict2();
         window.requestAnimationFrame(loop);
     }
 
     const predict = async () => {
         // Prediction #1: run input through posenet
         // estimatePose can take in an image, video or canvas html element
-        const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
-        // Prediction 2: run input through teachable machine classification model
-        const prediction = await model.predict(posenetOutput);
+        const { pose, posenetOutput } = await modelRight.estimatePose(webcam.canvas);
 
-        for (let i = 0; i < maxPredictions; i++) {
+        // Prediction 2: run input through teachable machine classification model
+        const prediction = await modelRight.predict(posenetOutput);
+
+        for (let i = 0; i < maxPredictionsRight; i++) {
             const classPrediction =
                 prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-            labelContainer.childNodes[i].innerHTML = classPrediction;
+            labelContainerRight.childNodes[i].innerHTML = classPrediction;
+        }
+
+        drawPose(pose);
+    }
+
+    const predict2 = async () => {
+        // Prediction #1: run input through posenet
+        // estimatePose can take in an image, video or canvas html element
+
+        const { pose, posenetOutput } = await modelLeft.estimatePose(webcam.canvas);
+        const predictionLeft = await modelLeft.predict(posenetOutput);
+        poseDecoderLeft(predictionLeft);
+        for (let i = 5; i < maxPredictionsLeft + 5; i++) {
+            const classPredictionLeft =
+                predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
+            labelContainerRight.childNodes[i].innerHTML = classPredictionLeft;
         }
 
         // finally draw the poses
@@ -223,6 +248,38 @@ const Game = () => {
                 tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx);
                 tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx2);
             }
+        }
+    }
+
+    const poseDecoderLeft = async (predictionLeft) => {
+        if (predictionLeft) {
+            const aux = [];
+            for (let i = 0; i < maxPredictionsLeft; i++) {
+                if (predictionLeft[i].probability > 0.97) {
+                    aux.push(predictionLeft[i].className);
+                    if (aux[aux.length] == aux[aux.length - 1]) {
+                        aux.pop();
+                    }
+                }
+
+                console.log(aux);
+                if (aux.length > 0) {
+                    let plumada = poseContext.checkPunzada(aux[0]);
+                    if (plumada) {
+                        alert('BPM a punto de cambiar')
+                        audioController.setBPM(plumada);
+                        setSpeed((plumada * 10) / initialBPM);
+                    }
+                    //poseContext.checkTriangulo(aux[0]);
+                    //poseContext.checkCruz(aux[0]);
+                    //if (plumada) {
+                    //    setShowPlumada(true);
+                    //}
+
+                }
+
+            }
+
         }
     }
 

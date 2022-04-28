@@ -26,12 +26,13 @@ export const PoseContextProvider = (props) => {
     const checkPunzada = (value) => {
 
         //verificamos movimientos
-        if (arrayVerificarPunzada[0] == 'LHM' && arrayVerificarPunzada[1] == 'LHU' && arrayVerificarPunzada[2] == 'LHM') {
+        if (arrayVerificarPunzada[0] == 'LHD' && arrayVerificarPunzada[1] == 'LHU' && arrayVerificarPunzada[2] == 'LHD') {
             let timeDifference = arraySegundosVerificarPunzada[2] - arraySegundosVerificarPunzada[0]
             console.log(timeToString(arraySegundosVerificarPunzada[0]), timeToString(arraySegundosVerificarPunzada[1]), timeToString(arraySegundosVerificarPunzada[2]), '-', arrayVerificarPunzada[0], arrayVerificarPunzada[1], arrayVerificarPunzada[2]);
 
             console.log(timeToString(timeDifference), 'time difference')
-            console.log(timetoBPM(timeToSeconds(timeDifference), 'punzada'), 'new BPM')
+            let newBPM = timetoBPM(timeToSeconds(timeDifference), 'punzada')
+            console.log(newBPM, 'new BPM')
             alert('patron encontrado');
             arrayVerificarPunzada = ['', '', ''];
             arraySegundosVerificarPunzada = [0, 0, 0];
@@ -41,32 +42,32 @@ export const PoseContextProvider = (props) => {
         
             arrayVerificarCruz = ['', '', '', '', '', ''];
             arraySegundosVerificarCruz = [0, 0, 0, 0, 0, 0];
-            return true;
+            return newBPM;
         }
 
         if (value) {
             //1. Primera posicion
             //Llenamos el arreglo cuando esta vacio
-            if (arrayVerificarPunzada[0] == '' && value == 'LHM') {
-                arrayVerificarPunzada[0] = 'LHM';
+            if (arrayVerificarPunzada[0] == '' && value == 'LHD') {
+                arrayVerificarPunzada[0] = 'LHD';
                 arraySegundosVerificarPunzada[0] = time
             }
 
             //Si encuentra un nuevo LHM, y no se ha llenado la siguiente posicion, actualizamos el tiempo
-            if (arrayVerificarPunzada[0] == 'LHM' && value == 'LHM' && arrayVerificarPunzada[1] == '') {
+            if (arrayVerificarPunzada[0] == 'LHD' && value == 'LHD' && arrayVerificarPunzada[1] == '') {
                 arraySegundosVerificarPunzada[0] = time
             }
 
             //2. Segunda posicion
-            if (arrayVerificarPunzada[1] == '' && arrayVerificarPunzada[0] == 'LHM' && value == 'LHU') {
+            if (arrayVerificarPunzada[1] == '' && arrayVerificarPunzada[0] == 'LHD' && value == 'LHU') {
                 arrayVerificarPunzada[1] = 'LHU';
                 arraySegundosVerificarPunzada[1] = time
             }
 
 
             //3. Tercera posicion
-            if (arrayVerificarPunzada[2] == '' && arrayVerificarPunzada[1] == 'LHU' && value == 'LHM') {
-                arrayVerificarPunzada[2] = 'LHM';
+            if (arrayVerificarPunzada[2] == '' && arrayVerificarPunzada[1] == 'LHU' && value == 'LHD') {
+                arrayVerificarPunzada[2] = 'LHD';
                 arraySegundosVerificarPunzada[2] = time;
             }
         }
