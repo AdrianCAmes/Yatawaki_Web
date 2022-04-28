@@ -28,10 +28,19 @@ export const PoseContextProvider = (props) => {
         //verificamos movimientos
         if (arrayVerificarPunzada[0] == 'LHM' && arrayVerificarPunzada[1] == 'LHU' && arrayVerificarPunzada[2] == 'LHM') {
             let timeDifference = arraySegundosVerificarPunzada[2] - arraySegundosVerificarPunzada[0]
+            console.log(timeToString(arraySegundosVerificarPunzada[0]), timeToString(arraySegundosVerificarPunzada[1]), timeToString(arraySegundosVerificarPunzada[2]), '-', arrayVerificarPunzada[0], arrayVerificarPunzada[1], arrayVerificarPunzada[2]);
+
             console.log(timeToString(timeDifference), 'time difference')
+            console.log(timetoBPM(timeToSeconds(timeDifference), 'punzada'), 'new BPM')
             alert('patron encontrado');
             arrayVerificarPunzada = ['', '', ''];
             arraySegundosVerificarPunzada = [0, 0, 0];
+        
+            arrayVerificarTriangulo = ['', '', '', '', ''];
+            arraySegundosVerificarTriangulo = [0, 0, 0, 0, 0];
+        
+            arrayVerificarCruz = ['', '', '', '', '', ''];
+            arraySegundosVerificarCruz = [0, 0, 0, 0, 0, 0];
             return true;
         }
 
@@ -63,7 +72,7 @@ export const PoseContextProvider = (props) => {
         }
 
 
-        console.log(timeToString(arraySegundosVerificarPunzada[0]), timeToString(arraySegundosVerificarPunzada[1]), timeToString(arraySegundosVerificarPunzada[2]), '-', arrayVerificarPunzada[0], arrayVerificarPunzada[1], arrayVerificarPunzada[2]);
+        //console.log(timeToString(arraySegundosVerificarPunzada[0]), timeToString(arraySegundosVerificarPunzada[1]), timeToString(arraySegundosVerificarPunzada[2]), '-', arrayVerificarPunzada[0], arrayVerificarPunzada[1], arrayVerificarPunzada[2]);
 
     }
 
@@ -72,9 +81,20 @@ export const PoseContextProvider = (props) => {
 
         //verificamos movimientos
         if (arrayVerificarTriangulo[0] == 'LHD' && arrayVerificarTriangulo[1] == 'LHL' && arrayVerificarTriangulo[2] == 'LHD' && arrayVerificarTriangulo[3] == 'LHU' && arrayVerificarTriangulo[4] == 'LHD') {
+            let timeDifference = arraySegundosVerificarTriangulo[4] - arraySegundosVerificarTriangulo[0]
+            console.log(timeToString(arraySegundosVerificarTriangulo[0]), timeToString(arraySegundosVerificarTriangulo[1]), timeToString(arraySegundosVerificarTriangulo[2]), timeToString(arraySegundosVerificarTriangulo[3]), timeToString(arraySegundosVerificarTriangulo[4]), '-', arrayVerificarTriangulo[0], arrayVerificarTriangulo[1], arrayVerificarTriangulo[2], arrayVerificarTriangulo[3], arrayVerificarTriangulo[4]);
+
+            console.log(timeToString(timeDifference), 'time difference')
+            console.log(timetoBPM(timeToSeconds(timeDifference), 'triangulo'), 'new BPM')
             alert('patron triangulo encontrado');
+            arrayVerificarPunzada = ['', '', ''];
+            arraySegundosVerificarPunzada = [0, 0, 0];
+        
             arrayVerificarTriangulo = ['', '', '', '', ''];
             arraySegundosVerificarTriangulo = [0, 0, 0, 0, 0];
+        
+            arrayVerificarCruz = ['', '', '', '', '', ''];
+            arraySegundosVerificarCruz = [0, 0, 0, 0, 0, 0];
             return true;
         }
 
@@ -118,7 +138,7 @@ export const PoseContextProvider = (props) => {
         }
 
 
-        console.log(timeToString(arraySegundosVerificarTriangulo[0]), timeToString(arraySegundosVerificarTriangulo[1]), timeToString(arraySegundosVerificarTriangulo[2]), timeToString(arraySegundosVerificarTriangulo[3]), timeToString(arraySegundosVerificarTriangulo[4]), '-', arrayVerificarTriangulo[0], arrayVerificarTriangulo[1], arrayVerificarTriangulo[2], arrayVerificarTriangulo[3], arrayVerificarTriangulo[4]);
+        //console.log(timeToString(arraySegundosVerificarTriangulo[0]), timeToString(arraySegundosVerificarTriangulo[1]), timeToString(arraySegundosVerificarTriangulo[2]), timeToString(arraySegundosVerificarTriangulo[3]), timeToString(arraySegundosVerificarTriangulo[4]), '-', arrayVerificarTriangulo[0], arrayVerificarTriangulo[1], arrayVerificarTriangulo[2], arrayVerificarTriangulo[3], arrayVerificarTriangulo[4]);
 
     }
 
@@ -126,7 +146,20 @@ export const PoseContextProvider = (props) => {
 
         //verificamos movimientos
         if (arrayVerificarCruz[0] == 'LHM' && arrayVerificarCruz[1] == 'LHL' && arrayVerificarCruz[2] == 'LHR' && arrayVerificarCruz[3] == 'LHM' && arrayVerificarCruz[4] == 'LHU' && arrayVerificarCruz[5] == 'LHM') {
-            alert('patron cuadrado encontrado');
+            let timeDifference = arraySegundosVerificarCruz[5] - arraySegundosVerificarCruz[0]
+            console.log(
+                timeToString(arraySegundosVerificarCruz[0]), timeToString(arraySegundosVerificarCruz[1]), timeToString(arraySegundosVerificarCruz[2]), timeToString(arraySegundosVerificarCruz[3]), timeToString(arraySegundosVerificarCruz[4]), timeToString(arraySegundosVerificarCruz[5]),
+                '-',
+                arrayVerificarCruz[0], arrayVerificarCruz[1], arrayVerificarCruz[2], arrayVerificarCruz[3], arrayVerificarCruz[4], arrayVerificarCruz[5]);
+            console.log(timeToString(timeDifference), 'time difference')
+            console.log(timetoBPM(timeToSeconds(timeDifference), 'cruz'), 'new BPM')
+            alert('patron cruz encontrado');
+            arrayVerificarPunzada = ['', '', ''];
+            arraySegundosVerificarPunzada = [0, 0, 0];
+        
+            arrayVerificarTriangulo = ['', '', '', '', ''];
+            arraySegundosVerificarTriangulo = [0, 0, 0, 0, 0];
+        
             arrayVerificarCruz = ['', '', '', '', '', ''];
             arraySegundosVerificarCruz = [0, 0, 0, 0, 0, 0];
             return true;
@@ -170,21 +203,41 @@ export const PoseContextProvider = (props) => {
             }
 
             //6. Quinta posicion
-            if (arrayVerificarCruz[4] == 'LHU' && arrayVerificarCruz[4] == '' && value == 'LHM') {
+            if (arrayVerificarCruz[4] == 'LHU' && arrayVerificarCruz[5] == '' && value == 'LHM') {
                 arrayVerificarCruz[5] = 'LHM';
                 arraySegundosVerificarCruz[5] = time;
             }
         }
 
-        console.log(
-            timeToString(arraySegundosVerificarCruz[0]), timeToString(arraySegundosVerificarCruz[1]), timeToString(arraySegundosVerificarCruz[2]), timeToString(arraySegundosVerificarCruz[3]), timeToString(arraySegundosVerificarCruz[4]), timeToString(arraySegundosVerificarCruz[5]),
-            '-',
-            arrayVerificarCruz[0], arrayVerificarCruz[1], arrayVerificarCruz[2], arrayVerificarCruz[3], arrayVerificarCruz[4], arrayVerificarCruz[5]);
+        // console.log(
+        //     timeToString(arraySegundosVerificarCruz[0]), timeToString(arraySegundosVerificarCruz[1]), timeToString(arraySegundosVerificarCruz[2]), timeToString(arraySegundosVerificarCruz[3]), timeToString(arraySegundosVerificarCruz[4]), timeToString(arraySegundosVerificarCruz[5]),
+        //     '-',
+        //     arrayVerificarCruz[0], arrayVerificarCruz[1], arrayVerificarCruz[2], arrayVerificarCruz[3], arrayVerificarCruz[4], arrayVerificarCruz[5]);
 
     }
 
     const timeToString = (timeInt) => {
         return ("0" + Math.floor((timeInt / 60000) % 60)).slice(-2) + ":" + ("0" + Math.floor((timeInt / 1000) % 60)).slice(-2) + ":" + ("0" + ((timeInt / 10) % 100)).slice(-2)
+    }
+
+    const timeToSeconds = (timeInt) => {
+        return parseFloat(("0" + Math.floor((timeInt / 60000) % 60)).slice(-2) * 60) + parseFloat(("0" + Math.floor((timeInt / 1000) % 60)).slice(-2)) + parseFloat(("0" + ((timeInt / 10) % 100)).slice(-2) / 1000)
+    }
+
+    const timetoBPM = (difference, patternType) => {
+        let BPM = 0;
+
+        if (patternType === 'punzada') {
+            BPM = 120 / difference;
+        }
+
+        if (patternType === 'triangulo') {
+            BPM = 240 / difference;
+        }
+        if (patternType === 'cruz') {
+            BPM = 300 / difference;
+        }
+        return BPM;
     }
 
     React.useEffect(() => {

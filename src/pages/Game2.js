@@ -210,7 +210,7 @@ const Game2 = () => {
 
                 console.log(aux);
                 if (aux.length > 0) {
-                    let plumada = poseContext.checkPunzada(aux[0]);
+                    //let plumada = poseContext.checkPunzada(aux[0]);
                     //poseContext.checkTriangulo(aux[0]);
                     //poseContext.checkCruz(aux[0]);
                     //if (plumada) {
