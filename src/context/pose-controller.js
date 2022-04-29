@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext } from "react";
 
 const PoseContext = createContext({
     checkPunzada: null,
@@ -7,7 +7,8 @@ const PoseContext = createContext({
     checkPunzadaRight: null,
     checkTrianguloRight: null,
     checkCruzRight: null,
-    startController: null
+    startController: null,
+    pauseController: null
 })
 
 export default PoseContext;
@@ -41,6 +42,10 @@ export const PoseContextProvider = (props) => {
         started = true;
         initialBPM = bpm;
         console.log(initialBPM, 'initialBPM in Pose Controller');
+    }
+
+    const pauseController = () => {
+        started = false;
     }
     //REGLA GENERAL: En cada paso verificar el anterior completo y el actual vacio :) Menos en el primero
 
@@ -491,7 +496,8 @@ export const PoseContextProvider = (props) => {
             checkPunzadaRight: checkPunzadaRight,
             checkTrianguloRight: checkTrianguloRight,
             checkCruzRight: checkCruzRight,
-            startController: startController
+            startController: startController,
+            pauseController: pauseController
         }}>
             {props.children}
         </PoseContext.Provider>

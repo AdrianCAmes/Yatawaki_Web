@@ -43,6 +43,9 @@ const Game = () => {
     const songDuration = 120; //segundos
     const [speed, setProgressSpeed] = useState(10);
 
+    const [pauseBpm, setPauseBpm] = useState(0);
+    
+
     //estados de animaciones
     const [animatePiano, setAnimatePiano] = useState(false);
     const [animateViolin, setAnimateViolin] = useState(false);
@@ -260,6 +263,19 @@ const Game = () => {
         }
     }
 
+    const pause = () => {
+        audioController.setBPM(1);
+        poseController.pauseController();
+        setProgressSpeed((1 * 10) / response.initialBpm);
+    }
+
+    const resume = () => {
+        audioController.setBPM(currentBPM);
+        poseController.startController(response.initialBpm);
+        setProgressSpeed((currentBPM * 10) / response.initialBpm);
+
+    }
+
     const drawPose = async (pose) => {
         if (webcam.canvas) {
             ctx.drawImage(webcam.canvas, 0, 0);
@@ -367,6 +383,8 @@ const Game = () => {
                 <button style={{ position: 'absolute', left: '50%', top: '66%', borderRadius: '30px' }} onClick={() => { changeSpeed(200) }}>hightBPM</button>
                 <button style={{ position: 'absolute', left: '50%', top: '62%', borderRadius: '30px' }} onClick={() => { changeSpeed(response.initialBpm) }}>restartBPM</button>
                 <button style={{ position: 'absolute', left: '50%', top: '70%', borderRadius: '30px' }} onClick={() => { changeSpeed(80) }}>lowBPM</button>
+                <button style={{ position: 'absolute', left: '45%', top: '70%', borderRadius: '30px' }} onClick={() => { pause() }}>pause</button>
+                <button style={{ position: 'absolute', left: '40%', top: '70%', borderRadius: '30px' }} onClick={() => { resume() }}>resume</button>
 
             </Paper>
         </React.Fragment>
