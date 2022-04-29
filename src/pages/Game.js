@@ -39,8 +39,8 @@ const Game = () => {
     //progreso de la cancion
     const [time, setTime] = useState(0);
     const [timerOn, setTimerOn] = useState(false);
+    const [currentBPM, setCurrentBPM] = useState(120);
     const songDuration = 120; //segundos
-    const initialBPM = 120; //bpm
     const [speed, setProgressSpeed] = useState(10);
 
     //estados de animaciones
@@ -89,9 +89,9 @@ const Game = () => {
     }
 
     const changeSpeed = (newBpm) => {
-        setProgressSpeed((newBpm * 10) / initialBPM);
+        setProgressSpeed((newBpm * 10) / response.initialBpm);
         audioController.setBPM(newBpm);
-        console.log((newBpm * 10) / initialBPM)
+        //console.log((newBpm * 10) / response.initialBpm)
     }
 
     React.useEffect(() => {
@@ -110,12 +110,14 @@ const Game = () => {
     }, [timerOn, speed]);
 
 
-    // Cuando el porcentaje sea 100%, dirigir a resumen
-    // React.useEffect(() => {
-    //     if (Math.round((Math.floor((time / 1000)) / songDuration) * 100) > 100) {
-    //         toRegister()
-    //     }
-    // }, [time]);
+    //Cuando el porcentaje sea 100%, dirigir a resumen
+    React.useEffect(() => {
+        if (Math.round((Math.floor((time / 1000)) / songDuration) * 100) > 100) {
+            //toRegister()
+            alert('tiempo cumplido, por favor refrescar')
+            navigate(0)
+        }
+    }, [time]);
 
 
     const renderSwitch = (param) => {
@@ -193,6 +195,7 @@ const Game = () => {
             labelContainerRight.appendChild(document.createElement("div"));
         }
         setLoading(false);
+
     }
 
     const loop = async () => {
@@ -237,6 +240,26 @@ const Game = () => {
         drawPose(pose);
     }
 
+    const setNewBPM = (newBpm) => {
+        let upperLimit = response.initialBpm + 70
+        let lowerLimit = response.initialBpm - 70
+        if (newBpm > upperLimit) {
+            //alert('EL BPM EXCEDE LOS LIMITES')
+            audioController.setBPM(upperLimit);
+            setProgressSpeed(upperLimit);
+            setCurrentBPM(upperLimit)
+        } else if (newBpm < lowerLimit) {
+            //alert('EL BPM EXCEDE LOS LIMITES INFERIORES')
+            audioController.setBPM(lowerLimit);
+            setProgressSpeed(lowerLimit);
+            setCurrentBPM(lowerLimit)
+        } else {
+            audioController.setBPM(newBpm);
+            setProgressSpeed((newBpm * 10) / response.initialBpm);
+            setCurrentBPM(newBpm)
+        }
+    }
+
     const drawPose = async (pose) => {
         if (webcam.canvas) {
             ctx.drawImage(webcam.canvas, 0, 0);
@@ -267,9 +290,9 @@ const Game = () => {
                 if (aux.length > 0) {
                     let plumadaBPM = poseController.checkPunzada(aux[0]);
                     if (plumadaBPM) {
-                        alert('BPM a punto de cambiar')
-                        audioController.setBPM(plumadaBPM);
-                        setProgressSpeed((plumadaBPM * 10) / initialBPM);
+                        //alert('BPM a punto de cambiar')
+                        setNewBPM(plumadaBPM)
+
                     }
                     //poseContext.checkTriangulo(aux[0]);
                     //poseContext.checkCruz(aux[0]);
@@ -334,13 +357,15 @@ const Game = () => {
                 {response.instruments.map((instrument, idx) => (
                     <div key={idx}>{renderSwitch(instrument)}</div>
                 ))}
+                <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> BPM: {Math.round(currentBPM, 0)}</Typography>
+
                 <canvas style={{ position: 'absolute', left: '40%', top: '62%', borderRadius: '30px', visibility: !open ? 'visible' : 'hidden' }} className={`canvas ${!open ? "canvasAnimation" : ""}`}></canvas>
                 <button style={{ position: 'absolute', left: '40%', top: '62%', borderRadius: '30px' }} onClick={() => { stopAnimationLeft() }}>stop left</button>
                 <button style={{ position: 'absolute', left: '40%', top: '66%', borderRadius: '30px' }} onClick={() => { animateLeft() }}>start Left</button>
                 <button style={{ position: 'absolute', left: '45%', top: '62%', borderRadius: '30px' }} onClick={() => { stopAnimationRight() }}>stop Right</button>
                 <button style={{ position: 'absolute', left: '45%', top: '66%', borderRadius: '30px' }} onClick={() => { animateRight() }}>start right</button>
                 <button style={{ position: 'absolute', left: '50%', top: '66%', borderRadius: '30px' }} onClick={() => { changeSpeed(200) }}>hightBPM</button>
-                <button style={{ position: 'absolute', left: '50%', top: '62%', borderRadius: '30px' }} onClick={() => { changeSpeed(initialBPM) }}>restartBPM</button>
+                <button style={{ position: 'absolute', left: '50%', top: '62%', borderRadius: '30px' }} onClick={() => { changeSpeed(response.initialBpm) }}>restartBPM</button>
                 <button style={{ position: 'absolute', left: '50%', top: '70%', borderRadius: '30px' }} onClick={() => { changeSpeed(80) }}>lowBPM</button>
 
             </Paper>
