@@ -16,7 +16,6 @@ import Market from './pages/Market';
 import Prueba from './pages/Prueba';
 import { AudioContextProvider } from './context/audio-context-controller';
 import Timer from './pages/Timer';
-import Game2 from './pages/Game2';
 import { PoseContextProvider } from './context/pose-controller';
 
 function App() {

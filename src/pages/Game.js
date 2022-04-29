@@ -21,7 +21,7 @@ let buttonStyle = { width: '150px', height: '50px', borderRadius: '15px', mx: '4
 const Game = () => {
     const navigate = useNavigate();
     const audioController = React.useContext(AudioController);
-    const poseContext = React.useContext(PoseContext);
+    const poseController = React.useContext(PoseContext);
 
 
     let response = {
@@ -41,7 +41,7 @@ const Game = () => {
     const [timerOn, setTimerOn] = useState(false);
     const songDuration = 120; //segundos
     const initialBPM = 120; //bpm
-    const [speed, setSpeed] = useState(10);
+    const [speed, setProgressSpeed] = useState(10);
 
     //estados de animaciones
     const [animatePiano, setAnimatePiano] = useState(false);
@@ -78,6 +78,7 @@ const Game = () => {
         animateLeft();
         animateRight();
         setTimerOn(true);
+        poseController.startController(response.initialBpm)
         audioController.start();
     }
 
@@ -88,7 +89,7 @@ const Game = () => {
     }
 
     const changeSpeed = (newBpm) => {
-        setSpeed((newBpm * 10) / initialBPM);
+        setProgressSpeed((newBpm * 10) / initialBPM);
         audioController.setBPM(newBpm);
         console.log((newBpm * 10) / initialBPM)
     }
@@ -264,11 +265,11 @@ const Game = () => {
 
                 console.log(aux);
                 if (aux.length > 0) {
-                    let plumadaBPM = poseContext.checkPunzada(aux[0]);
+                    let plumadaBPM = poseController.checkPunzada(aux[0]);
                     if (plumadaBPM) {
                         alert('BPM a punto de cambiar')
                         audioController.setBPM(plumadaBPM);
-                        setSpeed((plumadaBPM * 10) / initialBPM);
+                        setProgressSpeed((plumadaBPM * 10) / initialBPM);
                     }
                     //poseContext.checkTriangulo(aux[0]);
                     //poseContext.checkCruz(aux[0]);
