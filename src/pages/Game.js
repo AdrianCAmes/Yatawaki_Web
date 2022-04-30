@@ -40,6 +40,7 @@ const Game = () => {
     const [time, setTime] = useState(0);
     const [timerOn, setTimerOn] = useState(false);
     const [currentBPM, setCurrentBPM] = useState(120);
+    const [currentVolume, setCurrentVolume] = useState(0);
     const songDuration = 120; //segundos
     const [speed, setProgressSpeed] = useState(10);
 
@@ -307,7 +308,9 @@ const Game = () => {
                     let plumadaBPM = poseController.checkPunzada(aux[0]);
                     if (plumadaBPM) {
                         //alert('BPM a punto de cambiar')
-                        setNewBPM(plumadaBPM)
+                        //setNewBPM(plumadaBPM)
+                        setCurrentVolume(poseController.getVolume())
+                        //alert(poseController.getVolume())
 
                     }
                     //poseContext.checkTriangulo(aux[0]);
@@ -373,7 +376,8 @@ const Game = () => {
                 {response.instruments.map((instrument, idx) => (
                     <div key={idx}>{renderSwitch(instrument)}</div>
                 ))}
-                <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> BPM: {Math.round(currentBPM, 0)}</Typography>
+                {/* <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> BPM: {Math.round(currentBPM, 0)}</Typography> */}
+                <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> Media Volumen: {currentVolume}</Typography>
 
                 <canvas style={{ position: 'absolute', left: '40%', top: '62%', borderRadius: '30px', visibility: !open ? 'visible' : 'hidden' }} className={`canvas ${!open ? "canvasAnimation" : ""}`}></canvas>
                 <button style={{ position: 'absolute', left: '40%', top: '62%', borderRadius: '30px' }} onClick={() => { stopAnimationLeft() }}>stop left</button>

@@ -8,7 +8,8 @@ const PoseContext = createContext({
     checkTrianguloRight: null,
     checkCruzRight: null,
     startController: null,
-    pauseController: null
+    pauseController: null,
+    getVolume: null
 })
 
 export default PoseContext;
@@ -19,6 +20,8 @@ export const PoseContextProvider = (props) => {
     let initialBPM = 0;
     let arrayVerificarPunzada = ['', '', ''];
     let arraySegundosVerificarPunzada = [0, 0, 0];
+    let timeMediaPunzada = 0;
+    let lastTimePunzada = 0;
 
     let arrayVerificarTriangulo = ['', '', '', '', ''];
     let arraySegundosVerificarTriangulo = [0, 0, 0, 0, 0];
@@ -35,8 +38,10 @@ export const PoseContextProvider = (props) => {
     let arrayVerificarCruzRight = ['', '', '', '', '', ''];
     let arraySegundosVerificarCruzRight = [0, 0, 0, 0, 0, 0];
 
+
     let timerOn = true;
     let started = false;
+    let volume = 0;
 
     const startController = (bpm) => {
         started = true;
@@ -46,6 +51,12 @@ export const PoseContextProvider = (props) => {
 
     const pauseController = () => {
         started = false;
+    }
+
+    const getVolume = () => {
+        //logica para calcular nuevo volumen;
+        console.log(volume);
+        return volume;
     }
     //REGLA GENERAL: En cada paso verificar el anterior completo y el actual vacio :) Menos en el primero
 
@@ -57,7 +68,7 @@ export const PoseContextProvider = (props) => {
                 let timeDifference = arraySegundosVerificarPunzada[2] - arraySegundosVerificarPunzada[0]
                 console.log(timeToString(arraySegundosVerificarPunzada[0]), timeToString(arraySegundosVerificarPunzada[1]), timeToString(arraySegundosVerificarPunzada[2]), '-', arrayVerificarPunzada[0], arrayVerificarPunzada[1], arrayVerificarPunzada[2]);
 
-                console.log(timeToString(timeDifference), 'time difference')
+                //console.log(timeToString(timeDifference), 'time difference')
                 let newBPM = timetoBPM(timeToSeconds(timeDifference), 'punzada')
                 console.log(newBPM, 'new BPM')
                 //alert('patron encontrado');
@@ -69,6 +80,10 @@ export const PoseContextProvider = (props) => {
 
                 arrayVerificarCruz = ['', '', '', '', '', ''];
                 arraySegundosVerificarCruz = [0, 0, 0, 0, 0, 0];
+                volume = timeMediaPunzada;
+                //console.log(timeMediaPunzada)
+                timeMediaPunzada = 0;
+                lastTimePunzada = 0;
                 return newBPM;
             }
 
@@ -89,6 +104,11 @@ export const PoseContextProvider = (props) => {
                 if (arrayVerificarPunzada[1] == '' && arrayVerificarPunzada[0] == 'LHD' && value == 'LHU') {
                     arrayVerificarPunzada[1] = 'LHU';
                     arraySegundosVerificarPunzada[1] = time
+                    timeMediaPunzada = arraySegundosVerificarPunzada[1] - arraySegundosVerificarPunzada[0];
+                    lastTimePunzada = time
+                } else if (arrayVerificarPunzada[1] == 'LHU' && arrayVerificarPunzada[2] == '' && value == 'LHU') {
+                    lastTimePunzada = time;
+                    return;
                 }
 
 
@@ -96,6 +116,7 @@ export const PoseContextProvider = (props) => {
                 if (arrayVerificarPunzada[2] == '' && arrayVerificarPunzada[1] == 'LHU' && value == 'LHD') {
                     arrayVerificarPunzada[2] = 'LHD';
                     arraySegundosVerificarPunzada[2] = time;
+                    timeMediaPunzada = (timeMediaPunzada + (time - lastTimePunzada)) / 2
                 }
             }
 
@@ -497,7 +518,8 @@ export const PoseContextProvider = (props) => {
             checkTrianguloRight: checkTrianguloRight,
             checkCruzRight: checkCruzRight,
             startController: startController,
-            pauseController: pauseController
+            pauseController: pauseController,
+            getVolume: getVolume
         }}>
             {props.children}
         </PoseContext.Provider>
