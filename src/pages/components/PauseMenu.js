@@ -16,7 +16,7 @@ const PauseMenu = (props) => {
 
     return (
         <React.Fragment>
-            <Dialog PaperProps={{ style: { borderRadius: '50px', backgroundColor: '#FFED66' } }} open={props.open} onClose={props.handleClose} fullWidth maxWidth="lg">
+            <Dialog PaperProps={{ style: { borderRadius: '50px', backgroundColor: '#FFED66' } }} open={props.open} onClose={() => { props.handleClose()}} fullWidth maxWidth="lg">
                 <div style={{ height: '500px', backgroundColor: '#FFED66', padding: '50px',alignContent: 'center' }}>
                     <Typography fontWeight={600} fontSize={50} style={{ textAlign: 'center' }}>
                         Juego Pausado
@@ -24,7 +24,7 @@ const PauseMenu = (props) => {
                     <div style={{ height: '10%'}}></div>
                     <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Box className="hover" sx={buttonStyle}>
-                            <Typography style={{ fontSize: '30px', color: '#FFF' }}> Continuar </Typography>
+                            <Typography onClick={() => {props.resume()}} style={{ fontSize: '30px', color: '#FFF' }}> Continuar </Typography>
                         </Box>
                     </div>
                     <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>

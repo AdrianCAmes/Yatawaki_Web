@@ -274,13 +274,14 @@ const Game = () => {
         audioController.setBPM(1);
         poseController.pauseController();
         setProgressSpeed((1 * 10) / response.initialBpm);
+        setOpenDialog(true);
     }
 
     const resume = () => {
+        setOpenDialog(false);
         audioController.setBPM(currentBPM);
         poseController.startController(response.initialBpm);
         setProgressSpeed((currentBPM * 10) / response.initialBpm);
-
     }
 
     const drawPose = async (pose) => {
@@ -374,10 +375,10 @@ const Game = () => {
                         <LinearProgress variant="determinate" value={(Math.floor((time / 1000)) / songDuration) * 100} style={{ height: '10px', borderRadius: 5 }} />
                     </Box>
                     <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-                        <Box className="hover" onClick={() => { setOpenDialog(true) }} style={{ backgroundColor: '#FF5E5B', borderRadius: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50px', width: '50px' }}>
+                        <Box className="hover" onClick={() => { pause() }} style={{ backgroundColor: '#FF5E5B', borderRadius: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50px', width: '50px' }}>
                             <PauseRounded style={{ color: '#FFF', fontSize: '50px' }} />
-                            <PauseMenu open={openDialog} handleClose={handleCloseDialog}></PauseMenu>
                         </Box>
+                        <PauseMenu open={openDialog} handleClose={handleCloseDialog} resume={resume}></PauseMenu>
                     </div>
                 </div>
                 {response.instruments.map((instrument, idx) => (
