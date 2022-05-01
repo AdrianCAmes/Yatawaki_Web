@@ -407,7 +407,14 @@ export const PoseContextProvider = (props) => {
                 //2. Segunda posicion
                 if (arrayVerificarPunzadaRight[1] == '' && arrayVerificarPunzadaRight[0] == 'RHM' && value == 'RHU') {
                     arrayVerificarPunzadaRight[1] = 'RHU';
-                    arraySegundosVerificarPunzadaRight[1] = time
+                    arraySegundosVerificarPunzadaRight[1] = time;
+
+                    //volume
+                    timeMediaPunzadaRight = arraySegundosVerificarPunzadaRight[1] - arraySegundosVerificarPunzadaRight[0];
+                    lastTimePunzadaRight = time
+                } else if (arrayVerificarPunzadaRight[1] == 'RHU' && arrayVerificarPunzadaRight[2] == '' && value == 'RHU') {
+                    lastTimePunzadaRight = time;
+                    return;
                 }
 
 
@@ -415,6 +422,9 @@ export const PoseContextProvider = (props) => {
                 if (arrayVerificarPunzadaRight[2] == '' && arrayVerificarPunzadaRight[1] == 'RHU' && value == 'RHM') {
                     arrayVerificarPunzadaRight[2] = 'RHM';
                     arraySegundosVerificarPunzadaRight[2] = time;
+
+                    //volumen
+                    timeMediaPunzadaRight = (timeMediaPunzadaRight + (time - lastTimePunzadaRight)) / 2;
                 }
             }
 
