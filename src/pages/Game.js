@@ -30,8 +30,8 @@ const Game = () => {
         "initialBpm": 120,
         "songDuration": 120,
         "instruments": [
-            { "name": "Piano", "image": piano, "position": "L", "audio": chopin },
-            { "name": "Violin", "image": viola, "position": "L", "audio": chopin },
+            { "name": "Piano", "image": piano, "position": "L", "audio": mozart },
+            { "name": "Violin", "image": viola, "position": "L", "audio": mozart },
             { "name": "Chello", "image": chello, "position": "R", "audio": mozart },
             { "name": "Guitar", "image": guitar, "position": "R", "audio": mozart },
         ]
@@ -44,9 +44,9 @@ const Game = () => {
     const [currentVolume, setCurrentVolume] = useState(0);
     const songDuration = 120; //segundos
     const [speed, setProgressSpeed] = useState(10);
-    
+
     const [pauseBpm, setPauseBpm] = useState(0);
-    
+
 
     //estados de animaciones
     const [animatePiano, setAnimatePiano] = useState(false);
@@ -314,16 +314,16 @@ const Game = () => {
                     }
                 }
 
-                console.log(aux);
+                //console.log(aux);
                 if (aux.length > 0) {
-                    let plumadaBPM = poseController.checkPunzada(aux[0]);
-                    if (plumadaBPM) {
-                        //alert('BPM a punto de cambiar')
-                        //setNewBPM(plumadaBPM)
-                        setCurrentVolume(poseController.getVolume())
-                        //alert(poseController.getVolume())
+                    //let plumadaBPM = poseController.checkPunzada(aux[0]);
+                    //if (plumadaBPM) {
+                    //alert('BPM a punto de cambiar')
+                    //setNewBPM(plumadaBPM)
+                    //setCurrentVolume(poseController.getVolume())
+                    //alert(poseController.getVolume())
 
-                    }
+                    //}
                     //poseContext.checkTriangulo(aux[0]);
                     //poseContext.checkCruz(aux[0]);
                     //if (plumada) {
@@ -399,8 +399,12 @@ const Game = () => {
                 <button style={{ position: 'absolute', left: '50%', top: '66%', borderRadius: '30px' }} onClick={() => { changeSpeed(200) }}>hightBPM</button>
                 <button style={{ position: 'absolute', left: '50%', top: '62%', borderRadius: '30px' }} onClick={() => { changeSpeed(response.initialBpm) }}>restartBPM</button>
                 <button style={{ position: 'absolute', left: '50%', top: '70%', borderRadius: '30px' }} onClick={() => { changeSpeed(80) }}>lowBPM</button>
-                <button style={{ position: 'absolute', left: '45%', top: '70%', borderRadius: '30px' }} onClick={() => { pause() }}>pause</button>
-                <button style={{ position: 'absolute', left: '40%', top: '70%', borderRadius: '30px' }} onClick={() => { resume() }}>resume</button>
+                {/* <button style={{ position: 'absolute', left: '45%', top: '70%', borderRadius: '30px' }} onClick={() => { pause() }}>pause</button>
+                <button style={{ position: 'absolute', left: '40%', top: '70%', borderRadius: '30px' }} onClick={() => { resume() }}>resume</button> */}
+                <button style={{ position: 'absolute', left: '40%', top: '70%', borderRadius: '30px' }} onClick={() => { audioController.increasePitch() }}>pitch</button>
+                <button style={{ position: 'absolute', left: '45%', top: '70%', borderRadius: '30px' }} onClick={() => {  audioController.resetPitch() }}>reset pitch</button>
+                <button style={{ position: 'absolute', left: '45%', top: '73%', borderRadius: '30px' }} onClick={() => {  audioController.decreasePitch() }}>menos pitch</button>
+
 
             </Paper>
         </React.Fragment>
