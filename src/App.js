@@ -18,6 +18,7 @@ import { AudioContextProvider } from './context/audio-context-controller';
 import Timer from './pages/Timer';
 import { PoseContextProvider } from './context/pose-controller';
 
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
