@@ -16,6 +16,7 @@ import Market from './pages/Market';
 import Prueba from './pages/Prueba';
 import { AudioContextProvider } from './context/audio-context-controller';
 import Timer from './pages/Timer';
+import { PoseContextProvider } from './context/pose-controller';
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/menu" element={<YatawakiMenu />} />
               <Route path="/perfil" element={<Perfil />} />
-              <Route path="/game" element={<AudioContextProvider><Game /></AudioContextProvider>} />
+              <Route path="/game" element={<AudioContextProvider><PoseContextProvider><Game /></PoseContextProvider></AudioContextProvider>} />
               <Route path="/game-resume" element={<GameResume />} />
               <Route path="/market" element={<Market />} />
               <Route path="/prueba" element={<Prueba />} />

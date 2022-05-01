@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import piano from '../assets/piano.png';
 import viola from '../assets/viola.png';
 import chello from '../assets/chello.png';
-import oboe from '../assets/oboe.png';
-import arpa from '../assets/arpa.png';
 import calibracion from '../assets/calibracion.png';
 import guitar from '../assets/guitar.png';
 import { PauseRounded } from "@mui/icons-material";
@@ -15,6 +13,7 @@ import '@tensorflow/tfjs'
 import * as tmPose from '@teachablemachine/pose'
 import { useNavigate } from "react-router-dom";
 import AudioController from "../context/audio-context-controller";
+import PoseContext from "../context/pose-controller";
 
 let buttonStyle = { width: '150px', height: '50px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '20px' };
 
@@ -22,6 +21,7 @@ let buttonStyle = { width: '150px', height: '50px', borderRadius: '15px', mx: '4
 const Game = () => {
     const navigate = useNavigate();
     const audioController = React.useContext(AudioController);
+    const poseController = React.useContext(PoseContext);
 
 
     let response = {
@@ -39,9 +39,13 @@ const Game = () => {
     //progreso de la cancion
     const [time, setTime] = useState(0);
     const [timerOn, setTimerOn] = useState(false);
+    const [currentBPM, setCurrentBPM] = useState(120);
+    const [currentVolume, setCurrentVolume] = useState(0);
     const songDuration = 120; //segundos
-    const initialBPM = 120; //bpm
-    const [speed, setSpeed] = useState(10);
+    const [speed, setProgressSpeed] = useState(10);
+
+    const [pauseBpm, setPauseBpm] = useState(0);
+    
 
     //estados de animaciones
     const [animatePiano, setAnimatePiano] = useState(false);
@@ -78,6 +82,7 @@ const Game = () => {
         animateLeft();
         animateRight();
         setTimerOn(true);
+        poseController.startController(response.initialBpm)
         audioController.start();
     }
 
@@ -88,9 +93,9 @@ const Game = () => {
     }
 
     const changeSpeed = (newBpm) => {
-        setSpeed((newBpm * 10) / initialBPM);
+        setProgressSpeed((newBpm * 10) / response.initialBpm);
         audioController.setBPM(newBpm);
-        console.log((newBpm * 10) / initialBPM)
+        //console.log((newBpm * 10) / response.initialBpm)
     }
 
     React.useEffect(() => {
@@ -109,12 +114,14 @@ const Game = () => {
     }, [timerOn, speed]);
 
 
-    // Cuando el porcentaje sea 100%, dirigir a resumen
-    // React.useEffect(() => {
-    //     if (Math.round((Math.floor((time / 1000)) / songDuration) * 100) > 100) {
-    //         toRegister()
-    //     }
-    // }, [time]);
+    //Cuando el porcentaje sea 100%, dirigir a resumen
+    React.useEffect(() => {
+        if (Math.round((Math.floor((time / 1000)) / songDuration) * 100) > 100) {
+            //toRegister()
+            alert('tiempo cumplido, por favor refrescar')
+            navigate(0)
+        }
+    }, [time]);
 
 
     const renderSwitch = (param) => {
@@ -151,20 +158,27 @@ const Game = () => {
 
     //modelo
 
-    const URL = "https://teachablemachine.withgoogle.com/models/F6a7piIOE/";
-    let model, webcam, ctx, ctx2, labelContainer, maxPredictions;
+    const URLRight = "https://teachablemachine.withgoogle.com/models/DpJQ3G2-Y/";
+    const URLLeft = "https://teachablemachine.withgoogle.com/models/fRIw5b4gL/";
+    let modelRight, webcam, ctx, ctx2, labelContainerRight, maxPredictionsRight, modelLeft, labelContainerLeft, maxPredictionsLeft;
     const [open, setOpen] = React.useState(true);
     const [loading, setLoading] = React.useState(true);
 
     const init = async () => {
-        const modelURL = URL + "model.json";
-        const metadataURL = URL + "metadata.json";
+        const modelURLRight = URLRight + "model.json";
+        const metadataURLRight = URLRight + "metadata.json";
+
+        const modelURLLeft = URLLeft + "model.json";
+        const metadataURLLeft = URLLeft + "metadata.json";
 
         // load the model and metadata
         // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
         // Note: the pose library adds a tmPose object to your window (window.tmPose)
-        model = await tmPose.load(modelURL, metadataURL);
-        maxPredictions = model.getTotalClasses();
+        modelRight = await tmPose.load(modelURLRight, metadataURLRight);
+        maxPredictionsRight = modelRight.getTotalClasses();
+        //modelRight.predict
+        modelLeft = await tmPose.load(modelURLLeft, metadataURLLeft);
+        maxPredictionsLeft = modelLeft.getTotalClasses();
 
         // Convenience function to setup a webcam
         const size = 400;
@@ -176,39 +190,91 @@ const Game = () => {
 
         // append/get elements to the DOM
         const canvas = document.getElementsByClassName("canvas");
-        console.log(canvas)
         canvas[1].width = size; canvas[1].height = size;
         canvas[0].width = 250; canvas[0].height = 250;
         ctx = canvas[0].getContext("2d");
         ctx2 = canvas[1].getContext("2d");
-        labelContainer = document.getElementById("label-container");
-        for (let i = 0; i < maxPredictions; i++) { // and class labels
-            labelContainer.appendChild(document.createElement("div"));
+        labelContainerRight = document.getElementById("label-container");
+        for (let i = 0; i < maxPredictionsRight + maxPredictionsLeft + 1; i++) { // and class labels
+            labelContainerRight.appendChild(document.createElement("div"));
         }
         setLoading(false);
+
     }
 
     const loop = async () => {
         webcam.update(); // update the webcam frame
         await predict();
+        webcam.update();
+        await predict2();
         window.requestAnimationFrame(loop);
     }
 
     const predict = async () => {
         // Prediction #1: run input through posenet
         // estimatePose can take in an image, video or canvas html element
-        const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
-        // Prediction 2: run input through teachable machine classification model
-        const prediction = await model.predict(posenetOutput);
+        const { pose, posenetOutput } = await modelRight.estimatePose(webcam.canvas);
 
-        for (let i = 0; i < maxPredictions; i++) {
+        // Prediction 2: run input through teachable machine classification model
+        const prediction = await modelRight.predict(posenetOutput);
+
+        for (let i = 0; i < maxPredictionsRight; i++) {
             const classPrediction =
                 prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-            labelContainer.childNodes[i].innerHTML = classPrediction;
+            labelContainerRight.childNodes[i].innerHTML = classPrediction;
+        }
+
+        drawPose(pose);
+    }
+
+    const predict2 = async () => {
+        // Prediction #1: run input through posenet
+        // estimatePose can take in an image, video or canvas html element
+
+        const { pose, posenetOutput } = await modelLeft.estimatePose(webcam.canvas);
+        const predictionLeft = await modelLeft.predict(posenetOutput);
+        poseDecoderLeft(predictionLeft);
+        for (let i = 5; i < maxPredictionsLeft + 5; i++) {
+            const classPredictionLeft =
+                predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
+            labelContainerRight.childNodes[i].innerHTML = classPredictionLeft;
         }
 
         // finally draw the poses
         drawPose(pose);
+    }
+
+    const setNewBPM = (newBpm) => {
+        let upperLimit = response.initialBpm + 70
+        let lowerLimit = response.initialBpm - 70
+        if (newBpm > upperLimit) {
+            //alert('EL BPM EXCEDE LOS LIMITES')
+            audioController.setBPM(upperLimit);
+            setProgressSpeed(upperLimit);
+            setCurrentBPM(upperLimit)
+        } else if (newBpm < lowerLimit) {
+            //alert('EL BPM EXCEDE LOS LIMITES INFERIORES')
+            audioController.setBPM(lowerLimit);
+            setProgressSpeed(lowerLimit);
+            setCurrentBPM(lowerLimit)
+        } else {
+            audioController.setBPM(newBpm);
+            setProgressSpeed((newBpm * 10) / response.initialBpm);
+            setCurrentBPM(newBpm)
+        }
+    }
+
+    const pause = () => {
+        audioController.setBPM(1);
+        poseController.pauseController();
+        setProgressSpeed((1 * 10) / response.initialBpm);
+    }
+
+    const resume = () => {
+        audioController.setBPM(currentBPM);
+        poseController.startController(response.initialBpm);
+        setProgressSpeed((currentBPM * 10) / response.initialBpm);
+
     }
 
     const drawPose = async (pose) => {
@@ -223,6 +289,40 @@ const Game = () => {
                 tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx);
                 tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx2);
             }
+        }
+    }
+
+    const poseDecoderLeft = async (predictionLeft) => {
+        if (predictionLeft) {
+            const aux = [];
+            for (let i = 0; i < maxPredictionsLeft; i++) {
+                if (predictionLeft[i].probability > 0.97) {
+                    aux.push(predictionLeft[i].className);
+                    if (aux[aux.length] == aux[aux.length - 1]) {
+                        aux.pop();
+                    }
+                }
+
+                console.log(aux);
+                if (aux.length > 0) {
+                    let plumadaBPM = poseController.checkPunzada(aux[0]);
+                    if (plumadaBPM) {
+                        //alert('BPM a punto de cambiar')
+                        //setNewBPM(plumadaBPM)
+                        setCurrentVolume(poseController.getVolume())
+                        //alert(poseController.getVolume())
+
+                    }
+                    //poseContext.checkTriangulo(aux[0]);
+                    //poseContext.checkCruz(aux[0]);
+                    //if (plumada) {
+                    //    setShowPlumada(true);
+                    //}
+
+                }
+
+            }
+
         }
     }
 
@@ -276,14 +376,19 @@ const Game = () => {
                 {response.instruments.map((instrument, idx) => (
                     <div key={idx}>{renderSwitch(instrument)}</div>
                 ))}
+                {/* <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> BPM: {Math.round(currentBPM, 0)}</Typography> */}
+                <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> Media Volumen: {currentVolume}</Typography>
+
                 <canvas style={{ position: 'absolute', left: '40%', top: '62%', borderRadius: '30px', visibility: !open ? 'visible' : 'hidden' }} className={`canvas ${!open ? "canvasAnimation" : ""}`}></canvas>
                 <button style={{ position: 'absolute', left: '40%', top: '62%', borderRadius: '30px' }} onClick={() => { stopAnimationLeft() }}>stop left</button>
                 <button style={{ position: 'absolute', left: '40%', top: '66%', borderRadius: '30px' }} onClick={() => { animateLeft() }}>start Left</button>
                 <button style={{ position: 'absolute', left: '45%', top: '62%', borderRadius: '30px' }} onClick={() => { stopAnimationRight() }}>stop Right</button>
                 <button style={{ position: 'absolute', left: '45%', top: '66%', borderRadius: '30px' }} onClick={() => { animateRight() }}>start right</button>
                 <button style={{ position: 'absolute', left: '50%', top: '66%', borderRadius: '30px' }} onClick={() => { changeSpeed(200) }}>hightBPM</button>
-                <button style={{ position: 'absolute', left: '50%', top: '62%', borderRadius: '30px' }} onClick={() => { changeSpeed(initialBPM) }}>restartBPM</button>
+                <button style={{ position: 'absolute', left: '50%', top: '62%', borderRadius: '30px' }} onClick={() => { changeSpeed(response.initialBpm) }}>restartBPM</button>
                 <button style={{ position: 'absolute', left: '50%', top: '70%', borderRadius: '30px' }} onClick={() => { changeSpeed(80) }}>lowBPM</button>
+                <button style={{ position: 'absolute', left: '45%', top: '70%', borderRadius: '30px' }} onClick={() => { pause() }}>pause</button>
+                <button style={{ position: 'absolute', left: '40%', top: '70%', borderRadius: '30px' }} onClick={() => { resume() }}>resume</button>
 
             </Paper>
         </React.Fragment>
