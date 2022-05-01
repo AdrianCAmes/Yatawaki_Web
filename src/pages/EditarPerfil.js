@@ -11,8 +11,6 @@ import PropTypes from 'prop-types';
 import { Box } from "@mui/system";
 import { AchievementCard, AvatarCard, SymphonyCard } from "./components/ObjectCard";
 import styled from "@emotion/styled";
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
 
 function DataTwoColumns(props) {
     const label = props.label;
