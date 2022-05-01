@@ -1,5 +1,5 @@
 
-import { ArrowBackIosRounded } from "@mui/icons-material";
+import { ArrowBackIosRounded, TryOutlined } from "@mui/icons-material";
 import { Avatar, CircularProgress, Grid, Paper, Tab, Tabs, tabsClasses, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import { Box } from "@mui/system";
 import { AchievementCard, AvatarCard, ItemCard, SymphonyCard } from "./components/ObjectCard";
 import styled from "@emotion/styled";
+import ConfirmTradeDialog from "./components/ConfirmTradeDialog";
 
 function DataTwoColumns(props) {
     const label = props.label;
@@ -98,6 +99,7 @@ const Market = () => {
     const [value, setValue] = React.useState(0);
     const [loading, setLoading] = React.useState(true);
     const [profile, setProfile] = React.useState(null);
+    const [unlockable, setUnlockable] = React.useState(null);
     const [achievements, setAchievements] = React.useState([]);
     const [avatars, setAvatars] = React.useState([]);
     const [symphonies, setSymphonies] = React.useState([]);
@@ -111,6 +113,13 @@ const Market = () => {
         setValue(newValue);
     };
 
+    const onClickTrade = (tradeUnlockable) => {
+        setUnlockable(tradeUnlockable);
+        setOpenDialog(true);
+    };
+
+    
+
 
     const toHome = () => {
         navigate('/perfil')
@@ -121,7 +130,7 @@ const Market = () => {
         setLoading(true);
         UserUnlockableApi.findUserMarket(gameContext.userId)
             .then(response => {
-                console.log(response.data);
+                //console.log(response.data);
                 setAchievements(response.data.achievements);
                 setAvatars(response.data.avatars);
                 setSymphonies(response.data.symphonies);
@@ -137,11 +146,18 @@ const Market = () => {
 
     }, [gameContext.userId]);
 
+    const [openDialog, setOpenDialog] = React.useState(false);
+
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+    };
+
 
     return (
         <React.Fragment>
             {loading ? <CircularProgress style={{position:'absolute', right:'50%', top:'50%'}}></CircularProgress> :
                 <Paper square={true} sx={{ backgroundColor: 'primary.light', padding: '40px' }} elevation={0}>
+                    <ConfirmTradeDialog  open={openDialog} handleClose={handleCloseDialog} unlockable={unlockable}>  </ConfirmTradeDialog>
                     <div className="hover" onClick={() => { toHome() }} style={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
                         <ArrowBackIosRounded fontSize="medium" />
                         <Typography fontWeight={600} fontSize={24} sx={{ marginLeft: '10px' }}>Atrás</Typography>
@@ -160,21 +176,21 @@ const Market = () => {
                     <TabPanel value={value} index={0}>
                         <div style={{ width: '100%', borderRadius: '20px', padding: '30px', display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap' }}>
                             {achievements.length > 0 ? achievements.map((achievement, idx) => (
-                                <ItemCard key={idx} item={achievement}></ItemCard>
+                                <ItemCard key={idx} item={achievement} onClickTrade={onClickTrade}></ItemCard>
                             )) : <Typography>No cuentas con logros</Typography>}
                         </div>
                     </TabPanel>
                     <TabPanel value={value} index={1}>
                         <div style={{ width: '100%', borderRadius: '20px', padding: '30px', display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap' }}>
                             {symphonies.length > 0 ? symphonies.map((symphony, idx) => (
-                                <ItemCard key={idx} item={symphony}></ItemCard>
+                                <ItemCard key={idx} item={symphony} onClickTrade={onClickTrade}></ItemCard>
                             )) : <Typography>No cuentas con sinfonias</Typography>}
                         </div>
                     </TabPanel>
                     <TabPanel value={value} index={2}>
                         <div style={{ width: '100%', borderRadius: '20px', padding: '30px', display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap' }}>
                             {avatars.length > 0 ? avatars.map((avatar1, idx) => (
-                                <ItemCard key={idx} item={avatar1}></ItemCard>
+                                <ItemCard key={idx} item={avatar1} onClickTrade={onClickTrade}></ItemCard>
                             )) : <Typography>No cuentas con avatars</Typography>}
                         </div>
                     </TabPanel>
