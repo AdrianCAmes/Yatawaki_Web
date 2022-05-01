@@ -30,15 +30,23 @@ export const PoseContextProvider = (props) => {
 
     let arrayVerificarCruz = ['', '', '', '', '', ''];
     let arraySegundosVerificarCruz = [0, 0, 0, 0, 0, 0];
+    let timeMediaCruz = 0;
+    let lastTimeCruz = 0;
 
     let arrayVerificarPunzadaRight = ['', '', ''];
     let arraySegundosVerificarPunzadaRight = [0, 0, 0];
+    let timeMediaPunzadaRight = 0;
+    let lastTimePunzadaRight = 0;
 
     let arrayVerificarTrianguloRight = ['', '', '', '', ''];
     let arraySegundosVerificarTrianguloRight = [0, 0, 0, 0, 0];
+    let timeMediaTrianguloRight = 0;
+    let lastTimeTrianguloRight = 0;
 
     let arrayVerificarCruzRight = ['', '', '', '', '', ''];
     let arraySegundosVerificarCruzRight = [0, 0, 0, 0, 0, 0];
+    let timeMediaCruzRight = 0;
+    let lastTimeCruzRight = 0;
 
 
     let timerOn = true;
@@ -49,6 +57,41 @@ export const PoseContextProvider = (props) => {
         started = true;
         initialBPM = bpm;
         console.log(initialBPM, 'initialBPM in Pose Controller');
+    }
+
+    const resetBpmInputs = () => {
+        arrayVerificarPunzada = ['', '', ''];
+        arraySegundosVerificarPunzada = [0, 0, 0];
+
+        arrayVerificarTriangulo = ['', '', '', '', ''];
+        arraySegundosVerificarTriangulo = [0, 0, 0, 0, 0];
+
+        arrayVerificarCruz = ['', '', '', '', '', ''];
+        arraySegundosVerificarCruz = [0, 0, 0, 0, 0, 0];
+
+        arrayVerificarPunzadaRight = ['', '', ''];
+        arraySegundosVerificarPunzadaRight = [0, 0, 0];
+
+        arrayVerificarTrianguloRight = ['', '', '', '', ''];
+        arraySegundosVerificarTrianguloRight = [0, 0, 0, 0, 0];
+
+        arrayVerificarCruzRight = ['', '', '', '', '', ''];
+        arraySegundosVerificarCruzRight = [0, 0, 0, 0, 0, 0];
+    }
+
+    const resetVolumeInputs = () => {
+        timeMediaPunzada = 0;
+        lastTimePunzada = 0;
+        timeMediaTriangulo = 0;
+        lastTimeTriangulo = 0;
+        timeMediaCruz = 0;
+        lastTimeCruz = 0;
+        timeMediaPunzadaRight = 0;
+        lastTimePunzadaRight = 0;
+        timeMediaTrianguloRight = 0;
+        lastTimeTrianguloRight = 0;
+        timeMediaCruzRight = 0;
+        lastTimeCruzRight = 0;
     }
 
     const pauseController = () => {
@@ -74,20 +117,15 @@ export const PoseContextProvider = (props) => {
                 let newBPM = timetoBPM(timeToSeconds(timeDifference), 'punzada')
                 console.log(newBPM, 'new BPM')
                 //alert('patron encontrado');
-                arrayVerificarPunzada = ['', '', ''];
-                arraySegundosVerificarPunzada = [0, 0, 0];
 
-                arrayVerificarTriangulo = ['', '', '', '', ''];
-                arraySegundosVerificarTriangulo = [0, 0, 0, 0, 0];
-
-                arrayVerificarCruz = ['', '', '', '', '', ''];
-                arraySegundosVerificarCruz = [0, 0, 0, 0, 0, 0];
+                resetBpmInputs();
+                //volumen
                 volume = timeMediaPunzada;
+
+                resetVolumeInputs();
+
                 //console.log(timeMediaPunzada)
-                timeMediaPunzada = 0;
-                lastTimePunzada = 0;
-                timeMediaTriangulo = 0;
-                lastTimeTriangulo = 0;
+
                 return newBPM;
             }
 
@@ -142,22 +180,15 @@ export const PoseContextProvider = (props) => {
                 console.log(timeToString(timeDifference), 'time difference')
                 console.log(timetoBPM(timeToSeconds(timeDifference), 'triangulo'), 'new BPM')
                 alert('patron triangulo encontrado');
-                arrayVerificarPunzada = ['', '', ''];
-                arraySegundosVerificarPunzada = [0, 0, 0];
 
-                arrayVerificarTriangulo = ['', '', '', '', ''];
-                arraySegundosVerificarTriangulo = [0, 0, 0, 0, 0];
-
-                arrayVerificarCruz = ['', '', '', '', '', ''];
-                arraySegundosVerificarCruz = [0, 0, 0, 0, 0, 0];
+                resetBpmInputs();
 
                 //volumen
                 volume = timeMediaTriangulo;
                 //console.log(timeMediaPunzada)
-                timeMediaPunzada = 0;
-                lastTimePunzada = 0;
-                timeMediaTriangulo = 0;
-                lastTimeTriangulo = 0;
+
+                resetVolumeInputs();
+
                 return true;
             }
 
@@ -242,15 +273,15 @@ export const PoseContextProvider = (props) => {
                     arrayVerificarCruz[0], arrayVerificarCruz[1], arrayVerificarCruz[2], arrayVerificarCruz[3], arrayVerificarCruz[4], arrayVerificarCruz[5]);
                 console.log(timeToString(timeDifference), 'time difference')
                 console.log(timetoBPM(timeToSeconds(timeDifference), 'cruz'), 'new BPM')
-                alert('patron cruz encontrado');
-                arrayVerificarPunzada = ['', '', ''];
-                arraySegundosVerificarPunzada = [0, 0, 0];
+                //alert('patron cruz encontrado');
+                resetBpmInputs();
 
-                arrayVerificarTriangulo = ['', '', '', '', ''];
-                arraySegundosVerificarTriangulo = [0, 0, 0, 0, 0];
+                //volumen
+                volume = timeMediaCruz;
+                //console.log(timeMediaPunzada)
 
-                arrayVerificarCruz = ['', '', '', '', '', ''];
-                arraySegundosVerificarCruz = [0, 0, 0, 0, 0, 0];
+                resetVolumeInputs();
+
                 return true;
             }
 
@@ -269,7 +300,14 @@ export const PoseContextProvider = (props) => {
                 //2. Segunda posicion
                 if (arrayVerificarCruz[0] == 'LHM' && arrayVerificarCruz[1] == '' && value == 'LHL') {
                     arrayVerificarCruz[1] = 'LHL';
-                    arraySegundosVerificarCruz[1] = time
+                    arraySegundosVerificarCruz[1] = time;
+
+                    //volumen
+                    timeMediaCruz = arraySegundosVerificarCruz[1] - arraySegundosVerificarCruz[0];
+                    lastTimeCruz = time
+                } else if (arrayVerificarCruz[1] == 'LHL' && arrayVerificarCruz[2] == '' && value == 'LHL') {
+                    lastTimeCruz = time;
+                    return;
                 }
 
 
@@ -277,24 +315,49 @@ export const PoseContextProvider = (props) => {
                 if (arrayVerificarCruz[1] == 'LHL' && arrayVerificarCruz[2] == '' && value == 'LHR') {
                     arrayVerificarCruz[2] = 'LHR';
                     arraySegundosVerificarCruz[2] = time;
+
+                    //volumen
+                    timeMediaCruz = (timeMediaCruz + (time - lastTimeCruz)) / 2;
+                    lastTimeCruz = time;
+                } else if (arrayVerificarCruz[2] == 'LHR' && arrayVerificarCruz[3] == '' && value == 'LHR') {
+                    lastTimeCruz = time;
+                    return;
                 }
 
                 //4. Cuarta posicion
                 if (arrayVerificarCruz[2] == 'LHR' && arrayVerificarCruz[3] == '' && value == 'LHM') {
                     arrayVerificarCruz[3] = 'LHM';
                     arraySegundosVerificarCruz[3] = time;
+
+                    //volumen
+                    timeMediaCruz = (timeMediaCruz + (time - lastTimeCruz)) / 2;
+                    lastTimeCruz = time;
+                } else if (arrayVerificarCruz[3] == 'LHM' && arrayVerificarCruz[4] == '' && value == 'LHM') {
+                    lastTimeCruz = time;
+                    return;
                 }
 
                 //5. Quinta posicion
                 if (arrayVerificarCruz[3] == 'LHM' && arrayVerificarCruz[4] == '' && value == 'LHU') {
                     arrayVerificarCruz[4] = 'LHU';
                     arraySegundosVerificarCruz[4] = time;
+
+                    //volumen
+                    timeMediaCruz = (timeMediaCruz + (time - lastTimeCruz)) / 2;
+                    lastTimeCruz = time;
+                } else if (arrayVerificarCruz[4] == 'LHU' && arrayVerificarCruz[4] == '' && value == 'LHU') {
+                    lastTimeCruz = time;
+                    return;
                 }
 
                 //6. Quinta posicion
                 if (arrayVerificarCruz[4] == 'LHU' && arrayVerificarCruz[5] == '' && value == 'LHM') {
                     arrayVerificarCruz[5] = 'LHM';
                     arraySegundosVerificarCruz[5] = time;
+
+                    //volumen
+                    timeMediaCruz = (timeMediaCruz + (time - lastTimeCruz)) / 2;
+                    lastTimeCruz = time;
                 }
             }
 
@@ -318,14 +381,13 @@ export const PoseContextProvider = (props) => {
                 let newBPM = timetoBPM(timeToSeconds(timeDifference), 'punzada')
                 console.log(newBPM, 'new BPM')
                 alert('patron encontrado');
-                arrayVerificarPunzadaRight = ['', '', ''];
-                arraySegundosVerificarPunzadaRight = [0, 0, 0];
+                resetBpmInputs();
 
-                arrayVerificarTrianguloRight = ['', '', '', '', ''];
-                arraySegundosVerificarTrianguloRight = [0, 0, 0, 0, 0];
+                //volumen
+                volume = timeMediaPunzadaRight;
+                //console.log(timeMediaPunzada)
 
-                arrayVerificarCruzRight = ['', '', '', '', '', ''];
-                arraySegundosVerificarCruzRight = [0, 0, 0, 0, 0, 0];
+                resetVolumeInputs();
                 return newBPM;
             }
 
@@ -373,14 +435,13 @@ export const PoseContextProvider = (props) => {
                 console.log(timeToString(timeDifference), 'time difference')
                 console.log(timetoBPM(timeToSeconds(timeDifference), 'triangulo'), 'new BPM')
                 alert('patron triangulo encontrado');
-                arrayVerificarPunzadaRight = ['', '', ''];
-                arraySegundosVerificarPunzadaRight = [0, 0, 0];
+                resetBpmInputs();
 
-                arrayVerificarTrianguloRight = ['', '', '', '', ''];
-                arraySegundosVerificarTrianguloRight = [0, 0, 0, 0, 0];
+                //volumen
+                //volume = timeMediaTriangulo;
+                //console.log(timeMediaPunzada)
 
-                arrayVerificarCruzRight = ['', '', '', '', '', ''];
-                arraySegundosVerificarCruzRight = [0, 0, 0, 0, 0, 0];
+                resetVolumeInputs();
                 return true;
             }
 
@@ -442,14 +503,13 @@ export const PoseContextProvider = (props) => {
                 console.log(timeToString(timeDifference), 'time difference')
                 console.log(timetoBPM(timeToSeconds(timeDifference), 'cruz'), 'new BPM')
                 alert('patron cruz encontrado');
-                arrayVerificarPunzadaRight = ['', '', ''];
-                arraySegundosVerificarPunzadaRight = [0, 0, 0];
+                resetBpmInputs();
 
-                arrayVerificarTrianguloRight = ['', '', '', '', ''];
-                arraySegundosVerificarTrianguloRight = [0, 0, 0, 0, 0];
+                //volumen
+                //volume = timeMediaTriangulo;
+                //console.log(timeMediaPunzada)
 
-                arrayVerificarCruzRight = ['', '', '', '', '', ''];
-                arraySegundosVerificarCruzRight = [0, 0, 0, 0, 0, 0];
+                resetVolumeInputs();
                 return true;
             }
 
