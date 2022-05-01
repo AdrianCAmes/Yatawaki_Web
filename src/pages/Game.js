@@ -284,6 +284,10 @@ const Game = () => {
         setProgressSpeed((currentBPM * 10) / response.initialBpm);
     }
 
+    const navigate2Menu = () => {
+        navigate('/menu')
+    }
+
     const drawPose = async (pose) => {
         if (webcam.canvas) {
             ctx.drawImage(webcam.canvas, 0, 0);
@@ -378,7 +382,7 @@ const Game = () => {
                         <Box className="hover" onClick={() => { pause() }} style={{ backgroundColor: '#FF5E5B', borderRadius: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50px', width: '50px' }}>
                             <PauseRounded style={{ color: '#FFF', fontSize: '50px' }} />
                         </Box>
-                        <PauseMenu open={openDialog} handleClose={handleCloseDialog} resume={resume}></PauseMenu>
+                        <PauseMenu open={openDialog} handleClose={handleCloseDialog} resume={resume} exit={navigate2Menu}></PauseMenu>
                     </div>
                 </div>
                 {response.instruments.map((instrument, idx) => (

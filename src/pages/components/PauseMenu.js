@@ -34,7 +34,7 @@ const PauseMenu = (props) => {
                     </div>
                     <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Box className="hover" sx={buttonStyle}>
-                            <Typography style={{ fontSize: '30px', color: '#FFF' }}> Salir</Typography>
+                            <Typography onClick={() => {props.exit()}} style={{ fontSize: '30px', color: '#FFF' }}> Salir</Typography>
                         </Box>
                     </div>
                 </div>
