@@ -14,6 +14,7 @@ import * as tmPose from '@teachablemachine/pose'
 import { useNavigate } from "react-router-dom";
 import AudioController from "../context/audio-context-controller";
 import PoseContext from "../context/pose-controller";
+import PauseMenu from "./components/PauseMenu";
 
 let buttonStyle = { width: '150px', height: '50px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '20px' };
 
@@ -43,7 +44,7 @@ const Game = () => {
     const [currentVolume, setCurrentVolume] = useState(0);
     const songDuration = 120; //segundos
     const [speed, setProgressSpeed] = useState(10);
-
+    
     const [pauseBpm, setPauseBpm] = useState(0);
     
 
@@ -163,6 +164,11 @@ const Game = () => {
     let modelRight, webcam, ctx, ctx2, labelContainerRight, maxPredictionsRight, modelLeft, labelContainerLeft, maxPredictionsLeft;
     const [open, setOpen] = React.useState(true);
     const [loading, setLoading] = React.useState(true);
+    const [openDialog, setOpenDialog] = React.useState(false);
+
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+    };
 
     const init = async () => {
         const modelURLRight = URLRight + "model.json";
@@ -268,13 +274,18 @@ const Game = () => {
         audioController.setBPM(1);
         poseController.pauseController();
         setProgressSpeed((1 * 10) / response.initialBpm);
+        setOpenDialog(true);
     }
 
     const resume = () => {
+        setOpenDialog(false);
         audioController.setBPM(currentBPM);
         poseController.startController(response.initialBpm);
         setProgressSpeed((currentBPM * 10) / response.initialBpm);
+    }
 
+    const navigate2Menu = () => {
+        navigate('/menu')
     }
 
     const drawPose = async (pose) => {
@@ -368,9 +379,10 @@ const Game = () => {
                         <LinearProgress variant="determinate" value={(Math.floor((time / 1000)) / songDuration) * 100} style={{ height: '10px', borderRadius: 5 }} />
                     </Box>
                     <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-                        <Box className="hover" style={{ backgroundColor: '#FF5E5B', borderRadius: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50px', width: '50px' }}>
+                        <Box className="hover" onClick={() => { pause() }} style={{ backgroundColor: '#FF5E5B', borderRadius: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50px', width: '50px' }}>
                             <PauseRounded style={{ color: '#FFF', fontSize: '50px' }} />
                         </Box>
+                        <PauseMenu open={openDialog} handleClose={handleCloseDialog} resume={resume} exit={navigate2Menu}></PauseMenu>
                     </div>
                 </div>
                 {response.instruments.map((instrument, idx) => (
