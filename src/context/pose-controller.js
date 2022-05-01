@@ -25,6 +25,8 @@ export const PoseContextProvider = (props) => {
 
     let arrayVerificarTriangulo = ['', '', '', '', ''];
     let arraySegundosVerificarTriangulo = [0, 0, 0, 0, 0];
+    let timeMediaTriangulo = 0;
+    let lastTimeTriangulo = 0;
 
     let arrayVerificarCruz = ['', '', '', '', '', ''];
     let arraySegundosVerificarCruz = [0, 0, 0, 0, 0, 0];
@@ -84,6 +86,8 @@ export const PoseContextProvider = (props) => {
                 //console.log(timeMediaPunzada)
                 timeMediaPunzada = 0;
                 lastTimePunzada = 0;
+                timeMediaTriangulo = 0;
+                lastTimeTriangulo = 0;
                 return newBPM;
             }
 
@@ -146,6 +150,14 @@ export const PoseContextProvider = (props) => {
 
                 arrayVerificarCruz = ['', '', '', '', '', ''];
                 arraySegundosVerificarCruz = [0, 0, 0, 0, 0, 0];
+
+                //volumen
+                volume = timeMediaTriangulo;
+                //console.log(timeMediaPunzada)
+                timeMediaPunzada = 0;
+                lastTimePunzada = 0;
+                timeMediaTriangulo = 0;
+                lastTimeTriangulo = 0;
                 return true;
             }
 
@@ -166,6 +178,13 @@ export const PoseContextProvider = (props) => {
                 if (arrayVerificarTriangulo[0] == 'LHD' && arrayVerificarTriangulo[1] == '' && value == 'LHL') {
                     arrayVerificarTriangulo[1] = 'LHL';
                     arraySegundosVerificarTriangulo[1] = time
+
+                    //volumen
+                    timeMediaTriangulo = arraySegundosVerificarTriangulo[1] - arraySegundosVerificarTriangulo[0];
+                    lastTimeTriangulo = time
+                } else if (arrayVerificarTriangulo[1] == 'LHL' && arrayVerificarTriangulo[2] == '' && value == 'LHL') {
+                    lastTimeTriangulo = time;
+                    return;
                 }
 
 
@@ -173,18 +192,35 @@ export const PoseContextProvider = (props) => {
                 if (arrayVerificarTriangulo[1] == 'LHL' && arrayVerificarTriangulo[2] == '' && value == 'LHD') {
                     arrayVerificarTriangulo[2] = 'LHD';
                     arraySegundosVerificarTriangulo[2] = time;
+
+                    //volumen
+                    timeMediaTriangulo = (timeMediaTriangulo + (time - lastTimeTriangulo)) / 2;
+                    lastTimeTriangulo = time
+                } else if (arrayVerificarTriangulo[2] == 'LHD' && arrayVerificarTriangulo[3] == '' && value == 'LHD') {
+                    lastTimeTriangulo = time;
+                    return;
                 }
 
                 //4. Cuarta posicion
                 if (arrayVerificarTriangulo[2] == 'LHD' && arrayVerificarTriangulo[3] == '' && value == 'LHU') {
                     arrayVerificarTriangulo[3] = 'LHU';
                     arraySegundosVerificarTriangulo[3] = time;
+
+                    //volumen
+                    timeMediaTriangulo = (timeMediaTriangulo + (time - lastTimeTriangulo)) / 2;
+                    lastTimeTriangulo = time
+                } else if (arrayVerificarTriangulo[3] == 'LHU' && arrayVerificarTriangulo[4] == '' && value == 'LHU') {
+                    lastTimeTriangulo = time;
+                    return;
                 }
 
-                //3. Quinta posicion
+                //5. Quinta posicion
                 if (arrayVerificarTriangulo[3] == 'LHU' && arrayVerificarTriangulo[4] == '' && value == 'LHD') {
                     arrayVerificarTriangulo[4] = 'LHD';
                     arraySegundosVerificarTriangulo[4] = time;
+
+                    //volumen
+                    timeMediaTriangulo = (timeMediaTriangulo + (time - lastTimeTriangulo)) / 2
                 }
             }
 
