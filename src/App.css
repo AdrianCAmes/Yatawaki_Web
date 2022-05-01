@@ -248,6 +248,11 @@
      color: #FFF;
  }
 
+ .button-perfil2 {
+     font-size: 25px !important;
+     color: #000;
+ }
+
  /* end Perfil */
 
  /* Game Resume */
@@ -391,14 +396,14 @@
  }
 
  @keyframes fadeGuitar2 {
-    from {
-        transform: rotate(-25deg) scale(1.1);
-    }
+     from {
+         transform: rotate(-25deg) scale(1.1);
+     }
 
-    to {
-        transform: rotate(-20deg) scale(1);
-    }
-}
+     to {
+         transform: rotate(-20deg) scale(1);
+     }
+ }
 
  .chello {
      transform: rotate(40deg);
@@ -429,31 +434,31 @@
  }
 
  @keyframes fadeChello2 {
-    from {
-        transform: rotate(45deg) scale(1);
-    }
+     from {
+         transform: rotate(45deg) scale(1);
+     }
 
-    to {
-        transform: rotate(40deg) scale(1);
-    }
-}
+     to {
+         transform: rotate(40deg) scale(1);
+     }
+ }
 
 
 
-.canvasAnimation {
-    animation: canvas 2s;
-}
+ .canvasAnimation {
+     animation: canvas 2s;
+ }
 
-@keyframes canvas {
-    0% {
-        opacity: 0.5;
-        transform: scale(0)
-    }
+ @keyframes canvas {
+     0% {
+         opacity: 0.5;
+         transform: scale(0)
+     }
 
-    100% {
-        opacity: 1;
-        transform: scale(1)
-    }
-}
+     100% {
+         opacity: 1;
+         transform: scale(1)
+     }
+ }
 
  /* end Game animations */

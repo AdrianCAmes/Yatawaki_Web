@@ -38,7 +38,6 @@ function App() {
               <Route path="/prueba" element={<Prueba />} />
               <Route path="/timer-prueba" element={<Timer />} />
 
-              <Route path="/edit-perfil" element={<EditarPerfil />}/>
             </Routes>
           </BrowserRouter>
 

@@ -18,7 +18,7 @@ const UserApi = {
     }),
     resume: (username) => apiInstance.get(`${uri}${username}/resume`, getHeaderToken()),
     getUserProfileById: (userId) => apiInstance.get(`${uri}${userId}/profile`, getHeaderToken()),
-    updateuser: (idUser, firstname, lastname, nickname, mail) => apiInstance.put(`${uri}`,{
+    updateuser: (idUser, firstname, lastname, nickname, mail) => apiInstance.patch(`${uri}`,{
         idUser: idUser,
         firstname: firstname,
         lastname: lastname,
