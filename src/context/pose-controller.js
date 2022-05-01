@@ -448,7 +448,7 @@ export const PoseContextProvider = (props) => {
                 resetBpmInputs();
 
                 //volumen
-                //volume = timeMediaTriangulo;
+                volume = timeMediaTrianguloRight;
                 //console.log(timeMediaPunzada)
 
                 resetVolumeInputs();
@@ -471,7 +471,14 @@ export const PoseContextProvider = (props) => {
                 //2. Segunda posicion
                 if (arrayVerificarTrianguloRight[0] == 'RHM' && arrayVerificarTrianguloRight[1] == '' && value == 'RHR') {
                     arrayVerificarTrianguloRight[1] = 'RHR';
-                    arraySegundosVerificarTrianguloRight[1] = time
+                    arraySegundosVerificarTrianguloRight[1] = time;
+
+                    //volumen
+                    timeMediaTrianguloRight = arrayVerificarTrianguloRight[1] - arrayVerificarTrianguloRight[0];
+                    lastTimeTrianguloRight = time
+                } else if (arrayVerificarTrianguloRight[1] == 'RHR' && arrayVerificarTrianguloRight[2] == '' && value == 'RHR') {
+                    lastTimeTrianguloRight = time;
+                    return;
                 }
 
 
@@ -479,18 +486,35 @@ export const PoseContextProvider = (props) => {
                 if (arrayVerificarTrianguloRight[1] == 'RHR' && arrayVerificarTrianguloRight[2] == '' && value == 'RHM') {
                     arrayVerificarTrianguloRight[2] = 'RHM';
                     arraySegundosVerificarTrianguloRight[2] = time;
+
+                    //volumen
+                    timeMediaTrianguloRight = (timeMediaTrianguloRight + (time - lastTimeTrianguloRight)) / 2;
+                    lastTimeTrianguloRight = time
+                } else if (arrayVerificarTrianguloRight[2] == 'RHM' && arrayVerificarTrianguloRight[3] == '' && value == 'RHM') {
+                    lastTimeTrianguloRight = time;
+                    return;
                 }
 
                 //4. Cuarta posicion
                 if (arrayVerificarTrianguloRight[2] == 'RHM' && arrayVerificarTrianguloRight[3] == '' && value == 'RHU') {
                     arrayVerificarTrianguloRight[3] = 'RHU';
                     arraySegundosVerificarTrianguloRight[3] = time;
+
+                    //volumen
+                    timeMediaTrianguloRight = (timeMediaTrianguloRight + (time - lastTimeTrianguloRight)) / 2;
+                    lastTimeTrianguloRight = time
+                } else if (arrayVerificarTrianguloRight[3] == 'RHU' && arrayVerificarTrianguloRight[4] == '' && value == 'RHU') {
+                    lastTimeTrianguloRight = time;
+                    return;
                 }
 
                 //5. Quinta posicion
                 if (arrayVerificarTrianguloRight[3] == 'RHU' && arrayVerificarTrianguloRight[4] == '' && value == 'RHM') {
                     arrayVerificarTrianguloRight[4] = 'RHM';
                     arraySegundosVerificarTrianguloRight[4] = time;
+
+                    //volumen
+                    timeMediaTrianguloRight = (timeMediaTrianguloRight + (time - lastTimeTrianguloRight)) / 2
                 }
             }
 
