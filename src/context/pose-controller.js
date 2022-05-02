@@ -102,12 +102,12 @@ export const PoseContextProvider = (props) => {
 
     const timeDesviation = (timesArray) => {
         let array = []
-        console.log(timesArray, 'times Array')
+        //console.log(timesArray, 'times Array')
         for (let i = 0; i < timesArray.length - 1; i++) {
             array.push((timesArray[i + 1] - timesArray[i]) / 1000)
         }
 
-        console.log(array, 'diferencias')
+        //console.log(array, 'diferencias')
 
         let mean = array.reduce((acc, curr) => {
             return acc + curr
@@ -127,7 +127,7 @@ export const PoseContextProvider = (props) => {
 
     const getVolume = () => {
         //logica para calcular nuevo volumen;
-        console.log(volume);
+        //console.log(volume);
         return volume;
     }
 
@@ -213,7 +213,9 @@ export const PoseContextProvider = (props) => {
                 console.log(timeToString(arraySegundosVerificarTriangulo[0]), timeToString(arraySegundosVerificarTriangulo[1]), timeToString(arraySegundosVerificarTriangulo[2]), timeToString(arraySegundosVerificarTriangulo[3]), timeToString(arraySegundosVerificarTriangulo[4]), '-', arrayVerificarTriangulo[0], arrayVerificarTriangulo[1], arrayVerificarTriangulo[2], arrayVerificarTriangulo[3], arrayVerificarTriangulo[4]);
 
                 console.log(timeToString(timeDifference), 'time difference')
-                console.log(timetoBPM(timeToSeconds(timeDifference), 'triangulo'), 'new BPM')
+                //console.log(timetoBPM(timeToSeconds(timeDifference), 'triangulo'), 'new BPM')
+                let newBPM = timetoBPM(timeToSeconds(timeDifference), 'triangulo')
+
                 //alert('patron triangulo encontrado');
                 desviation = timeDesviation(arraySegundosVerificarTriangulo);
                 resetBpmInputs();
@@ -224,7 +226,7 @@ export const PoseContextProvider = (props) => {
 
                 resetVolumeInputs();
 
-                return true;
+                return newBPM;
             }
 
             if (value) {
@@ -309,6 +311,8 @@ export const PoseContextProvider = (props) => {
                 console.log(timeToString(timeDifference), 'time difference')
                 console.log(timetoBPM(timeToSeconds(timeDifference), 'cruz'), 'new BPM')
                 //alert('patron cruz encontrado');
+                let newBPM = timetoBPM(timeToSeconds(timeDifference), 'cruz')
+
                 desviation = timeDesviation(arraySegundosVerificarCruz);
 
                 resetBpmInputs();
@@ -319,7 +323,7 @@ export const PoseContextProvider = (props) => {
 
                 resetVolumeInputs();
 
-                return true;
+                return newBPM;
             }
 
             if (value) {
@@ -482,6 +486,8 @@ export const PoseContextProvider = (props) => {
 
                 console.log(timeToString(timeDifference), 'time difference')
                 console.log(timetoBPM(timeToSeconds(timeDifference), 'triangulo'), 'new BPM')
+                let newBPM = timetoBPM(timeToSeconds(timeDifference), 'cruz')
+
                 //alert('patron triangulo encontrado');
                 desviation = timeDesviation(arraySegundosVerificarTrianguloRight);
 
@@ -492,7 +498,7 @@ export const PoseContextProvider = (props) => {
                 //console.log(timeMediaPunzada)
 
                 resetVolumeInputs();
-                return true;
+                return newBPM;
             }
 
             if (value) {
@@ -576,6 +582,8 @@ export const PoseContextProvider = (props) => {
                     arrayVerificarCruzRight[0], arrayVerificarCruzRight[1], arrayVerificarCruzRight[2], arrayVerificarCruzRight[3], arrayVerificarCruzRight[4], arrayVerificarCruzRight[5]);
                 console.log(timeToString(timeDifference), 'time difference')
                 console.log(timetoBPM(timeToSeconds(timeDifference), 'cruz'), 'new BPM')
+                let newBPM = timetoBPM(timeToSeconds(timeDifference), 'cruz')
+
                 //alert('patron cruz encontrado');
                 desviation = timeDesviation(arraySegundosVerificarCruzRight);
 
@@ -586,7 +594,7 @@ export const PoseContextProvider = (props) => {
                 //console.log(timeMediaPunzada)
 
                 resetVolumeInputs();
-                return true;
+                return newBPM;
             }
 
             if (value) {

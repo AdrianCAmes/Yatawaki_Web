@@ -1,14 +1,8 @@
 import { CircularProgress, Dialog, LinearProgress, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
-import piano from '../assets/piano.png';
-import viola from '../assets/viola.png';
-import chello from '../assets/chello.png';
 import calibracion from '../assets/calibracion.png';
-import guitar from '../assets/guitar.png';
 import { PauseRounded } from "@mui/icons-material";
 import { Box } from "@mui/system";
-import chopin from "../assets/songs/Chopin - Nocturne op.9 No.2.mp3"
-import mozart from "../assets/songs/mozart.mp3"
 import '@tensorflow/tfjs'
 import * as tmPose from '@teachablemachine/pose'
 import { useNavigate } from "react-router-dom";
@@ -221,7 +215,7 @@ const Game = () => {
         // append/get elements to the DOM
         const canvas = document.getElementsByClassName("canvas");
         canvas[1].width = size; canvas[1].height = size;
-        canvas[0].width = 250; canvas[0].height = 250;
+        canvas[0].width = 300; canvas[0].height = 300;
         ctx = canvas[0].getContext("2d");
         ctx2 = canvas[1].getContext("2d");
         labelContainerRight = document.getElementById("label-container");
@@ -395,21 +389,30 @@ const Game = () => {
                 //console.log(aux);
                 if (aux.length > 0) {
                     let punzadaBpm = poseController.checkPunzada(aux[0]);
+                    let trianguloBpm = poseController.checkTriangulo(aux[0]);
+                    let cruzBpm = poseController.checkCruz(aux[0]);
                     if (punzadaBpm) {
                         calcularPuntajePrecision(poseController.getDesviation(), 'punzada');
                         calcularPuntajeBpm(punzadaBpm);
-
-                        //alert('BPM a punto de cambiar')
                         setNewBPM(punzadaBpm)
-                        //setCurrentVolume(poseController.getVolume())
-                        //alert(poseController.getVolume())
-
+                        //hacer algo con el volumen
+                        console.log(poseController.getVolume() / 1000, 'volumen')
+                        setCurrentVolume(poseController.getVolume())
                     }
-                    //poseContext.checkTriangulo(aux[0]);
-                    //poseContext.checkCruz(aux[0]);
-                    //if (plumada) {
-                    //    setShowPlumada(true);
-                    //}
+                    if (trianguloBpm) {
+                        calcularPuntajePrecision(poseController.getDesviation(), 'triangulo');
+                        calcularPuntajeBpm(trianguloBpm);
+                        setNewBPM(trianguloBpm)
+                        console.log(poseController.getVolume() / 1000, 'volumen')
+                        //setCurrentVolume(poseController.getVolume())
+                    }
+                    if (cruzBpm) {
+                        calcularPuntajePrecision(poseController.getDesviation(), 'cruz');
+                        calcularPuntajeBpm(cruzBpm);
+                        setNewBPM(cruzBpm);
+                        console.log(poseController.getVolume() / 1000, 'volumen')
+                    }
+
 
                 }
 
@@ -474,7 +477,7 @@ const Game = () => {
                 {/* <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> Media Volumen: {currentVolume}</Typography> */}
                 <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', right: '2%' }}> Puntaje: {puntaje}</Typography>
 
-                <canvas style={{ position: 'absolute', left: '40%', top: '62%', borderRadius: '30px', visibility: !open ? 'visible' : 'hidden' }} className={`canvas ${!open ? "canvasAnimation" : ""}`}></canvas>
+                <canvas style={{ position: 'absolute', left: '40%', bottom: '3%', borderRadius: '30px', visibility: !open ? 'visible' : 'hidden' }} className={`canvas ${!open ? "canvasAnimation" : ""}`}></canvas>
                 <button style={{ position: 'absolute', left: '40%', top: '62%', borderRadius: '30px' }} onClick={() => { stopAnimationLeft() }}>stop left</button>
                 <button style={{ position: 'absolute', left: '40%', top: '66%', borderRadius: '30px' }} onClick={() => { animateLeft() }}>start Left</button>
                 <button style={{ position: 'absolute', left: '45%', top: '62%', borderRadius: '30px' }} onClick={() => { stopAnimationRight() }}>stop Right</button>

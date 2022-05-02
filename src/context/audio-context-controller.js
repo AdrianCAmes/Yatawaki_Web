@@ -25,16 +25,14 @@ export const AudioContextProvider = (props) => {
     let pitchShift = new Tone.PitchShift(0).toDestination();
 
 
-    players.volume.value = -10;
+    players.volume.value = 0;
     players.playbackRate = 1;
     let initialBpm = 100;
 
     const setSongs = (songs) => {
         songsArray = songs;
         for (let song of songs) {
-            if (song.name !== 'Piano') {
-                players.add(song.name, song.track);
-            }
+            players.add(song.name, song.track);
         }
         console.log('added songs');
     }
@@ -48,10 +46,7 @@ export const AudioContextProvider = (props) => {
 
         if (players.loaded) {
             for (let song of songsArray) {
-                if (song.name !== 'Piano') {
-                    players.player(song.name).start();
-                }
-
+                players.player(song.name).start();
             }
             console.log('started!');
 
