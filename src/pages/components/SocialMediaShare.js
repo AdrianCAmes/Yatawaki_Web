@@ -1,4 +1,4 @@
-import { Box, Dialog, Divider, Grid, Typography } from "@mui/material";
+import { Box, Dialog, Divider, Typography } from "@mui/material";
 import React from "react";
 import { FacebookShareButton, WhatsappShareButton,TwitterShareButton } from "react-share";
 import { FacebookIcon, WhatsappIcon, TwitterIcon } from "react-share";
@@ -37,8 +37,8 @@ const SocialMediaShare = (props) => {
                         </TwitterShareButton>
                     </Divider>
                     <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <Box className="hover" sx={buttonStyle}>
-                            <Typography style={{ fontSize: '30px', color: '#FFF' }}> Cancelar</Typography>
+                        <Box className="hover" sx={buttonStyle} >
+                            <Typography onClick={() => {props.exit()}} style={{ fontSize: '30px', color: '#FFF' }}> Cancelar</Typography>
                         </Box>
                     </div>
                  </div>   

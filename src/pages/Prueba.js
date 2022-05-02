@@ -4,13 +4,25 @@ import * as Tone from "tone";
 import chopin from "../assets/songs/Chopin - Nocturne op.9 No.2.mp3"
 import mozart from "../assets/songs/mozart.mp3"
 import AudioController from "../context/audio-context-controller";
-
+import SocialMediaShare from "./components/SocialMediaShare";
+import { useNavigate } from "react-router-dom";
+import CameraDenied from "./components/CameraDenied";
 
 
 const Prueba = () => {
-
+    const navigate = useNavigate();
     const audioController = React.useContext(AudioController);
     const [started, setStarted] = useState(false);
+    const [openDialog, setOpenDialog] = React.useState(false);
+    const [openDialog2, setOpenDialog2] = React.useState(false);
+
+    const handleCloseDialog = () =>{
+        setOpenDialog(true);
+    }
+
+    const handleCloseDialog2 = () =>{
+        setOpenDialog2(true);
+    }
 
     const start = async () => {
         await Tone.start();
@@ -44,6 +56,13 @@ const Prueba = () => {
         audioController.setSongs(songs);
     }
 
+    const exit = () => {
+        navigate('/menu')
+    }
+
+    const camera = () =>{
+
+    }
 
 
 
@@ -74,7 +93,14 @@ const Prueba = () => {
                 <Button variant="contained" onClick={() => { setSongs() }}>
                     canciones
                 </Button>
-
+                <Button variant="contained" onClick={() => { handleCloseDialog()}}>
+                    Compartir!
+                    <SocialMediaShare open={openDialog} handleClose={handleCloseDialog}></SocialMediaShare>
+                </Button>
+                <Button variant="contained" onClick={() => { handleCloseDialog2()}}>
+                    Camara Denegada
+                    <CameraDenied open={openDialog2} handleClose={handleCloseDialog2}></CameraDenied>
+                </Button>
 
                 {started ? 'activo' : 'pausa'}
 

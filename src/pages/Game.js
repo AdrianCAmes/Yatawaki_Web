@@ -220,13 +220,13 @@ const Game = () => {
         // Prediction #1: run input through posenet
         // estimatePose can take in an image, video or canvas html element
         const { pose, posenetOutput } = await modelRight.estimatePose(webcam.canvas);
-
+        
         // Prediction 2: run input through teachable machine classification model
-        const prediction = await modelRight.predict(posenetOutput);
-
+        const predictionRight = await modelRight.predict(posenetOutput);
+        poseDecoderRight(predictionRight);
         for (let i = 0; i < maxPredictionsRight; i++) {
             const classPrediction =
-                prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+                predictionRight[i].className + ": " + predictionRight[i].probability.toFixed(2);
             labelContainerRight.childNodes[i].innerHTML = classPrediction;
         }
 
@@ -275,6 +275,11 @@ const Game = () => {
         poseController.pauseController();
         setProgressSpeed((1 * 10) / response.initialBpm);
         setOpenDialog(true);
+        
+    }
+
+    const reset = () =>{
+        
     }
 
     const resume = () => {
@@ -337,6 +342,36 @@ const Game = () => {
         }
     }
 
+    const poseDecoderRight = async (predictionRight) => {
+        if (predictionRight) {
+            const aux = [];
+            for (let i = 0; i < maxPredictionsRight; i++) {
+                if (predictionRight[i].probability > 0.97) {
+                    aux.push(predictionRight[i].className);
+                    if (aux[aux.length] == aux[aux.length - 1]) {
+                        aux.pop();
+                    }
+                }
+
+                console.log(aux);
+                if (aux.length > 0) {
+                    let plumadaBPM = poseController.checkPunzadaRight(aux[0]);
+                    if (plumadaBPM) {
+                        //alert('BPM a punto de cambiar')
+                        //setNewBPM(plumadaBPM)
+                        setCurrentVolume(poseController.getVolume())
+                        //alert(poseController.getVolume())
+                    }
+                    //poseContext.checkTriangulo(aux[0]);
+                    //poseContext.checkCruz(aux[0]);
+                    //if (plumada) {
+                    //    setShowPlumada(true);
+                    //}
+                }
+            }
+        }
+    }
+
     //seteo variables iniciales de juego
     React.useEffect(() => {
         setVariablesGame();
@@ -370,7 +405,9 @@ const Game = () => {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Typography fontWeight='600' fontSize='30px' style={{ flex: 1, display: 'flex' }}> Ahora tocando: {response.name}</Typography>
 
-
+                    <Box className="hover" sx={buttonStyle} onClick={() => { startGame() }}>
+                        <Typography className="title-button" fontSize="30px!important" > Iniciar</Typography>
+                    </Box>
                     <Box sx={{ width: '30%' }}>
                         <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {Math.round((Math.floor((time / 1000)) / songDuration) * 100)}%</Typography>
                         {/* <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {("0" + Math.floor((time / 60000) % 60)).slice(-2)}:{("0" + Math.floor((time / 1000) % 60)).slice(-2)}</Typography> */}
@@ -378,6 +415,7 @@ const Game = () => {
                         {/* <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {Math.floor((time / 1000))} segundos</Typography> */}
                         <LinearProgress variant="determinate" value={(Math.floor((time / 1000)) / songDuration) * 100} style={{ height: '10px', borderRadius: 5 }} />
                     </Box>
+
                     <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
                         <Box className="hover" onClick={() => { pause() }} style={{ backgroundColor: '#FF5E5B', borderRadius: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50px', width: '50px' }}>
                             <PauseRounded style={{ color: '#FFF', fontSize: '50px' }} />
