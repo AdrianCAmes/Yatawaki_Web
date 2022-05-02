@@ -16,6 +16,11 @@ const ConcertApis = {
         gesturesCompleted: 10,
         gainedCoins: 110
     }, getHeaderToken()),
+
+    startConcert: () => apiInstance.post(`${uri}start`, {
+        idUser: 1,
+        idSymphony: 1,
+    }, getHeaderToken()),
 }
 
 export default ConcertApis;

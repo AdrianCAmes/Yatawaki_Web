@@ -32,7 +32,9 @@ export const AudioContextProvider = (props) => {
     const setSongs = (songs) => {
         songsArray = songs;
         for (let song of songs) {
-            players.add(song.name, song.audio);
+            if (song.name !== 'Piano') {
+                players.add(song.name, song.track);
+            }
         }
         console.log('added songs');
     }
@@ -46,7 +48,10 @@ export const AudioContextProvider = (props) => {
 
         if (players.loaded) {
             for (let song of songsArray) {
-                players.player(song.name).start();
+                if (song.name !== 'Piano') {
+                    players.player(song.name).start();
+                }
+
             }
             console.log('started!');
 
