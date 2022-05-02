@@ -288,7 +288,7 @@ const Game = () => {
         navigate('/menu')
     }
 
-    const calcularPuntajeBpm = (desviacion, patron) => {
+    const calcularPuntajePrecision = (desviacion, patron) => {
         if (patron === 'punzada') {
             if (desviacion > 1.5) {
                 setPuntaje((prevPuntaje) => prevPuntaje + 2)
@@ -323,6 +323,25 @@ const Game = () => {
 
     }
 
+    const calcularPuntajeBpm = (nuevoBpm) => {
+        //calculamos puntaje de limite
+        if (nuevoBpm > (response.initialBpm - 10) && (nuevoBpm < (response.initialBpm + 10))) {
+            setPuntaje((prevPuntaje) => prevPuntaje + 5)
+        } else if (nuevoBpm > (response.initialBpm - 20) && (nuevoBpm < (response.initialBpm + 20))) {
+            setPuntaje((prevPuntaje) => prevPuntaje + 3)
+        } else if (nuevoBpm > (response.initialBpm - 40) && (nuevoBpm < (response.initialBpm + 40))) {
+            setPuntaje((prevPuntaje) => prevPuntaje + 1)
+        } else if (nuevoBpm > (response.initialBpm - 70 + (70 * 0.2)) && (nuevoBpm < (response.initialBpm + 70 + (70 * 0.2)))) {
+            setPuntaje((prevPuntaje) => prevPuntaje - 10)
+        } else if (nuevoBpm > (response.initialBpm - 70 + (70 * 0.5)) && (nuevoBpm < (response.initialBpm + 70 + (70 * 0.5)))) {
+            setPuntaje((prevPuntaje) => prevPuntaje - 20)
+        } else if (nuevoBpm > (response.initialBpm - 70 + (70 * 0.8)) && (nuevoBpm < (response.initialBpm + 70 + (70 * 0.8)))) {
+            setPuntaje((prevPuntaje) => prevPuntaje - 30)
+        } else {
+            setPuntaje((prevPuntaje) => prevPuntaje - 50)
+        }
+    }
+
     const drawPose = async (pose) => {
         if (webcam.canvas) {
             ctx.drawImage(webcam.canvas, 0, 0);
@@ -353,10 +372,11 @@ const Game = () => {
                 if (aux.length > 0) {
                     let punzadaBpm = poseController.checkPunzada(aux[0]);
                     if (punzadaBpm) {
-                        calcularPuntajeBpm(poseController.getDesviation(), 'punzada')
+                        calcularPuntajePrecision(poseController.getDesviation(), 'punzada');
+                        calcularPuntajeBpm(punzadaBpm);
 
                         //alert('BPM a punto de cambiar')
-                        //setNewBPM(plumadaBPM)
+                        setNewBPM(punzadaBpm)
                         //setCurrentVolume(poseController.getVolume())
                         //alert(poseController.getVolume())
 
@@ -425,8 +445,8 @@ const Game = () => {
                 {response.instruments.map((instrument, idx) => (
                     <div key={idx}>{renderSwitch(instrument)}</div>
                 ))}
-                {/* <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> BPM: {Math.round(currentBPM, 0)}</Typography> */}
-                <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> Media Volumen: {currentVolume}</Typography>
+                <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> BPM: {Math.round(currentBPM, 0)}</Typography>
+                {/* <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> Media Volumen: {currentVolume}</Typography> */}
                 <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', right: '2%' }}> Puntaje: {puntaje}</Typography>
 
                 <canvas style={{ position: 'absolute', left: '40%', top: '62%', borderRadius: '30px', visibility: !open ? 'visible' : 'hidden' }} className={`canvas ${!open ? "canvasAnimation" : ""}`}></canvas>
