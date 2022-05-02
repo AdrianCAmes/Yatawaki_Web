@@ -25,14 +25,14 @@ export const AudioContextProvider = (props) => {
     let pitchShift = new Tone.PitchShift(0).toDestination();
 
 
-    players.volume.value = -10;
+    players.volume.value = 0;
     players.playbackRate = 1;
     let initialBpm = 100;
 
     const setSongs = (songs) => {
         songsArray = songs;
         for (let song of songs) {
-            players.add(song.name, song.audio);
+            players.add(song.name, song.track);
         }
         console.log('added songs');
     }

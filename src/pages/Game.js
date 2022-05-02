@@ -1,20 +1,16 @@
 import { CircularProgress, Dialog, LinearProgress, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
-import piano from '../assets/piano.png';
-import viola from '../assets/viola.png';
-import chello from '../assets/chello.png';
 import calibracion from '../assets/calibracion.png';
-import guitar from '../assets/guitar.png';
 import { PauseRounded } from "@mui/icons-material";
 import { Box } from "@mui/system";
-import chopin from "../assets/songs/Chopin - Nocturne op.9 No.2.mp3"
-import mozart from "../assets/songs/mozart.mp3"
 import '@tensorflow/tfjs'
 import * as tmPose from '@teachablemachine/pose'
 import { useNavigate } from "react-router-dom";
 import AudioController from "../context/audio-context-controller";
 import PoseContext from "../context/pose-controller";
 import PauseMenu from "./components/PauseMenu";
+import ConcertApis from "../apis/concert-apis";
+import SnackBarContext from "../context/snack-bar-context";
 
 let buttonStyle = { width: '150px', height: '50px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '20px' };
 
@@ -23,29 +19,32 @@ const Game = () => {
     const navigate = useNavigate();
     const audioController = React.useContext(AudioController);
     const poseController = React.useContext(PoseContext);
+    const snackBarContext = React.useContext(SnackBarContext);
 
 
-    let response = {
-        "name": "Symphony n9",
-        "initialBpm": 120,
-        "songDuration": 120,
-        "instruments": [
-            { "name": "Piano", "image": piano, "position": "L", "audio": mozart },
-            { "name": "Violin", "image": viola, "position": "L", "audio": mozart },
-            { "name": "Chello", "image": chello, "position": "R", "audio": mozart },
-            { "name": "Guitar", "image": guitar, "position": "R", "audio": mozart },
-        ]
-    }
+    // let response = {
+    //     "name": "Symphony n9",
+    //     "initialBpm": 120,
+    //     "songDuration": 120,
+    //     "instruments": [
+    //         { "name": "Piano", "image": piano, "position": "L", "audio": mozart },
+    //         { "name": "Violin", "image": viola, "position": "L", "audio": mozart },
+    //         { "name": "Chello", "image": chello, "position": "R", "audio": mozart },
+    //         { "name": "Guitar", "image": guitar, "position": "R", "audio": mozart },
+    //     ]
+    // }
 
     //progreso de la cancion
     const [time, setTime] = useState(0);
+    const [response, setResponse] = useState(null);
     const [timerOn, setTimerOn] = useState(false);
-    const [currentBPM, setCurrentBPM] = useState(120);
+    const [currentBPM, setCurrentBPM] = useState(0);
     const [currentVolume, setCurrentVolume] = useState(0);
-    const songDuration = 120; //segundos
+    const [songDuration, setSongDuration] = useState(0);
+
     const [speed, setProgressSpeed] = useState(10);
 
-    const [pauseBpm, setPauseBpm] = useState(0);
+    const [puntaje, setPuntaje] = useState(0);
 
 
     //estados de animaciones
@@ -87,10 +86,25 @@ const Game = () => {
         audioController.start();
     }
 
-    const setVariablesGame = () => {
-        console.log("empezando el juego...");
-        audioController.setSongs(response.instruments);
-        audioController.setInitialBpm(response.initialBpm);
+    const startConcert = () => {
+        ConcertApis.startConcert()
+            .then(response => {
+                //console.log(response.data);
+                //response = response.data;
+                setResponse(response.data);
+                console.log(response);
+                console.log("empezando el juego...");
+
+                audioController.setSongs(response.data.instruments);
+                audioController.setInitialBpm(response.data.initialBpm);
+                setSongDuration(response.data.duration)
+                setCurrentBPM(response.data.initialBpm);
+
+            })
+            .catch(err => {
+                snackBarContext.onOpen({ severity: "error", message: err });
+                console.log(err);
+            })
     }
 
     const changeSpeed = (newBpm) => {
@@ -119,8 +133,12 @@ const Game = () => {
     React.useEffect(() => {
         if (Math.round((Math.floor((time / 1000)) / songDuration) * 100) > 100) {
             //toRegister()
-            alert('tiempo cumplido, por favor refrescar')
-            navigate(0)
+            //alert('tiempo cumplido, por favor refrescar')
+            navigate('/game-resume', {
+                state: {
+                    puntaje: puntaje
+                }
+            })
         }
     }, [time]);
 
@@ -129,28 +147,28 @@ const Game = () => {
         switch (param.name) {
             case 'Piano':
                 return <div>
-                    <img id="hola" style={{ position: 'absolute', left: '8%', top: '15%', height: '230px', }} src={param.image} className={`piano ${animatePiano ? "pianoAnimation" : ""}`} ></img>
+                    <img id="hola" style={{ position: 'absolute', left: '8%', top: '15%', height: '230px', }} src={param.icon} className={`piano ${animatePiano ? "pianoAnimation" : ""}`} ></img>
                 </div>
             case 'Guitar':
                 return <div>
-                    <img style={{ position: 'absolute', left: '52%', top: '29%', height: '170px' }} className={`guitar ${animateGuitar ? "guitarAnimation" : ""}`} src={param.image} ></img>
-                    <img style={{ position: 'absolute', left: '62%', top: '10%', height: '170px' }} className={`guitar ${animateGuitar ? "guitarAnimation" : ""}`} src={param.image} ></img>
+                    <img style={{ position: 'absolute', left: '52%', top: '29%', height: '170px' }} className={`guitar ${animateGuitar ? "guitarAnimation" : ""}`} src={param.icon} ></img>
+                    <img style={{ position: 'absolute', left: '62%', top: '10%', height: '170px' }} className={`guitar ${animateGuitar ? "guitarAnimation" : ""}`} src={param.icon} ></img>
                 </div>
             case 'Violin':
                 return <div>
-                    <img style={{ position: 'absolute', left: '18%', top: '45%', height: '180px' }} className={`violin ${animateViolin ? "violinAnimation" : ""}`} src={param.image} ></img>
-                    <img style={{ position: 'absolute', left: '25%', top: '30%', height: '180px' }} className={`violin ${animateViolin ? "violinAnimation" : ""}`} src={param.image} ></img>
-                    <img style={{ position: 'absolute', left: '34%', top: '17%', height: '180px' }} className={`violin ${animateViolin ? "violinAnimation" : ""}`} src={param.image} ></img>
-                    <img style={{ position: 'absolute', left: '28%', top: '60%', height: '180px' }} className={`violin ${animateViolin ? "violinAnimation" : ""}`} src={param.image} ></img>
-                    <img style={{ position: 'absolute', left: '32%', top: '48%', height: '180px' }} className={`violin ${animateViolin ? "violinAnimation" : ""}`} src={param.image} ></img>
-                    <img style={{ position: 'absolute', left: '39%', top: '36%', height: '180px' }} className={`violin ${animateViolin ? "violinAnimation" : ""}`} src={param.image} ></img>
+                    <img style={{ position: 'absolute', left: '18%', top: '45%', height: '180px' }} className={`violin ${animateViolin ? "violinAnimation" : ""}`} src={param.icon} ></img>
+                    <img style={{ position: 'absolute', left: '25%', top: '30%', height: '180px' }} className={`violin ${animateViolin ? "violinAnimation" : ""}`} src={param.icon} ></img>
+                    <img style={{ position: 'absolute', left: '34%', top: '17%', height: '180px' }} className={`violin ${animateViolin ? "violinAnimation" : ""}`} src={param.icon} ></img>
+                    <img style={{ position: 'absolute', left: '28%', top: '60%', height: '180px' }} className={`violin ${animateViolin ? "violinAnimation" : ""}`} src={param.icon} ></img>
+                    <img style={{ position: 'absolute', left: '32%', top: '48%', height: '180px' }} className={`violin ${animateViolin ? "violinAnimation" : ""}`} src={param.icon} ></img>
+                    <img style={{ position: 'absolute', left: '39%', top: '36%', height: '180px' }} className={`violin ${animateViolin ? "violinAnimation" : ""}`} src={param.icon} ></img>
                 </div>
-            case 'Chello':
+            case 'Cello':
                 return <div>
-                    <img style={{ position: 'absolute', left: '58%', top: '43%', height: '220px' }} className={`chello ${animateChello ? "chelloAnimation" : ""}`} src={param.image} ></img>
-                    <img style={{ position: 'absolute', left: '62%', top: '60%', height: '220px' }} className={`chello ${animateChello ? "chelloAnimation" : ""}`} src={param.image} ></img>
-                    <img style={{ position: 'absolute', left: '70%', top: '20%', height: '220px' }} className={`chello ${animateChello ? "chelloAnimation" : ""}`} src={param.image} ></img>
-                    <img style={{ position: 'absolute', left: '75%', top: '43%', height: '220px' }} className={`chello ${animateChello ? "chelloAnimation" : ""}`} src={param.image} ></img>
+                    <img style={{ position: 'absolute', left: '58%', top: '43%', height: '220px' }} className={`chello ${animateChello ? "chelloAnimation" : ""}`} src={param.icon} ></img>
+                    <img style={{ position: 'absolute', left: '62%', top: '60%', height: '220px' }} className={`chello ${animateChello ? "chelloAnimation" : ""}`} src={param.icon} ></img>
+                    <img style={{ position: 'absolute', left: '70%', top: '20%', height: '220px' }} className={`chello ${animateChello ? "chelloAnimation" : ""}`} src={param.icon} ></img>
+                    <img style={{ position: 'absolute', left: '75%', top: '43%', height: '220px' }} className={`chello ${animateChello ? "chelloAnimation" : ""}`} src={param.icon} ></img>
                 </div>;
             default:
                 return '';
@@ -197,7 +215,7 @@ const Game = () => {
         // append/get elements to the DOM
         const canvas = document.getElementsByClassName("canvas");
         canvas[1].width = size; canvas[1].height = size;
-        canvas[0].width = 250; canvas[0].height = 250;
+        canvas[0].width = 300; canvas[0].height = 300;
         ctx = canvas[0].getContext("2d");
         ctx2 = canvas[1].getContext("2d");
         labelContainerRight = document.getElementById("label-container");
@@ -288,6 +306,60 @@ const Game = () => {
         navigate('/menu')
     }
 
+    const calcularPuntajePrecision = (desviacion, patron) => {
+        if (patron === 'punzada') {
+            if (desviacion > 1.5) {
+                setPuntaje((prevPuntaje) => prevPuntaje + 2)
+            } else if (desviacion > 0.8 && desviacion < 1.5) {
+                setPuntaje((prevPuntaje) => prevPuntaje + 5)
+            } else if (desviacion > 0.2 && desviacion < 0.8) {
+                setPuntaje((prevPuntaje) => prevPuntaje + 7)
+            } else if (desviacion < 0.2) {
+                setPuntaje((prevPuntaje) => prevPuntaje + 10)
+            }
+        } else if (patron === 'triangulo') {
+            if (desviacion > 1.5) {
+                setPuntaje((prevPuntaje) => prevPuntaje + 4)
+            } else if (desviacion > 0.8 && desviacion < 1.5) {
+                setPuntaje((prevPuntaje) => prevPuntaje + 8)
+            } else if (desviacion > 0.2 && desviacion < 0.8) {
+                setPuntaje((prevPuntaje) => prevPuntaje + 12)
+            } else if (desviacion < 0.2) {
+                setPuntaje((prevPuntaje) => prevPuntaje + 15)
+            }
+        } else if (patron === 'cruz') {
+            if (desviacion > 1.5) {
+                setPuntaje((prevPuntaje) => prevPuntaje + 6)
+            } else if (desviacion > 0.8 && desviacion < 1.5) {
+                setPuntaje((prevPuntaje) => prevPuntaje + 10)
+            } else if (desviacion > 0.2 && desviacion < 0.8) {
+                setPuntaje((prevPuntaje) => prevPuntaje + 15)
+            } else if (desviacion < 0.2) {
+                setPuntaje((prevPuntaje) => prevPuntaje + 20)
+            }
+        }
+
+    }
+
+    const calcularPuntajeBpm = (nuevoBpm) => {
+        //calculamos puntaje de limite
+        if (nuevoBpm > (response.initialBpm - 10) && (nuevoBpm < (response.initialBpm + 10))) {
+            setPuntaje((prevPuntaje) => prevPuntaje + 5)
+        } else if (nuevoBpm > (response.initialBpm - 20) && (nuevoBpm < (response.initialBpm + 20))) {
+            setPuntaje((prevPuntaje) => prevPuntaje + 3)
+        } else if (nuevoBpm > (response.initialBpm - 40) && (nuevoBpm < (response.initialBpm + 40))) {
+            setPuntaje((prevPuntaje) => prevPuntaje + 1)
+        } else if (nuevoBpm > (response.initialBpm - 70 + (70 * 0.2)) && (nuevoBpm < (response.initialBpm + 70 + (70 * 0.2)))) {
+            setPuntaje((prevPuntaje) => prevPuntaje - 10)
+        } else if (nuevoBpm > (response.initialBpm - 70 + (70 * 0.5)) && (nuevoBpm < (response.initialBpm + 70 + (70 * 0.5)))) {
+            setPuntaje((prevPuntaje) => prevPuntaje - 20)
+        } else if (nuevoBpm > (response.initialBpm - 70 + (70 * 0.8)) && (nuevoBpm < (response.initialBpm + 70 + (70 * 0.8)))) {
+            setPuntaje((prevPuntaje) => prevPuntaje - 30)
+        } else {
+            setPuntaje((prevPuntaje) => prevPuntaje - 50)
+        }
+    }
+
     const drawPose = async (pose) => {
         if (webcam.canvas) {
             ctx.drawImage(webcam.canvas, 0, 0);
@@ -316,19 +388,31 @@ const Game = () => {
 
                 //console.log(aux);
                 if (aux.length > 0) {
-                    //let plumadaBPM = poseController.checkPunzada(aux[0]);
-                    //if (plumadaBPM) {
-                    //alert('BPM a punto de cambiar')
-                    //setNewBPM(plumadaBPM)
-                    //setCurrentVolume(poseController.getVolume())
-                    //alert(poseController.getVolume())
+                    let punzadaBpm = poseController.checkPunzada(aux[0]);
+                    let trianguloBpm = poseController.checkTriangulo(aux[0]);
+                    let cruzBpm = poseController.checkCruz(aux[0]);
+                    if (punzadaBpm) {
+                        calcularPuntajePrecision(poseController.getDesviation(), 'punzada');
+                        calcularPuntajeBpm(punzadaBpm);
+                        setNewBPM(punzadaBpm)
+                        //hacer algo con el volumen
+                        console.log(poseController.getVolume() / 1000, 'volumen')
+                        setCurrentVolume(poseController.getVolume())
+                    }
+                    if (trianguloBpm) {
+                        calcularPuntajePrecision(poseController.getDesviation(), 'triangulo');
+                        calcularPuntajeBpm(trianguloBpm);
+                        setNewBPM(trianguloBpm)
+                        console.log(poseController.getVolume() / 1000, 'volumen')
+                        //setCurrentVolume(poseController.getVolume())
+                    }
+                    if (cruzBpm) {
+                        calcularPuntajePrecision(poseController.getDesviation(), 'cruz');
+                        calcularPuntajeBpm(cruzBpm);
+                        setNewBPM(cruzBpm);
+                        console.log(poseController.getVolume() / 1000, 'volumen')
+                    }
 
-                    //}
-                    //poseContext.checkTriangulo(aux[0]);
-                    //poseContext.checkCruz(aux[0]);
-                    //if (plumada) {
-                    //    setShowPlumada(true);
-                    //}
 
                 }
 
@@ -339,7 +423,8 @@ const Game = () => {
 
     //seteo variables iniciales de juego
     React.useEffect(() => {
-        setVariablesGame();
+        //setVariablesGame();
+        startConcert();
     }, []);
 
 
@@ -348,7 +433,7 @@ const Game = () => {
     return (
         <React.Fragment>
             <Paper square={true} sx={{ backgroundColor: 'primary.light', height: '100%', width: '100%', padding: '10px' }} elevation={0}>
-                <Dialog PaperProps={{ style: { borderRadius: '50px', backgroundColor: '#FFED66', padding: '30px', display: 'flex', alignItems: 'center' } }} open={open} onClose={() => { setOpen(false) }} fullWidth maxWidth="lg">
+                <Dialog PaperProps={{ style: { borderRadius: '50px', backgroundColor: '#FFED66', padding: '30px', display: 'flex', alignItems: 'center' } }} open={open} fullWidth maxWidth="lg">
 
                     <div style={{ width: '100%', marginBottom: '20px' }}>
                         <Typography fontWeight='600' fontSize="30px!important"> Calibra tu cuerpo con la cámara web:</Typography>
@@ -368,7 +453,7 @@ const Game = () => {
                 </Dialog>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Typography fontWeight='600' fontSize='30px' style={{ flex: 1, display: 'flex' }}> Ahora tocando: {response.name}</Typography>
+                    <Typography fontWeight='600' fontSize='30px' style={{ flex: 1, display: 'flex' }}> Ahora tocando: {response ? response.name : '--'}</Typography>
 
 
                     <Box sx={{ width: '30%' }}>
@@ -385,13 +470,14 @@ const Game = () => {
                         <PauseMenu open={openDialog} handleClose={handleCloseDialog} resume={resume} exit={navigate2Menu}></PauseMenu>
                     </div>
                 </div>
-                {response.instruments.map((instrument, idx) => (
+                {response && response.instruments.map((instrument, idx) => (
                     <div key={idx}>{renderSwitch(instrument)}</div>
                 ))}
-                {/* <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> BPM: {Math.round(currentBPM, 0)}</Typography> */}
-                <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> Media Volumen: {currentVolume}</Typography>
+                <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> BPM: {Math.round(currentBPM, 0)}</Typography>
+                {/* <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> Media Volumen: {currentVolume}</Typography> */}
+                <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', right: '2%' }}> Puntaje: {puntaje}</Typography>
 
-                <canvas style={{ position: 'absolute', left: '40%', top: '62%', borderRadius: '30px', visibility: !open ? 'visible' : 'hidden' }} className={`canvas ${!open ? "canvasAnimation" : ""}`}></canvas>
+                <canvas style={{ position: 'absolute', left: '40%', bottom: '3%', borderRadius: '30px', visibility: !open ? 'visible' : 'hidden' }} className={`canvas ${!open ? "canvasAnimation" : ""}`}></canvas>
                 <button style={{ position: 'absolute', left: '40%', top: '62%', borderRadius: '30px' }} onClick={() => { stopAnimationLeft() }}>stop left</button>
                 <button style={{ position: 'absolute', left: '40%', top: '66%', borderRadius: '30px' }} onClick={() => { animateLeft() }}>start Left</button>
                 <button style={{ position: 'absolute', left: '45%', top: '62%', borderRadius: '30px' }} onClick={() => { stopAnimationRight() }}>stop Right</button>
@@ -402,8 +488,8 @@ const Game = () => {
                 {/* <button style={{ position: 'absolute', left: '45%', top: '70%', borderRadius: '30px' }} onClick={() => { pause() }}>pause</button>
                 <button style={{ position: 'absolute', left: '40%', top: '70%', borderRadius: '30px' }} onClick={() => { resume() }}>resume</button> */}
                 <button style={{ position: 'absolute', left: '40%', top: '70%', borderRadius: '30px' }} onClick={() => { audioController.increasePitch() }}>pitch</button>
-                <button style={{ position: 'absolute', left: '45%', top: '70%', borderRadius: '30px' }} onClick={() => {  audioController.resetPitch() }}>reset pitch</button>
-                <button style={{ position: 'absolute', left: '45%', top: '73%', borderRadius: '30px' }} onClick={() => {  audioController.decreasePitch() }}>menos pitch</button>
+                <button style={{ position: 'absolute', left: '45%', top: '70%', borderRadius: '30px' }} onClick={() => { audioController.resetPitch() }}>reset pitch</button>
+                <button style={{ position: 'absolute', left: '45%', top: '73%', borderRadius: '30px' }} onClick={() => { audioController.decreasePitch() }}>menos pitch</button>
 
 
             </Paper>

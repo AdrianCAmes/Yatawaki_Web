@@ -13,9 +13,7 @@ import Perfil from './pages/Perfil';
 import Game from './pages/Game';
 import GameResume from './pages/GameResume';
 import Market from './pages/Market';
-import Prueba from './pages/Prueba';
 import { AudioContextProvider } from './context/audio-context-controller';
-import Timer from './pages/Timer';
 import { PoseContextProvider } from './context/pose-controller';
 
 
@@ -35,8 +33,6 @@ function App() {
               <Route path="/game" element={<AudioContextProvider><PoseContextProvider><Game /></PoseContextProvider></AudioContextProvider>} />
               <Route path="/game-resume" element={<GameResume />} />
               <Route path="/market" element={<Market />} />
-              <Route path="/prueba" element={<Prueba />} />
-              <Route path="/timer-prueba" element={<Timer />} />
 
             </Routes>
           </BrowserRouter>
