@@ -45,7 +45,7 @@ const Game = () => {
     const songDuration = 120; //segundos
     const [speed, setProgressSpeed] = useState(10);
 
-    const [pauseBpm, setPauseBpm] = useState(0);
+    const [puntaje, setPuntaje] = useState(0);
 
 
     //estados de animaciones
@@ -288,6 +288,41 @@ const Game = () => {
         navigate('/menu')
     }
 
+    const calcularPuntajeBpm = (desviacion, patron) => {
+        if (patron === 'punzada') {
+            if (desviacion > 1.5) {
+                setPuntaje((prevPuntaje) => prevPuntaje + 2)
+            } else if (desviacion > 0.8 && desviacion < 1.5) {
+                setPuntaje((prevPuntaje) => prevPuntaje + 5)
+            } else if (desviacion > 0.2 && desviacion < 0.8) {
+                setPuntaje((prevPuntaje) => prevPuntaje + 7)
+            } else if (desviacion < 0.2) {
+                setPuntaje((prevPuntaje) => prevPuntaje + 10)
+            }
+        } else if (patron === 'triangulo') {
+            if (desviacion > 1.5) {
+                setPuntaje((prevPuntaje) => prevPuntaje + 4)
+            } else if (desviacion > 0.8 && desviacion < 1.5) {
+                setPuntaje((prevPuntaje) => prevPuntaje + 8)
+            } else if (desviacion > 0.2 && desviacion < 0.8) {
+                setPuntaje((prevPuntaje) => prevPuntaje + 12)
+            } else if (desviacion < 0.2) {
+                setPuntaje((prevPuntaje) => prevPuntaje + 15)
+            }
+        } else if (patron === 'cruz') {
+            if (desviacion > 1.5) {
+                setPuntaje((prevPuntaje) => prevPuntaje + 6)
+            } else if (desviacion > 0.8 && desviacion < 1.5) {
+                setPuntaje((prevPuntaje) => prevPuntaje + 10)
+            } else if (desviacion > 0.2 && desviacion < 0.8) {
+                setPuntaje((prevPuntaje) => prevPuntaje + 15)
+            } else if (desviacion < 0.2) {
+                setPuntaje((prevPuntaje) => prevPuntaje + 20)
+            }
+        }
+
+    }
+
     const drawPose = async (pose) => {
         if (webcam.canvas) {
             ctx.drawImage(webcam.canvas, 0, 0);
@@ -316,14 +351,16 @@ const Game = () => {
 
                 //console.log(aux);
                 if (aux.length > 0) {
-                    //let plumadaBPM = poseController.checkPunzada(aux[0]);
-                    //if (plumadaBPM) {
-                    //alert('BPM a punto de cambiar')
-                    //setNewBPM(plumadaBPM)
-                    //setCurrentVolume(poseController.getVolume())
-                    //alert(poseController.getVolume())
+                    let punzadaBpm = poseController.checkPunzada(aux[0]);
+                    if (punzadaBpm) {
+                        calcularPuntajeBpm(poseController.getDesviation(), 'punzada')
 
-                    //}
+                        //alert('BPM a punto de cambiar')
+                        //setNewBPM(plumadaBPM)
+                        //setCurrentVolume(poseController.getVolume())
+                        //alert(poseController.getVolume())
+
+                    }
                     //poseContext.checkTriangulo(aux[0]);
                     //poseContext.checkCruz(aux[0]);
                     //if (plumada) {
@@ -390,6 +427,7 @@ const Game = () => {
                 ))}
                 {/* <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> BPM: {Math.round(currentBPM, 0)}</Typography> */}
                 <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> Media Volumen: {currentVolume}</Typography>
+                <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', right: '2%' }}> Puntaje: {puntaje}</Typography>
 
                 <canvas style={{ position: 'absolute', left: '40%', top: '62%', borderRadius: '30px', visibility: !open ? 'visible' : 'hidden' }} className={`canvas ${!open ? "canvasAnimation" : ""}`}></canvas>
                 <button style={{ position: 'absolute', left: '40%', top: '62%', borderRadius: '30px' }} onClick={() => { stopAnimationLeft() }}>stop left</button>
@@ -402,8 +440,8 @@ const Game = () => {
                 {/* <button style={{ position: 'absolute', left: '45%', top: '70%', borderRadius: '30px' }} onClick={() => { pause() }}>pause</button>
                 <button style={{ position: 'absolute', left: '40%', top: '70%', borderRadius: '30px' }} onClick={() => { resume() }}>resume</button> */}
                 <button style={{ position: 'absolute', left: '40%', top: '70%', borderRadius: '30px' }} onClick={() => { audioController.increasePitch() }}>pitch</button>
-                <button style={{ position: 'absolute', left: '45%', top: '70%', borderRadius: '30px' }} onClick={() => {  audioController.resetPitch() }}>reset pitch</button>
-                <button style={{ position: 'absolute', left: '45%', top: '73%', borderRadius: '30px' }} onClick={() => {  audioController.decreasePitch() }}>menos pitch</button>
+                <button style={{ position: 'absolute', left: '45%', top: '70%', borderRadius: '30px' }} onClick={() => { audioController.resetPitch() }}>reset pitch</button>
+                <button style={{ position: 'absolute', left: '45%', top: '73%', borderRadius: '30px' }} onClick={() => { audioController.decreasePitch() }}>menos pitch</button>
 
 
             </Paper>
