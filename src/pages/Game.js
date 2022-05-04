@@ -42,7 +42,7 @@ const Game = () => {
     const [currentVolume, setCurrentVolume] = useState(72);
     const [songDuration, setSongDuration] = useState(0);
 
-    const [speed, setProgressSpeed] = useState(10);
+    const [speed, setProgressSpeed] = useState(13);
 
     const [puntaje, setPuntaje] = useState(0);
 
@@ -152,7 +152,7 @@ const Game = () => {
             //default speed = 10
             interval = setInterval(() => {
                 setTime((prevTime) => prevTime + speed);
-            }, 9);
+            }, 10);
         } else if (!timerOn) {
             clearInterval(interval);
         }
@@ -302,7 +302,7 @@ const Game = () => {
     }
 
     const changeSpeed = (newBpm) => {
-        setProgressSpeed((newBpm * 10) / response.initialBpm);
+        setProgressSpeed((newBpm * 13) / response.initialBpm);
         audioController.setBPM(newBpm);
         setCurrentBPM(newBpm);
         //console.log((newBpm * 10) / response.initialBpm)
@@ -325,7 +325,7 @@ const Game = () => {
     const pause = () => {
         audioController.setBPM(1);
         poseController.pauseController();
-        setProgressSpeed((1 * 10) / response.initialBpm);
+        setProgressSpeed((1 * 13) / response.initialBpm);
         stopAnimationLeft();
         stopAnimationRight();
         setOpenDialog(true);
@@ -335,7 +335,7 @@ const Game = () => {
         setOpenDialog(false);
         audioController.setBPM(currentBPM);
         poseController.startController(response.initialBpm);
-        setProgressSpeed((currentBPM * 10) / response.initialBpm);
+        setProgressSpeed((currentBPM * 13) / response.initialBpm);
         animateRight();
         animateLeft();
     }
@@ -500,8 +500,14 @@ const Game = () => {
     React.useEffect(() => {
         //setVariablesGame();
         startConcert();
-        init();
     }, []);
+
+    React.useEffect(() => {
+       if (response) {
+           init()
+       }
+    }, [response]);
+
 
 
 
