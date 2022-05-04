@@ -1,5 +1,6 @@
 import { Box, CircularProgress, Dialog, Typography } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import InstrumentApis from "../../apis/instrument-apis";
 import GameContext from "../../context/game-context";
 import InstrumentCard from "./InstrumentCard";
@@ -14,6 +15,8 @@ const SymphonyInstrumentsDialog = (props) => {
     const [instruments, setInstruments] = React.useState([]);
     const [selected, setSelected] = React.useState(null);
     const [selectedIdx, setSelectedIdx] = React.useState(null);
+    const navigate = useNavigate();
+
 
     const handleCloseDialog = () => {
         setOpenDialog(false);
@@ -57,7 +60,7 @@ const SymphonyInstrumentsDialog = (props) => {
                         ))}
                     </div>
                     <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <Box className="hover" sx={buttonStyle}>
+                        <Box className="hover" sx={buttonStyle} onClick={() => {navigate('/game')}}>
                             <Typography style={{ fontSize: '30px', color: '#FFF' }}> Continuar</Typography>
                         </Box>
                     </div>
