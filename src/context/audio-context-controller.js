@@ -13,7 +13,8 @@ const AudioContext = createContext({
     setInitialBpm: null,
     increasePitch: null,
     resetPitch: null,
-    decreasePitch: null
+    decreasePitch: null,
+    setVolume: null
 })
 
 export default AudioContext;
@@ -23,7 +24,6 @@ export const AudioContextProvider = (props) => {
     const players = new Tone.Players().toDestination();
     let songsArray = [];
     let pitchShift = new Tone.PitchShift(0).toDestination();
-
 
     players.volume.value = 0;
     players.playbackRate = 1;
@@ -68,6 +68,31 @@ export const AudioContextProvider = (props) => {
 
     const decreaseVolume = () => {
         players.volume.value = players.volume.value - 5;
+    }
+
+    const setVolume = (volumePercentage, hand) => {
+        let newVolume = 0;
+        let position = hand === "right" ? "R" : "L"
+
+        if (volumePercentage === 30) {
+            newVolume = -15;
+        } else if (volumePercentage === 44) {
+            newVolume = -10;
+        } else if (volumePercentage === 58) {
+            newVolume = -5;
+        } else if (volumePercentage === 72) {
+            newVolume = 0;
+        } else if (volumePercentage === 86) {
+            newVolume = 10;
+        } else if (volumePercentage == 100) {
+            newVolume = 15;
+        }
+
+        for (let song of songsArray) {
+            if (song.position === position) {
+                players.player(song.name).volume.value = newVolume
+            }
+        }
     }
 
     const increaseVolumeRight = () => {
@@ -180,7 +205,8 @@ export const AudioContextProvider = (props) => {
             setInitialBpm: setInitialBpm,
             increasePitch: increasePitch,
             resetPitch: resetPitch,
-            decreasePitch: decreasePitch
+            decreasePitch: decreasePitch,
+            setVolume: setVolume
         }}>
             {props.children}
         </AudioContext.Provider>

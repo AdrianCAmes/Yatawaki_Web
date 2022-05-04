@@ -39,7 +39,7 @@ const Game = () => {
     const [response, setResponse] = useState(null);
     const [timerOn, setTimerOn] = useState(false);
     const [currentBPM, setCurrentBPM] = useState(0);
-    const [currentVolume, setCurrentVolume] = useState(0);
+    const [currentVolume, setCurrentVolume] = useState(72);
     const [songDuration, setSongDuration] = useState(0);
 
     const [speed, setProgressSpeed] = useState(10);
@@ -87,31 +87,63 @@ const Game = () => {
     }
 
     const startConcert = () => {
-        ConcertApis.startConcert()
-            .then(response => {
-                //console.log(response.data);
-                //response = response.data;
-                setResponse(response.data);
-                console.log(response);
-                console.log("empezando el juego...");
+        let response2 = {
+            "idConcert": 72,
+            "name": "Nocturne Op 9 No 2",
+            "initialBpm": 122,
+            "duration": 270,
+            "instruments": [
+                {
+                    "name": "Piano",
+                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Pianos/piano_casio.png",
+                    "position": "L",
+                    "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Piano/piano_casio.mp3"
+                },
+                {
+                    "name": "Violin",
+                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Violins/violin_casio.png",
+                    "position": "L",
+                    "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Violin/violin_casio.mp3"
+                },
+                {
+                    "name": "Cello",
+                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Cellos/cello_casio.png",
+                    "position": "R",
+                    "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Cello/cello_casio.mp3"
+                },
+                {
+                    "name": "Guitar",
+                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Guitars/guitar_casio.png",
+                    "position": "R",
+                    "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Guitar/guitar_casio.mp3"
+                }
+            ]
+        }
+        audioController.setSongs(response2.instruments);
+        audioController.setInitialBpm(response2.initialBpm);
+        setSongDuration(response2.duration)
+        setCurrentBPM(response2.initialBpm);
+        setResponse(response2);
+        // ConcertApis.startConcert()
+        //     .then(response => {
+        //         //console.log(response.data);
+        //         //response = response.data;
+        //         setResponse(response.data);
+        //         console.log(response);
+        //         console.log("empezando el juego...");
 
-                audioController.setSongs(response.data.instruments);
-                audioController.setInitialBpm(response.data.initialBpm);
-                setSongDuration(response.data.duration)
-                setCurrentBPM(response.data.initialBpm);
+        //         audioController.setSongs(response.data.instruments);
+        //         audioController.setInitialBpm(response.data.initialBpm);
+        //         setSongDuration(response.data.duration)
+        //         setCurrentBPM(response.data.initialBpm);
 
-            })
-            .catch(err => {
-                snackBarContext.onOpen({ severity: "error", message: err });
-                console.log(err);
-            })
+        //     })
+        //     .catch(err => {
+        //         snackBarContext.onOpen({ severity: "error", message: err });
+        //         console.log(err);
+        //     })
     }
 
-    const changeSpeed = (newBpm) => {
-        setProgressSpeed((newBpm * 10) / response.initialBpm);
-        audioController.setBPM(newBpm);
-        //console.log((newBpm * 10) / response.initialBpm)
-    }
 
     React.useEffect(() => {
         let interval = null;
@@ -120,7 +152,7 @@ const Game = () => {
             //default speed = 10
             interval = setInterval(() => {
                 setTime((prevTime) => prevTime + speed);
-            }, 10);
+            }, 9);
         } else if (!timerOn) {
             clearInterval(interval);
         }
@@ -134,6 +166,7 @@ const Game = () => {
         if (Math.round((Math.floor((time / 1000)) / songDuration) * 100) > 100) {
             //toRegister()
             //alert('tiempo cumplido, por favor refrescar')
+            audioController.stop()
             navigate('/game-resume', {
                 state: {
                     puntaje: puntaje
@@ -268,23 +301,24 @@ const Game = () => {
         drawPose(pose);
     }
 
+    const changeSpeed = (newBpm) => {
+        setProgressSpeed((newBpm * 10) / response.initialBpm);
+        audioController.setBPM(newBpm);
+        setCurrentBPM(newBpm);
+        //console.log((newBpm * 10) / response.initialBpm)
+    }
+
     const setNewBPM = (newBpm) => {
         let upperLimit = response.initialBpm + 70
         let lowerLimit = response.initialBpm - 70
         if (newBpm > upperLimit) {
             //alert('EL BPM EXCEDE LOS LIMITES')
-            audioController.setBPM(upperLimit);
-            setProgressSpeed(upperLimit);
-            setCurrentBPM(upperLimit)
+            changeSpeed(upperLimit);
         } else if (newBpm < lowerLimit) {
             //alert('EL BPM EXCEDE LOS LIMITES INFERIORES')
-            audioController.setBPM(lowerLimit);
-            setProgressSpeed(lowerLimit);
-            setCurrentBPM(lowerLimit)
+            changeSpeed(lowerLimit);
         } else {
-            audioController.setBPM(newBpm);
-            setProgressSpeed((newBpm * 10) / response.initialBpm);
-            setCurrentBPM(newBpm)
+            changeSpeed(newBpm);
         }
     }
 
@@ -292,6 +326,8 @@ const Game = () => {
         audioController.setBPM(1);
         poseController.pauseController();
         setProgressSpeed((1 * 10) / response.initialBpm);
+        stopAnimationLeft();
+        stopAnimationRight();
         setOpenDialog(true);
     }
 
@@ -300,6 +336,8 @@ const Game = () => {
         audioController.setBPM(currentBPM);
         poseController.startController(response.initialBpm);
         setProgressSpeed((currentBPM * 10) / response.initialBpm);
+        animateRight();
+        animateLeft();
     }
 
     const navigate2Menu = () => {
@@ -360,6 +398,42 @@ const Game = () => {
         }
     }
 
+    const calcularVolumen = (newVolumen, hand) => {
+        let volumePercentage = 0;
+
+        if (newVolumen < 0.05) {
+            //logica de puntos
+            volumePercentage = 100
+            hand === "right" ? animateRight() : animateLeft();
+            setPuntaje((prevPuntaje) => prevPuntaje - 15);
+        } else if (newVolumen > 0.05 && newVolumen < 0.17) {
+            volumePercentage = 100;
+            hand === "right" ? animateRight() : animateLeft();
+        } else if (newVolumen > 0.17 && newVolumen < 0.29) {
+            volumePercentage = 86;
+            hand === "right" ? animateRight() : animateLeft();
+            
+        } else if (newVolumen > 0.29 && newVolumen < 0.42) {
+            volumePercentage = 72;
+            hand === "right" ? animateRight() : animateLeft();
+        } else if (newVolumen > 0.42 && newVolumen < 0.54) {
+            volumePercentage = 58;
+            hand === "right" ? animateRight() : animateLeft();
+            setPuntaje((prevPuntaje) => prevPuntaje - 0)
+        } else if (newVolumen > 0.54 && newVolumen < 0.65) {
+            volumePercentage = 44;
+            hand === "right" ? stopAnimationRight() : stopAnimationLeft();
+            setPuntaje((prevPuntaje) => prevPuntaje - 15)
+        } else {
+            volumePercentage = 30;
+            hand === "right" ? stopAnimationRight() : stopAnimationLeft();
+            setPuntaje((prevPuntaje) => prevPuntaje - 30)
+        }
+
+        setCurrentVolume(volumePercentage)
+        audioController.setVolume(volumePercentage, hand)
+    }
+
     const drawPose = async (pose) => {
         if (webcam.canvas) {
             ctx.drawImage(webcam.canvas, 0, 0);
@@ -389,29 +463,30 @@ const Game = () => {
                 //console.log(aux);
                 if (aux.length > 0) {
                     let punzadaBpm = poseController.checkPunzada(aux[0]);
-                    let trianguloBpm = poseController.checkTriangulo(aux[0]);
-                    let cruzBpm = poseController.checkCruz(aux[0]);
+                    //let trianguloBpm = poseController.checkTriangulo(aux[0]);
+                    //let cruzBpm = poseController.checkCruz(aux[0]);
                     if (punzadaBpm) {
                         calcularPuntajePrecision(poseController.getDesviation(), 'punzada');
                         calcularPuntajeBpm(punzadaBpm);
-                        setNewBPM(punzadaBpm)
+                        setNewBPM(punzadaBpm);
+                        calcularVolumen(poseController.getVolume() / 1000, "left")
                         //hacer algo con el volumen
-                        console.log(poseController.getVolume() / 1000, 'volumen')
-                        setCurrentVolume(poseController.getVolume())
-                    }
-                    if (trianguloBpm) {
-                        calcularPuntajePrecision(poseController.getDesviation(), 'triangulo');
-                        calcularPuntajeBpm(trianguloBpm);
-                        setNewBPM(trianguloBpm)
-                        console.log(poseController.getVolume() / 1000, 'volumen')
+                        //console.log(poseController.getVolume() / 1000, 'volumen')
                         //setCurrentVolume(poseController.getVolume())
                     }
-                    if (cruzBpm) {
-                        calcularPuntajePrecision(poseController.getDesviation(), 'cruz');
-                        calcularPuntajeBpm(cruzBpm);
-                        setNewBPM(cruzBpm);
-                        console.log(poseController.getVolume() / 1000, 'volumen')
-                    }
+                    // if (trianguloBpm) {
+                    //     calcularPuntajePrecision(poseController.getDesviation(), 'triangulo');
+                    //     calcularPuntajeBpm(trianguloBpm);
+                    //     setNewBPM(trianguloBpm)
+                    //     console.log(poseController.getVolume() / 1000, 'volumen')
+                    //     //setCurrentVolume(poseController.getVolume())
+                    // }
+                    // if (cruzBpm) {
+                    //     calcularPuntajePrecision(poseController.getDesviation(), 'cruz');
+                    //     calcularPuntajeBpm(cruzBpm);
+                    //     setNewBPM(cruzBpm);
+                    //     console.log(poseController.getVolume() / 1000, 'volumen')
+                    // }
 
 
                 }
@@ -474,6 +549,8 @@ const Game = () => {
                     <div key={idx}>{renderSwitch(instrument)}</div>
                 ))}
                 <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> BPM: {Math.round(currentBPM, 0)}</Typography>
+                <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '16%' }}> Volume: {currentVolume}%</Typography>
+                
                 {/* <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> Media Volumen: {currentVolume}</Typography> */}
                 <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', right: '2%' }}> Puntaje: {puntaje}</Typography>
 
