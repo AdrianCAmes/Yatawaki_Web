@@ -87,61 +87,61 @@ const Game = () => {
     }
 
     const startConcert = () => {
-        let response2 = {
-            "idConcert": 72,
-            "name": "Nocturne Op 9 No 2",
-            "initialBpm": 122,
-            "duration": 270,
-            "instruments": [
-                {
-                    "name": "Piano",
-                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Pianos/piano_casio.png",
-                    "position": "L",
-                    "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Piano/piano_casio.mp3"
-                },
-                {
-                    "name": "Violin",
-                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Violins/violin_casio.png",
-                    "position": "L",
-                    "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Violin/violin_casio.mp3"
-                },
-                {
-                    "name": "Cello",
-                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Cellos/cello_casio.png",
-                    "position": "R",
-                    "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Cello/cello_casio.mp3"
-                },
-                {
-                    "name": "Guitar",
-                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Guitars/guitar_casio.png",
-                    "position": "R",
-                    "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Guitar/guitar_casio.mp3"
-                }
-            ]
-        }
-        audioController.setSongs(response2.instruments);
-        audioController.setInitialBpm(response2.initialBpm);
-        setSongDuration(response2.duration)
-        setCurrentBPM(response2.initialBpm);
-        setResponse(response2);
-        // ConcertApis.startConcert()
-        //     .then(response => {
-        //         //console.log(response.data);
-        //         //response = response.data;
-        //         setResponse(response.data);
-        //         console.log(response);
-        //         console.log("empezando el juego...");
+        // let response2 = {
+        //     "idConcert": 72,
+        //     "name": "Nocturne Op 9 No 2",
+        //     "initialBpm": 122,
+        //     "duration": 270,
+        //     "instruments": [
+        //         {
+        //             "name": "Piano",
+        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Pianos/piano_casio.png",
+        //             "position": "L",
+        //             "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Piano/piano_casio.mp3"
+        //         },
+        //         {
+        //             "name": "Violin",
+        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Violins/violin_casio.png",
+        //             "position": "L",
+        //             "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Violin/violin_casio.mp3"
+        //         },
+        //         {
+        //             "name": "Cello",
+        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Cellos/cello_casio.png",
+        //             "position": "R",
+        //             "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Cello/cello_casio.mp3"
+        //         },
+        //         {
+        //             "name": "Guitar",
+        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Guitars/guitar_casio.png",
+        //             "position": "R",
+        //             "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Guitar/guitar_casio.mp3"
+        //         }
+        //     ]
+        // }
+        // audioController.setSongs(response2.instruments);
+        // audioController.setInitialBpm(response2.initialBpm);
+        // setSongDuration(response2.duration)
+        // setCurrentBPM(response2.initialBpm);
+        // setResponse(response2);
+        ConcertApis.startConcert()
+            .then(response => {
+                //console.log(response.data);
+                //response = response.data;
+                setResponse(response.data);
+                console.log(response);
+                console.log("empezando el juego...");
 
-        //         audioController.setSongs(response.data.instruments);
-        //         audioController.setInitialBpm(response.data.initialBpm);
-        //         setSongDuration(response.data.duration)
-        //         setCurrentBPM(response.data.initialBpm);
+                audioController.setSongs(response.data.instruments);
+                audioController.setInitialBpm(response.data.initialBpm);
+                setSongDuration(response.data.duration)
+                setCurrentBPM(response.data.initialBpm);
 
-        //     })
-        //     .catch(err => {
-        //         snackBarContext.onOpen({ severity: "error", message: err });
-        //         console.log(err);
-        //     })
+            })
+            .catch(err => {
+                snackBarContext.onOpen({ severity: "error", message: err });
+                console.log(err);
+            })
     }
 
 
@@ -248,13 +248,13 @@ const Game = () => {
         // append/get elements to the DOM
         const canvas = document.getElementsByClassName("canvas");
         canvas[1].width = size; canvas[1].height = size;
-        canvas[0].width = 300; canvas[0].height = 300;
+        canvas[0].width = size; canvas[0].height = size;
         ctx = canvas[0].getContext("2d");
         ctx2 = canvas[1].getContext("2d");
-        labelContainerRight = document.getElementById("label-container");
-        for (let i = 0; i < maxPredictionsRight + maxPredictionsLeft + 1; i++) { // and class labels
-            labelContainerRight.appendChild(document.createElement("div"));
-        }
+        //labelContainerRight = document.getElementById("label-container");
+        // for (let i = 0; i < maxPredictionsRight + maxPredictionsLeft + 1; i++) { // and class labels
+        //    labelContainerRight.appendChild(document.createElement("div"));
+        //}
         setLoading(false);
 
     }
@@ -275,11 +275,11 @@ const Game = () => {
         // Prediction 2: run input through teachable machine classification model
         const prediction = await modelRight.predict(posenetOutput);
 
-        for (let i = 0; i < maxPredictionsRight; i++) {
-            const classPrediction =
-                prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-            labelContainerRight.childNodes[i].innerHTML = classPrediction;
-        }
+        // for (let i = 0; i < maxPredictionsRight; i++) {
+        //     const classPrediction =
+        //         prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+        //     labelContainerRight.childNodes[i].innerHTML = classPrediction;
+        // }
 
         drawPose(pose);
     }
@@ -291,11 +291,11 @@ const Game = () => {
         const { pose, posenetOutput } = await modelLeft.estimatePose(webcam.canvas);
         const predictionLeft = await modelLeft.predict(posenetOutput);
         poseDecoderLeft(predictionLeft);
-        for (let i = 5; i < maxPredictionsLeft + 5; i++) {
-            const classPredictionLeft =
-                predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
-            labelContainerRight.childNodes[i].innerHTML = classPredictionLeft;
-        }
+        // for (let i = 5; i < maxPredictionsLeft + 5; i++) {
+        //     const classPredictionLeft =
+        //         predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
+        //     labelContainerRight.childNodes[i].innerHTML = classPredictionLeft;
+        // }
 
         // finally draw the poses
         drawPose(pose);
@@ -412,7 +412,7 @@ const Game = () => {
         } else if (newVolumen > 0.17 && newVolumen < 0.29) {
             volumePercentage = 86;
             hand === "right" ? animateRight() : animateLeft();
-            
+
         } else if (newVolumen > 0.29 && newVolumen < 0.42) {
             volumePercentage = 72;
             hand === "right" ? animateRight() : animateLeft();
@@ -463,8 +463,8 @@ const Game = () => {
                 //console.log(aux);
                 if (aux.length > 0) {
                     let punzadaBpm = poseController.checkPunzada(aux[0]);
-                    //let trianguloBpm = poseController.checkTriangulo(aux[0]);
-                    //let cruzBpm = poseController.checkCruz(aux[0]);
+                    let trianguloBpm = poseController.checkTriangulo(aux[0]);
+                    let cruzBpm = poseController.checkCruz(aux[0]);
                     if (punzadaBpm) {
                         calcularPuntajePrecision(poseController.getDesviation(), 'punzada');
                         calcularPuntajeBpm(punzadaBpm);
@@ -474,19 +474,19 @@ const Game = () => {
                         //console.log(poseController.getVolume() / 1000, 'volumen')
                         //setCurrentVolume(poseController.getVolume())
                     }
-                    // if (trianguloBpm) {
-                    //     calcularPuntajePrecision(poseController.getDesviation(), 'triangulo');
-                    //     calcularPuntajeBpm(trianguloBpm);
-                    //     setNewBPM(trianguloBpm)
-                    //     console.log(poseController.getVolume() / 1000, 'volumen')
-                    //     //setCurrentVolume(poseController.getVolume())
-                    // }
-                    // if (cruzBpm) {
-                    //     calcularPuntajePrecision(poseController.getDesviation(), 'cruz');
-                    //     calcularPuntajeBpm(cruzBpm);
-                    //     setNewBPM(cruzBpm);
-                    //     console.log(poseController.getVolume() / 1000, 'volumen')
-                    // }
+                    if (trianguloBpm) {
+                        calcularPuntajePrecision(poseController.getDesviation(), 'triangulo');
+                        calcularPuntajeBpm(trianguloBpm);
+                        setNewBPM(trianguloBpm)
+                        calcularVolumen(poseController.getVolume() / 1000, "left")
+                        //setCurrentVolume(poseController.getVolume())
+                    }
+                    if (cruzBpm) {
+                        calcularPuntajePrecision(poseController.getDesviation(), 'cruz');
+                        calcularPuntajeBpm(cruzBpm);
+                        setNewBPM(cruzBpm);
+                        calcularVolumen(poseController.getVolume() / 1000, "left")
+                    }
 
 
                 }
@@ -500,6 +500,7 @@ const Game = () => {
     React.useEffect(() => {
         //setVariablesGame();
         startConcert();
+        init();
     }, []);
 
 
@@ -513,10 +514,6 @@ const Game = () => {
                     <div style={{ width: '100%', marginBottom: '20px' }}>
                         <Typography fontWeight='600' fontSize="30px!important"> Calibra tu cuerpo con la cámara web:</Typography>
                     </div>
-
-                    {loading ? <Box className="hover" sx={buttonStyle} onClick={() => { init() }}>
-                        <Typography className="title-button" fontSize="30px!important" > Iniciar</Typography>
-                    </Box> : ''}
                     {loading && <CircularProgress style={{ marginTop: '30px' }}></CircularProgress>}
 
                     <canvas style={{ height: '300px!important', width: '300px!important' }} className="canvas"></canvas>
@@ -550,23 +547,23 @@ const Game = () => {
                 ))}
                 <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> BPM: {Math.round(currentBPM, 0)}</Typography>
                 <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '16%' }}> Volume: {currentVolume}%</Typography>
-                
+
                 {/* <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> Media Volumen: {currentVolume}</Typography> */}
                 <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', right: '2%' }}> Puntaje: {puntaje}</Typography>
 
-                <canvas style={{ position: 'absolute', left: '40%', bottom: '3%', borderRadius: '30px', visibility: !open ? 'visible' : 'hidden' }} className={`canvas ${!open ? "canvasAnimation" : ""}`}></canvas>
-                <button style={{ position: 'absolute', left: '40%', top: '62%', borderRadius: '30px' }} onClick={() => { stopAnimationLeft() }}>stop left</button>
+                <canvas style={{ position: 'absolute', left: '40%', bottom: '3%', borderRadius: '10px', visibility: !open ? 'visible' : 'hidden' }} className={`canvas ${!open ? "canvasAnimation" : ""}`}></canvas>
+                {/* <button style={{ position: 'absolute', left: '40%', top: '62%', borderRadius: '30px' }} onClick={() => { stopAnimationLeft() }}>stop left</button>
                 <button style={{ position: 'absolute', left: '40%', top: '66%', borderRadius: '30px' }} onClick={() => { animateLeft() }}>start Left</button>
                 <button style={{ position: 'absolute', left: '45%', top: '62%', borderRadius: '30px' }} onClick={() => { stopAnimationRight() }}>stop Right</button>
                 <button style={{ position: 'absolute', left: '45%', top: '66%', borderRadius: '30px' }} onClick={() => { animateRight() }}>start right</button>
                 <button style={{ position: 'absolute', left: '50%', top: '66%', borderRadius: '30px' }} onClick={() => { changeSpeed(200) }}>hightBPM</button>
                 <button style={{ position: 'absolute', left: '50%', top: '62%', borderRadius: '30px' }} onClick={() => { changeSpeed(response.initialBpm) }}>restartBPM</button>
-                <button style={{ position: 'absolute', left: '50%', top: '70%', borderRadius: '30px' }} onClick={() => { changeSpeed(80) }}>lowBPM</button>
+                <button style={{ position: 'absolute', left: '50%', top: '70%', borderRadius: '30px' }} onClick={() => { changeSpeed(80) }}>lowBPM</button> */}
                 {/* <button style={{ position: 'absolute', left: '45%', top: '70%', borderRadius: '30px' }} onClick={() => { pause() }}>pause</button>
                 <button style={{ position: 'absolute', left: '40%', top: '70%', borderRadius: '30px' }} onClick={() => { resume() }}>resume</button> */}
-                <button style={{ position: 'absolute', left: '40%', top: '70%', borderRadius: '30px' }} onClick={() => { audioController.increasePitch() }}>pitch</button>
+                {/* <button style={{ position: 'absolute', left: '40%', top: '70%', borderRadius: '30px' }} onClick={() => { audioController.increasePitch() }}>pitch</button>
                 <button style={{ position: 'absolute', left: '45%', top: '70%', borderRadius: '30px' }} onClick={() => { audioController.resetPitch() }}>reset pitch</button>
-                <button style={{ position: 'absolute', left: '45%', top: '73%', borderRadius: '30px' }} onClick={() => { audioController.decreasePitch() }}>menos pitch</button>
+                <button style={{ position: 'absolute', left: '45%', top: '73%', borderRadius: '30px' }} onClick={() => { audioController.decreasePitch() }}>menos pitch</button> */}
 
 
             </Paper>
