@@ -67,12 +67,6 @@ const AppBarYatawaki = (props) => {
                             <MenuItem onClick={() => {toPerfil()}}>
                                 <Typography textAlign="center">Perfil</Typography>
                             </MenuItem>
-                            <MenuItem>
-                                <Typography textAlign="center">Mis instrumentos</Typography>
-                            </MenuItem>
-                            <MenuItem>
-                                <Typography textAlign="center">Mis estadisticas</Typography>
-                            </MenuItem>
                             <MenuItem onClick={() => {logout()}}>
                                 <Typography textAlign="center">Cerrar Sesion</Typography>
                             </MenuItem>
