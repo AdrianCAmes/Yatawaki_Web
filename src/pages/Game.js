@@ -212,7 +212,8 @@ const Game = () => {
 
     const URLRight = "https://teachablemachine.withgoogle.com/models/DpJQ3G2-Y/";
     const URLLeft = "https://teachablemachine.withgoogle.com/models/fRIw5b4gL/";
-    let modelRight, webcam, ctx, ctx2, labelContainerRight, maxPredictionsRight, modelLeft, labelContainerLeft, maxPredictionsLeft;
+    const URTPose = "https://teachablemachine.withgoogle.com/models/sFWZWZTan/";
+    let modelRight, webcam, ctx, ctx2, labelContainerRight, maxPredictionsRight, modelLeft, labelContainerLeft, maxPredictionsLeft, modelTPose, maxPredictionsTPose;
     const [open, setOpen] = React.useState(true);
     const [loading, setLoading] = React.useState(true);
     const [openDialog, setOpenDialog] = React.useState(false);
@@ -228,6 +229,9 @@ const Game = () => {
         const modelURLLeft = URLLeft + "model.json";
         const metadataURLLeft = URLLeft + "metadata.json";
 
+        const modelURLTPose = URTPose + "model.json";
+        const metadataURLTPose = URTPose + "metadata.json";
+
         // load the model and metadata
         // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
         // Note: the pose library adds a tmPose object to your window (window.tmPose)
@@ -236,6 +240,9 @@ const Game = () => {
         //modelRight.predict
         modelLeft = await tmPose.load(modelURLLeft, metadataURLLeft);
         maxPredictionsLeft = modelLeft.getTotalClasses();
+        //tpose
+        modelTPose = await tmPose.load(modelURLTPose, metadataURLTPose);
+        maxPredictionsTPose = modelTPose.getTotalClasses();
 
         // Convenience function to setup a webcam
         const size = 400;
@@ -264,6 +271,8 @@ const Game = () => {
         await predict();
         webcam.update();
         await predict2();
+        webcam.update();
+        await predictTPose();
         window.requestAnimationFrame(loop);
     }
 
@@ -291,6 +300,23 @@ const Game = () => {
         const { pose, posenetOutput } = await modelLeft.estimatePose(webcam.canvas);
         const predictionLeft = await modelLeft.predict(posenetOutput);
         poseDecoderLeft(predictionLeft);
+        // for (let i = 5; i < maxPredictionsLeft + 5; i++) {
+        //     const classPredictionLeft =
+        //         predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
+        //     labelContainerRight.childNodes[i].innerHTML = classPredictionLeft;
+        // }
+
+        // finally draw the poses
+        drawPose(pose);
+    }
+
+    const predictTPose = async () => {
+        // Prediction #1: run input through posenet
+        // estimatePose can take in an image, video or canvas html element
+
+        const { pose, posenetOutput } = await modelTPose.estimatePose(webcam.canvas);
+        const predictionTPose = await modelTPose.predict(posenetOutput);
+        poseDecoderTPose(predictionTPose);
         // for (let i = 5; i < maxPredictionsLeft + 5; i++) {
         //     const classPredictionLeft =
         //         predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
@@ -496,6 +522,31 @@ const Game = () => {
         }
     }
 
+    let calibrado = false;
+
+    const poseDecoderTPose = async (predictionTPose) => {
+        if (predictionTPose) {
+            const aux = [];
+            for (let i = 0; i < maxPredictionsTPose; i++) {
+                if (predictionTPose[i].probability > 0.97) {
+                    aux.push(predictionTPose[i].className);
+                    if (aux[aux.length] == aux[aux.length - 1]) {
+                        aux.pop();
+                    }
+                }
+
+                //console.log(aux);
+                if (aux[0] === "T" && !calibrado) {
+                    calibrado = true;
+                    startGame();
+                }
+
+            }
+
+        }
+    }
+
+
     //seteo variables iniciales de juego
     React.useEffect(() => {
         //setVariablesGame();
@@ -525,9 +576,6 @@ const Game = () => {
                     <canvas style={{ height: '300px!important', width: '300px!important' }} className="canvas"></canvas>
                     {!loading && <img style={{ position: 'absolute', height: '400px', width: '400px', top: '95px' }} src={calibracion} />}
                     <div id="label-container"></div>
-                    {!loading ? <Box className="hover" sx={buttonStyle} onClick={() => { startGame() }}>
-                        <Typography className="title-button" fontSize="30px!important" > Realizado</Typography>
-                    </Box> : ''}
                 </Dialog>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
