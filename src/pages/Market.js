@@ -177,21 +177,21 @@ const Market = () => {
                         <div style={{ width: '100%', borderRadius: '20px', padding: '30px', display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap' }}>
                             {achievements.length > 0 ? achievements.map((achievement, idx) => (
                                 <ItemCard key={idx} item={achievement} onClickTrade={onClickTrade}></ItemCard>
-                            )) : <Typography>No cuentas con logros</Typography>}
+                            )) : <Typography>No hay logros disponibles</Typography>}
                         </div>
                     </TabPanel>
                     <TabPanel value={value} index={1}>
                         <div style={{ width: '100%', borderRadius: '20px', padding: '30px', display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap' }}>
                             {symphonies.length > 0 ? symphonies.map((symphony, idx) => (
                                 <ItemCard key={idx} item={symphony} onClickTrade={onClickTrade}></ItemCard>
-                            )) : <Typography>No cuentas con sinfonias</Typography>}
+                            )) : <Typography>No hay sinfonias disponibles</Typography>}
                         </div>
                     </TabPanel>
                     <TabPanel value={value} index={2}>
                         <div style={{ width: '100%', borderRadius: '20px', padding: '30px', display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap' }}>
                             {avatars.length > 0 ? avatars.map((avatar1, idx) => (
                                 <ItemCard key={idx} item={avatar1} onClickTrade={onClickTrade}></ItemCard>
-                            )) : <Typography>No cuentas con avatars</Typography>}
+                            )) : <Typography>No hay avatars disponibles</Typography>}
                         </div>
                     </TabPanel>
 
