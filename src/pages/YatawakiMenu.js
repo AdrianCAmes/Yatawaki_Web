@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Paper } from "@mui/material";
+import { Box, CircularProgress, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
 import SymphonyApis from "../apis/symphony-apis";
 import UserApi from "../apis/user-apis";
@@ -43,7 +43,6 @@ const YatawakiMenu = () => {
             .then(response => {
                 setResume(response.data);
                 setSymphonies(response.data.symphonies);
-                console.log(response.data.symphonies);
                 gameContext.updateUser(response.data.idUser);
             })
             .catch(err => {
@@ -84,7 +83,7 @@ const YatawakiMenu = () => {
 
     return (
         <React.Fragment>
-            {loading || gameContext.username === '' ? <CircularProgress style={{position:'absolute', right:'50%', top:'50%'}} /> : <Paper square={true} sx={{ backgroundColor: 'primary.light', height: '100vh' }} elevation={0}>
+            {loading || gameContext.username === '' ? <CircularProgress style={{ position: 'absolute', right: '50%', top: '50%' }} /> : <Paper square={true} sx={{ backgroundColor: 'primary.light', height: '100vh' }} elevation={0}>
 
                 <AppBarYatawaki resume={resume}></AppBarYatawaki>
 
@@ -94,7 +93,13 @@ const YatawakiMenu = () => {
                 <SymphonySlider slides={symphonies} passToParent={childCallback} selectSlider={selectSlider} />
                 <Box className="container-height" sx={{ backgroundColor: '#E8E8E0', px: '30px', paddingTop: '20px', mx: '30px', marginTop: '50px', height: '100%', borderRadius: '13px;' }}>
                     {symphonies.map((symphony, idx) => (
-                        <h1 key={idx} >{idx === index ? `${symphony.name}. ${symphony.description}. ${symphony.composer.name} muere el ${dateHourStringToDate(symphony.composer.deathDate)}` : null}</h1>
+                        <h1 key={idx} >{idx === index ?
+                            <>
+                                <Typography fontSize={32} fontWeight={600}>{`${symphony.name} | ${symphony.type}`}</Typography>
+                                <Typography fontSize={32} fontWeight={600}>{`${symphony.composer.name}. ${dateHourStringToDate(symphony.composer.deathDate)}`}</Typography>
+                                <Typography fontSize={32} fontWeight={600}>{`${symphony.description}.`}</Typography>
+                            </>
+                            : null}</h1>
                     ))}
                 </Box>
 
