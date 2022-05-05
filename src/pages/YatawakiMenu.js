@@ -4,6 +4,7 @@ import SymphonyApis from "../apis/symphony-apis";
 import UserApi from "../apis/user-apis";
 import GameContext from "../context/game-context";
 import SnackBarContext from "../context/snack-bar-context";
+import { dateHourStringToDate } from "../utils/utils";
 import AppBarYatawaki from "./components/AppBarYatawaki";
 import SymphonyInstrumentsDialog from "./components/SymphonyInstrumentsDialog";
 import SymphonySlider from "./components/SymphonySlider";
@@ -42,6 +43,7 @@ const YatawakiMenu = () => {
             .then(response => {
                 setResume(response.data);
                 setSymphonies(response.data.symphonies);
+                console.log(response.data.symphonies);
                 gameContext.updateUser(response.data.idUser);
             })
             .catch(err => {
@@ -92,7 +94,7 @@ const YatawakiMenu = () => {
                 <SymphonySlider slides={symphonies} passToParent={childCallback} selectSlider={selectSlider} />
                 <Box className="container-height" sx={{ backgroundColor: '#E8E8E0', px: '30px', paddingTop: '20px', mx: '30px', marginTop: '50px', height: '100%', borderRadius: '13px;' }}>
                     {symphonies.map((symphony, idx) => (
-                        <h1 key={idx} >{idx === index ? symphony.description : null}</h1>
+                        <h1 key={idx} >{idx === index ? `${symphony.name}. ${symphony.description}. ${symphony.composer.name} muere el ${dateHourStringToDate(symphony.composer.deathDate)}` : null}</h1>
                     ))}
                 </Box>
 
