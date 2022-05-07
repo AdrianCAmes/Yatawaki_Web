@@ -22,18 +22,6 @@ const Game = () => {
     const snackBarContext = React.useContext(SnackBarContext);
 
 
-    // let response = {
-    //     "name": "Symphony n9",
-    //     "initialBpm": 120,
-    //     "songDuration": 120,
-    //     "instruments": [
-    //         { "name": "Piano", "image": piano, "position": "L", "audio": mozart },
-    //         { "name": "Violin", "image": viola, "position": "L", "audio": mozart },
-    //         { "name": "Chello", "image": chello, "position": "R", "audio": mozart },
-    //         { "name": "Guitar", "image": guitar, "position": "R", "audio": mozart },
-    //     ]
-    // }
-
     //progreso de la cancion
     const [time, setTime] = useState(0);
     const [response, setResponse] = useState(null);
@@ -46,6 +34,7 @@ const Game = () => {
     const [speed, setProgressSpeed] = useState(13);
 
     const [puntaje, setPuntaje] = useState(0);
+    const [precision, setPrecision] = useState(0);
 
 
     //estados de animaciones
@@ -89,7 +78,7 @@ const Game = () => {
 
     const startConcert = () => {
         let response2 = {
-            "idConcert": 72,
+            "idConcert": 1,
             "name": "Nocturne Op 9 No 2",
             "initialBpm": 122,
             "duration": 270,
@@ -167,11 +156,16 @@ const Game = () => {
         if (Math.round((Math.floor((time / 1000)) / songDuration) * 100) > 100) {
             //toRegister()
             //alert('tiempo cumplido, por favor refrescar')
-            audioController.stop()
-            navigate('/game-resume', {
+            audioController.stop();
+            poseController.pauseController();
+            navigate('/game-resume', { 
                 state: {
-                    puntaje: puntaje
-                }
+                    points: puntaje,
+                    gesturesCompleted: posesCount,
+                    accuracyRate: precision,
+                    idConcert: response.idConcert
+                },
+                replace: true
             })
         }
     }, [time]);
@@ -636,33 +630,45 @@ const Game = () => {
     const calcularPuntajePrecision = (desviacion, patron) => {
         if (patron === 'punzada') {
             if (desviacion > 1.5) {
-                setPuntaje((prevPuntaje) => prevPuntaje + 2)
+                setPuntaje((prevPuntaje) => prevPuntaje + 2);
+                setPrecision((prevPrecision) => (prevPrecision + 1.5) / 2)
             } else if (desviacion > 0.8 && desviacion < 1.5) {
                 setPuntaje((prevPuntaje) => prevPuntaje + 5)
+                setPrecision((prevPrecision) => (prevPrecision + desviacion) / 2)
             } else if (desviacion > 0.2 && desviacion < 0.8) {
                 setPuntaje((prevPuntaje) => prevPuntaje + 7)
+                setPrecision((prevPrecision) => (prevPrecision + desviacion) / 2)
             } else if (desviacion < 0.2) {
                 setPuntaje((prevPuntaje) => prevPuntaje + 10)
+                setPrecision((prevPrecision) => (prevPrecision + desviacion) / 2)
             }
         } else if (patron === 'triangulo') {
             if (desviacion > 1.5) {
                 setPuntaje((prevPuntaje) => prevPuntaje + 4)
+                setPrecision((prevPrecision) => (prevPrecision + 1.5) / 2)
             } else if (desviacion > 0.8 && desviacion < 1.5) {
                 setPuntaje((prevPuntaje) => prevPuntaje + 8)
+                setPrecision((prevPrecision) => (prevPrecision + desviacion) / 2)
             } else if (desviacion > 0.2 && desviacion < 0.8) {
+                setPrecision((prevPrecision) => (prevPrecision + desviacion) / 2)
                 setPuntaje((prevPuntaje) => prevPuntaje + 12)
             } else if (desviacion < 0.2) {
+                setPrecision((prevPrecision) => (prevPrecision + desviacion) / 2)
                 setPuntaje((prevPuntaje) => prevPuntaje + 15)
             }
         } else if (patron === 'cruz') {
             if (desviacion > 1.5) {
                 setPuntaje((prevPuntaje) => prevPuntaje + 6)
+                setPrecision((prevPrecision) => (prevPrecision + 1.5) / 2)
             } else if (desviacion > 0.8 && desviacion < 1.5) {
                 setPuntaje((prevPuntaje) => prevPuntaje + 10)
+                setPrecision((prevPrecision) => (prevPrecision + desviacion) / 2)
             } else if (desviacion > 0.2 && desviacion < 0.8) {
                 setPuntaje((prevPuntaje) => prevPuntaje + 15)
+                setPrecision((prevPrecision) => (prevPrecision + desviacion) / 2)
             } else if (desviacion < 0.2) {
                 setPuntaje((prevPuntaje) => prevPuntaje + 20)
+                setPrecision((prevPrecision) => (prevPrecision + desviacion) / 2)
             }
         }
 

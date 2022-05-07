@@ -54,34 +54,34 @@ const GameResults = (props) => {
 
             <Grid container>
                 <Grid item xs={6} display='flex' alignItems='center' justifyContent='center'>
-                    <div style={{ width: '90%', height: '90%', display:'flex', alignItems:'center', justifyContent:'center' }}>
+                    <div style={{ width: '90%', height: '90%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <img src={sinfonia} style={{ objectFit: 'contain', maxWidth: '100%', maxHeight: '100%', borderRadius: '20px' }} />
                     </div>
                 </Grid>
                 <Grid item xs={6} padding="10px">
                     <Box height='50px' width='90%' style={buttonStyle}>
                         <Grid container justifyContent='center'>
-                            <DataTwoColumns label='Puntos' value={props.results.points}></DataTwoColumns>
+                            <DataTwoColumns label='Puntos' value={props.results ? props.results.points : '--'}></DataTwoColumns>
                         </Grid>
                     </Box>
                     <Box height='50px' width='90%' style={buttonStyle}>
                         <Grid container justifyContent='center'>
-                            <DataTwoColumns label='Gestos completados' value={props.results.gesturesCompleted}></DataTwoColumns>
+                            <DataTwoColumns label='Gestos completados' value={props.results ? props.results.gesturesCompleted : '--'}></DataTwoColumns>
                         </Grid>
                     </Box>
                     <Box height='50px' width='90%' style={buttonStyle}>
                         <Grid container justifyContent='center'>
-                            <DataTwoColumns label='Porcentaje de precisión' value={`${props.results.accuracyRate}%`}></DataTwoColumns>
+                            <DataTwoColumns label='Porcentaje de precisión' value={props.results ? `${Math.round(props.results.accuracyRate, 2)}%` : '--'}></DataTwoColumns>
                         </Grid>
                     </Box>
                     <Box height='50px' width='90%' style={buttonStyle}>
                         <Grid container justifyContent='center'>
-                            <DataTwoColumns label='Monedas' value={`+${props.results.gainedCoins}`}></DataTwoColumns>
+                            <DataTwoColumns label='Monedas' value={props.results ? `+${Math.round(props.results.gainedCoins)}` : '--'}></DataTwoColumns>
                         </Grid>
                     </Box>
                     <Box height='50px' width='90%' style={buttonStyle}>
                         <Grid container justifyContent='center'>
-                            <DataTwoColumns label='Experiencia' value={`+${props.results.gainedExperience}`}></DataTwoColumns>
+                            <DataTwoColumns label='Experiencia' value={props.results ? `+${Math.round(props.results.gainedExperience)}` : '--'}></DataTwoColumns>
                         </Grid>
                     </Box>
                 </Grid>

@@ -8,13 +8,13 @@ const getHeaderToken = () => {
 
 
 const ConcertApis = {
-    concertComplete: () => apiInstance.post(`${uri}complete`, {
-        idConcert: 1,
-        gainedExperience: 700,
-        points: 600,
-        accuracyRate: 88,
-        gesturesCompleted: 10,
-        gainedCoins: 110
+    concertComplete: (idConcert, points, accuracyRate, gesturesCompleted, gainedExperience, gainedCoins) => apiInstance.post(`${uri}complete`, {
+        idConcert: idConcert,
+        gainedExperience: gainedExperience,
+        points: points,
+        accuracyRate: accuracyRate,
+        gesturesCompleted: gesturesCompleted,
+        gainedCoins: gainedCoins
     }, getHeaderToken()),
 
     startConcert: () => apiInstance.post(`${uri}start`, {
