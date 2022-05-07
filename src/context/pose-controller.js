@@ -10,7 +10,8 @@ const PoseContext = createContext({
     startController: null,
     pauseController: null,
     getVolume: null,
-    getDesviation: null
+    getDesviation: null,
+    checkPitchLeft: null
 })
 
 export default PoseContext;
@@ -137,6 +138,24 @@ export const PoseContextProvider = (props) => {
         return desviation;
     }
     //REGLA GENERAL: En cada paso verificar el anterior completo y el actual vacio :) Menos en el primero
+
+    const checkPitchLeft = (value) => {
+        if (started) {
+            if (value === 'LHUL') {
+                //audio controller pitch
+                console.log('Aumenado el pitch')
+                return 'up';
+            } else if (value === 'LHDL') {
+                //audio controller pitch
+                console.log('Disminuido el pitch')
+                return 'down';
+            } else {
+                //reset pitch
+                console.log('Resteado')
+                return 'reset';
+            }
+        }
+    }
 
     const checkPunzada = (value) => {
 
@@ -731,7 +750,8 @@ export const PoseContextProvider = (props) => {
             startController: startController,
             pauseController: pauseController,
             getVolume: getVolume,
-            getDesviation: getDesviation
+            getDesviation: getDesviation,
+            checkPitchLeft: checkPitchLeft
         }}>
             {props.children}
         </PoseContext.Provider>
