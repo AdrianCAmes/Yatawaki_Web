@@ -452,10 +452,22 @@ const Game = () => {
                     }
                 }
 
-                //console.log(aux);
                 if (aux.length > 0) {
+                    //console.log(aux, 'PitchRight');
 
-                    //poseController.checkPitchRight(aux[0])
+                    let pitchRight = poseController.checkPitchRight(aux[0]);
+
+                    if (pitchRight === 'up') {
+                        //audio controller pitch
+                        audioController.increasePitch();
+                    } else if (pitchRight === 'down') {
+                        //audio controller pitch
+                        audioController.decreasePitch();
+                    } else if (pitchRight === 'reset') {
+                        //reset pitch
+                        audioController.resetPitch();
+                    }
+
 
                 }
 
@@ -477,7 +489,7 @@ const Game = () => {
 
 
                 if (aux.length > 0) {
-                    console.log(aux, 'PitchLeft');
+                    //console.log(aux, 'PitchLeft');
 
                     let pitchLeft = poseController.checkPitchLeft(aux[0]);
 

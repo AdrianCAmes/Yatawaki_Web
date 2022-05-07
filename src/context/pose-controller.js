@@ -11,7 +11,8 @@ const PoseContext = createContext({
     pauseController: null,
     getVolume: null,
     getDesviation: null,
-    checkPitchLeft: null
+    checkPitchLeft: null,
+    checkPitchRight: null,
 })
 
 export default PoseContext;
@@ -146,6 +147,24 @@ export const PoseContextProvider = (props) => {
                 console.log('Aumenado el pitch')
                 return 'up';
             } else if (value === 'LHDL') {
+                //audio controller pitch
+                console.log('Disminuido el pitch')
+                return 'down';
+            } else {
+                //reset pitch
+                console.log('Resteado')
+                return 'reset';
+            }
+        }
+    }
+
+    const checkPitchRight = (value) => {
+        if (started) {
+            if (value === 'RHUR') {
+                //audio controller pitch
+                console.log('Aumenado el pitch')
+                return 'up';
+            } else if (value === 'RHDR') {
                 //audio controller pitch
                 console.log('Disminuido el pitch')
                 return 'down';
@@ -751,7 +770,8 @@ export const PoseContextProvider = (props) => {
             pauseController: pauseController,
             getVolume: getVolume,
             getDesviation: getDesviation,
-            checkPitchLeft: checkPitchLeft
+            checkPitchLeft: checkPitchLeft,
+            checkPitchRight: checkPitchRight,
         }}>
             {props.children}
         </PoseContext.Provider>
