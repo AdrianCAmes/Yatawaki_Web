@@ -39,6 +39,7 @@ const Game = () => {
     const [response, setResponse] = useState(null);
     const [timerOn, setTimerOn] = useState(false);
     const [currentBPM, setCurrentBPM] = useState(0);
+    const [posesCount, setPosesCount] = useState(0);
     const [currentVolume, setCurrentVolume] = useState(72);
     const [songDuration, setSongDuration] = useState(0);
 
@@ -87,61 +88,61 @@ const Game = () => {
     }
 
     const startConcert = () => {
-        // let response2 = {
-        //     "idConcert": 72,
-        //     "name": "Nocturne Op 9 No 2",
-        //     "initialBpm": 122,
-        //     "duration": 270,
-        //     "instruments": [
-        //         {
-        //             "name": "Piano",
-        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Pianos/piano_casio.png",
-        //             "position": "L",
-        //             "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Piano/piano_casio.mp3"
-        //         },
-        //         {
-        //             "name": "Violin",
-        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Violins/violin_casio.png",
-        //             "position": "L",
-        //             "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Violin/violin_casio.mp3"
-        //         },
-        //         {
-        //             "name": "Cello",
-        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Cellos/cello_casio.png",
-        //             "position": "R",
-        //             "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Cello/cello_casio.mp3"
-        //         },
-        //         {
-        //             "name": "Guitar",
-        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Guitars/guitar_casio.png",
-        //             "position": "R",
-        //             "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Guitar/guitar_casio.mp3"
-        //         }
-        //     ]
-        // }
-        // audioController.setSongs(response2.instruments);
-        // audioController.setInitialBpm(response2.initialBpm);
-        // setSongDuration(response2.duration)
-        // setCurrentBPM(response2.initialBpm);
-        // setResponse(response2);
-        ConcertApis.startConcert()
-            .then(response => {
-                //console.log(response.data);
-                //response = response.data;
-                setResponse(response.data);
-                console.log(response);
-                console.log("empezando el juego...");
+        let response2 = {
+            "idConcert": 72,
+            "name": "Nocturne Op 9 No 2",
+            "initialBpm": 122,
+            "duration": 270,
+            "instruments": [
+                {
+                    "name": "Piano",
+                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Pianos/piano_casio.png",
+                    "position": "L",
+                    "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Piano/piano_casio.mp3"
+                },
+                {
+                    "name": "Violin",
+                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Violins/violin_casio.png",
+                    "position": "L",
+                    "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Violin/violin_casio.mp3"
+                },
+                {
+                    "name": "Cello",
+                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Cellos/cello_casio.png",
+                    "position": "R",
+                    "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Cello/cello_casio.mp3"
+                },
+                {
+                    "name": "Guitar",
+                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Guitars/guitar_casio.png",
+                    "position": "R",
+                    "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Guitar/guitar_casio.mp3"
+                }
+            ]
+        }
+        audioController.setSongs(response2.instruments);
+        audioController.setInitialBpm(response2.initialBpm);
+        setSongDuration(response2.duration)
+        setCurrentBPM(response2.initialBpm);
+        setResponse(response2);
+        // ConcertApis.startConcert()
+        //     .then(response => {
+        //         //console.log(response.data);
+        //         //response = response.data;
+        //         setResponse(response.data);
+        //         console.log(response);
+        //         console.log("empezando el juego...");
 
-                audioController.setSongs(response.data.instruments);
-                audioController.setInitialBpm(response.data.initialBpm);
-                setSongDuration(response.data.duration)
-                setCurrentBPM(response.data.initialBpm);
+        //         audioController.setSongs(response.data.instruments);
+        //         audioController.setInitialBpm(response.data.initialBpm);
+        //         setSongDuration(response.data.duration)
+        //         setCurrentBPM(response.data.initialBpm);
 
-            })
-            .catch(err => {
-                snackBarContext.onOpen({ severity: "error", message: err });
-                console.log(err);
-            })
+        //     })
+        //     .catch(err => {
+        //         snackBarContext.onOpen({ severity: "error", message: err });
+        //         console.log(err);
+        //     })
     }
 
 
@@ -210,10 +211,12 @@ const Game = () => {
 
     //modelo
 
-    const URLRight = "https://teachablemachine.withgoogle.com/models/DpJQ3G2-Y/";
-    const URLLeft = "https://teachablemachine.withgoogle.com/models/fRIw5b4gL/";
-    const URTPose = "https://teachablemachine.withgoogle.com/models/sFWZWZTan/";
-    let modelRight, webcam, ctx, ctx2, labelContainerRight, maxPredictionsRight, modelLeft, labelContainerLeft, maxPredictionsLeft, modelTPose, maxPredictionsTPose;
+    const URLRight = "https://teachablemachine.withgoogle.com/models/7vVySgCUN/";
+    const URLLeft = "https://teachablemachine.withgoogle.com/models/6WeNGi4Pn/";
+    const URLTPose = "https://teachablemachine.withgoogle.com/models/sFWZWZTan/";
+    const URLRightPitch = "https://teachablemachine.withgoogle.com/models/sVIndV-v-/";
+    const URLLeftPitch = "https://teachablemachine.withgoogle.com/models/kwhV8Vs4-/";
+    let modelRight, webcam, ctx, ctx2, labelContainerRight, maxPredictionsRight, modelLeft, labelContainerLeft, maxPredictionsLeft, modelTPose, maxPredictionsTPose, modelPitchLeft, maxPredictionsPitchLeft, modelPitchRight, maxPredictionsPitchRight;
     const [open, setOpen] = React.useState(true);
     const [loading, setLoading] = React.useState(true);
     const [openDialog, setOpenDialog] = React.useState(false);
@@ -229,8 +232,14 @@ const Game = () => {
         const modelURLLeft = URLLeft + "model.json";
         const metadataURLLeft = URLLeft + "metadata.json";
 
-        const modelURLTPose = URTPose + "model.json";
-        const metadataURLTPose = URTPose + "metadata.json";
+        const modelURLTPose = URLTPose + "model.json";
+        const metadataURLTPose = URLTPose + "metadata.json";
+
+        const modelURLRightPitch = URLRightPitch + "model.json";
+        const metadataURLRightPitch = URLRightPitch + "metadata.json";
+
+        const modelURLLeftPitch = URLLeftPitch + "model.json";
+        const metadataURLLeftPitch = URLLeftPitch + "metadata.json";
 
         // load the model and metadata
         // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
@@ -243,6 +252,12 @@ const Game = () => {
         //tpose
         modelTPose = await tmPose.load(modelURLTPose, metadataURLTPose);
         maxPredictionsTPose = modelTPose.getTotalClasses();
+        //pitch right
+        modelPitchRight = await tmPose.load(modelURLRightPitch, metadataURLRightPitch);
+        maxPredictionsPitchRight = modelPitchRight.getTotalClasses();
+        //pitch left
+        modelPitchLeft = await tmPose.load(modelURLLeftPitch, metadataURLLeftPitch);
+        maxPredictionsPitchLeft = modelPitchLeft.getTotalClasses();
 
         // Convenience function to setup a webcam
         const size = 400;
@@ -273,6 +288,10 @@ const Game = () => {
         await predict2();
         webcam.update();
         await predictTPose();
+        webcam.update();
+        await predictPitchLeft();
+        webcam.update();
+        await predictPitchRight();
         window.requestAnimationFrame(loop);
     }
 
@@ -283,7 +302,7 @@ const Game = () => {
 
         // Prediction 2: run input through teachable machine classification model
         const prediction = await modelRight.predict(posenetOutput);
-
+        poseDecoderRight(prediction);
         // for (let i = 0; i < maxPredictionsRight; i++) {
         //     const classPrediction =
         //         prediction[i].className + ": " + prediction[i].probability.toFixed(2);
@@ -325,6 +344,250 @@ const Game = () => {
 
         // finally draw the poses
         drawPose(pose);
+    }
+
+    const predictPitchLeft = async () => {
+        // Prediction #1: run input through posenet
+        // estimatePose can take in an image, video or canvas html element
+
+        const { pose, posenetOutput } = await modelPitchLeft.estimatePose(webcam.canvas);
+        const predictionPitchLeft = await modelPitchLeft.predict(posenetOutput);
+        poseDecoderPitchLeft(predictionPitchLeft);
+        // for (let i = 5; i < maxPredictionsLeft + 5; i++) {
+        //     const classPredictionLeft =
+        //         predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
+        //     labelContainerRight.childNodes[i].innerHTML = classPredictionLeft;
+        // }
+
+        // finally draw the poses
+        drawPose(pose);
+    }
+
+    const predictPitchRight = async () => {
+        // Prediction #1: run input through posenet
+        // estimatePose can take in an image, video or canvas html element
+
+        const { pose, posenetOutput } = await modelPitchRight.estimatePose(webcam.canvas);
+        const predictionPitchRight = await modelPitchRight.predict(posenetOutput);
+        poseDecoderPitchRight(predictionPitchRight);
+        // for (let i = 5; i < maxPredictionsLeft + 5; i++) {
+        //     const classPredictionLeft =
+        //         predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
+        //     labelContainerRight.childNodes[i].innerHTML = classPredictionLeft;
+        // }
+
+        // finally draw the poses
+        drawPose(pose);
+    }
+
+    const drawPose = async (pose) => {
+        if (webcam.canvas) {
+            ctx.drawImage(webcam.canvas, 0, 0);
+            ctx2.drawImage(webcam.canvas, 0, 0);
+            // draw the keypoints and skeleton
+            if (pose) {
+                const minPartConfidence = 0.5;
+                tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx);
+                tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx2);
+                tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx);
+                tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx2);
+            }
+        }
+    }
+
+    const poseDecoderLeft = async (predictionLeft) => {
+        if (predictionLeft) {
+            const aux = [];
+            for (let i = 0; i < maxPredictionsLeft; i++) {
+                if (predictionLeft[i].probability > 0.97) {
+                    aux.push(predictionLeft[i].className);
+                    if (aux[aux.length] == aux[aux.length - 1]) {
+                        aux.pop();
+                    }
+                }
+
+                //console.log(aux);
+                if (aux.length > 0) {
+                    let punzadaBpm = poseController.checkPunzada(aux[0]);
+                    let trianguloBpm = poseController.checkTriangulo(aux[0]);
+                    let cruzBpm = poseController.checkCruz(aux[0]);
+                    if (punzadaBpm) {
+                        setPosesCount((prevCount) => prevCount + 1);
+                        calcularPuntajePrecision(poseController.getDesviation(), 'punzada');
+                        calcularPuntajeBpm(punzadaBpm);
+                        setNewBPM(punzadaBpm);
+                        calcularVolumen(poseController.getVolume() / 1000, "left")
+                        //hacer algo con el volumen
+                        //console.log(poseController.getVolume() / 1000, 'volumen')
+                        //setCurrentVolume(poseController.getVolume())
+                    }
+                    if (trianguloBpm) {
+                        setPosesCount((prevCount) => prevCount + 1);
+                        calcularPuntajePrecision(poseController.getDesviation(), 'triangulo');
+                        calcularPuntajeBpm(trianguloBpm);
+                        setNewBPM(trianguloBpm)
+                        calcularVolumen(poseController.getVolume() / 1000, "left")
+                        //setCurrentVolume(poseController.getVolume())
+                    }
+                    if (cruzBpm) {
+                        setPosesCount((prevCount) => prevCount + 1);
+                        calcularPuntajePrecision(poseController.getDesviation(), 'cruz');
+                        calcularPuntajeBpm(cruzBpm);
+                        setNewBPM(cruzBpm);
+                        calcularVolumen(poseController.getVolume() / 1000, "left")
+                    }
+
+
+                }
+
+            }
+
+        }
+    }
+
+    const poseDecoderRight = async (predictionRight) => {
+        if (predictionRight) {
+            const aux = [];
+            for (let i = 0; i < maxPredictionsRight; i++) {
+                if (predictionRight[i].probability > 0.97) {
+                    aux.push(predictionRight[i].className);
+                    if (aux[aux.length] == aux[aux.length - 1]) {
+                        aux.pop();
+                    }
+                }
+
+                //console.log(aux);
+                if (aux.length > 0) {
+                    let punzadaBpmRight = poseController.checkPunzadaRight(aux[0]);
+                    let trianguloBpmRight = poseController.checkTrianguloRight(aux[0]);
+                    let cruzBpmRight = poseController.checkCruzRight(aux[0]);
+                    if (punzadaBpmRight) {
+                        setPosesCount((prevCount) => prevCount + 1);
+                        calcularPuntajePrecision(poseController.getDesviation(), 'punzada');
+                        calcularPuntajeBpm(punzadaBpmRight);
+                        setNewBPM(punzadaBpmRight);
+                        calcularVolumen(poseController.getVolume() / 1000, "right")
+                        //hacer algo con el volumen
+                        //console.log(poseController.getVolume() / 1000, 'volumen')
+                        //setCurrentVolume(poseController.getVolume())
+                    }
+                    if (trianguloBpmRight) {
+                        setPosesCount((prevCount) => prevCount + 1);
+                        calcularPuntajePrecision(poseController.getDesviation(), 'triangulo');
+                        calcularPuntajeBpm(trianguloBpmRight);
+                        setNewBPM(trianguloBpmRight)
+                        calcularVolumen(poseController.getVolume() / 1000, "right")
+                        //setCurrentVolume(poseController.getVolume())
+                    }
+                    if (cruzBpmRight) {
+                        setPosesCount((prevCount) => prevCount + 1);
+                        calcularPuntajePrecision(poseController.getDesviation(), 'cruz');
+                        calcularPuntajeBpm(cruzBpmRight);
+                        setNewBPM(cruzBpmRight);
+                        calcularVolumen(poseController.getVolume() / 1000, "right")
+                    }
+
+
+                }
+
+            }
+
+        }
+    }
+
+    const poseDecoderPitchRight = async (predictionPitchRight) => {
+        if (predictionPitchRight) {
+            const aux = [];
+            for (let i = 0; i < maxPredictionsPitchRight; i++) {
+                if (predictionPitchRight[i].probability > 0.97) {
+                    aux.push(predictionPitchRight[i].className);
+                    if (aux[aux.length] == aux[aux.length - 1]) {
+                        aux.pop();
+                    }
+                }
+
+                if (aux.length > 0) {
+                    //console.log(aux, 'PitchRight');
+
+                    let pitchRight = poseController.checkPitchRight(aux[0]);
+
+                    if (pitchRight === 'up') {
+                        //audio controller pitch
+                        audioController.increasePitch();
+                    } else if (pitchRight === 'down') {
+                        //audio controller pitch
+                        audioController.decreasePitch();
+                    } else if (pitchRight === 'reset') {
+                        //reset pitch
+                        audioController.resetPitch();
+                    }
+
+
+                }
+
+            }
+
+        }
+    }
+
+    const poseDecoderPitchLeft = async (predictionPitchLeft) => {
+        if (predictionPitchLeft) {
+            const aux = [];
+            for (let i = 0; i < maxPredictionsPitchLeft; i++) {
+                if (predictionPitchLeft[i].probability > 0.97) {
+                    aux.push(predictionPitchLeft[i].className);
+                    if (aux[aux.length] == aux[aux.length - 1]) {
+                        aux.pop();
+                    }
+                }
+
+
+                if (aux.length > 0) {
+                    //console.log(aux, 'PitchLeft');
+
+                    let pitchLeft = poseController.checkPitchLeft(aux[0]);
+
+                    if (pitchLeft === 'up') {
+                        //audio controller pitch
+                        audioController.increasePitch();
+                    } else if (pitchLeft === 'down') {
+                        //audio controller pitch
+                        audioController.decreasePitch();
+                    } else if (pitchLeft === 'reset') {
+                        //reset pitch
+                        audioController.resetPitch();
+                    }
+
+
+                }
+
+            }
+
+        }
+    }
+
+    let calibrado = false;
+
+    const poseDecoderTPose = async (predictionTPose) => {
+        if (predictionTPose) {
+            const aux = [];
+            for (let i = 0; i < maxPredictionsTPose; i++) {
+                if (predictionTPose[i].probability > 0.97) {
+                    aux.push(predictionTPose[i].className);
+                    if (aux[aux.length] == aux[aux.length - 1]) {
+                        aux.pop();
+                    }
+                }
+
+                //console.log(aux);
+                if (aux[0] === "T" && !calibrado) {
+                    calibrado = true;
+                    startGame();
+                }
+
+            }
+
+        }
     }
 
     const changeSpeed = (newBpm) => {
@@ -460,93 +723,6 @@ const Game = () => {
         audioController.setVolume(volumePercentage, hand)
     }
 
-    const drawPose = async (pose) => {
-        if (webcam.canvas) {
-            ctx.drawImage(webcam.canvas, 0, 0);
-            ctx2.drawImage(webcam.canvas, 0, 0);
-            // draw the keypoints and skeleton
-            if (pose) {
-                const minPartConfidence = 0.5;
-                tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx);
-                tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx2);
-                tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx);
-                tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx2);
-            }
-        }
-    }
-
-    const poseDecoderLeft = async (predictionLeft) => {
-        if (predictionLeft) {
-            const aux = [];
-            for (let i = 0; i < maxPredictionsLeft; i++) {
-                if (predictionLeft[i].probability > 0.97) {
-                    aux.push(predictionLeft[i].className);
-                    if (aux[aux.length] == aux[aux.length - 1]) {
-                        aux.pop();
-                    }
-                }
-
-                //console.log(aux);
-                if (aux.length > 0) {
-                    let punzadaBpm = poseController.checkPunzada(aux[0]);
-                    let trianguloBpm = poseController.checkTriangulo(aux[0]);
-                    let cruzBpm = poseController.checkCruz(aux[0]);
-                    if (punzadaBpm) {
-                        calcularPuntajePrecision(poseController.getDesviation(), 'punzada');
-                        calcularPuntajeBpm(punzadaBpm);
-                        setNewBPM(punzadaBpm);
-                        calcularVolumen(poseController.getVolume() / 1000, "left")
-                        //hacer algo con el volumen
-                        //console.log(poseController.getVolume() / 1000, 'volumen')
-                        //setCurrentVolume(poseController.getVolume())
-                    }
-                    if (trianguloBpm) {
-                        calcularPuntajePrecision(poseController.getDesviation(), 'triangulo');
-                        calcularPuntajeBpm(trianguloBpm);
-                        setNewBPM(trianguloBpm)
-                        calcularVolumen(poseController.getVolume() / 1000, "left")
-                        //setCurrentVolume(poseController.getVolume())
-                    }
-                    if (cruzBpm) {
-                        calcularPuntajePrecision(poseController.getDesviation(), 'cruz');
-                        calcularPuntajeBpm(cruzBpm);
-                        setNewBPM(cruzBpm);
-                        calcularVolumen(poseController.getVolume() / 1000, "left")
-                    }
-
-
-                }
-
-            }
-
-        }
-    }
-
-    let calibrado = false;
-
-    const poseDecoderTPose = async (predictionTPose) => {
-        if (predictionTPose) {
-            const aux = [];
-            for (let i = 0; i < maxPredictionsTPose; i++) {
-                if (predictionTPose[i].probability > 0.97) {
-                    aux.push(predictionTPose[i].className);
-                    if (aux[aux.length] == aux[aux.length - 1]) {
-                        aux.pop();
-                    }
-                }
-
-                //console.log(aux);
-                if (aux[0] === "T" && !calibrado) {
-                    calibrado = true;
-                    startGame();
-                }
-
-            }
-
-        }
-    }
-
-
     //seteo variables iniciales de juego
     React.useEffect(() => {
         //setVariablesGame();
@@ -554,9 +730,9 @@ const Game = () => {
     }, []);
 
     React.useEffect(() => {
-       if (response) {
-           init()
-       }
+        if (response) {
+            init()
+        }
     }, [response]);
 
 

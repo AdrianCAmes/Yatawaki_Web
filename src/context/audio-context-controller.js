@@ -28,6 +28,7 @@ export const AudioContextProvider = (props) => {
     players.volume.value = 0;
     players.playbackRate = 1;
     let initialBpm = 100;
+    let pitchChanged = false;
 
     const setSongs = (songs) => {
         songsArray = songs;
@@ -156,17 +157,29 @@ export const AudioContextProvider = (props) => {
     // }
 
     const increasePitch = () => {
-        pitchShift = new Tone.PitchShift(8).toDestination();
-        players.fan(pitchShift);
+        if (!pitchChanged) {
+            pitchShift = new Tone.PitchShift(8).toDestination();
+            pitchChanged = true;
+            players.fan(pitchShift);
+        }
     }
 
     const decreasePitch = () => {
-        pitchShift = new Tone.PitchShift(-8).toDestination();
-        players.fan(pitchShift);
+        if (!pitchChanged) {
+            pitchChanged = true;
+            pitchShift = new Tone.PitchShift(-8).toDestination();
+            players.fan(pitchShift);
+        }
     }
 
-    const resetPitch = () => {
-        players.disconnect(pitchShift);
+    const resetPitch = async () => {
+        if (pitchChanged) {
+            console.log('desconectando...');
+            await delay(5000).then(() => {
+                players.disconnect(pitchShift);
+            });
+            pitchChanged = false;
+        }
     }
 
     const decreasePlaybackRate = () => {
