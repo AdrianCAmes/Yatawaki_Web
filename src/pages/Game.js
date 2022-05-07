@@ -39,6 +39,7 @@ const Game = () => {
     const [response, setResponse] = useState(null);
     const [timerOn, setTimerOn] = useState(false);
     const [currentBPM, setCurrentBPM] = useState(0);
+    const [posesCount, setPosesCount] = useState(0);
     const [currentVolume, setCurrentVolume] = useState(72);
     const [songDuration, setSongDuration] = useState(0);
 
@@ -301,7 +302,7 @@ const Game = () => {
 
         // Prediction 2: run input through teachable machine classification model
         const prediction = await modelRight.predict(posenetOutput);
-
+        poseDecoderRight(prediction);
         // for (let i = 0; i < maxPredictionsRight; i++) {
         //     const classPrediction =
         //         prediction[i].className + ": " + prediction[i].probability.toFixed(2);
@@ -411,6 +412,7 @@ const Game = () => {
                     let trianguloBpm = poseController.checkTriangulo(aux[0]);
                     let cruzBpm = poseController.checkCruz(aux[0]);
                     if (punzadaBpm) {
+                        setPosesCount((prevCount) => prevCount + 1);
                         calcularPuntajePrecision(poseController.getDesviation(), 'punzada');
                         calcularPuntajeBpm(punzadaBpm);
                         setNewBPM(punzadaBpm);
@@ -420,6 +422,7 @@ const Game = () => {
                         //setCurrentVolume(poseController.getVolume())
                     }
                     if (trianguloBpm) {
+                        setPosesCount((prevCount) => prevCount + 1);
                         calcularPuntajePrecision(poseController.getDesviation(), 'triangulo');
                         calcularPuntajeBpm(trianguloBpm);
                         setNewBPM(trianguloBpm)
@@ -427,10 +430,61 @@ const Game = () => {
                         //setCurrentVolume(poseController.getVolume())
                     }
                     if (cruzBpm) {
+                        setPosesCount((prevCount) => prevCount + 1);
                         calcularPuntajePrecision(poseController.getDesviation(), 'cruz');
                         calcularPuntajeBpm(cruzBpm);
                         setNewBPM(cruzBpm);
                         calcularVolumen(poseController.getVolume() / 1000, "left")
+                    }
+
+
+                }
+
+            }
+
+        }
+    }
+
+    const poseDecoderRight = async (predictionRight) => {
+        if (predictionRight) {
+            const aux = [];
+            for (let i = 0; i < maxPredictionsRight; i++) {
+                if (predictionRight[i].probability > 0.97) {
+                    aux.push(predictionRight[i].className);
+                    if (aux[aux.length] == aux[aux.length - 1]) {
+                        aux.pop();
+                    }
+                }
+
+                //console.log(aux);
+                if (aux.length > 0) {
+                    let punzadaBpmRight = poseController.checkPunzadaRight(aux[0]);
+                    let trianguloBpmRight = poseController.checkTrianguloRight(aux[0]);
+                    let cruzBpmRight = poseController.checkCruzRight(aux[0]);
+                    if (punzadaBpmRight) {
+                        setPosesCount((prevCount) => prevCount + 1);
+                        calcularPuntajePrecision(poseController.getDesviation(), 'punzada');
+                        calcularPuntajeBpm(punzadaBpmRight);
+                        setNewBPM(punzadaBpmRight);
+                        calcularVolumen(poseController.getVolume() / 1000, "right")
+                        //hacer algo con el volumen
+                        //console.log(poseController.getVolume() / 1000, 'volumen')
+                        //setCurrentVolume(poseController.getVolume())
+                    }
+                    if (trianguloBpmRight) {
+                        setPosesCount((prevCount) => prevCount + 1);
+                        calcularPuntajePrecision(poseController.getDesviation(), 'triangulo');
+                        calcularPuntajeBpm(trianguloBpmRight);
+                        setNewBPM(trianguloBpmRight)
+                        calcularVolumen(poseController.getVolume() / 1000, "right")
+                        //setCurrentVolume(poseController.getVolume())
+                    }
+                    if (cruzBpmRight) {
+                        setPosesCount((prevCount) => prevCount + 1);
+                        calcularPuntajePrecision(poseController.getDesviation(), 'cruz');
+                        calcularPuntajeBpm(cruzBpmRight);
+                        setNewBPM(cruzBpmRight);
+                        calcularVolumen(poseController.getVolume() / 1000, "right")
                     }
 
 
