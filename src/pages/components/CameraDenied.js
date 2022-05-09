@@ -1,10 +1,12 @@
 import { Box, Dialog, Typography } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 
 const CameraDeniedDialog = (props) => {
 
     const mountedRef = React.useRef(true);
+    const navigate = useNavigate();
     const [openDialog, setOpenDialog] = React.useState(false);
 
     const handleCloseDialog = () => {
@@ -30,13 +32,8 @@ const CameraDeniedDialog = (props) => {
                         Acceso a camara denegada. Por favor revise los permisos.
                     </Typography>
                     <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <Box className="hover" sx={buttonStyle}>
-                            <Typography style={{ fontSize: '30px', color: '#FFF' }}> Dar Permisos</Typography>
-                        </Box>
-                    </div>
-                    <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <Box className="hover" sx={buttonStyle}>
-                            <Typography style={{ fontSize: '30px', color: '#FFF' }}> Cancelar</Typography>
+                        <Box className="hover" sx={buttonStyle} onClick={() => {navigate(0)}}>
+                            <Typography style={{ fontSize: '30px', color: '#FFF' }}> Realizado</Typography>
                         </Box>
                     </div>
                 </div>
