@@ -1,9 +1,11 @@
-import { Box, Dialog, Grid, Paper, Typography } from "@mui/material";
+import { Box, Dialog, Divider, Grid, Paper, Typography } from "@mui/material";
 import React from "react";
 import GameContext from "../../context/game-context";
 import SnackBarContext from "../../context/snack-bar-context";
 import sinfonia from '../../assets/sinfonia-ejemplo.png'
 import PropTypes from 'prop-types';
+import { FacebookIcon, FacebookShareButton, TwitterIcon, TwitterShareButton, WhatsappIcon, WhatsappShareButton } from "react-share";
+import { useLocation } from "react-router-dom";
 
 function DataTwoColumns(props) {
     const label = props.label;
@@ -41,6 +43,7 @@ const GameResults = (props) => {
     const gameContext = React.useContext(GameContext);
     const snackBarContext = React.useContext(SnackBarContext);
 
+    const location = useLocation();
 
 
 
@@ -84,8 +87,23 @@ const GameResults = (props) => {
                             <DataTwoColumns label='Experiencia' value={props.results ? `+${Math.round(props.results.gainedExperience)}` : '--'}></DataTwoColumns>
                         </Grid>
                     </Box>
+                    <Divider style={{width:'90%', marginTop:'30px'}}>
+                        <FacebookShareButton url={window.location.href} title="Mira mis resultados en YATAWAKI">
+                            <FacebookIcon size={50} round={true} />
+                        </FacebookShareButton>
+                        <WhatsappShareButton url={window.location.href} title="Mira mis resultados en YATAWAKI">
+                            <WhatsappIcon size={50} round={true} />
+                        </WhatsappShareButton>
+
+                        <TwitterShareButton url={window.location.href} title="Mira mis resultados en YATAWAKI">
+                            <TwitterIcon size={50} round={true} />
+                        </TwitterShareButton>
+                    </Divider>
                 </Grid>
+
             </Grid>
+
+
 
 
         </React.Fragment >
