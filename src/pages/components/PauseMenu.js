@@ -1,8 +1,10 @@
 import { Box, Dialog, Typography } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const PauseMenu = (props) => {
     const mountedRef = React.useRef(true)
+    const navigate = useNavigate();
   
 
     React.useEffect(() => {
@@ -29,7 +31,7 @@ const PauseMenu = (props) => {
                     </div>
                     <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Box className="hover" sx={buttonStyle}>
-                            <Typography style={{ fontSize: '30px', color: '#FFF' }}> Reiniciar </Typography>
+                            <Typography onClick={() => {navigate(0)}} style={{ fontSize: '30px', color: '#FFF' }}> Reiniciar </Typography>
                         </Box>
                     </div>
                     <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
