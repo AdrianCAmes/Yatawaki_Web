@@ -174,10 +174,11 @@ export const AudioContextProvider = (props) => {
 
     const resetPitch = async () => {
         if (pitchChanged) {
-            console.log('desconectando...');
-            await delay(5000).then(() => {
-                players.disconnect(pitchShift);
-            });
+            //console.log('desconectando...');
+            // await delay(5000).then(() => {
+            //     players.disconnect(pitchShift);
+            // });
+            players.disconnect(pitchShift);
             pitchChanged = false;
         }
     }

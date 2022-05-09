@@ -734,10 +734,10 @@ export const PoseContextProvider = (props) => {
         }
 
         if (patternType === 'triangulo') {
-            BPM = 240 / difference;
+            BPM = 180 / difference;
         }
         if (patternType === 'cruz') {
-            BPM = 300 / difference;
+            BPM = 240 / difference;
         }
         return BPM;
     }

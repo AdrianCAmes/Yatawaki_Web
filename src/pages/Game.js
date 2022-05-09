@@ -1,4 +1,4 @@
-import { CircularProgress, Dialog, LinearProgress, Paper, Typography } from "@mui/material";
+import { CircularProgress, Dialog, LinearProgress, Paper, Snackbar, SnackbarContent, Typography } from "@mui/material";
 import React, { useState } from "react";
 import calibracion from '../assets/calibracion.png';
 import { PauseRounded } from "@mui/icons-material";
@@ -158,7 +158,7 @@ const Game = () => {
             //alert('tiempo cumplido, por favor refrescar')
             audioController.stop();
             poseController.pauseController();
-            navigate('/game-resume', { 
+            navigate('/game-resume', {
                 state: {
                     points: puntaje,
                     gesturesCompleted: posesCount,
@@ -363,7 +363,7 @@ const Game = () => {
 
         const { pose, posenetOutput } = await modelPitchRight.estimatePose(webcam.canvas);
         const predictionPitchRight = await modelPitchRight.predict(posenetOutput);
-        poseDecoderPitchRight(predictionPitchRight);
+        //poseDecoderPitchRight(predictionPitchRight);
         // for (let i = 5; i < maxPredictionsLeft + 5; i++) {
         //     const classPredictionLeft =
         //         predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
@@ -632,43 +632,55 @@ const Game = () => {
             if (desviacion > 1.5) {
                 setPuntaje((prevPuntaje) => prevPuntaje + 2);
                 setPrecision((prevPrecision) => (prevPrecision + 1.5) / 2)
+                newPuntajeSnack(2)
             } else if (desviacion > 0.8 && desviacion < 1.5) {
                 setPuntaje((prevPuntaje) => prevPuntaje + 5)
                 setPrecision((prevPrecision) => (prevPrecision + desviacion) / 2)
+                newPuntajeSnack(5)
             } else if (desviacion > 0.2 && desviacion < 0.8) {
                 setPuntaje((prevPuntaje) => prevPuntaje + 7)
                 setPrecision((prevPrecision) => (prevPrecision + desviacion) / 2)
+                newPuntajeSnack(7)
             } else if (desviacion < 0.2) {
                 setPuntaje((prevPuntaje) => prevPuntaje + 10)
                 setPrecision((prevPrecision) => (prevPrecision + desviacion) / 2)
+                newPuntajeSnack(10)
             }
         } else if (patron === 'triangulo') {
             if (desviacion > 1.5) {
                 setPuntaje((prevPuntaje) => prevPuntaje + 4)
                 setPrecision((prevPrecision) => (prevPrecision + 1.5) / 2)
+                newPuntajeSnack(4)
             } else if (desviacion > 0.8 && desviacion < 1.5) {
                 setPuntaje((prevPuntaje) => prevPuntaje + 8)
                 setPrecision((prevPrecision) => (prevPrecision + desviacion) / 2)
+                newPuntajeSnack(8)
             } else if (desviacion > 0.2 && desviacion < 0.8) {
                 setPrecision((prevPrecision) => (prevPrecision + desviacion) / 2)
                 setPuntaje((prevPuntaje) => prevPuntaje + 12)
+                newPuntajeSnack(12)
             } else if (desviacion < 0.2) {
                 setPrecision((prevPrecision) => (prevPrecision + desviacion) / 2)
                 setPuntaje((prevPuntaje) => prevPuntaje + 15)
+                newPuntajeSnack(15)
             }
         } else if (patron === 'cruz') {
             if (desviacion > 1.5) {
                 setPuntaje((prevPuntaje) => prevPuntaje + 6)
                 setPrecision((prevPrecision) => (prevPrecision + 1.5) / 2)
+                newPuntajeSnack(6)
             } else if (desviacion > 0.8 && desviacion < 1.5) {
                 setPuntaje((prevPuntaje) => prevPuntaje + 10)
                 setPrecision((prevPrecision) => (prevPrecision + desviacion) / 2)
+                newPuntajeSnack(10)
             } else if (desviacion > 0.2 && desviacion < 0.8) {
                 setPuntaje((prevPuntaje) => prevPuntaje + 15)
                 setPrecision((prevPrecision) => (prevPrecision + desviacion) / 2)
+                newPuntajeSnack(15)
             } else if (desviacion < 0.2) {
                 setPuntaje((prevPuntaje) => prevPuntaje + 20)
                 setPrecision((prevPrecision) => (prevPrecision + desviacion) / 2)
+                newPuntajeSnack(20)
             }
         }
 
@@ -677,19 +689,26 @@ const Game = () => {
     const calcularPuntajeBpm = (nuevoBpm) => {
         //calculamos puntaje de limite
         if (nuevoBpm > (response.initialBpm - 10) && (nuevoBpm < (response.initialBpm + 10))) {
-            setPuntaje((prevPuntaje) => prevPuntaje + 5)
+            setPuntaje((prevPuntaje) => prevPuntaje + 5);
+            newPuntajeSnack(5)
         } else if (nuevoBpm > (response.initialBpm - 20) && (nuevoBpm < (response.initialBpm + 20))) {
             setPuntaje((prevPuntaje) => prevPuntaje + 3)
+            newPuntajeSnack(3)
         } else if (nuevoBpm > (response.initialBpm - 40) && (nuevoBpm < (response.initialBpm + 40))) {
             setPuntaje((prevPuntaje) => prevPuntaje + 1)
+            newPuntajeSnack(1)
         } else if (nuevoBpm > (response.initialBpm - 70 + (70 * 0.2)) && (nuevoBpm < (response.initialBpm + 70 + (70 * 0.2)))) {
             setPuntaje((prevPuntaje) => prevPuntaje - 10)
+            newPuntajeSnack(-10)
         } else if (nuevoBpm > (response.initialBpm - 70 + (70 * 0.5)) && (nuevoBpm < (response.initialBpm + 70 + (70 * 0.5)))) {
             setPuntaje((prevPuntaje) => prevPuntaje - 20)
+            newPuntajeSnack(-20)
         } else if (nuevoBpm > (response.initialBpm - 70 + (70 * 0.8)) && (nuevoBpm < (response.initialBpm + 70 + (70 * 0.8)))) {
             setPuntaje((prevPuntaje) => prevPuntaje - 30)
+            newPuntajeSnack(-30)
         } else {
             setPuntaje((prevPuntaje) => prevPuntaje - 50)
+            newPuntajeSnack(-50)
         }
     }
 
@@ -741,9 +760,23 @@ const Game = () => {
         }
     }, [response]);
 
+    const [openSnack, setOpenSnack] = React.useState(false);
+    const [newPoint, setNewPoints] = React.useState(0);
+    const [addPoint, setAddPoint] = React.useState(false);
 
+    const newPuntajeSnack = (newPuntaje) => {
+        setNewPoints(newPuntaje)
+        if (newPuntaje >= 0) {
+            setAddPoint(true);
+        } else {
+            setAddPoint(false);
+        }
+        setOpenSnack(true);
+    };
 
-
+    const handleCloseSnack = () => {
+        setOpenSnack(false);
+    };
 
     return (
         <React.Fragment>
@@ -781,6 +814,20 @@ const Game = () => {
                 {response && response.instruments.map((instrument, idx) => (
                     <div key={idx}>{renderSwitch(instrument)}</div>
                 ))}
+                <Snackbar
+                    open={openSnack}
+                    autoHideDuration={2000}
+                    onClose={handleCloseSnack}
+                    anchorOrigin={{ horizontal: "right", vertical: "top" }}
+                >
+                    <SnackbarContent elevation={0} style={{
+                        backgroundColor: 'transparent',
+                        fontSize: '40px',
+                        color: `${addPoint ? 'green' : 'red'}`
+                    }}
+                        message={<span>{newPoint}</span>}
+                    />
+                </Snackbar>
                 <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> BPM: {Math.round(currentBPM, 0)}</Typography>
                 <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '16%' }}> Volume: {currentVolume}%</Typography>
 
