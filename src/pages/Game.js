@@ -11,6 +11,7 @@ import PoseContext from "../context/pose-controller";
 import PauseMenu from "./components/PauseMenu";
 import ConcertApis from "../apis/concert-apis";
 import SnackBarContext from "../context/snack-bar-context";
+import CameraDeniedDialog from "./components/CameraDenied";
 
 let buttonStyle = { width: '150px', height: '50px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '20px' };
 
@@ -42,6 +43,8 @@ const Game = () => {
     const [animateViolin, setAnimateViolin] = useState(false);
     const [animateChello, setAnimateChello] = useState(false);
     const [animateGuitar, setAnimateGuitar] = useState(false);
+
+
 
     const animateLeft = () => {
         setAnimateViolin(true);
@@ -493,7 +496,7 @@ const Game = () => {
         if (predictionPitchRight) {
             const aux = [];
             for (let i = 0; i < maxPredictionsPitchRight; i++) {
-                if (predictionPitchRight[i].probability > 0.97) {
+                if (predictionPitchRight[i].probability === 1) {
                     aux.push(predictionPitchRight[i].className);
                     if (aux[aux.length] == aux[aux.length - 1]) {
                         aux.pop();
@@ -528,7 +531,7 @@ const Game = () => {
         if (predictionPitchLeft) {
             const aux = [];
             for (let i = 0; i < maxPredictionsPitchLeft; i++) {
-                if (predictionPitchLeft[i].probability > 0.97) {
+                if (predictionPitchLeft[i].probability === 1) {
                     aux.push(predictionPitchLeft[i].className);
                     if (aux[aux.length] == aux[aux.length - 1]) {
                         aux.pop();
@@ -561,6 +564,7 @@ const Game = () => {
     }
 
     let calibrado = false;
+    const [cameraDenied, setCameraDenied] = useState(false);
 
     const poseDecoderTPose = async (predictionTPose) => {
         if (predictionTPose) {
@@ -583,6 +587,12 @@ const Game = () => {
 
         }
     }
+    navigator.permissions.query({ name: "camera" }).then(res => {
+        if (res.state !== "granted") {
+            setCameraDenied(true);
+            //console.log('checkeando')
+        }
+    });
 
     const changeSpeed = (newBpm) => {
         setProgressSpeed((newBpm * 13) / response.initialBpm);
@@ -792,6 +802,8 @@ const Game = () => {
                     {!loading && <img style={{ position: 'absolute', height: '400px', width: '400px', top: '95px' }} src={calibracion} />}
                     <div id="label-container"></div>
                 </Dialog>
+                
+                <CameraDeniedDialog open={cameraDenied} ></CameraDeniedDialog>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Typography fontWeight='600' fontSize='30px' style={{ flex: 1, display: 'flex' }}> Ahora tocando: {response ? response.name : '--'}</Typography>
