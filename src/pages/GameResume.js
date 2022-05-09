@@ -54,6 +54,15 @@ const GameResume = () => {
             "gainedCoins": (state.points * state.gesturesCompleted) / 150
         }
 
+        // const aresults = {
+        //     "idConcert": 1,
+        //     "gainedExperience": 324,
+        //     "points": 234,
+        //     "accuracyRate": 234,
+        //     "gesturesCompleted": 23,
+        //     "gainedCoins": 2341
+        // }
+
         setResultsFinal(aresults);
 
         ConcertApis.concertComplete(aresults.idConcert, aresults.points, aresults.accuracyRate, aresults.gesturesCompleted, aresults.gainedExperience, aresults.gainedCoins)
@@ -95,7 +104,6 @@ const GameResume = () => {
     return (
         <React.Fragment>
             <Paper sx={{ backgroundColor: '#FFED66', height: '100vh', display: 'flex', alignItems: 'center', flexDirection: 'column', padding: '20px' }}>
-
                 {showFinal ? <GameResults results={resultsFinal}></GameResults>
                     : <NewUnlockable unlockable={currentUnlockable}></NewUnlockable>}
 
