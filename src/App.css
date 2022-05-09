@@ -461,4 +461,12 @@
      }
  }
 
+ .add {
+     color: 'green'
+ }
+
+ .remove {
+     color: 'red'
+ }
+
  /* end Game animations */
