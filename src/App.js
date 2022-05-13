@@ -15,6 +15,7 @@ import GameResume from './pages/GameResume';
 import Market from './pages/Market';
 import { AudioContextProvider } from './context/audio-context-controller';
 import { PoseContextProvider } from './context/pose-controller';
+import Tutorial from './pages/Tutorial';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
               <Route path="/game" element={<AudioContextProvider><PoseContextProvider><Game /></PoseContextProvider></AudioContextProvider>} />
               <Route path="/game-resume" element={<GameResume />} />
               <Route path="/market" element={<Market />} />
+              <Route path="/tutorial" element={<Tutorial />} />
 
             </Routes>
           </BrowserRouter>

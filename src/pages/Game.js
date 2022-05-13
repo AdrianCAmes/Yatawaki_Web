@@ -166,7 +166,8 @@ const Game = () => {
                     points: puntaje,
                     gesturesCompleted: posesCount,
                     accuracyRate: precision,
-                    idConcert: response.idConcert
+                    idConcert: response.idConcert,
+                    symphonyName: response.name
                 },
                 replace: true
             })
@@ -923,7 +924,7 @@ const Game = () => {
                 <Dialog PaperProps={{ style: { borderRadius: '50px', backgroundColor: '#FFED66', padding: '30px', display: 'flex', alignItems: 'center' } }} open={open} fullWidth maxWidth="lg">
 
                     <div style={{ width: '100%', marginBottom: '20px' }}>
-                        <Typography fontWeight='600' fontSize="30px!important"> Calibra tu cuerpo con la cámara web:</Typography>
+                        <Typography fontWeight='600' fontSize="30px!important"> Por favor, calibre su cuerpo con la silueta de la cámara:</Typography>
                     </div>
                     {loading && <CircularProgress style={{ marginTop: '30px' }}></CircularProgress>}
 

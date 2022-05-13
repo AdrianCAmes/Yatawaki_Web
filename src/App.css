@@ -470,3 +470,8 @@
  }
 
  /* end Game animations */
+
+
+ .title-dialog-tutorial {
+    font-size: 50px !important;
+}
