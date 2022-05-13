@@ -324,7 +324,7 @@ const Game = () => {
 
         const { pose, posenetOutput } = await modelLeft.estimatePose(webcam.canvas);
         const predictionLeft = await modelLeft.predict(posenetOutput);
-        //poseDecoderLeft(predictionLeft);
+        poseDecoderLeft(predictionLeft);
         // for (let i = 5; i < maxPredictionsLeft + 5; i++) {
         //     const classPredictionLeft =
         //         predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
@@ -589,7 +589,6 @@ const Game = () => {
         }
     }
 
-    let calibrado = false;
     const [cameraDenied, setCameraDenied] = useState(false);
 
     const poseDecoderDetecJugador = async (predictionDetecJugador) => {
@@ -605,15 +604,16 @@ const Game = () => {
 
 
                 if (aux.length > 0) {
-                    console.log(aux, 'Detec jugador');
-                    if (aux[0] === 'NotPlaying' && calibrado) {
+                    let checkPlayer = poseController.checkPlayer(aux[0])
+
+                    if (checkPlayer === 'NotPlaying') {
                         setCameraDenied(true);
                         pause(true);
-
-                    } else if (aux[0] === "Playing" && calibrado) {
+                    } else if (checkPlayer === 'Resume') {
+                        newCalibration();
                         setCameraDenied(false);
-                        resume();
                     }
+
 
                 }
 
@@ -635,10 +635,13 @@ const Game = () => {
                     }
                 }
 
-                //console.log(aux);
-                if (aux[0] === "T" && !calibrado) {
-                    calibrado = true;
+                let tpose = poseController.checkTPose(aux[0]);
+
+                if (tpose === 'Start') {
                     startGame();
+                }
+                if (tpose === 'Continue') {
+                    resume();
                 }
 
             }
@@ -679,19 +682,30 @@ const Game = () => {
         setProgressSpeed((1 * 13) / response.initialBpm);
         stopAnimationLeft();
         stopAnimationRight();
+        setLoading(true);
         if (!isCameraDenied) {
             setOpenDialog(true);
         }
     }
 
     const resume = () => {
-        setOpenDialog(false);
+        setOpen(false);
         audioController.setBPM(currentBPM);
         poseController.startController(response.initialBpm);
         setProgressSpeed((currentBPM * 13) / response.initialBpm);
         animateRight();
         animateLeft();
+        setLoading(true);
     }
+
+
+
+    const newCalibration = () => {
+        setOpenDialog(false);
+        setOpen(true);
+        init()
+    }
+
 
     const navigate2Menu = () => {
         navigate('/menu')
@@ -880,7 +894,7 @@ const Game = () => {
                         <Box className="hover" onClick={() => { pause(false) }} style={{ backgroundColor: '#FF5E5B', borderRadius: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50px', width: '50px' }}>
                             <PauseRounded style={{ color: '#FFF', fontSize: '50px' }} />
                         </Box>
-                        <PauseMenu open={openDialog} handleClose={handleCloseDialog} resume={resume} exit={navigate2Menu}></PauseMenu>
+                        <PauseMenu open={openDialog} resume={newCalibration} exit={navigate2Menu}></PauseMenu>
                     </div>
                 </div>
                 {response && response.instruments.map((instrument, idx) => (

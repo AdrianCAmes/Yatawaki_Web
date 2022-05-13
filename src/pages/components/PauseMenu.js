@@ -18,7 +18,7 @@ const PauseMenu = (props) => {
 
     return (
         <React.Fragment>
-            <Dialog PaperProps={{ style: { borderRadius: '50px', backgroundColor: '#FFED66' } }} open={props.open} onClose={() => { props.handleClose()}} fullWidth maxWidth="lg">
+            <Dialog PaperProps={{ style: { borderRadius: '50px', backgroundColor: '#FFED66' } }} open={props.open} fullWidth maxWidth="lg">
                 <div style={{ height: '500px', backgroundColor: '#FFED66', padding: '50px',alignContent: 'center' }}>
                     <Typography fontWeight={600} fontSize={50} style={{ textAlign: 'center' }}>
                         Juego Pausado
