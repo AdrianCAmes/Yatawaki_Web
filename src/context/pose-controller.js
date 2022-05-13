@@ -13,6 +13,8 @@ const PoseContext = createContext({
     getDesviation: null,
     checkPitchLeft: null,
     checkPitchRight: null,
+    checkPlayer: null,
+    checkTPose: null
 })
 
 export default PoseContext;
@@ -56,9 +58,13 @@ export const PoseContextProvider = (props) => {
     let started = false;
     let volume = 0;
     let desviation = 0;
+    let paused = false;
+    let calibrado = false;
+    let checkNewCalibration = false;
 
     const startController = (bpm) => {
         started = true;
+        calibrado = true;
         initialBPM = bpm;
         console.log(initialBPM, 'initialBPM in Pose Controller');
     }
@@ -100,6 +106,7 @@ export const PoseContextProvider = (props) => {
 
     const pauseController = () => {
         started = false;
+        checkNewCalibration = true;
     }
 
     const timeDesviation = (timesArray) => {
@@ -139,6 +146,33 @@ export const PoseContextProvider = (props) => {
         return desviation;
     }
     //REGLA GENERAL: En cada paso verificar el anterior completo y el actual vacio :) Menos en el primero
+
+    const checkPlayer = (value) => {
+        if (started) {
+            if (value === 'NotPlaying') {
+                paused = true;
+                return 'NotPlaying';
+            }
+        } else if (value === 'Playing' && paused) {
+            paused = false;
+            return 'Resume';
+        }
+    }
+
+    const checkTPose = (value) => {
+
+
+        if (!calibrado && value === 'T') {
+            calibrado = true;
+            return 'Start';
+        }
+
+        if (checkNewCalibration && value === 'T') {
+            checkNewCalibration = false;
+            return 'Continue'
+        }
+
+    }
 
     const checkPitchLeft = (value) => {
         if (started) {
@@ -772,6 +806,8 @@ export const PoseContextProvider = (props) => {
             getDesviation: getDesviation,
             checkPitchLeft: checkPitchLeft,
             checkPitchRight: checkPitchRight,
+            checkPlayer: checkPlayer,
+            checkTPose: checkTPose
         }}>
             {props.children}
         </PoseContext.Provider>
