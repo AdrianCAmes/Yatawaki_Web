@@ -107,6 +107,8 @@ export const PoseContextProvider = (props) => {
     const pauseController = () => {
         started = false;
         checkNewCalibration = true;
+        resetVolumeInputs();
+        resetBpmInputs();
     }
 
     const timeDesviation = (timesArray) => {
