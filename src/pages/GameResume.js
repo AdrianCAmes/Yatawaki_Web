@@ -45,25 +45,25 @@ const GameResume = () => {
 
     const concertComplete = async () => {
 
-        // const aresults = {
-        //     "idConcert": state.idConcert,
-        //     "gainedExperience": (state.points * state.gesturesCompleted) / 20,
-        //     "points": state.points,
-        //     "accuracyRate": state.accuracyRate,
-        //     "gesturesCompleted": state.gesturesCompleted,
-        //     "gainedCoins": (state.points * state.gesturesCompleted) / 150,
-        //     "symphonyName": state.symphonyName
-        // }
-
         const aresults = {
-            "idConcert": 1,
-            "gainedExperience": 324,
-            "points": 234,
-            "accuracyRate": 234,
-            "gesturesCompleted": 23,
-            "gainedCoins": 2341,
-            "symphonyName": "Symphony No9"
+            "idConcert": state.idConcert,
+            "gainedExperience": (state.points * state.gesturesCompleted) / 20,
+            "points": state.points,
+            "accuracyRate": state.accuracyRate,
+            "gesturesCompleted": state.gesturesCompleted,
+            "gainedCoins": (state.points * state.gesturesCompleted) / 150,
+            "symphonyName": state.symphonyName
         }
+
+        // const aresults = {
+        //     "idConcert": 1,
+        //     "gainedExperience": 324,
+        //     "points": 234,
+        //     "accuracyRate": 234,
+        //     "gesturesCompleted": 23,
+        //     "gainedCoins": 2341,
+        //     "symphonyName": "Symphony No9"
+        // }
 
         setResultsFinal(aresults);
 

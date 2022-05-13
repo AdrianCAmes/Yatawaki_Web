@@ -80,61 +80,61 @@ const Game = () => {
     }
 
     const startConcert = () => {
-        let response2 = {
-            "idConcert": 1,
-            "name": "Nocturne Op 9 No 2",
-            "initialBpm": 122,
-            "duration": 270,
-            "instruments": [
-                {
-                    "name": "Piano",
-                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Pianos/piano_casio.png",
-                    "position": "L",
-                    "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Piano/piano_casio.mp3"
-                },
-                {
-                    "name": "Violin",
-                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Violins/violin_casio.png",
-                    "position": "L",
-                    "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Violin/violin_casio.mp3"
-                },
-                {
-                    "name": "Cello",
-                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Cellos/cello_casio.png",
-                    "position": "R",
-                    "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Cello/cello_casio.mp3"
-                },
-                {
-                    "name": "Guitar",
-                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Guitars/guitar_casio.png",
-                    "position": "R",
-                    "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Guitar/guitar_casio.mp3"
-                }
-            ]
-        }
-        audioController.setSongs(response2.instruments);
-        audioController.setInitialBpm(response2.initialBpm);
-        setSongDuration(response2.duration)
-        setCurrentBPM(response2.initialBpm);
-        setResponse(response2);
-        // ConcertApis.startConcert()
-        //     .then(response => {
-        //         //console.log(response.data);
-        //         //response = response.data;
-        //         setResponse(response.data);
-        //         console.log(response);
-        //         console.log("empezando el juego...");
+        // let response2 = {
+        //     "idConcert": 1,
+        //     "name": "Nocturne Op 9 No 2",
+        //     "initialBpm": 122,
+        //     "duration": 270,
+        //     "instruments": [
+        //         {
+        //             "name": "Piano",
+        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Pianos/piano_casio.png",
+        //             "position": "L",
+        //             "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Piano/piano_casio.mp3"
+        //         },
+        //         {
+        //             "name": "Violin",
+        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Violins/violin_casio.png",
+        //             "position": "L",
+        //             "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Violin/violin_casio.mp3"
+        //         },
+        //         {
+        //             "name": "Cello",
+        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Cellos/cello_casio.png",
+        //             "position": "R",
+        //             "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Cello/cello_casio.mp3"
+        //         },
+        //         {
+        //             "name": "Guitar",
+        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Guitars/guitar_casio.png",
+        //             "position": "R",
+        //             "track": "https://adriancames.github.io/Yatawaki_Files/Tracks/Nocturne_Op9_No_2/Multitracks/Guitar/guitar_casio.mp3"
+        //         }
+        //     ]
+        // }
+        // audioController.setSongs(response2.instruments);
+        // audioController.setInitialBpm(response2.initialBpm);
+        // setSongDuration(response2.duration)
+        // setCurrentBPM(response2.initialBpm);
+        // setResponse(response2);
+        ConcertApis.startConcert()
+            .then(response => {
+                //console.log(response.data);
+                //response = response.data;
+                setResponse(response.data);
+                console.log(response);
+                console.log("empezando el juego...");
 
-        //         audioController.setSongs(response.data.instruments);
-        //         audioController.setInitialBpm(response.data.initialBpm);
-        //         setSongDuration(response.data.duration)
-        //         setCurrentBPM(response.data.initialBpm);
+                audioController.setSongs(response.data.instruments);
+                audioController.setInitialBpm(response.data.initialBpm);
+                setSongDuration(response.data.duration)
+                setCurrentBPM(response.data.initialBpm);
 
-        //     })
-        //     .catch(err => {
-        //         snackBarContext.onOpen({ severity: "error", message: err });
-        //         console.log(err);
-        //     })
+            })
+            .catch(err => {
+                snackBarContext.onOpen({ severity: "error", message: err });
+                console.log(err);
+            })
     }
 
 
@@ -309,7 +309,7 @@ const Game = () => {
 
         // Prediction 2: run input through teachable machine classification model
         const prediction = await modelRight.predict(posenetOutput);
-        //poseDecoderRight(prediction);
+        poseDecoderRight(prediction);
         // for (let i = 0; i < maxPredictionsRight; i++) {
         //     const classPrediction =
         //         prediction[i].className + ": " + prediction[i].probability.toFixed(2);
@@ -325,7 +325,7 @@ const Game = () => {
 
         const { pose, posenetOutput } = await modelLeft.estimatePose(webcam.canvas);
         const predictionLeft = await modelLeft.predict(posenetOutput);
-        //poseDecoderLeft(predictionLeft);
+        poseDecoderLeft(predictionLeft);
         // for (let i = 5; i < maxPredictionsLeft + 5; i++) {
         //     const classPredictionLeft =
         //         predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
@@ -376,7 +376,7 @@ const Game = () => {
 
         const { pose, posenetOutput } = await modelPitchRight.estimatePose(webcam.canvas);
         const predictionPitchRight = await modelPitchRight.predict(posenetOutput);
-        //poseDecoderPitchRight(predictionPitchRight);
+        poseDecoderPitchRight(predictionPitchRight);
         // for (let i = 5; i < maxPredictionsLeft + 5; i++) {
         //     const classPredictionLeft =
         //         predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
