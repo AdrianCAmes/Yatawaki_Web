@@ -641,7 +641,8 @@ const Game = () => {
                     startGame();
                 }
                 if (tpose === 'Continue') {
-                    resume();
+                    setOpen(false);
+                    setTimerOnCountDown(true);
                 }
 
             }
@@ -689,13 +690,11 @@ const Game = () => {
     }
 
     const resume = () => {
-        setOpen(false);
         audioController.setBPM(currentBPM);
         poseController.startController(response.initialBpm);
         setProgressSpeed((currentBPM * 13) / response.initialBpm);
         animateRight();
         animateLeft();
-        setLoading(true);
     }
 
 
@@ -862,6 +861,62 @@ const Game = () => {
         setOpenSnack(false);
     };
 
+    const [timeCountdown, setTimeCountdown] = React.useState(3500);
+    const [timerOnCountDown, setTimerOnCountDown] = React.useState(false);
+    const [tres, setTres] = React.useState(false);
+    const [dos, setDos] = React.useState(false);
+    const [uno, setUno] = React.useState(false);
+    const [comienza, setComienza] = React.useState(false);
+
+    React.useEffect(() => {
+        let interval = null;
+
+        if (timerOnCountDown) {
+            interval = setInterval(() => {
+                setTimeCountdown((prevTime) => prevTime - 10);
+            }, 10);
+        } else if (!timerOnCountDown) {
+            clearInterval(interval);
+        }
+
+        return () => clearInterval(interval);
+    }, [timerOnCountDown]);
+
+
+    React.useEffect(() => {
+        let interval = null;
+
+        if (timerOnCountDown && timeCountdown < 0) {
+            setTimeCountdown(3500);
+            setTimerOnCountDown(false);
+            setTres(false);
+            setDos(false);
+            setUno(false);
+            setComienza(false);
+            resume();
+        } else if (!timerOnCountDown) {
+            clearInterval(interval);
+        }
+
+        if (Math.floor((timeCountdown / 1000) % 60) === 3 && timerOnCountDown) {
+            setTres(true);
+        } else if (Math.floor((timeCountdown / 1000) % 60) === 2) {
+            setTres(false);
+            setDos(true);
+        } else if (Math.floor((timeCountdown / 1000) % 60) === 1) {
+            setTres(false);
+            setDos(false);
+            setUno(true);
+        } else if (Math.floor((timeCountdown / 1000) % 60) === 0 && timerOnCountDown) {
+            setTres(false);
+            setDos(false);
+            setUno(false);
+            setComienza(true);
+        }
+
+        return () => clearInterval(interval);
+    }, [timeCountdown]);
+
     return (
         <React.Fragment>
             <Paper square={true} sx={{ backgroundColor: 'primary.light', height: '100%', width: '100%', padding: '10px' }} elevation={0}>
@@ -921,6 +976,10 @@ const Game = () => {
                 <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', right: '2%' }}> Puntaje: {puntaje}</Typography>
 
                 <canvas style={{ position: 'absolute', left: '40%', bottom: '3%', borderRadius: '10px', visibility: !open ? 'visible' : 'hidden' }} className={`canvas ${!open ? "canvasAnimation" : ""}`}></canvas>
+                <span style={{ position: 'absolute', left: '43%', bottom: '40%', fontSize: '200px', visibility: tres ? 'visible' : 'hidden' }} className={`${tres ? 'canvasAnimation' : ''}`}>3</span>
+                <span style={{ position: 'absolute', left: '43%', bottom: '40%', fontSize: '200px', visibility: dos ? 'visible' : 'hidden' }} className={`${dos ? 'canvasAnimation' : ''}`}>2</span>
+                <span style={{ position: 'absolute', left: '43%', bottom: '40%', fontSize: '200px', visibility: uno ? 'visible' : 'hidden' }} className={`${uno ? 'canvasAnimation' : ''}`}>1</span>
+                <span style={{ position: 'absolute', left: '33%', bottom: '40%', fontSize: '150px', visibility: comienza ? 'visible' : 'hidden' }} className={`${comienza ? 'canvasAnimation' : ''}`}>Comienza!</span>
                 {/* <button style={{ position: 'absolute', left: '40%', top: '62%', borderRadius: '30px' }} onClick={() => { stopAnimationLeft() }}>stop left</button>
                 <button style={{ position: 'absolute', left: '40%', top: '66%', borderRadius: '30px' }} onClick={() => { animateLeft() }}>start Left</button>
                 <button style={{ position: 'absolute', left: '45%', top: '62%', borderRadius: '30px' }} onClick={() => { stopAnimationRight() }}>stop Right</button>
