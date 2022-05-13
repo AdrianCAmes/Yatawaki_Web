@@ -213,7 +213,8 @@ const Game = () => {
     const URLTPose = "https://teachablemachine.withgoogle.com/models/sFWZWZTan/";
     const URLRightPitch = "https://teachablemachine.withgoogle.com/models/sVIndV-v-/";
     const URLLeftPitch = "https://teachablemachine.withgoogle.com/models/kwhV8Vs4-/";
-    let modelRight, webcam, ctx, ctx2, labelContainerRight, maxPredictionsRight, modelLeft, labelContainerLeft, maxPredictionsLeft, modelTPose, maxPredictionsTPose, modelPitchLeft, maxPredictionsPitchLeft, modelPitchRight, maxPredictionsPitchRight;
+    const URLDetecJugador = "https://teachablemachine.withgoogle.com/models/-GnOXIlck/";
+    let modelRight, webcam, ctx, ctx2, labelContainerRight, maxPredictionsRight, modelLeft, labelContainerLeft, maxPredictionsLeft, modelTPose, maxPredictionsTPose, modelPitchLeft, maxPredictionsPitchLeft, modelPitchRight, maxPredictionsPitchRight, modelDetecJugador, maxPredictionsDetecJugador;
     const [open, setOpen] = React.useState(true);
     const [loading, setLoading] = React.useState(true);
     const [openDialog, setOpenDialog] = React.useState(false);
@@ -238,6 +239,9 @@ const Game = () => {
         const modelURLLeftPitch = URLLeftPitch + "model.json";
         const metadataURLLeftPitch = URLLeftPitch + "metadata.json";
 
+        const modelURLDetecJugador = URLDetecJugador + "model.json";
+        const metadataURLDetecJugador = URLDetecJugador + "metadata.json";
+
         // load the model and metadata
         // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
         // Note: the pose library adds a tmPose object to your window (window.tmPose)
@@ -255,6 +259,9 @@ const Game = () => {
         //pitch left
         modelPitchLeft = await tmPose.load(modelURLLeftPitch, metadataURLLeftPitch);
         maxPredictionsPitchLeft = modelPitchLeft.getTotalClasses();
+        //detec jugador
+        modelDetecJugador = await tmPose.load(modelURLDetecJugador, metadataURLDetecJugador);
+        maxPredictionsDetecJugador = modelDetecJugador.getTotalClasses();
 
         // Convenience function to setup a webcam
         const size = 400;
@@ -289,6 +296,8 @@ const Game = () => {
         await predictPitchLeft();
         webcam.update();
         await predictPitchRight();
+        webcam.update();
+        await predictDetecJugador();
         window.requestAnimationFrame(loop);
     }
 
@@ -299,7 +308,7 @@ const Game = () => {
 
         // Prediction 2: run input through teachable machine classification model
         const prediction = await modelRight.predict(posenetOutput);
-        poseDecoderRight(prediction);
+        //poseDecoderRight(prediction);
         // for (let i = 0; i < maxPredictionsRight; i++) {
         //     const classPrediction =
         //         prediction[i].className + ": " + prediction[i].probability.toFixed(2);
@@ -315,7 +324,7 @@ const Game = () => {
 
         const { pose, posenetOutput } = await modelLeft.estimatePose(webcam.canvas);
         const predictionLeft = await modelLeft.predict(posenetOutput);
-        poseDecoderLeft(predictionLeft);
+        //poseDecoderLeft(predictionLeft);
         // for (let i = 5; i < maxPredictionsLeft + 5; i++) {
         //     const classPredictionLeft =
         //         predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
@@ -349,7 +358,7 @@ const Game = () => {
 
         const { pose, posenetOutput } = await modelPitchLeft.estimatePose(webcam.canvas);
         const predictionPitchLeft = await modelPitchLeft.predict(posenetOutput);
-        poseDecoderPitchLeft(predictionPitchLeft);
+        //poseDecoderPitchLeft(predictionPitchLeft);
         // for (let i = 5; i < maxPredictionsLeft + 5; i++) {
         //     const classPredictionLeft =
         //         predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
@@ -367,6 +376,23 @@ const Game = () => {
         const { pose, posenetOutput } = await modelPitchRight.estimatePose(webcam.canvas);
         const predictionPitchRight = await modelPitchRight.predict(posenetOutput);
         //poseDecoderPitchRight(predictionPitchRight);
+        // for (let i = 5; i < maxPredictionsLeft + 5; i++) {
+        //     const classPredictionLeft =
+        //         predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
+        //     labelContainerRight.childNodes[i].innerHTML = classPredictionLeft;
+        // }
+
+        // finally draw the poses
+        drawPose(pose);
+    }
+
+    const predictDetecJugador = async () => {
+        // Prediction #1: run input through posenet
+        // estimatePose can take in an image, video or canvas html element
+
+        const { pose, posenetOutput } = await modelDetecJugador.estimatePose(webcam.canvas);
+        const predictionDetecJugador = await modelDetecJugador.predict(posenetOutput);
+        poseDecoderDetecJugador(predictionDetecJugador);
         // for (let i = 5; i < maxPredictionsLeft + 5; i++) {
         //     const classPredictionLeft =
         //         predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
@@ -566,6 +592,38 @@ const Game = () => {
     let calibrado = false;
     const [cameraDenied, setCameraDenied] = useState(false);
 
+    const poseDecoderDetecJugador = async (predictionDetecJugador) => {
+        if (predictionDetecJugador) {
+            const aux = [];
+            for (let i = 0; i < maxPredictionsDetecJugador; i++) {
+                if (predictionDetecJugador[i].probability === 1) {
+                    aux.push(predictionDetecJugador[i].className);
+                    if (aux[aux.length] == aux[aux.length - 1]) {
+                        aux.pop();
+                    }
+                }
+
+
+                if (aux.length > 0) {
+                    console.log(aux, 'Detec jugador');
+                    if (aux[0] === 'NotPlaying' && calibrado) {
+                        setCameraDenied(true);
+                        pause(true);
+
+                    } else if (aux[0] === "Playing" && calibrado) {
+                        setCameraDenied(false);
+                        resume();
+                    }
+
+                }
+
+            }
+
+        }
+    }
+
+
+
     const poseDecoderTPose = async (predictionTPose) => {
         if (predictionTPose) {
             const aux = [];
@@ -615,13 +673,15 @@ const Game = () => {
         }
     }
 
-    const pause = () => {
+    const pause = (isCameraDenied) => {
         audioController.setBPM(1);
         poseController.pauseController();
         setProgressSpeed((1 * 13) / response.initialBpm);
         stopAnimationLeft();
         stopAnimationRight();
-        setOpenDialog(true);
+        if (!isCameraDenied) {
+            setOpenDialog(true);
+        }
     }
 
     const resume = () => {
@@ -802,8 +862,8 @@ const Game = () => {
                     {!loading && <img style={{ position: 'absolute', height: '400px', width: '400px', top: '95px' }} src={calibracion} />}
                     <div id="label-container"></div>
                 </Dialog>
-                
-                <CameraDeniedDialog open={cameraDenied} ></CameraDeniedDialog>
+
+                <CameraDeniedDialog open={cameraDenied} isCameraDenied={false}></CameraDeniedDialog>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Typography fontWeight='600' fontSize='30px' style={{ flex: 1, display: 'flex' }}> Ahora tocando: {response ? response.name : '--'}</Typography>
@@ -817,7 +877,7 @@ const Game = () => {
                         <LinearProgress variant="determinate" value={(Math.floor((time / 1000)) / songDuration) * 100} style={{ height: '10px', borderRadius: 5 }} />
                     </Box>
                     <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-                        <Box className="hover" onClick={() => { pause() }} style={{ backgroundColor: '#FF5E5B', borderRadius: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50px', width: '50px' }}>
+                        <Box className="hover" onClick={() => { pause(false) }} style={{ backgroundColor: '#FF5E5B', borderRadius: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50px', width: '50px' }}>
                             <PauseRounded style={{ color: '#FFF', fontSize: '50px' }} />
                         </Box>
                         <PauseMenu open={openDialog} handleClose={handleCloseDialog} resume={resume} exit={navigate2Menu}></PauseMenu>

@@ -89,7 +89,6 @@ const GameResume = () => {
 
     }
 
-
     React.useEffect(() => {
         concertComplete();
     }, []);
