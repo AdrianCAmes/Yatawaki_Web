@@ -109,10 +109,32 @@ const ItemToTradeCard = (props) => {
     )
 }
 
+const TutorialCard = (props) => {
+
+    return (
+        <React.Fragment>
+            <Grid container direction='column' alignItems='center' justifyContent='center' xs={5} sx={{ p: '10px', borderRadius: '15px' }}>
+                <Grid item>
+                    <Typography align="center" style={{ fontSize: '22px', marginBottom: '10px', fontWeight: '600', }}>{props.item ? props.item.name : '--'}</Typography>
+                </Grid>
+                <Grid item>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <img style={{ height: '150px', width: '100px', border: '1px solid #777', padding: '1px' }} alt="gift" src={props.item ? props.item.icon : moneda} />
+                    </div>
+                </Grid>
+                <Grid item>
+                    <Typography align="center" style={{ fontSize: '22px', marginTop: '20px', fontWeight: '600', }}>{props.item ? props.item.description : '--'}</Typography>
+                </Grid>
+            </Grid>
+        </React.Fragment>
+    )
+}
+
 export {
     SymphonyCard,
     AvatarCard,
     AchievementCard,
     ItemCard,
-    ItemToTradeCard
+    ItemToTradeCard,
+    TutorialCard
 };
