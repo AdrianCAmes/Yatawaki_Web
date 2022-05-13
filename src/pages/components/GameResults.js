@@ -53,7 +53,7 @@ const GameResults = (props) => {
     return (
         <React.Fragment>
             <Typography className="title-font height-size" color='secondary' lineHeight='150px'>Completado</Typography>
-            <Typography className="title-font height-size2" lineHeight='50px' sx={{ marginBottom: '20px' }}>Has tocado Symphony No9</Typography>
+            <Typography className="title-font height-size2" lineHeight='50px' sx={{ marginBottom: '20px' }}>Has tocado {props.results ? props.results.symphonyName : '--'}</Typography>
 
             <Grid container>
                 <Grid item xs={6} display='flex' alignItems='center' justifyContent='center'>
@@ -87,15 +87,15 @@ const GameResults = (props) => {
                             <DataTwoColumns label='Experiencia' value={props.results ? `+${Math.round(props.results.gainedExperience)}` : '--'}></DataTwoColumns>
                         </Grid>
                     </Box>
-                    <Divider style={{width:'90%', marginTop:'30px'}}>
-                        <FacebookShareButton url={window.location.href} title="Mira mis resultados en YATAWAKI">
+                    <Divider style={{ width: '90%', marginTop: '30px' }}>
+                        <FacebookShareButton url={window.location.href} title={`He conseguido ${props.results ? props.results.points : '--'} puntos y ${props.results ? Math.round(props.results.accuracyRate, 2) : '--'}% de precisión en ${props.results ? props.results.symphonyName : '--'}.\nPrueba YATAWAKI en:`}>
                             <FacebookIcon size={50} round={true} />
                         </FacebookShareButton>
-                        <WhatsappShareButton url={window.location.href} title="Mira mis resultados en YATAWAKI">
+                        <WhatsappShareButton url={window.location.href} title={`He conseguido ${props.results ? props.results.points : '--'} puntos y ${props.results ? Math.round(props.results.accuracyRate, 2) : '--'}% de precisión en ${props.results ? props.results.symphonyName : '--'}.\nPrueba YATAWAKI en:`}>
                             <WhatsappIcon size={50} round={true} />
                         </WhatsappShareButton>
 
-                        <TwitterShareButton url={window.location.href} title="Mira mis resultados en YATAWAKI">
+                        <TwitterShareButton url={window.location.href} title={`He conseguido ${props.results ? props.results.points : '--'} puntos y ${props.results ? Math.round(props.results.accuracyRate, 2) : '--'}% de precisión en ${props.results ? props.results.symphonyName : '--'}.\nPrueba  YATAWAKI en:`}>
                             <TwitterIcon size={50} round={true} />
                         </TwitterShareButton>
                     </Divider>

@@ -166,7 +166,8 @@ const Game = () => {
                     points: puntaje,
                     gesturesCompleted: posesCount,
                     accuracyRate: precision,
-                    idConcert: response.idConcert
+                    idConcert: response.idConcert,
+                    symphonyName: response.name
                 },
                 replace: true
             })
