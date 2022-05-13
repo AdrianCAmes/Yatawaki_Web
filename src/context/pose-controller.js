@@ -62,6 +62,12 @@ export const PoseContextProvider = (props) => {
     let calibrado = false;
     let checkNewCalibration = false;
 
+    let lastTimePitch = 0;
+    let poseLastPitch = '';
+
+    let lastTimePitchRight = 0;
+    let poseLastPitchRight = '';
+
     const startController = (bpm) => {
         started = true;
         calibrado = true;
@@ -178,37 +184,80 @@ export const PoseContextProvider = (props) => {
 
     const checkPitchLeft = (value) => {
         if (started) {
-            if (value === 'LHUL') {
-                //audio controller pitch
-                console.log('Aumenado el pitch')
-                return 'up';
-            } else if (value === 'LHDL') {
-                //audio controller pitch
-                console.log('Disminuido el pitch')
-                return 'down';
-            } else {
-                //reset pitch
-                console.log('Resteado')
+
+            if ((value === 'LHUL' || value === 'LHDL') && lastTimePitch === 0) {
+                lastTimePitch = time;
+                poseLastPitch = value;
+
                 return 'reset';
+            } else {
+                if (value === 'LHDL' && poseLastPitch !== 'LHDL') {
+                    lastTimePitch = 0;
+                    poseLastPitch = '';
+                    //console.log(lastTimePitch, poseLastPitch, 'ERA LHUL, ENCUENTRA LHDL');
+
+                    return 'reset';
+                } else if (value === 'LHUL' && poseLastPitch !== 'LHUL') {
+                    lastTimePitch = 0;
+                    poseLastPitch = '';
+                    //console.log(lastTimePitch, poseLastPitch, 'ERA LHDL, ENCUENTRA LHUL');
+                    return 'reset';
+                } else if (value === 'LHDL' && poseLastPitch === 'LHDL') {
+                    console.log(Math.floor(((time - lastTimePitch) / 1000) % 60), 'ENCUENTRA DE NUEVO LHD');
+
+                    if (Math.floor(((time - lastTimePitch) / 1000) % 60) > 2) {
+                        console.log(Math.floor(((time - lastTimePitch) / 1000) % 60), 'RETORNA DOWN');
+                        return 'down';
+                    }
+                } else if (value === 'LHUL' && poseLastPitch === 'LHUL') {
+                    console.log(Math.floor(((time - lastTimePitch) / 1000) % 60), 'ENCUENTRA DE NUEVO LHL');
+
+                    if (Math.floor(((time - lastTimePitch) / 1000) % 60) > 2) {
+                        console.log(Math.floor(((time - lastTimePitch) / 1000) % 60), 'RETORNA UP');
+
+                        return 'up';
+                    }
+                }
             }
+
         }
     }
 
+
     const checkPitchRight = (value) => {
         if (started) {
-            if (value === 'RHUR') {
-                //audio controller pitch
-                console.log('Aumenado el pitch')
-                return 'up';
-            } else if (value === 'RHDR') {
-                //audio controller pitch
-                console.log('Disminuido el pitch')
-                return 'down';
-            } else {
-                //reset pitch
-                console.log('Resteado')
+
+            if ((value === 'RHUR' || value === 'RHDR') && lastTimePitchRight === 0) {
+                lastTimePitchRight = time;
+                poseLastPitchRight = value;
+
                 return 'reset';
+            } else {
+                if (value === 'RHDR' && poseLastPitchRight !== 'RHDR') {
+                    lastTimePitchRight = 0;
+                    poseLastPitchRight = '';
+                    //console.log(lastTimePitch, poseLastPitch, 'ERA LHUL, ENCUENTRA LHDL');
+
+                    return 'reset';
+                } else if (value === 'RHUR' && poseLastPitchRight !== 'RHUR') {
+                    lastTimePitchRight = 0;
+                    poseLastPitchRight = '';
+                    //console.log(lastTimePitch, poseLastPitch, 'ERA LHDL, ENCUENTRA LHUL');
+                    return 'reset';
+                } else if (value === 'RHDR' && poseLastPitchRight === 'RHDR') {
+
+                    if (Math.floor(((time - lastTimePitchRight) / 1000) % 60) > 2) {
+                        return 'down';
+                    }
+                } else if (value === 'RHUR' && poseLastPitchRight === 'RHUR') {
+
+                    if (Math.floor(((time - lastTimePitchRight) / 1000) % 60) > 2) {
+
+                        return 'up';
+                    }
+                }
             }
+
         }
     }
 

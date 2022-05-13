@@ -325,7 +325,7 @@ const Game = () => {
 
         const { pose, posenetOutput } = await modelLeft.estimatePose(webcam.canvas);
         const predictionLeft = await modelLeft.predict(posenetOutput);
-        poseDecoderLeft(predictionLeft);
+        //poseDecoderLeft(predictionLeft);
         // for (let i = 5; i < maxPredictionsLeft + 5; i++) {
         //     const classPredictionLeft =
         //         predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
@@ -359,7 +359,7 @@ const Game = () => {
 
         const { pose, posenetOutput } = await modelPitchLeft.estimatePose(webcam.canvas);
         const predictionPitchLeft = await modelPitchLeft.predict(posenetOutput);
-        //poseDecoderPitchLeft(predictionPitchLeft);
+        poseDecoderPitchLeft(predictionPitchLeft);
         // for (let i = 5; i < maxPredictionsLeft + 5; i++) {
         //     const classPredictionLeft =
         //         predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
@@ -558,7 +558,7 @@ const Game = () => {
         if (predictionPitchLeft) {
             const aux = [];
             for (let i = 0; i < maxPredictionsPitchLeft; i++) {
-                if (predictionPitchLeft[i].probability === 1) {
+                if (predictionPitchLeft[i].probability > 0.97) {
                     aux.push(predictionPitchLeft[i].className);
                     if (aux[aux.length] == aux[aux.length - 1]) {
                         aux.pop();
@@ -567,7 +567,6 @@ const Game = () => {
 
 
                 if (aux.length > 0) {
-                    //console.log(aux, 'PitchLeft');
 
                     let pitchLeft = poseController.checkPitchLeft(aux[0]);
 
