@@ -88,7 +88,7 @@ const Game = () => {
             "idConcert": 1,
             "name": "Nocturne Op 9 No 2",
             "initialBpm": 122,
-            "duration": 270,
+            "duration": 230,
             "instruments": [
                 {
                     "name": "Piano",
