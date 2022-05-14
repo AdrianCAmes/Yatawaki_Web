@@ -48,7 +48,7 @@ const GameResume = () => {
         const aresults = {
             "idConcert": state.idConcert,
             "gainedExperience": (state.points * state.gesturesCompleted) / 20,
-            "points": state.points,
+            "points": state.points > 0 ? state.point : 0,
             "accuracyRate": state.accuracyRate,
             "gesturesCompleted": state.gesturesCompleted,
             "gainedCoins": (state.points * state.gesturesCompleted) / 150,
