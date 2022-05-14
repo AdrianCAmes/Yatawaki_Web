@@ -119,7 +119,7 @@ const TutorialCard = (props) => {
                 </Grid>
                 <Grid item>
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <img style={{ height: '150px', width: '100px', border: '1px solid #777', padding: '1px' }} alt="gift" src={props.item ? props.item.icon : moneda} />
+                        <img style={{ height: '200px',  border: '1px solid #777', padding: '1px' }} alt="gift" src={props.item ? props.item.icon : moneda} />
                     </div>
                 </Grid>
                 <Grid item>

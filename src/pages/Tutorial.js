@@ -5,7 +5,12 @@ import { Box } from "@mui/system";
 import '@tensorflow/tfjs'
 import * as tmPose from '@teachablemachine/pose'
 import { useNavigate } from "react-router-dom";
-import { ItemCard, ItemToTradeCard, TutorialCard } from "./components/ObjectCard";
+import { TutorialCard } from "./components/ObjectCard";
+import punzada from '../assets/Punzada.gif';
+import cruz from '../assets/Cruz.gif';
+import triangulo from '../assets/Triangulo.gif';
+import pitchR from '../assets/Pitch Grave.gif';
+import pitchL from '../assets/Pitch Agudo.gif';
 
 
 let buttonStyle = { width: '300px', height: '50px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '30px' };
@@ -236,9 +241,9 @@ const Tutorial = () => {
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '5%', top: '10%', zIndex: `${paso === 5 ? '3' : '1'}`, visibility: paso === 5 ? 'visible' : 'hidden', backgroundColor: '#FFFFEA', height: '80vh', width: '90vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 5 ? 'canvasAnimation' : ''}`}>
                 <Typography textAlign='center' className="title-font title-dialog-tutorial">Puedes realizar los siguientes gestos para controlar el tempo de la reproducción</Typography>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '80%' }}>
-                    <TutorialCard item={{ name: 'Plomada', icon: 'https://c.tenor.com/OI3kJuJGIkoAAAAd/orchestra-conductor.gif', description: '2 beats por gesto' }} ></TutorialCard>
-                    <TutorialCard item={{ name: 'Triangulo', icon: 'https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Guitars/guitar_casio.png', description: '3 beats por gesto' }} ></TutorialCard>
-                    <TutorialCard item={{ name: 'Cruz', icon: 'https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Guitars/guitar_casio.png', description: '4 beats por gesto' }} ></TutorialCard>
+                    <TutorialCard item={{ name: 'Plomada', icon: punzada, description: '2 beats por gesto' }} ></TutorialCard>
+                    <TutorialCard item={{ name: 'Triangulo', icon: triangulo, description: '3 beats por gesto' }} ></TutorialCard>
+                    <TutorialCard item={{ name: 'Cruz', icon: cruz, description: '4 beats por gesto' }} ></TutorialCard>
 
                 </div>
 
@@ -248,13 +253,14 @@ const Tutorial = () => {
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '5%', top: '2%', zIndex: `${paso === 6 ? '3' : '1'}`, visibility: paso === 6 ? 'visible' : 'hidden', backgroundColor: '#FFFFEA', height: '90vh', width: '90vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 6 ? 'canvasAnimation' : ''}`}>
-                <Typography textAlign='center' className="title-font title-dialog-tutorial">Puedes controlar el pitch de la cancion con los siguientes movimientos</Typography>
+                <Typography textAlign='center' className="title-font title-dialog-tutorial">Puedes realizar los siguientes gestos para controlar el pitch de la reproducción</Typography>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '80%' }}>
-                    <TutorialCard item={{ name: 'Plomada', icon: 'https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Guitars/guitar_casio.png', description: '2 beats por gesto' }} ></TutorialCard>
-                    <TutorialCard item={{ name: 'Triangulo', icon: 'https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Guitars/guitar_casio.png', description: '3 beats por gesto' }} ></TutorialCard>
-                    <TutorialCard item={{ name: 'Cruz', icon: 'https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Guitars/guitar_casio.png', description: '4 beats por gesto' }} ></TutorialCard>
-                    <TutorialCard item={{ name: 'Cruz', icon: 'https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Guitars/guitar_casio.png', description: '4 beats por gesto' }} ></TutorialCard>
+                    <TutorialCard item={{ name: 'Pitch Agudo', icon: pitchL }} ></TutorialCard>
+                    <TutorialCard item={{ name: 'Pitch Grave', icon: pitchR }} ></TutorialCard>
                 </div>
+                <Typography textAlign='center' className="title-font" fontSize={24}>Mantener 3 segundos para que aplique los cambios en la reproducción</Typography>
+
+
 
                 <Box className="hover" sx={buttonStyle} onClick={() => { nextPaso() }}>
                     <Typography className="title-button" fontSize='40px!important'> Siguiente</Typography>
