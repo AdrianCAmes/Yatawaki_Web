@@ -68,7 +68,7 @@ const ItemCard = (props) => {
 
     return (
         <React.Fragment>
-            <Grid container direction='column' alignItems='center' justifyContent='center' xs={5} sx={{ p: '20px', backgroundColor: '#D8D8D899', borderRadius: '15px', height: '300px' }}>
+            <Grid container direction='column' alignItems='center' justifyContent='center' xs={5} sx={{ p: '20px', backgroundColor: '#D8D8D899', borderRadius: '15px', height: '300px', marginBottom:'20px' }}>
                 <Grid item>
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                         <Avatar sx={{ height: '100px', width: '100px', border: '1px solid #777', padding: '1px' }} alt="avatar" src={props.item ? props.item.icon : moneda} />

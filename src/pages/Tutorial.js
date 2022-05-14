@@ -263,7 +263,7 @@ const Tutorial = () => {
 
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '10%', top: '13%', zIndex: `${paso === 7 ? '3' : '1'}`, visibility: paso === 7 ? 'visible' : 'hidden', backgroundColor: '#FFFFEA', height: '70vh', width: '80vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 7 ? 'canvasAnimation' : ''}`}>
                 <Typography textAlign='center' className="title-font title-dialog-tutorial">Ten en cuenta que la intensidad del sonido de la sinfonía dependerá de la intensidad (fuerza) de tus movimientos. !No olvides divertirte y disfrutar de Yatawaki!</Typography>
-                <Box className="hover" sx={buttonStyle} onClick={() => { nextPaso() }}>
+                <Box className="hover" sx={buttonStyle} onClick={() => { navigate('/menu') }}>
                     <Typography className="title-button" fontSize='40px!important'> Terminar</Typography>
                 </Box>
             </div>
