@@ -68,6 +68,9 @@ export const PoseContextProvider = (props) => {
     let lastTimePitchRight = 0;
     let poseLastPitchRight = '';
 
+    let lastTimeNotPlaying = 0;
+
+
     const startController = (bpm) => {
         started = true;
         calibrado = true;
@@ -157,9 +160,17 @@ export const PoseContextProvider = (props) => {
 
     const checkPlayer = (value) => {
         if (started) {
-            if (value === 'NotPlaying') {
-                paused = true;
-                return 'NotPlaying';
+            if (value === 'NotPlaying' && lastTimeNotPlaying === 0) {
+                lastTimeNotPlaying = time;
+            } else if (value === 'NotPlaying' && lastTimeNotPlaying !== 0) {
+                console.log('NOT PLAYING GA', Math.floor(((time - lastTimeNotPlaying) / 1000) % 60))
+                if (Math.floor(((time - lastTimeNotPlaying) / 1000) % 60) > 2) {
+                    paused = true;
+                    lastTimeNotPlaying = 0;
+                    return 'NotPlaying';
+                }
+            } else {
+                lastTimeNotPlaying = 0;
             }
         } else if (value === 'Playing' && paused) {
             paused = false;
