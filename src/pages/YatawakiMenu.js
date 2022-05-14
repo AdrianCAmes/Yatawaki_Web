@@ -95,9 +95,9 @@ const YatawakiMenu = () => {
                     {symphonies.map((symphony, idx) => (
                         <h1 key={idx} >{idx === index ?
                             <>
-                                <Typography fontSize={32} fontWeight={600}>{`${symphony.name} | ${symphony.type}`}</Typography>
-                                <Typography fontSize={32} fontWeight={600}>{`${symphony.composer.name}. ${dateHourStringToDate(symphony.composer.deathDate)}`}</Typography>
-                                <Typography fontSize={32} fontWeight={600}>{`${symphony.description}.`}</Typography>
+                                <Typography fontSize={24} fontWeight={600}>{`${symphony.name} | ${symphony.type}`}</Typography>
+                                <Typography fontSize={24} fontWeight={600}>{`${symphony.composer.name}. ${dateHourStringToDate(symphony.composer.deathDate)}`}</Typography>
+                                <Typography fontSize={24} fontWeight={600}>{`${symphony.description}.`}</Typography>
                             </>
                             : null}</h1>
                     ))}

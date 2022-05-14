@@ -17,14 +17,14 @@ const AppBarYatawaki = (props) => {
     };
 
     const logout = () => {
-       gameContext.logout();
-       window.localStorage.removeItem('jwt');
-       navigate('/');
+        gameContext.logout();
+        window.localStorage.removeItem('jwt');
+        navigate('/');
     };
 
     const toPerfil = () => {
         navigate('/perfil');
-     };
+    };
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
@@ -64,10 +64,13 @@ const AppBarYatawaki = (props) => {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            <MenuItem onClick={() => {toPerfil()}}>
+                            <MenuItem onClick={() => { toPerfil() }}>
                                 <Typography textAlign="center">Perfil</Typography>
                             </MenuItem>
-                            <MenuItem onClick={() => {logout()}}>
+                            <MenuItem onClick={() => { navigate('/tutorial') }}>
+                                <Typography textAlign="center">Tutorial</Typography>
+                            </MenuItem>
+                            <MenuItem onClick={() => { logout() }}>
                                 <Typography textAlign="center">Cerrar Sesion</Typography>
                             </MenuItem>
                         </Menu>
