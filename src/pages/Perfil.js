@@ -155,7 +155,7 @@ const Perfil = () => {
                 console.log(response.data);
                 setIsEditing(false);
                 snackBarContext.onOpen({
-                    severity: "success",
+                    severity: "exito",
                     message: "Perfil Editado correctamente"
                 });
                 getUser();

@@ -19,7 +19,7 @@ const CustomSnackBar = (props) => {
 
 CustomSnackBar.propTypes = {
   open: PropTypes.bool.isRequired,
-  severity: PropTypes.oneOf(["success","warning","info","error"]).isRequired,
+  severity: PropTypes.oneOf(["exito","warning","info","error"]).isRequired,
   onClose: PropTypes.func.isRequired,
 }
 export default CustomSnackBar;

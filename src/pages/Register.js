@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import ImageAutoSlider from "../components/ImageAutoSlider";
 import logo_upc from '../assets/Logo UPC.png';
 import googleIcon from '../assets/google.png';
+import { GoogleLogin } from "@react-oauth/google";
 
 let buttonStyle = { width: ['300px', '300px', '400px'], height: '70px', borderRadius: '15px', mx: 'auto', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '30px' };
 
@@ -78,7 +79,7 @@ const Register = () => {
             UserApi.register(nickname, password, firstname, lastname, mail)
                 .then(response => {
                     snackBarContext.onOpen({
-                        severity: "success",
+                        severity: "exito",
                         message: "Registrado correctamente"
                     });
                     navigate('/login');
@@ -130,7 +131,7 @@ const Register = () => {
     return (
         <React.Fragment>
             <Paper square={true} sx={{ backgroundColor: 'primary.light', height: '100%' }} elevation={0}>
-                <div className="hover" onClick={() => { toSplashscreen() }} style={{ display: 'flex', justifyContent: 'start', alignItems: 'center', margin:'20px', position:'absolute' }}>
+                <div className="hover" onClick={() => { toSplashscreen() }} style={{ display: 'flex', justifyContent: 'start', alignItems: 'center', margin: '20px', position: 'absolute' }}>
                     <ArrowBackIosRounded fontSize="medium" />
                     <Typography fontWeight={600} fontSize={24} sx={{ marginLeft: '10px' }}>Atrás</Typography>
                 </div>
@@ -148,6 +149,7 @@ const Register = () => {
 
                         {step === 1 ? (
                             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                                
 
                                 <div className="hover" style={{ width: '80%', height: '50px', display: 'flex', justifyContent: 'start', alignItems: 'center', backgroundColor: '#FFFFFF', borderRadius: '10px', border: '1px solid #C3D8EE' }}>
                                     <img style={{ height: '35px', marginLeft: '10px' }} src={googleIcon} alt="google" />
