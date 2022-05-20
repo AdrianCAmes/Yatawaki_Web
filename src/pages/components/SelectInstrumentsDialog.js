@@ -13,7 +13,7 @@ const SelectInstrumentsDialog = (props) => {
 
     const selectInstrument = (newInstrument) => {
        gameContext.updateInstrumentsByIndex(newInstrument, props.selectedIdx);
-       snackBarContext.onOpen({ severity: "exito", message: 'Instrumento Seleccionado' });
+       snackBarContext.onOpen({ severity: "success", message: 'Instrumento Seleccionado' });
        props.handleClose();
     }
 

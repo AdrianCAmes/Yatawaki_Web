@@ -25,7 +25,7 @@ const ConfirmTradeDialog = (props) => {
         UserUnlockableApi.trade(gameContext.userId, props.unlockable.idUnlockable)
             .then(response => {
                 snackBarContext.onOpen({
-                    severity: "exito",
+                    severity: "success",
                     message: "Éxito"
                 });
                 navigate(0);

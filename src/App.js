@@ -16,6 +16,7 @@ import Market from './pages/Market';
 import { AudioContextProvider } from './context/audio-context-controller';
 import { PoseContextProvider } from './context/pose-controller';
 import Tutorial from './pages/Tutorial';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 
 function App() {
@@ -24,20 +25,24 @@ function App() {
       <CssBaseline />
       <SnackBarContextProvider>
         <GameContextProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Splashscreen />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/menu" element={<YatawakiMenu />} />
-              <Route path="/perfil" element={<Perfil />} />
-              <Route path="/game" element={<AudioContextProvider><PoseContextProvider><Game /></PoseContextProvider></AudioContextProvider>} />
-              <Route path="/game-resume" element={<GameResume />} />
-              <Route path="/market" element={<Market />} />
-              <Route path="/tutorial" element={<Tutorial />} />
+          <GoogleOAuthProvider clientId="501234886159-njo2973km2fh50fqge2r28upd3568b67.apps.googleusercontent.com">
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Splashscreen />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/menu" element={<YatawakiMenu />} />
+                <Route path="/perfil" element={<Perfil />} />
+                <Route path="/game" element={<AudioContextProvider><PoseContextProvider><Game /></PoseContextProvider></AudioContextProvider>} />
+                <Route path="/game-resume" element={<GameResume />} />
+                <Route path="/market" element={<Market />} />
+                <Route path="/tutorial" element={<Tutorial />} />
 
-            </Routes>
-          </BrowserRouter>
+              </Routes>
+            </BrowserRouter>
+          </GoogleOAuthProvider>;
+
+
 
         </GameContextProvider>
       </SnackBarContextProvider>

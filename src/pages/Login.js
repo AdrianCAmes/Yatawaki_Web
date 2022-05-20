@@ -30,7 +30,7 @@ const Login = () => {
             .then(response => {
                 window.localStorage.setItem('jwt', response.data.jwt);
                 snackBarContext.onOpen({
-                    severity: "exito",
+                    severity: "success",
                     message: "Bienvenido!"
                 });
                 gameContext.updateUsername(uniqueIdentifier);
