@@ -342,7 +342,7 @@ export const PoseContextProvider = (props) => {
             //['LHD','LHl','LHD','LHU','LHD']
 
             //verificamos movimientos
-            if (arrayVerificarTriangulo[0] === 'LHD' && arrayVerificarTriangulo[1] === 'LHL' && arrayVerificarTriangulo[2] === 'LHD' && arrayVerificarTriangulo[3] === 'LHU' && arrayVerificarTriangulo[4] === 'LHD') {
+            if (arrayVerificarTriangulo[0] === 'LHM' && arrayVerificarTriangulo[1] === 'LHL' && arrayVerificarTriangulo[2] === 'LHM' && arrayVerificarTriangulo[3] === 'LHD' && arrayVerificarTriangulo[4] === 'LHM') {
                 let timeDifference = arraySegundosVerificarTriangulo[4] - arraySegundosVerificarTriangulo[0]
                 console.log(timeToString(arraySegundosVerificarTriangulo[0]), timeToString(arraySegundosVerificarTriangulo[1]), timeToString(arraySegundosVerificarTriangulo[2]), timeToString(arraySegundosVerificarTriangulo[3]), timeToString(arraySegundosVerificarTriangulo[4]), '-', arrayVerificarTriangulo[0], arrayVerificarTriangulo[1], arrayVerificarTriangulo[2], arrayVerificarTriangulo[3], arrayVerificarTriangulo[4]);
 
@@ -366,18 +366,18 @@ export const PoseContextProvider = (props) => {
             if (value) {
                 //1. Primera posicion
                 //Llenamos el arreglo cuando esta vacio
-                if (arrayVerificarTriangulo[0] === '' && value === 'LHD') {
-                    arrayVerificarTriangulo[0] = 'LHD';
+                if (arrayVerificarTriangulo[0] === '' && value === 'LHM') {
+                    arrayVerificarTriangulo[0] = 'LHM';
                     arraySegundosVerificarTriangulo[0] = time
                 }
 
                 //Si encuentra un nuevo LHM, y no se ha llenado la siguiente posicion, actualizamos el tiempo
-                if (arrayVerificarTriangulo[0] === 'LHD' && value === 'LHD' && arrayVerificarTriangulo[1] === '') {
+                if (arrayVerificarTriangulo[0] === 'LHM' && value === 'LHM' && arrayVerificarTriangulo[1] === '') {
                     arraySegundosVerificarTriangulo[0] = time
                 }
 
                 //2. Segunda posicion
-                if (arrayVerificarTriangulo[0] === 'LHD' && arrayVerificarTriangulo[1] === '' && value === 'LHL') {
+                if (arrayVerificarTriangulo[0] === 'LHM' && arrayVerificarTriangulo[1] === '' && value === 'LHL') {
                     arrayVerificarTriangulo[1] = 'LHL';
                     arraySegundosVerificarTriangulo[1] = time
 
@@ -391,34 +391,34 @@ export const PoseContextProvider = (props) => {
 
 
                 //3. Tercera posicion
-                if (arrayVerificarTriangulo[1] === 'LHL' && arrayVerificarTriangulo[2] === '' && value === 'LHD') {
-                    arrayVerificarTriangulo[2] = 'LHD';
+                if (arrayVerificarTriangulo[1] === 'LHL' && arrayVerificarTriangulo[2] === '' && value === 'LHM') {
+                    arrayVerificarTriangulo[2] = 'LHM';
                     arraySegundosVerificarTriangulo[2] = time;
 
                     //volumen
                     timeMediaTriangulo = (timeMediaTriangulo + (time - lastTimeTriangulo)) / 2;
                     lastTimeTriangulo = time
-                } else if (arrayVerificarTriangulo[2] === 'LHD' && arrayVerificarTriangulo[3] === '' && value === 'LHD') {
+                } else if (arrayVerificarTriangulo[2] === 'LHM' && arrayVerificarTriangulo[3] === '' && value === 'LHM') {
                     lastTimeTriangulo = time;
                     return;
                 }
 
                 //4. Cuarta posicion
-                if (arrayVerificarTriangulo[2] === 'LHD' && arrayVerificarTriangulo[3] === '' && value === 'LHU') {
-                    arrayVerificarTriangulo[3] = 'LHU';
+                if (arrayVerificarTriangulo[2] === 'LHM' && arrayVerificarTriangulo[3] === '' && value === 'LHD') {
+                    arrayVerificarTriangulo[3] = 'LHD';
                     arraySegundosVerificarTriangulo[3] = time;
 
                     //volumen
                     timeMediaTriangulo = (timeMediaTriangulo + (time - lastTimeTriangulo)) / 2;
                     lastTimeTriangulo = time
-                } else if (arrayVerificarTriangulo[3] === 'LHU' && arrayVerificarTriangulo[4] === '' && value === 'LHU') {
+                } else if (arrayVerificarTriangulo[3] === 'LHD' && arrayVerificarTriangulo[4] === '' && value === 'LHD') {
                     lastTimeTriangulo = time;
                     return;
                 }
 
                 //5. Quinta posicion
-                if (arrayVerificarTriangulo[3] === 'LHU' && arrayVerificarTriangulo[4] === '' && value === 'LHD') {
-                    arrayVerificarTriangulo[4] = 'LHD';
+                if (arrayVerificarTriangulo[3] === 'LHD' && arrayVerificarTriangulo[4] === '' && value === 'LHM') {
+                    arrayVerificarTriangulo[4] = 'LHM';
                     arraySegundosVerificarTriangulo[4] = time;
 
                     //volumen
@@ -614,7 +614,7 @@ export const PoseContextProvider = (props) => {
 
         if (started) {
             //verificamos movimientos
-            if (arrayVerificarTrianguloRight[0] === 'RHM' && arrayVerificarTrianguloRight[1] === 'RHR' && arrayVerificarTrianguloRight[2] === 'RHM' && arrayVerificarTrianguloRight[3] === 'RHU' && arrayVerificarTrianguloRight[4] === 'RHM') {
+            if (arrayVerificarTrianguloRight[0] === 'RHM' && arrayVerificarTrianguloRight[1] === 'RHR' && arrayVerificarTrianguloRight[2] === 'RHM' && arrayVerificarTrianguloRight[3] === 'RHD' && arrayVerificarTrianguloRight[4] === 'RHM') {
                 let timeDifference = arraySegundosVerificarTrianguloRight[4] - arraySegundosVerificarTrianguloRight[0]
                 console.log(timeToString(arraySegundosVerificarTrianguloRight[0]), timeToString(arraySegundosVerificarTrianguloRight[1]), timeToString(arraySegundosVerificarTrianguloRight[2]), timeToString(arraySegundosVerificarTrianguloRight[3]), timeToString(arraySegundosVerificarTrianguloRight[4]), '-', arrayVerificarTrianguloRight[0], arrayVerificarTrianguloRight[1], arrayVerificarTrianguloRight[2], arrayVerificarTrianguloRight[3], arrayVerificarTrianguloRight[4]);
 
@@ -676,20 +676,20 @@ export const PoseContextProvider = (props) => {
                 }
 
                 //4. Cuarta posicion
-                if (arrayVerificarTrianguloRight[2] === 'RHM' && arrayVerificarTrianguloRight[3] === '' && value === 'RHU') {
-                    arrayVerificarTrianguloRight[3] = 'RHU';
+                if (arrayVerificarTrianguloRight[2] === 'RHM' && arrayVerificarTrianguloRight[3] === '' && value === 'RHD') {
+                    arrayVerificarTrianguloRight[3] = 'RHD';
                     arraySegundosVerificarTrianguloRight[3] = time;
 
                     //volumen
                     timeMediaTrianguloRight = (timeMediaTrianguloRight + (time - lastTimeTrianguloRight)) / 2;
                     lastTimeTrianguloRight = time
-                } else if (arrayVerificarTrianguloRight[3] === 'RHU' && arrayVerificarTrianguloRight[4] === '' && value === 'RHU') {
+                } else if (arrayVerificarTrianguloRight[3] === 'RHD' && arrayVerificarTrianguloRight[4] === '' && value === 'RHD') {
                     lastTimeTrianguloRight = time;
                     return;
                 }
 
                 //5. Quinta posicion
-                if (arrayVerificarTrianguloRight[3] === 'RHU' && arrayVerificarTrianguloRight[4] === '' && value === 'RHM') {
+                if (arrayVerificarTrianguloRight[3] === 'RHD' && arrayVerificarTrianguloRight[4] === '' && value === 'RHM') {
                     arrayVerificarTrianguloRight[4] = 'RHM';
                     arraySegundosVerificarTrianguloRight[4] = time;
 
