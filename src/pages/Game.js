@@ -380,7 +380,7 @@ const Game = () => {
 
         const { pose, posenetOutput } = await modelPitchRight.estimatePose(webcam.canvas);
         const predictionPitchRight = await modelPitchRight.predict(posenetOutput);
-        //poseDecoderPitchRight(predictionPitchRight);
+        poseDecoderPitchRight(predictionPitchRight);
         // for (let i = 5; i < maxPredictionsLeft + 5; i++) {
         //     const classPredictionLeft =
         //         predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
@@ -434,7 +434,7 @@ const Game = () => {
                     }
                 }
 
-                //console.log(aux);
+                //console.log(aux, 'predic left');
                 if (aux.length > 0) {
                     let punzadaBpm = poseController.checkPunzada(aux[0]);
                     let trianguloBpm = poseController.checkTriangulo(aux[0]);
@@ -484,7 +484,7 @@ const Game = () => {
                     }
                 }
 
-                //console.log(aux);
+                //console.log(aux, 'predict right');
                 if (aux.length > 0) {
                     let punzadaBpmRight = poseController.checkPunzadaRight(aux[0]);
                     let trianguloBpmRight = poseController.checkTrianguloRight(aux[0]);
@@ -527,7 +527,7 @@ const Game = () => {
         if (predictionPitchRight) {
             const aux = [];
             for (let i = 0; i < maxPredictionsPitchRight; i++) {
-                if (predictionPitchRight[i].probability === 1) {
+                if (predictionPitchRight[i].probability > 0.99) {
                     aux.push(predictionPitchRight[i].className);
                     if (aux[aux.length] == aux[aux.length - 1]) {
                         aux.pop();
@@ -535,7 +535,7 @@ const Game = () => {
                 }
 
                 if (aux.length > 0) {
-                    //console.log(aux, 'PitchRight');
+                    //console.log(aux[0], 'predict pitch right')
 
                     let pitchRight = poseController.checkPitchRight(aux[0]);
 
@@ -571,6 +571,7 @@ const Game = () => {
 
 
                 if (aux.length > 0) {
+                    //console.log(aux[0], 'predict pitch left')
 
                     let pitchLeft = poseController.checkPitchLeft(aux[0]);
 
@@ -785,17 +786,17 @@ const Game = () => {
             setPuntaje((prevPuntaje) => prevPuntaje + 1)
             newPuntajeSnack(1)
         } else if (nuevoBpm > (response.initialBpm - 70 + (70 * 0.2)) && (nuevoBpm < (response.initialBpm + 70 + (70 * 0.2)))) {
+            setPuntaje((prevPuntaje) => prevPuntaje - 5)
+            newPuntajeSnack(-5)
+        } else if (nuevoBpm > (response.initialBpm - 70 + (70 * 0.5)) && (nuevoBpm < (response.initialBpm + 70 + (70 * 0.5)))) {
+            setPuntaje((prevPuntaje) => prevPuntaje - 7)
+            newPuntajeSnack(-7)
+        } else if (nuevoBpm > (response.initialBpm - 70 + (70 * 0.8)) && (nuevoBpm < (response.initialBpm + 70 + (70 * 0.8)))) {
             setPuntaje((prevPuntaje) => prevPuntaje - 10)
             newPuntajeSnack(-10)
-        } else if (nuevoBpm > (response.initialBpm - 70 + (70 * 0.5)) && (nuevoBpm < (response.initialBpm + 70 + (70 * 0.5)))) {
-            setPuntaje((prevPuntaje) => prevPuntaje - 20)
-            newPuntajeSnack(-20)
-        } else if (nuevoBpm > (response.initialBpm - 70 + (70 * 0.8)) && (nuevoBpm < (response.initialBpm + 70 + (70 * 0.8)))) {
-            setPuntaje((prevPuntaje) => prevPuntaje - 30)
-            newPuntajeSnack(-30)
         } else {
-            setPuntaje((prevPuntaje) => prevPuntaje - 50)
-            newPuntajeSnack(-50)
+            setPuntaje((prevPuntaje) => prevPuntaje - 13)
+            newPuntajeSnack(-13)
         }
     }
 
