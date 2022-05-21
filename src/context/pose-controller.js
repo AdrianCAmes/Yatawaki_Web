@@ -195,13 +195,18 @@ export const PoseContextProvider = (props) => {
 
     const checkPitchLeft = (value) => {
         if (started) {
-
+            if (value === 'NN') {
+                lastTimePitch = 0;
+                poseLastPitch = '';
+                return 'reset';
+            }
             if ((value === 'LHUL' || value === 'LHDL') && lastTimePitch === 0) {
                 lastTimePitch = time;
                 poseLastPitch = value;
 
                 return 'reset';
             } else {
+
                 if (value === 'LHDL' && poseLastPitch !== 'LHDL') {
                     lastTimePitch = 0;
                     poseLastPitch = '';
@@ -237,7 +242,11 @@ export const PoseContextProvider = (props) => {
 
     const checkPitchRight = (value) => {
         if (started) {
-
+            if (value === 'NN') {
+                lastTimePitchRight = 0;
+                poseLastPitchRight = '';
+                return 'reset';
+            }
             if ((value === 'RHUR' || value === 'RHDR') && lastTimePitchRight === 0) {
                 lastTimePitchRight = time;
                 poseLastPitchRight = value;
