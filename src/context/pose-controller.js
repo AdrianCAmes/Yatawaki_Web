@@ -436,7 +436,7 @@ export const PoseContextProvider = (props) => {
         if (started) {
 
             //verificamos movimientos
-            if (arrayVerificarCruz[0] === 'LHM' && arrayVerificarCruz[1] === 'LHL' && arrayVerificarCruz[2] === 'LHR' && arrayVerificarCruz[3] === 'LHM' && arrayVerificarCruz[4] === 'LHU' && arrayVerificarCruz[5] === 'LHM') {
+            if (arrayVerificarCruz[0] === 'LHM' && arrayVerificarCruz[1] === 'LHR' && arrayVerificarCruz[2] === 'LHM' && arrayVerificarCruz[3] === 'LHL' && arrayVerificarCruz[4] === 'LHU' && arrayVerificarCruz[5] === 'LHD') {
                 let timeDifference = arraySegundosVerificarCruz[5] - arraySegundosVerificarCruz[0]
                 console.log(
                     timeToString(arraySegundosVerificarCruz[0]), timeToString(arraySegundosVerificarCruz[1]), timeToString(arraySegundosVerificarCruz[2]), timeToString(arraySegundosVerificarCruz[3]), timeToString(arraySegundosVerificarCruz[4]), timeToString(arraySegundosVerificarCruz[5]),
@@ -473,47 +473,47 @@ export const PoseContextProvider = (props) => {
                 }
 
                 //2. Segunda posicion
-                if (arrayVerificarCruz[0] === 'LHM' && arrayVerificarCruz[1] === '' && value === 'LHL') {
-                    arrayVerificarCruz[1] = 'LHL';
+                if (arrayVerificarCruz[0] === 'LHM' && arrayVerificarCruz[1] === '' && value === 'LHR') {
+                    arrayVerificarCruz[1] = 'LHR';
                     arraySegundosVerificarCruz[1] = time;
 
                     //volumen
                     timeMediaCruz = arraySegundosVerificarCruz[1] - arraySegundosVerificarCruz[0];
                     lastTimeCruz = time
-                } else if (arrayVerificarCruz[1] === 'LHL' && arrayVerificarCruz[2] === '' && value === 'LHL') {
+                } else if (arrayVerificarCruz[1] === 'LHR' && arrayVerificarCruz[2] === '' && value === 'LHR') {
                     lastTimeCruz = time;
                     return;
                 }
 
 
                 //3. Tercera posicion
-                if (arrayVerificarCruz[1] === 'LHL' && arrayVerificarCruz[2] === '' && value === 'LHR') {
-                    arrayVerificarCruz[2] = 'LHR';
+                if (arrayVerificarCruz[1] === 'LHR' && arrayVerificarCruz[2] === '' && value === 'LHM') {
+                    arrayVerificarCruz[2] = 'LHM';
                     arraySegundosVerificarCruz[2] = time;
 
                     //volumen
                     timeMediaCruz = (timeMediaCruz + (time - lastTimeCruz)) / 2;
                     lastTimeCruz = time;
-                } else if (arrayVerificarCruz[2] === 'LHR' && arrayVerificarCruz[3] === '' && value === 'LHR') {
+                } else if (arrayVerificarCruz[2] === 'LHM' && arrayVerificarCruz[3] === '' && value === 'LHM') {
                     lastTimeCruz = time;
                     return;
                 }
 
                 //4. Cuarta posicion
-                if (arrayVerificarCruz[2] === 'LHR' && arrayVerificarCruz[3] === '' && value === 'LHM') {
-                    arrayVerificarCruz[3] = 'LHM';
+                if (arrayVerificarCruz[2] === 'LHM' && arrayVerificarCruz[3] === '' && value === 'LHL') {
+                    arrayVerificarCruz[3] = 'LHL';
                     arraySegundosVerificarCruz[3] = time;
 
                     //volumen
                     timeMediaCruz = (timeMediaCruz + (time - lastTimeCruz)) / 2;
                     lastTimeCruz = time;
-                } else if (arrayVerificarCruz[3] === 'LHM' && arrayVerificarCruz[4] === '' && value === 'LHM') {
+                } else if (arrayVerificarCruz[3] === 'LHL' && arrayVerificarCruz[4] === '' && value === 'LHL') {
                     lastTimeCruz = time;
                     return;
                 }
 
                 //5. Quinta posicion
-                if (arrayVerificarCruz[3] === 'LHM' && arrayVerificarCruz[4] === '' && value === 'LHU') {
+                if (arrayVerificarCruz[3] === 'LHL' && arrayVerificarCruz[4] === '' && value === 'LHU') {
                     arrayVerificarCruz[4] = 'LHU';
                     arraySegundosVerificarCruz[4] = time;
 
@@ -526,8 +526,8 @@ export const PoseContextProvider = (props) => {
                 }
 
                 //6. Quinta posicion
-                if (arrayVerificarCruz[4] === 'LHU' && arrayVerificarCruz[5] === '' && value === 'LHM') {
-                    arrayVerificarCruz[5] = 'LHM';
+                if (arrayVerificarCruz[4] === 'LHU' && arrayVerificarCruz[5] === '' && value === 'LHD') {
+                    arrayVerificarCruz[5] = 'LHD';
                     arraySegundosVerificarCruz[5] = time;
 
                     //volumen
@@ -708,7 +708,7 @@ export const PoseContextProvider = (props) => {
         if (started) {
 
             //verificamos movimientos
-            if (arrayVerificarCruzRight[0] === 'RHM' && arrayVerificarCruzRight[1] === 'RHL' && arrayVerificarCruzRight[2] === 'RHR' && arrayVerificarCruzRight[3] === 'RHM' && arrayVerificarCruzRight[4] === 'RHU' && arrayVerificarCruzRight[5] === 'RHM') {
+            if (arrayVerificarCruzRight[0] === 'RHM' && arrayVerificarCruzRight[1] === 'RHL' && arrayVerificarCruzRight[2] === 'RHM' && arrayVerificarCruzRight[3] === 'RHR' && arrayVerificarCruzRight[4] === 'RHU' && arrayVerificarCruzRight[5] === 'RHD') {
                 let timeDifference = arraySegundosVerificarCruzRight[5] - arraySegundosVerificarCruzRight[0]
                 console.log(
                     timeToString(arraySegundosVerificarCruzRight[0]), timeToString(arraySegundosVerificarCruzRight[1]), timeToString(arraySegundosVerificarCruzRight[2]), timeToString(arraySegundosVerificarCruzRight[3]), timeToString(arraySegundosVerificarCruzRight[4]), timeToString(arraySegundosVerificarCruzRight[5]),
@@ -758,33 +758,33 @@ export const PoseContextProvider = (props) => {
 
 
                 //3. Tercera posicion
-                if (arrayVerificarCruzRight[1] === 'RHL' && arrayVerificarCruzRight[2] === '' && value === 'RHR') {
-                    arrayVerificarCruzRight[2] = 'RHR';
+                if (arrayVerificarCruzRight[1] === 'RHL' && arrayVerificarCruzRight[2] === '' && value === 'RHM') {
+                    arrayVerificarCruzRight[2] = 'RHM';
                     arraySegundosVerificarCruzRight[2] = time;
 
                     //volumen
                     timeMediaCruzRight = (timeMediaCruzRight + (time - lastTimeCruzRight)) / 2;
                     lastTimeCruzRight = time;
-                } else if (arrayVerificarCruzRight[2] === 'RHR' && arrayVerificarCruzRight[3] === '' && value === 'RHR') {
+                } else if (arrayVerificarCruzRight[2] === 'RHM' && arrayVerificarCruzRight[3] === '' && value === 'RHM') {
                     lastTimeCruzRight = time;
                     return;
                 }
 
                 //4. Cuarta posicion
-                if (arrayVerificarCruzRight[2] === 'RHR' && arrayVerificarCruzRight[3] === '' && value === 'RHM') {
-                    arrayVerificarCruzRight[3] = 'RHM';
+                if (arrayVerificarCruzRight[2] === 'RHM' && arrayVerificarCruzRight[3] === '' && value === 'RHR') {
+                    arrayVerificarCruzRight[3] = 'RHR';
                     arraySegundosVerificarCruzRight[3] = time;
 
                     //volumen
                     timeMediaCruzRight = (timeMediaCruzRight + (time - lastTimeCruzRight)) / 2;
                     lastTimeCruzRight = time;
-                } else if (arrayVerificarCruzRight[3] === 'RHM' && arrayVerificarCruzRight[4] === '' && value === 'RHM') {
+                } else if (arrayVerificarCruzRight[3] === 'RHR' && arrayVerificarCruzRight[4] === '' && value === 'RHR') {
                     lastTimeCruzRight = time;
                     return;
                 }
 
                 //5. Quinta posicion
-                if (arrayVerificarCruzRight[3] === 'RHM' && arrayVerificarCruzRight[4] === '' && value === 'RHU') {
+                if (arrayVerificarCruzRight[3] === 'RHR' && arrayVerificarCruzRight[4] === '' && value === 'RHU') {
                     arrayVerificarCruzRight[4] = 'RHU';
                     arraySegundosVerificarCruzRight[4] = time;
 
@@ -797,8 +797,8 @@ export const PoseContextProvider = (props) => {
                 }
 
                 //6. Quinta posicion
-                if (arrayVerificarCruzRight[4] === 'RHU' && arrayVerificarCruzRight[5] === '' && value === 'RHM') {
-                    arrayVerificarCruzRight[5] = 'RHM';
+                if (arrayVerificarCruzRight[4] === 'RHU' && arrayVerificarCruzRight[5] === '' && value === 'RHD') {
+                    arrayVerificarCruzRight[5] = 'RHD';
                     arraySegundosVerificarCruzRight[5] = time;
 
                     //volumen
