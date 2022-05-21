@@ -786,17 +786,17 @@ const Game = () => {
             setPuntaje((prevPuntaje) => prevPuntaje + 1)
             newPuntajeSnack(1)
         } else if (nuevoBpm > (response.initialBpm - 70 + (70 * 0.2)) && (nuevoBpm < (response.initialBpm + 70 + (70 * 0.2)))) {
+            setPuntaje((prevPuntaje) => prevPuntaje - 5)
+            newPuntajeSnack(-5)
+        } else if (nuevoBpm > (response.initialBpm - 70 + (70 * 0.5)) && (nuevoBpm < (response.initialBpm + 70 + (70 * 0.5)))) {
+            setPuntaje((prevPuntaje) => prevPuntaje - 7)
+            newPuntajeSnack(-7)
+        } else if (nuevoBpm > (response.initialBpm - 70 + (70 * 0.8)) && (nuevoBpm < (response.initialBpm + 70 + (70 * 0.8)))) {
             setPuntaje((prevPuntaje) => prevPuntaje - 10)
             newPuntajeSnack(-10)
-        } else if (nuevoBpm > (response.initialBpm - 70 + (70 * 0.5)) && (nuevoBpm < (response.initialBpm + 70 + (70 * 0.5)))) {
-            setPuntaje((prevPuntaje) => prevPuntaje - 20)
-            newPuntajeSnack(-20)
-        } else if (nuevoBpm > (response.initialBpm - 70 + (70 * 0.8)) && (nuevoBpm < (response.initialBpm + 70 + (70 * 0.8)))) {
-            setPuntaje((prevPuntaje) => prevPuntaje - 30)
-            newPuntajeSnack(-30)
         } else {
-            setPuntaje((prevPuntaje) => prevPuntaje - 50)
-            newPuntajeSnack(-50)
+            setPuntaje((prevPuntaje) => prevPuntaje - 13)
+            newPuntajeSnack(-13)
         }
     }
 
