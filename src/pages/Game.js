@@ -84,61 +84,61 @@ const Game = () => {
     }
 
     const startConcert = () => {
-        let response2 = {
-            "idConcert": 1,
-            "name": "Nocturne Op 9 No 2",
-            "initialBpm": 122,
-            "duration": 230,
-            "instruments": [
-                {
-                    "name": "Piano",
-                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Pianos/piano_casio.png",
-                    "position": "L",
-                    "track": violin2
-                },
-                {
-                    "name": "Violin",
-                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Violins/violin_casio.png",
-                    "position": "L",
-                    "track": violin1
-                },
-                {
-                    "name": "Cello",
-                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Cellos/cello_casio.png",
-                    "position": "R",
-                    "track": cello
-                },
-                {
-                    "name": "Guitar",
-                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Guitars/guitar_casio.png",
-                    "position": "R",
-                    "track": viola
-                }
-            ]
-        }
-        audioController.setSongs(response2.instruments);
-        audioController.setInitialBpm(response2.initialBpm);
-        setSongDuration(response2.duration)
-        setCurrentBPM(response2.initialBpm);
-        setResponse(response2);
-        // ConcertApis.startConcert()
-        //     .then(response => {
-        //         //console.log(response.data);
-        //         //response = response.data;
-        //         setResponse(response.data);
-        //         console.log(response);
-        //         console.log("empezando el juego...");
+        // let response2 = {
+        //     "idConcert": 1,
+        //     "name": "Nocturne Op 9 No 2",
+        //     "initialBpm": 122,
+        //     "duration": 230,
+        //     "instruments": [
+        //         {
+        //             "name": "Piano",
+        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Pianos/piano_casio.png",
+        //             "position": "L",
+        //             "track": violin2
+        //         },
+        //         {
+        //             "name": "Violin",
+        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Violins/violin_casio.png",
+        //             "position": "L",
+        //             "track": violin1
+        //         },
+        //         {
+        //             "name": "Cello",
+        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Cellos/cello_casio.png",
+        //             "position": "R",
+        //             "track": cello
+        //         },
+        //         {
+        //             "name": "Guitar",
+        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Guitars/guitar_casio.png",
+        //             "position": "R",
+        //             "track": viola
+        //         }
+        //     ]
+        // }
+        // audioController.setSongs(response2.instruments);
+        // audioController.setInitialBpm(response2.initialBpm);
+        // setSongDuration(response2.duration)
+        // setCurrentBPM(response2.initialBpm);
+        // setResponse(response2);
+        ConcertApis.startConcert()
+            .then(response => {
+                //console.log(response.data);
+                //response = response.data;
+                setResponse(response.data);
+                console.log(response);
+                console.log("empezando el juego...");
 
-        //         audioController.setSongs(response.data.instruments);
-        //         audioController.setInitialBpm(response.data.initialBpm);
-        //         setSongDuration(response.data.duration)
-        //         setCurrentBPM(response.data.initialBpm);
+                audioController.setSongs(response.data.instruments);
+                audioController.setInitialBpm(response.data.initialBpm);
+                setSongDuration(response.data.duration)
+                setCurrentBPM(response.data.initialBpm);
 
-        //     })
-        //     .catch(err => {
-        //         snackBarContext.onOpen({ severity: "error", message: err });
-        //         console.log(err);
-        //     })
+            })
+            .catch(err => {
+                snackBarContext.onOpen({ severity: "error", message: err });
+                console.log(err);
+            })
     }
 
 
