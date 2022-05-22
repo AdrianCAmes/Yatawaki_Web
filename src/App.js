@@ -17,6 +17,7 @@ import { AudioContextProvider } from './context/audio-context-controller';
 import { PoseContextProvider } from './context/pose-controller';
 import Tutorial from './pages/Tutorial';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import TutorialResume from './pages/TutorialResume';
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
                 <Route path="/game-resume" element={<GameResume />} />
                 <Route path="/market" element={<Market />} />
                 <Route path="/tutorial" element={<Tutorial />} />
+                <Route path="/tutorial-resume" element={<TutorialResume />} />
 
               </Routes>
             </BrowserRouter>
