@@ -44,6 +44,8 @@ const YatawakiMenu = () => {
                 setResume(response.data);
                 setSymphonies(response.data.symphonies);
                 gameContext.updateUser(response.data.idUser);
+                gameContext.setShowTutorials(response.data.showTutorials)
+                console.log(response.data)
             })
             .catch(err => {
                 console.log(err);
@@ -95,9 +97,9 @@ const YatawakiMenu = () => {
                     {symphonies.map((symphony, idx) => (
                         <h1 key={idx} >{idx === index ?
                             <>
-                                <Typography fontSize={24} fontWeight={600}>{`${symphony.name} | ${symphony.type}`}</Typography>
-                                <Typography fontSize={24} fontWeight={600}>{`${symphony.composer.name}. ${dateHourStringToDate(symphony.composer.deathDate)}`}</Typography>
-                                <Typography fontSize={24} fontWeight={600}>{`${symphony.description}.`}</Typography>
+                                <Typography fontSize={16} fontWeight={600}>{`${symphony.name} | ${symphony.type}`}</Typography>
+                                <Typography fontSize={16} fontWeight={600}>{`${symphony.composer.name}. ${dateHourStringToDate(symphony.composer.deathDate)}`}</Typography>
+                                <Typography fontSize={16} fontWeight={600}>{`${symphony.description}.`}</Typography>
                             </>
                             : null}</h1>
                     ))}

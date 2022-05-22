@@ -6,6 +6,8 @@ import sinfonia from '../assets/sinfonia-ejemplo.png'
 import PropTypes from 'prop-types';
 import { FacebookIcon, FacebookShareButton, TwitterIcon, TwitterShareButton, WhatsappIcon, WhatsappShareButton } from "react-share";
 import { useNavigate } from "react-router-dom";
+import UserApi from "../apis/user-apis";
+import GameContext from "../context/game-context";
 
 
 let buttonStyle = { width: '500px', height: '80px', borderRadius: '20px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', };
@@ -43,6 +45,7 @@ DataTwoColumns.defaultProps = {
 
 
 const TutorialResume = () => {
+    const gameContext = React.useContext(GameContext);
 
     const [results, setResultsFinal] = React.useState(null);
     const [paso, setPaso] = React.useState(1);
@@ -63,6 +66,21 @@ const TutorialResume = () => {
         }
         setResultsFinal(aresults)
     }, []);
+
+    const pasoFinal = () => {
+        updateTutorial()
+    }
+
+    const updateTutorial = async () => {
+        UserApi.updateShowTutorial(gameContext.userId)
+            .then(response => {
+                console.log(response.data)
+                navigate('/menu')
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
 
     return (
         <React.Fragment>
@@ -173,7 +191,7 @@ const TutorialResume = () => {
                 </Grid>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '2%', top: '20%', zIndex: `${paso === 3 ? '3' : '1'}`, visibility: paso === 3 ? 'visible' : 'hidden', backgroundColor: '#FFFFEA', height: '50vh', width: '45vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 3 ? 'canvasAnimation' : ''}`}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '2%', top: '20%', zIndex: `${paso === 3 ? '3' : '1'}`, visibility: paso === 3 ? 'visible' : 'hidden', backgroundColor: '#FFFFEA', height: '60vh', width: '45vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 3 ? 'canvasAnimation' : ''}`}>
                 <Typography textAlign='center' className="title-font title-dialog-tutorial">Tus puntos, gestos completados y porcentaje de precisión son un indicador de tu desempeño a lo largo de la partida</Typography>
                 <Box className="hover" sx={buttonStyle2} onClick={() => { nextPaso() }}>
                     <Typography className="title-button" fontSize='40px!important'> Siguiente</Typography>
@@ -221,7 +239,7 @@ const TutorialResume = () => {
                 </Grid>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '2%', top: '20%', zIndex: `${paso === 4 ? '3' : '1'}`, visibility: paso === 4 ? 'visible' : 'hidden', backgroundColor: '#FFFFEA', height: '50vh', width: '45vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 4 ? 'canvasAnimation' : ''}`}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '2%', top: '20%', zIndex: `${paso === 4 ? '3' : '1'}`, visibility: paso === 4 ? 'visible' : 'hidden', backgroundColor: '#FFFFEA', height: '60vh', width: '45vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 4 ? 'canvasAnimation' : ''}`}>
                 <Typography textAlign='center' className="title-font title-dialog-tutorial">Puedes usar las monedas obtenidas para canjearlas por objetos desbloqueables en la tienda</Typography>
                 <Box className="hover" sx={buttonStyle2} onClick={() => { nextPaso() }}>
                     <Typography className="title-button" fontSize='40px!important'> Siguiente</Typography>
@@ -318,9 +336,9 @@ const TutorialResume = () => {
                 </Grid>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '2%', top: '20%', zIndex: `${paso === 6 ? '3' : '1'}`, visibility: paso === 6 ? 'visible' : 'hidden', backgroundColor: '#FFFFEA', height: '50vh', width: '45vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 6 ? 'canvasAnimation' : ''}`}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '2%', top: '20%', zIndex: `${paso === 6 ? '3' : '1'}`, visibility: paso === 6 ? 'visible' : 'hidden', backgroundColor: '#FFFFEA', width: '45vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 6 ? 'canvasAnimation' : ''}`}>
                 <Typography textAlign='center' className="title-font title-dialog-tutorial">¡Recuerda que mientras mejores sean tus resultados, más probabilidades tienes de desbloquear objetos más exclusivos!</Typography>
-                <Box className="hover" sx={buttonStyle2} onClick={() => { navigate('/menu') }}>
+                <Box className="hover" sx={buttonStyle2} onClick={() => { pasoFinal() }}>
                     <Typography className="title-button" fontSize='40px!important'> Terminar </Typography>
                 </Box>
             </div>

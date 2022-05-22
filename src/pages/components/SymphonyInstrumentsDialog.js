@@ -60,7 +60,7 @@ const SymphonyInstrumentsDialog = (props) => {
                         ))}
                     </div>
                     <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <Box className="hover" sx={buttonStyle} onClick={() => {navigate('/game')}}>
+                        <Box className="hover" sx={buttonStyle} onClick={() => {gameContext.showTutorials === true ? navigate('/tutorial') : navigate('/game')}}>
                             <Typography style={{ fontSize: '30px', color: '#FFF' }}> Continuar</Typography>
                         </Box>
                     </div>

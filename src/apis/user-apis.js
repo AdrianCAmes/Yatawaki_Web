@@ -25,6 +25,10 @@ const UserApi = {
         nickname: nickname,
         mail: mail,
     }, getHeaderToken()),
+    updateShowTutorial: (idUser) => apiInstance.patch(`${uri}`,{
+        idUser: idUser,
+        showTutorials: false
+    }, getHeaderToken()),
 }
 
 export default UserApi;

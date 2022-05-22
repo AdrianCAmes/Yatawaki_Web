@@ -3,6 +3,8 @@ import { createContext, useEffect, useState } from "react";
 
 const GameContext = createContext({
     userId: 0,
+    showTutorials: null,
+    setShowTutorials: null,
     updateUser: null,
     username: '',
     updateUsername: null,
@@ -16,6 +18,7 @@ export default GameContext;
 
 export const GameContextProvider = (props) => {
     const [userId, setUserId] = useState(0);
+    const [showTutorials, setShowTutorials] = useState(true);
     const [username, setUsername] = useState('');
     const [instruments, setInstruments] = useState([]);
 
@@ -63,11 +66,16 @@ export const GameContextProvider = (props) => {
         localStorage.setItem('username', username);
     }, [username]);
 
+    useEffect(() => {
+        localStorage.setItem('showTutorials', showTutorials);
+    }, [showTutorials]);
 
     return (
         <GameContext.Provider value={{
             userId: userId,
             updateUser: updateUserId,
+            showTutorials: showTutorials,
+            setShowTutorials: setShowTutorials,
             username: username,
             updateUsername: updateUsername,
             logout: logout,
