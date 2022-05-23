@@ -1,4 +1,4 @@
-import { CircularProgress, Dialog, LinearProgress, Paper, Snackbar, SnackbarContent, Typography } from "@mui/material";
+import { CircularProgress, Dialog, LinearProgress, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
 import calibracion from '../assets/calibracion.png';
 import { PauseRounded } from "@mui/icons-material";
@@ -39,7 +39,7 @@ const Game = () => {
     const [currentVolume, setCurrentVolume] = useState(72);
     const [songDuration, setSongDuration] = useState(0);
 
-    const [speed, setProgressSpeed] = useState(13);
+    const [speed, setProgressSpeed] = useState(10);
 
     const [puntaje, setPuntaje] = useState(0);
     const [precision, setPrecision] = useState(0);
@@ -368,7 +368,7 @@ const Game = () => {
 
         const { pose, posenetOutput } = await modelPitchLeft.estimatePose(webcam.canvas);
         const predictionPitchLeft = await modelPitchLeft.predict(posenetOutput);
-        poseDecoderPitchLeft(predictionPitchLeft);
+        //poseDecoderPitchLeft(predictionPitchLeft);
         // for (let i = 5; i < maxPredictionsLeft + 5; i++) {
         //     const classPredictionLeft =
         //         predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
@@ -385,7 +385,7 @@ const Game = () => {
 
         const { pose, posenetOutput } = await modelPitchRight.estimatePose(webcam.canvas);
         const predictionPitchRight = await modelPitchRight.predict(posenetOutput);
-        poseDecoderPitchRight(predictionPitchRight);
+        //poseDecoderPitchRight(predictionPitchRight);
         // for (let i = 5; i < maxPredictionsLeft + 5; i++) {
         //     const classPredictionLeft =
         //         predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
@@ -489,7 +489,7 @@ const Game = () => {
                     }
                 }
 
-                //console.log(aux, 'predict right');
+                console.log(aux, 'predict right');
                 if (aux.length > 0) {
                     let punzadaBpmRight = poseController.checkPunzadaRight(aux[0]);
                     let trianguloBpmRight = poseController.checkTrianguloRight(aux[0]);
@@ -667,7 +667,7 @@ const Game = () => {
     });
 
     const changeSpeed = (newBpm) => {
-        setProgressSpeed((newBpm * 13) / response.initialBpm);
+        setProgressSpeed((newBpm * 10) / response.initialBpm);
         audioController.setBPM(newBpm);
         setCurrentBPM(newBpm);
         //console.log((newBpm * 10) / response.initialBpm)
@@ -690,7 +690,7 @@ const Game = () => {
     const pause = (isCameraDenied) => {
         audioController.setBPM(1);
         poseController.pauseController();
-        setProgressSpeed((1 * 13) / response.initialBpm);
+        setProgressSpeed((1 * 10) / response.initialBpm);
         stopAnimationLeft();
         stopAnimationRight();
         setLoading(true);
@@ -920,7 +920,7 @@ const Game = () => {
     }, [timeCountdown]);
 
     const transition = { duration: 0.3, yoyo: Infinity, ease: 'easeInOut' };
-
+    const transition2 = { duration: 1.5, yoyo: Infinity, ease: 'easeInOut' };
     const [stack, setStack] = React.useState([]);
 
     React.useEffect(() => {
@@ -979,7 +979,7 @@ const Game = () => {
 
                     <Box sx={{ width: '30%' }}>
                         <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {Math.round((Math.floor((time / 1000)) / songDuration) * 100)}%</Typography>
-                        {/* <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {("0" + Math.floor((time / 60000) % 60)).slice(-2)}:{("0" + Math.floor((time / 1000) % 60)).slice(-2)}</Typography> */}
+                        <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {("0" + Math.floor((time / 60000) % 60)).slice(-2)}:{("0" + Math.floor((time / 1000) % 60)).slice(-2)}</Typography>
                         {/* <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {Math.floor((time / 1000))}-</Typography> */}
                         {/* <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {Math.floor((time / 1000))} segundos</Typography> */}
                         <LinearProgress variant="determinate" value={(Math.floor((time / 1000)) / songDuration) * 100} style={{ height: '10px', borderRadius: 5 }} />
@@ -1047,7 +1047,45 @@ const Game = () => {
                 <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '16%' }}> Volume: {currentVolume}%</Typography>
 
                 {/* <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> Media Volumen: {currentVolume}</Typography> */}
-                <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', right: '2%' }}> Puntaje: {puntaje}</Typography>
+                {/* <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', right: '2%' }}> Puntaje: {puntaje}</Typography> */}
+                <div className="container-control-points">
+                    <div className="container-points-svg">
+                        <motion.svg
+                            width="28"
+                            height="28"
+                            stroke-width="1.5"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <motion.path
+                                d="M1.5 12.5L5.57574 16.5757C5.81005 16.8101 6.18995 16.8101 6.42426 16.5757L9 14"
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                initial={{ pathLength: 0 }}
+                                animate={{ pathLength: 1 }}
+                                transition={transition2}
+                            />
+                            <motion.path
+                                d="M16 7L12 11"
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                initial={{ pathLength: 0 }}
+                                animate={{ pathLength: 1 }}
+                                transition={transition2}
+                            />
+                            <motion.path
+                                d="M7 12L11.5757 16.5757C11.8101 16.8101 12.1899 16.8101 12.4243 16.5757L22 7"
+                                stroke="currentColor"
+                                strokeLinejoin="round"
+                                initial={{ pathLength: 0 }}
+                                animate={{ pathLength: 1 }}
+                                transition={transition2}
+                            />
+                        </motion.svg>
+                    </div>
+                    <span>{puntaje} puntos</span>
+                </div>
 
                 <canvas style={{ position: 'absolute', left: '40%', bottom: '3%', borderRadius: '10px', visibility: !open ? 'visible' : 'hidden' }} className={`canvas ${!open ? "canvasAnimation" : ""}`}></canvas>
                 <span style={{ position: 'absolute', left: '43%', bottom: '40%', fontSize: '200px', visibility: tres ? 'visible' : 'hidden' }} className={`${tres ? 'canvasAnimation' : ''}`}>3</span>

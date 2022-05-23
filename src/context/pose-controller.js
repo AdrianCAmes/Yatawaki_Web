@@ -193,6 +193,16 @@ export const PoseContextProvider = (props) => {
 
     }
 
+    const resetPitchLeft = () => {
+        lastTimePitch = 0;
+        poseLastPitch = '';
+    }
+
+    const resetPitchRight = () => {
+        lastTimePitchRight = 0;
+        poseLastPitchRight = '';
+    }
+
     const checkPitchLeft = (value) => {
         if (started) {
             if (value === 'NN') {
@@ -223,6 +233,7 @@ export const PoseContextProvider = (props) => {
 
                     if (Math.floor(((time - lastTimePitch) / 1000) % 60) > 2) {
                         console.log(Math.floor(((time - lastTimePitch) / 1000) % 60), 'RETORNA DOWN');
+                        resetPitchRight();
                         return 'down';
                     }
                 } else if (value === 'LHUL' && poseLastPitch === 'LHUL') {
@@ -230,7 +241,7 @@ export const PoseContextProvider = (props) => {
 
                     if (Math.floor(((time - lastTimePitch) / 1000) % 60) > 2) {
                         console.log(Math.floor(((time - lastTimePitch) / 1000) % 60), 'RETORNA UP');
-
+                        resetPitchRight();
                         return 'up';
                     }
                 }
@@ -267,12 +278,15 @@ export const PoseContextProvider = (props) => {
                 } else if (value === 'RHDR' && poseLastPitchRight === 'RHDR') {
 
                     if (Math.floor(((time - lastTimePitchRight) / 1000) % 60) > 2) {
+                        resetPitchLeft();
                         return 'down';
+                        
                     }
                 } else if (value === 'RHUR' && poseLastPitchRight === 'RHUR') {
 
                     if (Math.floor(((time - lastTimePitchRight) / 1000) % 60) > 2) {
 
+                        resetPitchLeft();
                         return 'up';
                     }
                 }

@@ -515,3 +515,36 @@
      color: #9381ff;
      text-shadow: 0 0 10px #b8b8ff;
  }
+
+ .container-control-points {
+    position: absolute;
+    bottom: 3%;
+    right: 2%;
+    width: 180px;
+    background-color: #ffeedd;
+    padding: 10px 20px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+  }
+  
+  .container-control-points span {
+    color: black;
+    font-family: 'Kubots';
+    font-weight: bold;
+    font-size: 25px;
+  }
+  
+  .container-points-svg {
+    background-color: rgb(0, 0, 0, 0.15);
+    border-radius: 30px;
+    padding: 10px;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    width: 30px;
+    height: 30px;
+  }
