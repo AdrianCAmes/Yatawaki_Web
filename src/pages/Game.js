@@ -5,7 +5,7 @@ import { PauseRounded } from "@mui/icons-material";
 import { Box } from "@mui/system";
 import '@tensorflow/tfjs'
 import * as tmPose from '@teachablemachine/pose'
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AudioController from "../context/audio-context-controller";
 import PoseContext from "../context/pose-controller";
 import PauseMenu from "./components/PauseMenu";
@@ -83,6 +83,8 @@ const Game = () => {
         audioController.start();
     }
 
+    const { state } = useLocation();
+
     const startConcert = () => {
         // let response2 = {
         //     "idConcert": 1,
@@ -121,7 +123,7 @@ const Game = () => {
         // setSongDuration(response2.duration)
         // setCurrentBPM(response2.initialBpm);
         // setResponse(response2);
-        ConcertApis.startConcert()
+        ConcertApis.startConcert(state.symphonyId)
             .then(response => {
                 //console.log(response.data);
                 //response = response.data;
@@ -136,8 +138,8 @@ const Game = () => {
 
             })
             .catch(err => {
-                snackBarContext.onOpen({ severity: "error", message: err });
-                console.log(err);
+                //snackBarContext.onOpen({ severity: "error", message: 'error' });
+                console.log(err, 'startGame');
             })
     }
 
