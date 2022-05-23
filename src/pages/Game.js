@@ -368,7 +368,7 @@ const Game = () => {
 
         const { pose, posenetOutput } = await modelPitchLeft.estimatePose(webcam.canvas);
         const predictionPitchLeft = await modelPitchLeft.predict(posenetOutput);
-        //poseDecoderPitchLeft(predictionPitchLeft);
+        poseDecoderPitchLeft(predictionPitchLeft);
         // for (let i = 5; i < maxPredictionsLeft + 5; i++) {
         //     const classPredictionLeft =
         //         predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
@@ -528,6 +528,7 @@ const Game = () => {
         }
     }
 
+
     const poseDecoderPitchRight = async (predictionPitchRight) => {
         if (predictionPitchRight) {
             const aux = [];
@@ -667,7 +668,7 @@ const Game = () => {
     });
 
     const changeSpeed = (newBpm) => {
-        setProgressSpeed((newBpm * 10) / response.initialBpm);
+        setProgressSpeed((newBpm * 18) / response.initialBpm);
         audioController.setBPM(newBpm);
         setCurrentBPM(newBpm);
         //console.log((newBpm * 10) / response.initialBpm)
