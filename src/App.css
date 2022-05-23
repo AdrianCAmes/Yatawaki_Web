@@ -473,5 +473,37 @@
 
 
  .title-dialog-tutorial {
-    font-size: 40px !important;
-}
+     font-size: 40px !important;
+ }
+
+ .container-control {
+     position: absolute;
+     bottom: 3%;
+     left: 3%;
+     width: 180px;
+     background-color: #9381ff;
+     padding: 10px 20px;
+     border-radius: 50px;
+     display: flex;
+     align-items: center;
+ }
+
+ .container-control span {
+     color: white;
+     font-family: 'Kubots';
+     font-weight: bold;
+     font-size: 25px;
+ }
+
+ .container-svg {
+     background-color: rgb(255, 255, 255, 0.15);
+     border-radius: 30px;
+     padding: 10px;
+     color: white;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     margin-right: 10px;
+     width: 30px;
+     height: 30px;
+ }
