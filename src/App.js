@@ -42,7 +42,7 @@ function App() {
 
               </Routes>
             </BrowserRouter>
-          </GoogleOAuthProvider>;
+          </GoogleOAuthProvider>
 
 
 
