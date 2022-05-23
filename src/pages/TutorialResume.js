@@ -197,7 +197,7 @@ const TutorialResume = () => {
                 </Box>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '10%', zIndex: `${paso === 3 ? '3' : '1'}`, visibility: paso === 3 ? 'visible' : 'hidden', height: '50vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 3 ? 'canvasAnimation' : ''}`}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '120px', zIndex: `${paso === 3 ? '3' : '1'}`, visibility: paso === 3 ? 'visible' : 'hidden', height: '50vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 3 ? 'canvasAnimation' : ''}`}>
                 <Grid container>
                     <Grid item xs={12} padding="10px">
                         <Box height='50px' width='90%' style={boxStyle}>
@@ -220,7 +220,7 @@ const TutorialResume = () => {
                 </Grid>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '28.5%', zIndex: `${paso === 3 && '1'}`, visibility: paso === 3 ? 'visible' : 'hidden', height: '50vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 3 ? 'canvasAnimation' : ''}`}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '300px', zIndex: `${paso === 3 && '1'}`, visibility: paso === 3 ? 'visible' : 'hidden', height: '50vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 3 ? 'canvasAnimation' : ''}`}>
                 <Grid container>
                     <Grid item xs={12} padding="10px">
                         <Box height='50px' width='90%' style={boxStyle}>
@@ -245,7 +245,7 @@ const TutorialResume = () => {
                 </Box>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '15%', zIndex: `${paso === 4 && '1'}`, visibility: paso === 4 ? 'visible' : 'hidden', height: '50vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 4 ? 'canvasAnimation' : ''}`}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '180px', zIndex: `${paso === 4 && '1'}`, visibility: paso === 4 ? 'visible' : 'hidden', height: '50vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 4 ? 'canvasAnimation' : ''}`}>
                 <Grid container>
                     <Grid item xs={12} padding="10px">
                         <Box height='50px' width='90%' style={boxStyle}>
@@ -275,7 +275,7 @@ const TutorialResume = () => {
                 </Grid>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '37.5%', zIndex: `${paso === 4 ? '3' : '1'}`, visibility: paso === 4 ? 'visible' : 'hidden', height: '20vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 4 ? 'canvasAnimation' : ''}`}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '370px', zIndex: `${paso === 4 ? '3' : '1'}`, visibility: paso === 4 ? 'visible' : 'hidden', height: '20vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 4 ? 'canvasAnimation' : ''}`}>
                 <Grid container>
                     <Grid item xs={12} padding="10px">
                         <Box height='50px' width='90%' style={boxStyle}>
@@ -296,7 +296,7 @@ const TutorialResume = () => {
                 </Box>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '15%', zIndex: `${paso === 5 && '1'}`, visibility: paso === 5 ? 'visible' : 'hidden', height: '50vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 5 ? 'canvasAnimation' : ''}`}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '180px', zIndex: `${paso === 5 && '1'}`, visibility: paso === 5 ? 'visible' : 'hidden', height: '50vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 5 ? 'canvasAnimation' : ''}`}>
                 <Grid container>
                     <Grid item xs={12} padding="10px">
                         <Box height='50px' width='90%' style={boxStyle}>
@@ -323,7 +323,7 @@ const TutorialResume = () => {
                 </Grid>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '48.5%', zIndex: `${paso === 5 ? '3' : '1'}`, visibility: paso === 5 ? 'visible' : 'hidden', height: '20vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 5 ? 'canvasAnimation' : ''}`}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '470px', zIndex: `${paso === 5 ? '3' : '1'}`, visibility: paso === 5 ? 'visible' : 'hidden', height: '20vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 5 ? 'canvasAnimation' : ''}`}>
                 <Grid container>
                     <Grid item xs={12} padding="10px">
 
@@ -343,7 +343,7 @@ const TutorialResume = () => {
                 </Box>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '33%', zIndex: `${paso === 6 ? '3' : '1'}`, visibility: paso === 6 ? 'visible' : 'hidden', height: '20vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 6 ? 'canvasAnimation' : ''}`}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '340px', zIndex: `${paso === 6 ? '3' : '1'}`, visibility: paso === 6 ? 'visible' : 'hidden', height: '20vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 6 ? 'canvasAnimation' : ''}`}>
                 <Grid container>
                     <Grid item xs={12} padding="10px">
 

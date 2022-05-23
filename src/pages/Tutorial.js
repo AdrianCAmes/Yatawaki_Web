@@ -208,7 +208,7 @@ const Tutorial = () => {
 
             </div>
 
-            <canvas style={{ position: 'absolute', left: '40%', bottom: '3%', borderRadius: '10px', zIndex: `${paso === 2 ? '3' : '1'}`, }} className={`canvas `}></canvas>
+            <canvas style={{ position: 'absolute', left: '40%', bottom: '3%', borderRadius: '10px', zIndex: `${paso === 2 ? '4' : '1'}`, }} className={`canvas `}></canvas>
 
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '10%', top: '20%', zIndex: `${paso === 1 ? '3' : '1'}`, visibility: paso === 1 ? 'visible' : 'hidden', backgroundColor: '#FFFFEA', height: '60vh', width: '80vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 1 ? 'canvasAnimation' : ''}`}>
                 <Typography textAlign='center' className="title-font title-dialog-tutorial">¡Bienvenido a Yatawaki! Un espacio virtual creado especialmente para que desarrolles tus habilidades de dirección orquestal</Typography>
@@ -217,7 +217,7 @@ const Tutorial = () => {
                 </Box>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '10%', top: '5%', zIndex: `${paso === 2 ? '3' : '1'}`, visibility: paso === 2 ? 'visible' : 'hidden', backgroundColor: '#FFFFEA', height: '60vh', width: '80vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 2 ? 'canvasAnimation' : ''}`}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '10%', top: '5%', zIndex: `${paso === 2 ? '3' : '1'}`, visibility: paso === 2 ? 'visible' : 'hidden', backgroundColor: '#FFFFEA', width: '80vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 2 ? 'canvasAnimation' : ''}`}>
                 <Typography textAlign='center' className="title-font title-dialog-tutorial">En la sección inferior podrás visualizar el video tomado en tiempo real, el cual mediante nuestra inteligencia artificial reconocerá tus gestos y aplicará distintos efectos de sonido a la sinfonía</Typography>
                 <Box className="hover" sx={buttonStyle} onClick={() => { nextPaso() }}>
                     <Typography className="title-button" fontSize='40px!important'> Siguiente</Typography>
