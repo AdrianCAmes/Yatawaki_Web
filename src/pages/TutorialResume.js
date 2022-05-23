@@ -86,7 +86,7 @@ const TutorialResume = () => {
         <React.Fragment>
             <div style={{ backgroundColor: '#000', height: '100%', width: '100%', padding: '10px', opacity: '0.6', position: 'absolute', zIndex: '2' }} >
             </div>
-            <div style={{ backgroundColor: '#FFED66', height: '100vh', display: 'flex', alignItems: 'center', flexDirection: 'column', padding: '20px' }} >
+            <div style={{ backgroundColor: '#FFED66', height: '100%', display: 'flex', alignItems: 'center', flexDirection: 'column', padding: '20px' }} >
                 <Typography className="title-font height-size" color='secondary' lineHeight='150px'>Completado</Typography>
                 <Typography className="title-font height-size2" lineHeight='50px' sx={{ marginBottom: '20px' }}>Has tocado {results ? results.symphonyName : '--'}</Typography>
 
@@ -143,7 +143,7 @@ const TutorialResume = () => {
                 </Box>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '10%', top: '20%', zIndex: `${paso === 1 ? '3' : '1'}`, visibility: paso === 1 ? 'visible' : 'hidden', backgroundColor: '#FFFFEA', height: '50vh', width: '80vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 1 ? 'canvasAnimation' : ''}`}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '20%', top: '25%', zIndex: `${paso === 1 ? '3' : '1'}`, visibility: paso === 1 ? 'visible' : 'hidden', backgroundColor: '#FFFFEA', width: '60vw', borderRadius: '30px', padding: '30px' }} className={`${paso === 1 ? 'canvasAnimation' : ''}`}>
                 <Typography textAlign='center' className="title-font title-dialog-tutorial">FELICIDADES!</Typography>
                 <Typography textAlign='center' className="title-font title-dialog-tutorial">Has culminado tu primera partida</Typography>
                 <Box className="hover" sx={buttonStyle2} onClick={() => { nextPaso() }}>
@@ -151,7 +151,7 @@ const TutorialResume = () => {
                 </Box>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '2%', top: '20%', zIndex: `${paso === 2 ? '3' : '1'}`, visibility: paso === 2 ? 'visible' : 'hidden', backgroundColor: '#FFFFEA', height: '50vh', width: '45vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 2 ? 'canvasAnimation' : ''}`}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '2%', top: '28%', zIndex: `${paso === 2 ? '3' : '1'}`, visibility: paso === 2 ? 'visible' : 'hidden', backgroundColor: '#FFFFEA', padding:'30px', width: '45vw', borderRadius: '30px'}} className={`${paso === 2 ? 'canvasAnimation' : ''}`}>
                 <Typography textAlign='center' className="title-font title-dialog-tutorial">En la parte derecha de la pantalla podrás observar tus resultados obtenidos</Typography>
                 <Box className="hover" sx={buttonStyle2} onClick={() => { nextPaso() }}>
                     <Typography className="title-button" fontSize='40px!important'> Siguiente</Typography>
@@ -190,15 +190,14 @@ const TutorialResume = () => {
                     </Grid>
                 </Grid>
             </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '2%', top: '20%', zIndex: `${paso === 3 ? '3' : '1'}`, visibility: paso === 3 ? 'visible' : 'hidden', backgroundColor: '#FFFFEA', height: '60vh', width: '45vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 3 ? 'canvasAnimation' : ''}`}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '2%', top: '27%', zIndex: `${paso === 3 ? '3' : '1'}`, visibility: paso === 3 ? 'visible' : 'hidden', backgroundColor: '#FFFFEA', width: '45vw', borderRadius: '30px', padding: '30px' }} className={`${paso === 3 ? 'canvasAnimation' : ''}`}>
                 <Typography textAlign='center' className="title-font title-dialog-tutorial">Tus puntos, gestos completados y porcentaje de precisión son un indicador de tu desempeño a lo largo de la partida</Typography>
                 <Box className="hover" sx={buttonStyle2} onClick={() => { nextPaso() }}>
                     <Typography className="title-button" fontSize='40px!important'> Siguiente</Typography>
                 </Box>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '10%', zIndex: `${paso === 3 ? '3' : '1'}`, visibility: paso === 3 ? 'visible' : 'hidden', height: '50vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 3 ? 'canvasAnimation' : ''}`}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '120px', zIndex: `${paso === 3 ? '3' : '1'}`, visibility: paso === 3 ? 'visible' : 'hidden', height: '50vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 3 ? 'canvasAnimation' : ''}`}>
                 <Grid container>
                     <Grid item xs={12} padding="10px">
                         <Box height='50px' width='90%' style={boxStyle}>
@@ -221,7 +220,7 @@ const TutorialResume = () => {
                 </Grid>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '28.5%', zIndex: `${paso === 3 && '1'}`, visibility: paso === 3 ? 'visible' : 'hidden', height: '50vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 3 ? 'canvasAnimation' : ''}`}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '300px', zIndex: `${paso === 3 && '1'}`, visibility: paso === 3 ? 'visible' : 'hidden', height: '50vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 3 ? 'canvasAnimation' : ''}`}>
                 <Grid container>
                     <Grid item xs={12} padding="10px">
                         <Box height='50px' width='90%' style={boxStyle}>
@@ -239,14 +238,14 @@ const TutorialResume = () => {
                 </Grid>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '2%', top: '20%', zIndex: `${paso === 4 ? '3' : '1'}`, visibility: paso === 4 ? 'visible' : 'hidden', backgroundColor: '#FFFFEA', height: '60vh', width: '45vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 4 ? 'canvasAnimation' : ''}`}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '2%', top: '27%', zIndex: `${paso === 4 ? '3' : '1'}`, visibility: paso === 4 ? 'visible' : 'hidden', backgroundColor: '#FFFFEA', width: '45vw', borderRadius: '30px', padding: '30px' }} className={`${paso === 4 ? 'canvasAnimation' : ''}`}>
                 <Typography textAlign='center' className="title-font title-dialog-tutorial">Puedes usar las monedas obtenidas para canjearlas por objetos desbloqueables en la tienda</Typography>
                 <Box className="hover" sx={buttonStyle2} onClick={() => { nextPaso() }}>
                     <Typography className="title-button" fontSize='40px!important'> Siguiente</Typography>
                 </Box>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '15%', zIndex: `${paso === 4 && '1'}`, visibility: paso === 4 ? 'visible' : 'hidden', height: '50vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 4 ? 'canvasAnimation' : ''}`}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '180px', zIndex: `${paso === 4 && '1'}`, visibility: paso === 4 ? 'visible' : 'hidden', height: '50vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 4 ? 'canvasAnimation' : ''}`}>
                 <Grid container>
                     <Grid item xs={12} padding="10px">
                         <Box height='50px' width='90%' style={boxStyle}>
@@ -276,7 +275,7 @@ const TutorialResume = () => {
                 </Grid>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '37.5%', zIndex: `${paso === 4 ? '3' : '1'}`, visibility: paso === 4 ? 'visible' : 'hidden', height: '20vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 4 ? 'canvasAnimation' : ''}`}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '370px', zIndex: `${paso === 4 ? '3' : '1'}`, visibility: paso === 4 ? 'visible' : 'hidden', height: '20vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 4 ? 'canvasAnimation' : ''}`}>
                 <Grid container>
                     <Grid item xs={12} padding="10px">
                         <Box height='50px' width='90%' style={boxStyle}>
@@ -288,15 +287,16 @@ const TutorialResume = () => {
                     </Grid>
                 </Grid>
             </div>
+            
 
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '2%', top: '20%', zIndex: `${paso === 5 ? '3' : '1'}`, visibility: paso === 5 ? 'visible' : 'hidden', backgroundColor: '#FFFFEA', height: '50vh', width: '45vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 5 ? 'canvasAnimation' : ''}`}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '2%', top: '30%', zIndex: `${paso === 5 ? '3' : '1'}`, visibility: paso === 5 ? 'visible' : 'hidden', backgroundColor: '#FFFFEA', width: '45vw', borderRadius: '30px', padding: '30px' }} className={`${paso === 5 ? 'canvasAnimation' : ''}`}>
                 <Typography textAlign='center' className="title-font title-dialog-tutorial">Junta experiencia para subir de rango y sé un experto en dirección orquestal</Typography>
                 <Box className="hover" sx={buttonStyle2} onClick={() => { nextPaso() }}>
                     <Typography className="title-button" fontSize='40px!important'> Siguiente</Typography>
                 </Box>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '15%', zIndex: `${paso === 5 && '1'}`, visibility: paso === 5 ? 'visible' : 'hidden', height: '50vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 5 ? 'canvasAnimation' : ''}`}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '180px', zIndex: `${paso === 5 && '1'}`, visibility: paso === 5 ? 'visible' : 'hidden', height: '50vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 5 ? 'canvasAnimation' : ''}`}>
                 <Grid container>
                     <Grid item xs={12} padding="10px">
                         <Box height='50px' width='90%' style={boxStyle}>
@@ -323,7 +323,7 @@ const TutorialResume = () => {
                 </Grid>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '48.5%', zIndex: `${paso === 5 ? '3' : '1'}`, visibility: paso === 5 ? 'visible' : 'hidden', height: '20vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 5 ? 'canvasAnimation' : ''}`}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '470px', zIndex: `${paso === 5 ? '3' : '1'}`, visibility: paso === 5 ? 'visible' : 'hidden', height: '20vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 5 ? 'canvasAnimation' : ''}`}>
                 <Grid container>
                     <Grid item xs={12} padding="10px">
 
@@ -336,14 +336,14 @@ const TutorialResume = () => {
                 </Grid>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '2%', top: '20%', zIndex: `${paso === 6 ? '3' : '1'}`, visibility: paso === 6 ? 'visible' : 'hidden', backgroundColor: '#FFFFEA', width: '45vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 6 ? 'canvasAnimation' : ''}`}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '2%', top: '30%', zIndex: `${paso === 6 ? '3' : '1'}`, visibility: paso === 6 ? 'visible' : 'hidden', backgroundColor: '#FFFFEA', width: '45vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 6 ? 'canvasAnimation' : ''}`}>
                 <Typography textAlign='center' className="title-font title-dialog-tutorial">¡Recuerda que mientras mejores sean tus resultados, más probabilidades tienes de desbloquear objetos más exclusivos!</Typography>
                 <Box className="hover" sx={buttonStyle2} onClick={() => { pasoFinal() }}>
                     <Typography className="title-button" fontSize='40px!important'> Terminar </Typography>
                 </Box>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '33%', zIndex: `${paso === 6 ? '3' : '1'}`, visibility: paso === 6 ? 'visible' : 'hidden', height: '20vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 6 ? 'canvasAnimation' : ''}`}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '340px', zIndex: `${paso === 6 ? '3' : '1'}`, visibility: paso === 6 ? 'visible' : 'hidden', height: '20vh', width: '50vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 6 ? 'canvasAnimation' : ''}`}>
                 <Grid container>
                     <Grid item xs={12} padding="10px">
 

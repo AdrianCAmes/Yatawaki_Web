@@ -473,5 +473,115 @@
 
 
  .title-dialog-tutorial {
-    font-size: 40px !important;
-}
+     font-size: 40px !important;
+ }
+
+ .container-control {
+     position: absolute;
+     bottom: 3%;
+     left: 3%;
+     width: 180px;
+     background-color: #9381ff;
+     padding: 10px 20px;
+     border-radius: 50px;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+ }
+
+ .container-control span {
+     color: white;
+     font-family: 'Kubots';
+     font-weight: bold;
+     font-size: 25px;
+ }
+
+ .container-svg {
+     background-color: rgb(255, 255, 255, 0.15);
+     border-radius: 30px;
+     padding: 10px;
+     color: white;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     margin-right: 10px;
+     width: 30px;
+     height: 30px;
+ }
+
+ .point {
+     font-size: 30px;
+     font-family: 'Kubots';
+     font-weight: bold;
+     color: #9381ff;
+     text-shadow: 0 0 10px #b8b8ff;
+ }
+
+ .container-control-points {
+     position: absolute;
+     bottom: 3%;
+     right: 2%;
+     width: 220px;
+     background-color: #ffeedd;
+     padding: 10px 20px;
+     border-radius: 50px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     margin-right: 10px;
+ }
+
+ .container-control-points span {
+     color: black;
+     font-family: 'Kubots';
+     font-weight: bold;
+     font-size: 25px;
+ }
+
+ .container-points-svg {
+     background-color: rgb(0, 0, 0, 0.15);
+     border-radius: 30px;
+     padding: 10px;
+     color: black;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     margin-right: 10px;
+     width: 30px;
+     height: 30px;
+ }
+
+ .container-control2 {
+     position: absolute;
+     bottom: 3%;
+     left: 20%;
+     height: 50px;
+     width: 180px;
+     background-color: #9381ff;
+     padding: 10px 20px;
+     border-radius: 50px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     margin-right: 10px;
+ }
+
+ .container-control2 span {
+     color: white;
+     font-family: 'Kubots';
+     font-weight: bold;
+     font-size: 25px;
+ }
+
+ .container-svg2 {
+     background-color: rgb(255, 255, 255, 0.15);
+     border-radius: 30px;
+     padding: 10px;
+     color: white;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     margin-right: 10px;
+     width: 30px;
+     height: 30px;
+ }

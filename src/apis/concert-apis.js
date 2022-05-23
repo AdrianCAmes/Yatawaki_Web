@@ -17,9 +17,9 @@ const ConcertApis = {
         gainedCoins: gainedCoins
     }, getHeaderToken()),
 
-    startConcert: () => apiInstance.post(`${uri}start`, {
+    startConcert: (symId) => apiInstance.post(`${uri}start`, {
         idUser: 1,
-        idSymphony: 1,
+        idSymphony: symId,
     }, getHeaderToken()),
 }
 

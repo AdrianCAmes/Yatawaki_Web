@@ -1,11 +1,11 @@
-import { CircularProgress, Dialog, LinearProgress, Paper, Snackbar, SnackbarContent, Typography } from "@mui/material";
+import { CircularProgress, Dialog, LinearProgress, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
 import calibracion from '../assets/calibracion.png';
 import { PauseRounded } from "@mui/icons-material";
 import { Box } from "@mui/system";
 import '@tensorflow/tfjs'
 import * as tmPose from '@teachablemachine/pose'
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AudioController from "../context/audio-context-controller";
 import PoseContext from "../context/pose-controller";
 import PauseMenu from "./components/PauseMenu";
@@ -16,6 +16,9 @@ import violin1 from '../assets/songs/Mozart String Quartet No. 17, K.458, Moveme
 import violin2 from '../assets/songs/Mozart String Quartet No. 17, K.458, Movement 2 (Dry)-Violin-(Violin 1).mp3'
 import cello from '../assets/songs/Mozart String Quartet No. 17, K.458, Movement 2 (Dry)-Cello-(Cello).mp3'
 import viola from '../assets/songs/Mozart String Quartet No. 17, K.458, Movement 2 (Dry)-Viola-(Viola).mp3'
+import { motion } from 'framer-motion';
+import { MechanicalCounter } from "mechanical-counter";
+import { AnimatePresence } from 'framer-motion';
 
 let buttonStyle = { width: '150px', height: '50px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '20px' };
 
@@ -36,7 +39,7 @@ const Game = () => {
     const [currentVolume, setCurrentVolume] = useState(72);
     const [songDuration, setSongDuration] = useState(0);
 
-    const [speed, setProgressSpeed] = useState(13);
+    const [speed, setProgressSpeed] = useState(10);
 
     const [puntaje, setPuntaje] = useState(0);
     const [precision, setPrecision] = useState(0);
@@ -83,62 +86,64 @@ const Game = () => {
         audioController.start();
     }
 
+    const { state } = useLocation();
+
     const startConcert = () => {
-        // let response2 = {
-        //     "idConcert": 1,
-        //     "name": "Nocturne Op 9 No 2",
-        //     "initialBpm": 122,
-        //     "duration": 230,
-        //     "instruments": [
-        //         {
-        //             "name": "Piano",
-        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Pianos/piano_casio.png",
-        //             "position": "L",
-        //             "track": violin2
-        //         },
-        //         {
-        //             "name": "Violin",
-        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Violins/violin_casio.png",
-        //             "position": "L",
-        //             "track": violin1
-        //         },
-        //         {
-        //             "name": "Cello",
-        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Cellos/cello_casio.png",
-        //             "position": "R",
-        //             "track": cello
-        //         },
-        //         {
-        //             "name": "Guitar",
-        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Guitars/guitar_casio.png",
-        //             "position": "R",
-        //             "track": viola
-        //         }
-        //     ]
-        // }
-        // audioController.setSongs(response2.instruments);
-        // audioController.setInitialBpm(response2.initialBpm);
-        // setSongDuration(response2.duration)
-        // setCurrentBPM(response2.initialBpm);
-        // setResponse(response2);
-        ConcertApis.startConcert()
-            .then(response => {
-                //console.log(response.data);
-                //response = response.data;
-                setResponse(response.data);
-                console.log(response);
-                console.log("empezando el juego...");
+        let response2 = {
+            "idConcert": 1,
+            "name": "Nocturne Op 9 No 2",
+            "initialBpm": 122,
+            "duration": 230,
+            "instruments": [
+                {
+                    "name": "Piano",
+                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Pianos/piano_casio.png",
+                    "position": "L",
+                    "track": violin2
+                },
+                {
+                    "name": "Violin",
+                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Violins/violin_casio.png",
+                    "position": "L",
+                    "track": violin1
+                },
+                {
+                    "name": "Cello",
+                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Cellos/cello_casio.png",
+                    "position": "R",
+                    "track": cello
+                },
+                {
+                    "name": "Guitar",
+                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Guitars/guitar_casio.png",
+                    "position": "R",
+                    "track": viola
+                }
+            ]
+        }
+        audioController.setSongs(response2.instruments);
+        audioController.setInitialBpm(response2.initialBpm);
+        setSongDuration(response2.duration)
+        setCurrentBPM(response2.initialBpm);
+        setResponse(response2);
+        // ConcertApis.startConcert(state.symphonyId)
+        //     .then(response => {
+        //         //console.log(response.data);
+        //         //response = response.data;
+        //         setResponse(response.data);
+        //         console.log(response);
+        //         console.log("empezando el juego...");
 
-                audioController.setSongs(response.data.instruments);
-                audioController.setInitialBpm(response.data.initialBpm);
-                setSongDuration(response.data.duration)
-                setCurrentBPM(response.data.initialBpm);
+        //         audioController.setSongs(response.data.instruments);
+        //         audioController.setInitialBpm(response.data.initialBpm);
+        //         setSongDuration(response.data.duration)
+        //         setCurrentBPM(response.data.initialBpm);
 
-            })
-            .catch(err => {
-                snackBarContext.onOpen({ severity: "error", message: err });
-                console.log(err);
-            })
+        //     })
+        //     .catch(err => {
+        //         //snackBarContext.onOpen({ severity: "error", message: 'error' });
+        //         console.log(err, 'startGame');
+        //     })
     }
 
 
@@ -380,7 +385,7 @@ const Game = () => {
 
         const { pose, posenetOutput } = await modelPitchRight.estimatePose(webcam.canvas);
         const predictionPitchRight = await modelPitchRight.predict(posenetOutput);
-        poseDecoderPitchRight(predictionPitchRight);
+        //poseDecoderPitchRight(predictionPitchRight);
         // for (let i = 5; i < maxPredictionsLeft + 5; i++) {
         //     const classPredictionLeft =
         //         predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
@@ -484,7 +489,7 @@ const Game = () => {
                     }
                 }
 
-                //console.log(aux, 'predict right');
+                console.log(aux, 'predict right');
                 if (aux.length > 0) {
                     let punzadaBpmRight = poseController.checkPunzadaRight(aux[0]);
                     let trianguloBpmRight = poseController.checkTrianguloRight(aux[0]);
@@ -522,6 +527,7 @@ const Game = () => {
 
         }
     }
+
 
     const poseDecoderPitchRight = async (predictionPitchRight) => {
         if (predictionPitchRight) {
@@ -662,7 +668,7 @@ const Game = () => {
     });
 
     const changeSpeed = (newBpm) => {
-        setProgressSpeed((newBpm * 13) / response.initialBpm);
+        setProgressSpeed((newBpm * 18) / response.initialBpm);
         audioController.setBPM(newBpm);
         setCurrentBPM(newBpm);
         //console.log((newBpm * 10) / response.initialBpm)
@@ -685,7 +691,7 @@ const Game = () => {
     const pause = (isCameraDenied) => {
         audioController.setBPM(1);
         poseController.pauseController();
-        setProgressSpeed((1 * 13) / response.initialBpm);
+        setProgressSpeed((1 * 10) / response.initialBpm);
         stopAnimationLeft();
         stopAnimationRight();
         setLoading(true);
@@ -852,15 +858,7 @@ const Game = () => {
     const [newPoint, setNewPoints] = React.useState(0);
     const [addPoint, setAddPoint] = React.useState(false);
 
-    const newPuntajeSnack = (newPuntaje) => {
-        setNewPoints(newPuntaje)
-        if (newPuntaje >= 0) {
-            setAddPoint(true);
-        } else {
-            setAddPoint(false);
-        }
-        setOpenSnack(true);
-    };
+
 
     const handleCloseSnack = () => {
         setOpenSnack(false);
@@ -922,6 +920,44 @@ const Game = () => {
         return () => clearInterval(interval);
     }, [timeCountdown]);
 
+    const transition = { duration: 0.3, yoyo: Infinity, ease: 'easeInOut' };
+    const transition2 = { duration: 1.5, yoyo: Infinity, ease: 'easeInOut' };
+    const transition3 = { duration: 0.3, yoyo: Infinity, ease: 'easeInOut' };
+    const [stack, setStack] = React.useState([]);
+
+    React.useEffect(() => {
+        const interval = setInterval(() => {
+            setStack((stack) =>
+                stack.map((st) => {
+                    return new Date(st.expirationTime) > new Date()
+                        ? st
+                        : { ...st, visibility: false };
+                })
+            );
+        }, 1000);
+
+        return () => {
+            clearInterval(interval);
+        };
+    }, []);
+
+
+    const newPuntajeSnack = (newPuntaje) => {
+        var t = new Date();
+        t.setSeconds(t.getSeconds() + 1);
+
+        let newTack = {
+            visibility: true,
+            left: `${Math.floor(Math.random() * 85) + 10}%`,
+            top: `${Math.floor(Math.random() * 25) + 10}%`,
+            value: newPuntaje.toString(),
+            id: Math.floor(Math.random() * 100),
+            expirationTime: t,
+        };
+
+        setStack([...stack, newTack]);
+    };
+
     return (
         <React.Fragment>
             <Paper square={true} sx={{ backgroundColor: 'primary.light', height: '100%', width: '100%', padding: '10px' }} elevation={0}>
@@ -945,7 +981,7 @@ const Game = () => {
 
                     <Box sx={{ width: '30%' }}>
                         <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {Math.round((Math.floor((time / 1000)) / songDuration) * 100)}%</Typography>
-                        {/* <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {("0" + Math.floor((time / 60000) % 60)).slice(-2)}:{("0" + Math.floor((time / 1000) % 60)).slice(-2)}</Typography> */}
+                        <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {("0" + Math.floor((time / 60000) % 60)).slice(-2)}:{("0" + Math.floor((time / 1000) % 60)).slice(-2)}</Typography>
                         {/* <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {Math.floor((time / 1000))}-</Typography> */}
                         {/* <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {Math.floor((time / 1000))} segundos</Typography> */}
                         <LinearProgress variant="determinate" value={(Math.floor((time / 1000)) / songDuration) * 100} style={{ height: '10px', borderRadius: 5 }} />
@@ -960,25 +996,120 @@ const Game = () => {
                 {response && response.instruments.map((instrument, idx) => (
                     <div key={idx}>{renderSwitch(instrument)}</div>
                 ))}
-                <Snackbar
-                    open={openSnack}
-                    autoHideDuration={2000}
-                    onClose={handleCloseSnack}
-                    anchorOrigin={{ horizontal: "right", vertical: "top" }}
-                >
-                    <SnackbarContent elevation={0} style={{
-                        backgroundColor: 'transparent',
-                        fontSize: '40px',
-                        color: `${addPoint ? 'green' : 'red'}`
-                    }}
-                        message={<span>{newPoint}</span>}
-                    />
-                </Snackbar>
-                <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> BPM: {Math.round(currentBPM, 0)}</Typography>
-                <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '16%' }}> Volume: {currentVolume}%</Typography>
+
+                <AnimatePresence>
+                    {stack.map(
+                        (element, idx) =>
+                            element.visibility && (
+                                <motion.div
+                                    key={idx}
+                                    style={{
+                                        position: 'absolute',
+                                        top: element.top,
+                                        left: element.left,
+                                    }}
+                                    className="point"
+                                    initial={{ translateY: -10 }}
+                                    animate={{ translateY: 0, opacity: 1 }}
+                                    exit={{ translateY: 20, opacity: 0 }}
+                                >
+                                    {element.value} puntos
+                                </motion.div>
+                            )
+                    )}
+                </AnimatePresence>
+
+
+                <div className="container-control">
+                    <div className="container-svg">
+                        <motion.svg
+                            width="24"
+                            height="24"
+                            strokeWidth="1.5"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            initial={{ scale: 1 }}
+                            animate={{ scale: 1.1 }}
+                            transition={transition}
+                        >
+                            <motion.path
+                                d="M22 8.86222C22 10.4087 21.4062 11.8941 20.3458 12.9929C17.9049 15.523 15.5374 18.1613 13.0053 20.5997C12.4249 21.1505 11.5042 21.1304 10.9488 20.5547L3.65376 12.9929C1.44875 10.7072 1.44875 7.01723 3.65376 4.73157C5.88044 2.42345 9.50794 2.42345 11.7346 4.73157L11.9998 5.00642L12.2648 4.73173C13.3324 3.6245 14.7864 3 16.3053 3C17.8242 3 19.2781 3.62444 20.3458 4.73157C21.4063 5.83045 22 7.31577 22 8.86222Z"
+                                stroke="currentColor"
+                                initial={{ width: 24, height: 24 }}
+                                animate={{ width: 34, height: 34 }}
+                                strokeLinejoin="round"
+                                transition={transition}
+                            />
+                        </motion.svg>
+                    </div>
+                    <MechanicalCounter height={30} text={`${Math.round(currentBPM, 0)} bpm`} />
+                </div>
+                {/* <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> BPM: {Math.round(currentBPM, 0)}</Typography> */}
+                {/* <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '16%' }}> Volume: {currentVolume}%</Typography> */}
+                <div className="container-control2">
+                    <div className="container-svg2">
+                        <motion.svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            initial={{ scale: 1 }}
+                            animate={{ scale: 1.1 }}
+                            transition={transition3}
+                        >
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                        </motion.svg>
+                    </div>
+                    <span>{currentVolume}%</span>
+                </div>
 
                 {/* <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> Media Volumen: {currentVolume}</Typography> */}
-                <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', right: '2%' }}> Puntaje: {puntaje}</Typography>
+                {/* <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', right: '2%' }}> Puntaje: {puntaje}</Typography> */}
+                <div className="container-control-points">
+                    <div className="container-points-svg">
+                        <motion.svg
+                            width="28"
+                            height="28"
+                            stroke-width="1.5"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <motion.path
+                                d="M1.5 12.5L5.57574 16.5757C5.81005 16.8101 6.18995 16.8101 6.42426 16.5757L9 14"
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                initial={{ pathLength: 0 }}
+                                animate={{ pathLength: 1 }}
+                                transition={transition2}
+                            />
+                            <motion.path
+                                d="M16 7L12 11"
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                initial={{ pathLength: 0 }}
+                                animate={{ pathLength: 1 }}
+                                transition={transition2}
+                            />
+                            <motion.path
+                                d="M7 12L11.5757 16.5757C11.8101 16.8101 12.1899 16.8101 12.4243 16.5757L22 7"
+                                stroke="currentColor"
+                                strokeLinejoin="round"
+                                initial={{ pathLength: 0 }}
+                                animate={{ pathLength: 1 }}
+                                transition={transition2}
+                            />
+                        </motion.svg>
+                    </div>
+                    <span>{puntaje} puntos</span>
+                </div>
 
                 <canvas style={{ position: 'absolute', left: '40%', bottom: '3%', borderRadius: '10px', visibility: !open ? 'visible' : 'hidden' }} className={`canvas ${!open ? "canvasAnimation" : ""}`}></canvas>
                 <span style={{ position: 'absolute', left: '43%', bottom: '40%', fontSize: '200px', visibility: tres ? 'visible' : 'hidden' }} className={`${tres ? 'canvasAnimation' : ''}`}>3</span>

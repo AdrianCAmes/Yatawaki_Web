@@ -15,6 +15,7 @@ const YatawakiMenu = () => {
     const [index, setIndex] = useState(0);
     const [resume, setResume] = useState([]);
     const [symphonies, setSymphonies] = React.useState([]);
+    const [selectedSymphony, setSelectedSymphony] = React.useState(null);
 
     const [openDialog, setOpenDialog] = React.useState(false);
     const gameContext = React.useContext(GameContext);
@@ -34,6 +35,7 @@ const YatawakiMenu = () => {
 
     const selectSlider = () => {
         findInstruments(symphonies[index].idUnlockable);
+        setSelectedSymphony(symphonies[index])
         setOpenDialog(true);
     }
 
@@ -45,7 +47,6 @@ const YatawakiMenu = () => {
                 setSymphonies(response.data.symphonies);
                 gameContext.updateUser(response.data.idUser);
                 gameContext.setShowTutorials(response.data.showTutorials)
-                console.log(response.data)
             })
             .catch(err => {
                 console.log(err);
@@ -89,7 +90,7 @@ const YatawakiMenu = () => {
 
                 <AppBarYatawaki resume={resume}></AppBarYatawaki>
 
-                <SymphonyInstrumentsDialog open={openDialog} handleClose={handleCloseDialog}></SymphonyInstrumentsDialog>
+                <SymphonyInstrumentsDialog open={openDialog} handleClose={handleCloseDialog} symphony={selectedSymphony}></SymphonyInstrumentsDialog>
 
 
                 <SymphonySlider slides={symphonies} passToParent={childCallback} selectSlider={selectSlider} />
