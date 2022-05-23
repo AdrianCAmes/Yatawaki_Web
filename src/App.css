@@ -507,3 +507,11 @@
      width: 30px;
      height: 30px;
  }
+
+ .point {
+     font-size: 30px;
+     font-family: 'Kubots';
+     font-weight: bold;
+     color: #9381ff;
+     text-shadow: 0 0 10px #b8b8ff;
+ }

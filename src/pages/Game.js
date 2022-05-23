@@ -18,6 +18,7 @@ import cello from '../assets/songs/Mozart String Quartet No. 17, K.458, Movement
 import viola from '../assets/songs/Mozart String Quartet No. 17, K.458, Movement 2 (Dry)-Viola-(Viola).mp3'
 import { motion } from 'framer-motion';
 import { MechanicalCounter } from "mechanical-counter";
+import { AnimatePresence } from 'framer-motion';
 
 let buttonStyle = { width: '150px', height: '50px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '20px' };
 
@@ -856,15 +857,7 @@ const Game = () => {
     const [newPoint, setNewPoints] = React.useState(0);
     const [addPoint, setAddPoint] = React.useState(false);
 
-    const newPuntajeSnack = (newPuntaje) => {
-        setNewPoints(newPuntaje)
-        if (newPuntaje >= 0) {
-            setAddPoint(true);
-        } else {
-            setAddPoint(false);
-        }
-        setOpenSnack(true);
-    };
+
 
     const handleCloseSnack = () => {
         setOpenSnack(false);
@@ -928,6 +921,41 @@ const Game = () => {
 
     const transition = { duration: 0.3, yoyo: Infinity, ease: 'easeInOut' };
 
+    const [stack, setStack] = React.useState([]);
+
+    React.useEffect(() => {
+        const interval = setInterval(() => {
+            setStack((stack) =>
+                stack.map((st) => {
+                    return new Date(st.expirationTime) > new Date()
+                        ? st
+                        : { ...st, visibility: false };
+                })
+            );
+        }, 1000);
+
+        return () => {
+            clearInterval(interval);
+        };
+    }, []);
+
+
+    const newPuntajeSnack = (newPuntaje) => {
+        var t = new Date();
+        t.setSeconds(t.getSeconds() + 1);
+
+        let newTack = {
+            visibility: true,
+            left: `${Math.floor(Math.random() * 85) + 10}%`,
+            top: `${Math.floor(Math.random() * 25) + 10}%`,
+            value: newPuntaje.toString(),
+            id: Math.floor(Math.random() * 100),
+            expirationTime: t,
+        };
+
+        setStack([...stack, newTack]);
+    };
+
     return (
         <React.Fragment>
             <Paper square={true} sx={{ backgroundColor: 'primary.light', height: '100%', width: '100%', padding: '10px' }} elevation={0}>
@@ -966,20 +994,30 @@ const Game = () => {
                 {response && response.instruments.map((instrument, idx) => (
                     <div key={idx}>{renderSwitch(instrument)}</div>
                 ))}
-                <Snackbar
-                    open={openSnack}
-                    autoHideDuration={2000}
-                    onClose={handleCloseSnack}
-                    anchorOrigin={{ horizontal: "right", vertical: "top" }}
-                >
-                    <SnackbarContent elevation={0} style={{
-                        backgroundColor: 'transparent',
-                        fontSize: '40px',
-                        color: `${addPoint ? 'green' : 'red'}`
-                    }}
-                        message={<span>{newPoint}</span>}
-                    />
-                </Snackbar>
+
+                <AnimatePresence>
+                    {stack.map(
+                        (element, idx) =>
+                            element.visibility && (
+                                <motion.div
+                                    key={idx}
+                                    style={{
+                                        position: 'absolute',
+                                        top: element.top,
+                                        left: element.left,
+                                    }}
+                                    className="point"
+                                    initial={{ translateY: -10 }}
+                                    animate={{ translateY: 0, opacity: 1 }}
+                                    exit={{ translateY: 20, opacity: 0 }}
+                                >
+                                    {element.value} puntos
+                                </motion.div>
+                            )
+                    )}
+                </AnimatePresence>
+
+
                 <div className="container-control">
                     <div className="container-svg">
                         <motion.svg
