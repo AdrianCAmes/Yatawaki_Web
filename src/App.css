@@ -485,6 +485,7 @@
      padding: 10px 20px;
      border-radius: 50px;
      display: flex;
+     justify-content: center;
      align-items: center;
  }
 
@@ -517,34 +518,70 @@
  }
 
  .container-control-points {
-    position: absolute;
-    bottom: 3%;
-    right: 2%;
-    width: 180px;
-    background-color: #ffeedd;
-    padding: 10px 20px;
-    border-radius: 50px;
-    display: flex;
-    align-items: center;
-    margin-right: 10px;
-  }
-  
-  .container-control-points span {
-    color: black;
-    font-family: 'Kubots';
-    font-weight: bold;
-    font-size: 25px;
-  }
-  
-  .container-points-svg {
-    background-color: rgb(0, 0, 0, 0.15);
-    border-radius: 30px;
-    padding: 10px;
-    color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 10px;
-    width: 30px;
-    height: 30px;
-  }
+     position: absolute;
+     bottom: 3%;
+     right: 2%;
+     width: 220px;
+     background-color: #ffeedd;
+     padding: 10px 20px;
+     border-radius: 50px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     margin-right: 10px;
+ }
+
+ .container-control-points span {
+     color: black;
+     font-family: 'Kubots';
+     font-weight: bold;
+     font-size: 25px;
+ }
+
+ .container-points-svg {
+     background-color: rgb(0, 0, 0, 0.15);
+     border-radius: 30px;
+     padding: 10px;
+     color: black;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     margin-right: 10px;
+     width: 30px;
+     height: 30px;
+ }
+
+ .container-control2 {
+     position: absolute;
+     bottom: 3%;
+     left: 20%;
+     height: 50px;
+     width: 180px;
+     background-color: #9381ff;
+     padding: 10px 20px;
+     border-radius: 50px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     margin-right: 10px;
+ }
+
+ .container-control2 span {
+     color: white;
+     font-family: 'Kubots';
+     font-weight: bold;
+     font-size: 25px;
+ }
+
+ .container-svg2 {
+     background-color: rgb(255, 255, 255, 0.15);
+     border-radius: 30px;
+     padding: 10px;
+     color: white;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     margin-right: 10px;
+     width: 30px;
+     height: 30px;
+ }

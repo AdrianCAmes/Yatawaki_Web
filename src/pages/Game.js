@@ -921,6 +921,7 @@ const Game = () => {
 
     const transition = { duration: 0.3, yoyo: Infinity, ease: 'easeInOut' };
     const transition2 = { duration: 1.5, yoyo: Infinity, ease: 'easeInOut' };
+    const transition3 = { duration: 0.3, yoyo: Infinity, ease: 'easeInOut' };
     const [stack, setStack] = React.useState([]);
 
     React.useEffect(() => {
@@ -1044,7 +1045,29 @@ const Game = () => {
                     <MechanicalCounter height={30} text={`${Math.round(currentBPM, 0)} bpm`} />
                 </div>
                 {/* <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> BPM: {Math.round(currentBPM, 0)}</Typography> */}
-                <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '16%' }}> Volume: {currentVolume}%</Typography>
+                {/* <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '16%' }}> Volume: {currentVolume}%</Typography> */}
+                <div className="container-control2">
+                    <div className="container-svg2">
+                        <motion.svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            initial={{ scale: 1 }}
+                            animate={{ scale: 1.1 }}
+                            transition={transition3}
+                        >
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                        </motion.svg>
+                    </div>
+                    <span>{currentVolume}%</span>
+                </div>
 
                 {/* <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> Media Volumen: {currentVolume}</Typography> */}
                 {/* <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', right: '2%' }}> Puntaje: {puntaje}</Typography> */}
