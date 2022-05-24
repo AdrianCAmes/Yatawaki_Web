@@ -74,7 +74,6 @@ const TutorialResume = () => {
     const updateTutorial = async () => {
         UserApi.updateShowTutorial(gameContext.userId)
             .then(response => {
-                console.log(response.data)
                 navigate('/menu')
             })
             .catch(err => {

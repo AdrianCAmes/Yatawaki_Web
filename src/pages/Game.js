@@ -89,61 +89,61 @@ const Game = () => {
     const { state } = useLocation();
 
     const startConcert = () => {
-        let response2 = {
-            "idConcert": 1,
-            "name": "Nocturne Op 9 No 2",
-            "initialBpm": 122,
-            "duration": 230,
-            "instruments": [
-                {
-                    "name": "Piano",
-                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Pianos/piano_casio.png",
-                    "position": "L",
-                    "track": violin2
-                },
-                {
-                    "name": "Violin",
-                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Violins/violin_casio.png",
-                    "position": "L",
-                    "track": violin1
-                },
-                {
-                    "name": "Cello",
-                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Cellos/cello_casio.png",
-                    "position": "R",
-                    "track": cello
-                },
-                {
-                    "name": "Guitar",
-                    "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Guitars/guitar_casio.png",
-                    "position": "R",
-                    "track": viola
-                }
-            ]
-        }
-        audioController.setSongs(response2.instruments);
-        audioController.setInitialBpm(response2.initialBpm);
-        setSongDuration(response2.duration)
-        setCurrentBPM(response2.initialBpm);
-        setResponse(response2);
-        // ConcertApis.startConcert(state.symphonyId)
-        //     .then(response => {
-        //         //console.log(response.data);
-        //         //response = response.data;
-        //         setResponse(response.data);
-        //         console.log(response);
-        //         console.log("empezando el juego...");
+        // let response2 = {
+        //     "idConcert": 1,
+        //     "name": "Nocturne Op 9 No 2",
+        //     "initialBpm": 122,
+        //     "duration": 230,
+        //     "instruments": [
+        //         {
+        //             "name": "Piano",
+        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Pianos/piano_casio.png",
+        //             "position": "L",
+        //             "track": violin2
+        //         },
+        //         {
+        //             "name": "Violin",
+        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Violins/violin_casio.png",
+        //             "position": "L",
+        //             "track": violin1
+        //         },
+        //         {
+        //             "name": "Cello",
+        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Cellos/cello_casio.png",
+        //             "position": "R",
+        //             "track": cello
+        //         },
+        //         {
+        //             "name": "Guitar",
+        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Guitars/guitar_casio.png",
+        //             "position": "R",
+        //             "track": viola
+        //         }
+        //     ]
+        // }
+        // audioController.setSongs(response2.instruments);
+        // audioController.setInitialBpm(response2.initialBpm);
+        // setSongDuration(response2.duration)
+        // setCurrentBPM(response2.initialBpm);
+        // setResponse(response2);
+        ConcertApis.startConcert(state.symphonyId)
+            .then(response => {
+                //console.log(response.data);
+                //response = response.data;
+                setResponse(response.data);
+                console.log(response);
+                console.log("empezando el juego...");
 
-        //         audioController.setSongs(response.data.instruments);
-        //         audioController.setInitialBpm(response.data.initialBpm);
-        //         setSongDuration(response.data.duration)
-        //         setCurrentBPM(response.data.initialBpm);
+                audioController.setSongs(response.data.instruments);
+                audioController.setInitialBpm(response.data.initialBpm);
+                setSongDuration(response.data.duration)
+                setCurrentBPM(response.data.initialBpm);
 
-        //     })
-        //     .catch(err => {
-        //         //snackBarContext.onOpen({ severity: "error", message: 'error' });
-        //         console.log(err, 'startGame');
-        //     })
+            })
+            .catch(err => {
+                //snackBarContext.onOpen({ severity: "error", message: 'error' });
+                console.log(err, 'startGame');
+            })
     }
 
 
@@ -385,7 +385,7 @@ const Game = () => {
 
         const { pose, posenetOutput } = await modelPitchRight.estimatePose(webcam.canvas);
         const predictionPitchRight = await modelPitchRight.predict(posenetOutput);
-        //poseDecoderPitchRight(predictionPitchRight);
+        poseDecoderPitchRight(predictionPitchRight);
         // for (let i = 5; i < maxPredictionsLeft + 5; i++) {
         //     const classPredictionLeft =
         //         predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
@@ -981,7 +981,7 @@ const Game = () => {
 
                     <Box sx={{ width: '30%' }}>
                         <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {Math.round((Math.floor((time / 1000)) / songDuration) * 100)}%</Typography>
-                        <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {("0" + Math.floor((time / 60000) % 60)).slice(-2)}:{("0" + Math.floor((time / 1000) % 60)).slice(-2)}</Typography>
+                        {/* <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {("0" + Math.floor((time / 60000) % 60)).slice(-2)}:{("0" + Math.floor((time / 1000) % 60)).slice(-2)}</Typography> */}
                         {/* <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {Math.floor((time / 1000))}-</Typography> */}
                         {/* <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {Math.floor((time / 1000))} segundos</Typography> */}
                         <LinearProgress variant="determinate" value={(Math.floor((time / 1000)) / songDuration) * 100} style={{ height: '10px', borderRadius: 5 }} />
