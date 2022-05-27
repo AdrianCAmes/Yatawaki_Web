@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import UserUnlockableApi from "../../apis/user-unlockable-apis";
 import GameContext from "../../context/game-context";
 import SnackBarContext from "../../context/snack-bar-context";
-import { ItemCard, ItemToTradeCard } from "./ObjectCard";
+import { ItemToTradeCard } from "./ObjectCard";
 
 const ConfirmTradeDialog = (props) => {
     const mountedRef = React.useRef(true)
@@ -23,7 +23,7 @@ const ConfirmTradeDialog = (props) => {
 
     const trade = async () => {
         UserUnlockableApi.trade(gameContext.userId, props.unlockable.idUnlockable)
-            .then(response => {
+            .then(_response => {
                 snackBarContext.onOpen({
                     severity: "success",
                     message: "Éxito"

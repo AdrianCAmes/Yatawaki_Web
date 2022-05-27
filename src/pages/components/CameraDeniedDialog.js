@@ -8,11 +8,6 @@ const CameraDeniedDialog = (props) => {
 
     const mountedRef = React.useRef(true);
     const navigate = useNavigate();
-    const [openDialog, setOpenDialog] = React.useState(false);
-
-    const handleCloseDialog = () => {
-        setOpenDialog(false);
-    };
 
     React.useEffect(() => {
         return () => {

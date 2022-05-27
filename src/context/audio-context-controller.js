@@ -81,8 +81,6 @@ export const AudioContextProvider = (props) => {
             newVolume = -10;
         } else if (volumePercentage === 58) {
             newVolume = -5;
-        } else if (volumePercentage === 72) {
-            newVolume = 0;
         } else if (volumePercentage === 86) {
             newVolume = 10;
         } else if (volumePercentage == 100) {
@@ -96,65 +94,12 @@ export const AudioContextProvider = (props) => {
         }
     }
 
-    const increaseVolumeRight = () => {
-        for (let song of songsArray) {
-            if (song.position === "R") {
-                players.player(song.name).volume.value = players.player(song.name).volume.value + 5
-            }
-        }
-    }
-    const decreaseVolumeRight = () => {
-        for (let song of songsArray) {
-            if (song.position === "R") {
-                players.player(song.name).volume.value = players.player(song.name).volume.value - 5
-            }
-        }
-    }
-
-    const increaseVolumeLeft = () => {
-        for (let song of songsArray) {
-            if (song.position === "L") {
-                players.player(song.name).volume.value = players.player(song.name).volume.value + 5
-            }
-        }
-    }
-    const decreaseVolumeLeft = () => {
-        for (let song of songsArray) {
-            if (song.position === "L") {
-                players.player(song.name).volume.value = players.player(song.name).volume.value - 5
-            }
-        }
-    }
-
     const increasePlaybackRate = () => {
         for (let song of songsArray) {
             players.player(song.name).playbackRate = players.player(song.name).playbackRate + 0.5;
         }
     }
 
-    function delay(time) {
-        return new Promise(resolve => setTimeout(resolve, time));
-    }
-
-    // const increasePitch = async () => {
-    //     let maxPitch = 8;
-    //     let currentPitch = 0;
-
-
-    //     while (currentPitch !== maxPitch) {
-    //         pitchShift.disconnect().toDestination();
-    //         players.fan(pitchShift);
-    //         pitchShift = new Tone.PitchShift(currentPitch + 1).toDestination();
-
-    //         await delay(1000).then(() => {
-    //             players.fan(pitchShift);
-    //             // for (let song of songsArray) {
-    //             //     players.player(song.name).fan(pitchShift);
-    //             // }
-    //         });
-    //         currentPitch++;
-    //     }
-    // }
 
     const increasePitch = () => {
         if (!pitchChanged) {
@@ -193,15 +138,6 @@ export const AudioContextProvider = (props) => {
             players.player(song.name).playbackRate = newPlaybackRate;
         }
     }
-
-
-    //Agregar filtros
-    const filter = new Tone.Filter("E5").toDestination();
-    const filters = () => {
-        //agregar filtros
-        players.fan(pitchShift);
-    }
-
 
     return (
         <AudioContext.Provider value={{

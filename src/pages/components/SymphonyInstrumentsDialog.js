@@ -8,7 +8,7 @@ import SelectInstrumentsDialog from "./SelectInstrumentsDialog";
 
 const SymphonyInstrumentsDialog = (props) => {
 
-    const [loading, setLoading] = React.useState(true);
+    const [loading, setLoading] = React.useState();
     const mountedRef = React.useRef(true);
     const gameContext = React.useContext(GameContext);
     const [openDialog, setOpenDialog] = React.useState(false);
@@ -23,6 +23,7 @@ const SymphonyInstrumentsDialog = (props) => {
     };
 
     const selectInstrument = (instrument, idx) => {
+        setLoading(true);
         InstrumentApis.findInstrumentsByName(instrument.name)
             .then(response => {
                 setSelectedIdx(idx)
@@ -59,6 +60,7 @@ const SymphonyInstrumentsDialog = (props) => {
                             <InstrumentCard onClick={() => { selectInstrument(instrument, idx) }} key={idx} instrument={instrument}></InstrumentCard>
                         ))}
                     </div>
+                    {loading && <CircularProgress style={{ marginTop: '20px', marginBottom: '20px' }} ></CircularProgress>}
                     <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Box className="hover" sx={buttonStyle} onClick={() => {
                             gameContext.showTutorials === true ? navigate('/tutorial') : navigate('/game', {

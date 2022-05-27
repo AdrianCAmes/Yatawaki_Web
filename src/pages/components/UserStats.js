@@ -1,7 +1,6 @@
 import { AddBox, Star } from "@mui/icons-material";
 import { Grid, Typography } from "@mui/material";
 import React from "react";
-import solIcon from "../../assets/sol.png"
 import monedaIcon from "../../assets/moneda.png"
 
 const UserStats = (props) => {

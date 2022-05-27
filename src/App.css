@@ -14,11 +14,11 @@
  }
 
  html * {
-     font-family: 'SFP' !important;
+     font-family: 'SFP', sans-serif !important;
  }
 
  .title-font {
-     font-family: 'Kubots' !important;
+     font-family: 'Kubots', sans-serif !important;
      font-weight: 1000 !important;
  }
 
@@ -152,7 +152,7 @@
  }
 
  .title-button {
-     font-size: 50px !important;
+     font-size: 40px !important;
      color: #FFF;
  }
 

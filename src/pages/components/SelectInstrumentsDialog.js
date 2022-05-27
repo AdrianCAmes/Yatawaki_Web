@@ -1,4 +1,4 @@
-import { Box, Dialog, Typography } from "@mui/material";
+import { Dialog, Typography } from "@mui/material";
 import React from "react";
 import GameContext from "../../context/game-context";
 import SnackBarContext from "../../context/snack-bar-context";
@@ -24,8 +24,6 @@ const SelectInstrumentsDialog = (props) => {
             mountedRef.current = false
         }
     }, []);
-
-    let buttonStyle = { width: '300px', height: '50px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '30px' };
 
 
     return (

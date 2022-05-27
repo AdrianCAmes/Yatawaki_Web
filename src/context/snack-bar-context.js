@@ -11,7 +11,7 @@ export const SnackBarContextProvider = (props) => {
     open: false,
     severity: "info",
     message: "",
-    onClose: () => {},
+    onClose: () => { /* inicializamos en empty */ },
   };
   const [snackBar, setSnackBar] = useState(initSnackBar);
 

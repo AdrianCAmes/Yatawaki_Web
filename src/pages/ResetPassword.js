@@ -6,9 +6,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import logo_upc from '../assets/Logo UPC.png';
 import { Box } from "@mui/system";
 import ImageAutoSlider from "../components/ImageAutoSlider";
-import AuthApi from "../apis/auth-apis";
-import GameContext from "../context/game-context";
 import { useAuth } from "../context/auth-context";
+import UserApi from "../apis/user-apis";
+import GameContext from "../context/game-context";
 
 let buttonStyle = { width: '400px', height: '70px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '30px' };
 
@@ -18,39 +18,38 @@ function useQuery() {
 
 const ResetPassword = () => {
     const [password, setPassword] = React.useState(null);
-    const [passwordError, setPasswordError] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
     const { resetPassword } = useAuth();
     const query = useQuery();
 
     const snackBarContext = React.useContext(SnackBarContext);
-    const gameContext = React.useContext(GameContext);
     const navigate = useNavigate()
 
     const toSplashscreen = () => {
         navigate('/login')
     };
 
+    const gameContext = React.useContext(GameContext)
+
+
     const submit = async () => {
         if (!/[a-zA-Z]/.test(password)) {
-            setPasswordError(true);
             snackBarContext.onOpen({
                 severity: "error",
                 message: "Tu contraseña no tiene letras"
             });
         } else if (!/\d/.test(password)) {
-            setPasswordError(true);
             snackBarContext.onOpen({
                 severity: "error",
                 message: "Tu contraseña no tiene numeros"
             });
         } else if (password.length < 8) {
-            setPasswordError(true);
             snackBarContext.onOpen({
                 severity: "error",
                 message: "Por favor ingresa mas de 8 caracteres"
             });
         } else {
+            setLoading(true);
             resetPassword(query.get('oobCode'), password)
                 .then((response) => {
                     console.log(response)
@@ -58,7 +57,7 @@ const ResetPassword = () => {
                         severity: "success",
                         message: "Contraseña actualizada con éxito  "
                     });
-                    //llamar a back de adrian
+                    resetBack()
                     navigate('/login')
                 })
                 .catch((err) => {
@@ -68,8 +67,16 @@ const ResetPassword = () => {
                         message: err.message
                     });
                 })
+                .finally(() => {
+                    setLoading(false);
+                })
         }
 
+
+    }
+
+    const resetBack = async () => {
+        UserApi.updatePassword(gameContext.emailToUpdate, password)
 
     }
 

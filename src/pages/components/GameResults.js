@@ -1,11 +1,8 @@
-import { Box, Dialog, Divider, Grid, Paper, Typography } from "@mui/material";
+import { Box, Divider, Grid, Typography } from "@mui/material";
 import React from "react";
-import GameContext from "../../context/game-context";
-import SnackBarContext from "../../context/snack-bar-context";
 import sinfonia from '../../assets/sinfonia-ejemplo.png'
 import PropTypes from 'prop-types';
 import { FacebookIcon, FacebookShareButton, TwitterIcon, TwitterShareButton, WhatsappIcon, WhatsappShareButton } from "react-share";
-import { useLocation } from "react-router-dom";
 
 function DataTwoColumns(props) {
     const label = props.label;
@@ -37,15 +34,6 @@ DataTwoColumns.defaultProps = {
 };
 
 const GameResults = (props) => {
-
-
-    const mountedRef = React.useRef(true);
-    const gameContext = React.useContext(GameContext);
-    const snackBarContext = React.useContext(SnackBarContext);
-
-    const location = useLocation();
-
-
 
     let buttonStyle = { borderRadius: '20px', backgroundColor: '#00CECB', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', marginTop: '20px', padding: '10px' };
 

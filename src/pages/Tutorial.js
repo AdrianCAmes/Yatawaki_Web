@@ -1,4 +1,4 @@
-import { LinearProgress, Paper, Typography } from "@mui/material";
+import { LinearProgress, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { PauseRounded } from "@mui/icons-material";
 import { Box } from "@mui/system";
@@ -137,7 +137,7 @@ const Tutorial = () => {
     }
 
     const predict = async () => {
-        const { pose, posenetOutput } = await modelRight.estimatePose(webcam.canvas);
+        const { pose } = await modelRight.estimatePose(webcam.canvas);
         drawPose(pose);
     }
 

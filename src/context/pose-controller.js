@@ -206,8 +206,7 @@ export const PoseContextProvider = (props) => {
     const checkPitchLeft = (value) => {
         if (started) {
             if (value === 'NN') {
-                lastTimePitch = 0;
-                poseLastPitch = '';
+                resetPitchLeft();
                 return 'reset';
             }
             if ((value === 'LHUL' || value === 'LHDL') && lastTimePitch === 0) {
@@ -217,16 +216,10 @@ export const PoseContextProvider = (props) => {
                 return 'reset';
             } else {
 
-                if (value === 'LHDL' && poseLastPitch !== 'LHDL') {
+                if ((value === 'LHDL' && poseLastPitch !== 'LHDL') || (value === 'LHUL' && poseLastPitch !== 'LHUL')) {
                     lastTimePitch = 0;
                     poseLastPitch = '';
-                    //console.log(lastTimePitch, poseLastPitch, 'ERA LHUL, ENCUENTRA LHDL');
 
-                    return 'reset';
-                } else if (value === 'LHUL' && poseLastPitch !== 'LHUL') {
-                    lastTimePitch = 0;
-                    poseLastPitch = '';
-                    //console.log(lastTimePitch, poseLastPitch, 'ERA LHDL, ENCUENTRA LHUL');
                     return 'reset';
                 } else if (value === 'LHDL' && poseLastPitch === 'LHDL') {
                     console.log(Math.floor(((time - lastTimePitch) / 1000) % 60), 'ENCUENTRA DE NUEVO LHD');
@@ -264,23 +257,17 @@ export const PoseContextProvider = (props) => {
 
                 return 'reset';
             } else {
-                if (value === 'RHDR' && poseLastPitchRight !== 'RHDR') {
+                if ((value === 'RHDR' && poseLastPitchRight !== 'RHDR') || (value === 'RHUR' && poseLastPitchRight !== 'RHUR')) {
                     lastTimePitchRight = 0;
                     poseLastPitchRight = '';
-                    //console.log(lastTimePitch, poseLastPitch, 'ERA LHUL, ENCUENTRA LHDL');
 
-                    return 'reset';
-                } else if (value === 'RHUR' && poseLastPitchRight !== 'RHUR') {
-                    lastTimePitchRight = 0;
-                    poseLastPitchRight = '';
-                    //console.log(lastTimePitch, poseLastPitch, 'ERA LHDL, ENCUENTRA LHUL');
                     return 'reset';
                 } else if (value === 'RHDR' && poseLastPitchRight === 'RHDR') {
 
                     if (Math.floor(((time - lastTimePitchRight) / 1000) % 60) > 2) {
                         resetPitchLeft();
                         return 'down';
-                        
+
                     }
                 } else if (value === 'RHUR' && poseLastPitchRight === 'RHUR') {
 
@@ -303,20 +290,16 @@ export const PoseContextProvider = (props) => {
                 let timeDifference = arraySegundosVerificarPunzada[2] - arraySegundosVerificarPunzada[0]
                 console.log(timeToString(arraySegundosVerificarPunzada[0]), timeToString(arraySegundosVerificarPunzada[1]), timeToString(arraySegundosVerificarPunzada[2]), '-', arrayVerificarPunzada[0], arrayVerificarPunzada[1], arrayVerificarPunzada[2]);
 
-                //console.log(timeToString(timeDifference), 'time difference')
                 let newBPM = timetoBPM(timeToSeconds(timeDifference), 'punzada')
                 console.log(newBPM, 'new BPM');
 
-                //alert('patron encontrado');
                 desviation = timeDesviation(arraySegundosVerificarPunzada);
-                //console.log(desviation)
                 resetBpmInputs();
                 //volumen
                 volume = timeMediaPunzada;
 
                 resetVolumeInputs();
 
-                //console.log(timeMediaPunzada)
 
                 return newBPM;
             }
@@ -354,9 +337,6 @@ export const PoseContextProvider = (props) => {
                 }
             }
 
-
-            //console.log(timeToString(arraySegundosVerificarPunzada[0]), timeToString(arraySegundosVerificarPunzada[1]), timeToString(arraySegundosVerificarPunzada[2]), '-', arrayVerificarPunzada[0], arrayVerificarPunzada[1], arrayVerificarPunzada[2]);
-
         }
     }
 
@@ -370,16 +350,13 @@ export const PoseContextProvider = (props) => {
                 console.log(timeToString(arraySegundosVerificarTriangulo[0]), timeToString(arraySegundosVerificarTriangulo[1]), timeToString(arraySegundosVerificarTriangulo[2]), timeToString(arraySegundosVerificarTriangulo[3]), timeToString(arraySegundosVerificarTriangulo[4]), '-', arrayVerificarTriangulo[0], arrayVerificarTriangulo[1], arrayVerificarTriangulo[2], arrayVerificarTriangulo[3], arrayVerificarTriangulo[4]);
 
                 console.log(timeToString(timeDifference), 'time difference')
-                //console.log(timetoBPM(timeToSeconds(timeDifference), 'triangulo'), 'new BPM')
                 let newBPM = timetoBPM(timeToSeconds(timeDifference), 'triangulo')
 
-                //alert('patron triangulo encontrado');
                 desviation = timeDesviation(arraySegundosVerificarTriangulo);
                 resetBpmInputs();
 
                 //volumen
                 volume = timeMediaTriangulo;
-                //console.log(timeMediaPunzada)
 
                 resetVolumeInputs();
 
@@ -449,9 +426,6 @@ export const PoseContextProvider = (props) => {
                 }
             }
 
-
-            //console.log(timeToString(arraySegundosVerificarTriangulo[0]), timeToString(arraySegundosVerificarTriangulo[1]), timeToString(arraySegundosVerificarTriangulo[2]), timeToString(arraySegundosVerificarTriangulo[3]), timeToString(arraySegundosVerificarTriangulo[4]), '-', arrayVerificarTriangulo[0], arrayVerificarTriangulo[1], arrayVerificarTriangulo[2], arrayVerificarTriangulo[3], arrayVerificarTriangulo[4]);
-
         }
     }
 
@@ -467,7 +441,6 @@ export const PoseContextProvider = (props) => {
                     arrayVerificarCruz[0], arrayVerificarCruz[1], arrayVerificarCruz[2], arrayVerificarCruz[3], arrayVerificarCruz[4], arrayVerificarCruz[5]);
                 console.log(timeToString(timeDifference), 'time difference')
                 console.log(timetoBPM(timeToSeconds(timeDifference), 'cruz'), 'new BPM')
-                //alert('patron cruz encontrado');
                 let newBPM = timetoBPM(timeToSeconds(timeDifference), 'cruz')
 
                 desviation = timeDesviation(arraySegundosVerificarCruz);
@@ -476,7 +449,6 @@ export const PoseContextProvider = (props) => {
 
                 //volumen
                 volume = timeMediaCruz;
-                //console.log(timeMediaPunzada)
 
                 resetVolumeInputs();
 
@@ -558,11 +530,6 @@ export const PoseContextProvider = (props) => {
                 }
             }
 
-            // console.log(
-            //     timeToString(arraySegundosVerificarCruz[0]), timeToString(arraySegundosVerificarCruz[1]), timeToString(arraySegundosVerificarCruz[2]), timeToString(arraySegundosVerificarCruz[3]), timeToString(arraySegundosVerificarCruz[4]), timeToString(arraySegundosVerificarCruz[5]),
-            //     '-',
-            //     arrayVerificarCruz[0], arrayVerificarCruz[1], arrayVerificarCruz[2], arrayVerificarCruz[3], arrayVerificarCruz[4], arrayVerificarCruz[5]);
-
         }
     }
 
@@ -577,14 +544,12 @@ export const PoseContextProvider = (props) => {
                 console.log(timeToString(timeDifference), 'time difference')
                 let newBPM = timetoBPM(timeToSeconds(timeDifference), 'punzada')
                 console.log(newBPM, 'new BPM')
-                //alert('patron encontrado');
                 desviation = timeDesviation(arraySegundosVerificarPunzadaRight);
 
                 resetBpmInputs();
 
                 //volumen
                 volume = timeMediaPunzadaRight;
-                //console.log(timeMediaPunzada)
 
                 resetVolumeInputs();
                 return newBPM;
@@ -627,9 +592,6 @@ export const PoseContextProvider = (props) => {
                 }
             }
 
-
-            //console.log(timeToString(arraySegundosVerificarPunzada[0]), timeToString(arraySegundosVerificarPunzada[1]), timeToString(arraySegundosVerificarPunzada[2]), '-', arrayVerificarPunzada[0], arrayVerificarPunzada[1], arrayVerificarPunzada[2]);
-
         }
     }
 
@@ -645,14 +607,12 @@ export const PoseContextProvider = (props) => {
                 console.log(timetoBPM(timeToSeconds(timeDifference), 'triangulo'), 'new BPM')
                 let newBPM = timetoBPM(timeToSeconds(timeDifference), 'cruz')
 
-                //alert('patron triangulo encontrado');
                 desviation = timeDesviation(arraySegundosVerificarTrianguloRight);
 
                 resetBpmInputs();
 
                 //volumen
                 volume = timeMediaTrianguloRight;
-                //console.log(timeMediaPunzada)
 
                 resetVolumeInputs();
                 return newBPM;
@@ -721,9 +681,6 @@ export const PoseContextProvider = (props) => {
                 }
             }
 
-
-            //console.log(timeToString(arraySegundosVerificarTrianguloRight[0]), timeToString(arraySegundosVerificarTrianguloRight[1]), timeToString(arraySegundosVerificarTrianguloRight[2]), timeToString(arraySegundosVerificarTrianguloRight[3]), timeToString(arraySegundosVerificarTrianguloRight[4]), '-', arrayVerificarTrianguloRight[0], arrayVerificarTrianguloRight[1], arrayVerificarTrianguloRight[2], arrayVerificarTrianguloRight[3], arrayVerificarTrianguloRight[4]);
-
         }
     }
 
@@ -741,14 +698,12 @@ export const PoseContextProvider = (props) => {
                 console.log(timetoBPM(timeToSeconds(timeDifference), 'cruz'), 'new BPM')
                 let newBPM = timetoBPM(timeToSeconds(timeDifference), 'cruz')
 
-                //alert('patron cruz encontrado');
                 desviation = timeDesviation(arraySegundosVerificarCruzRight);
 
                 resetBpmInputs();
 
                 //volumen
                 volume = timeMediaCruzRight;
-                //console.log(timeMediaPunzada)
 
                 resetVolumeInputs();
                 return newBPM;
@@ -828,11 +783,6 @@ export const PoseContextProvider = (props) => {
                     timeMediaCruzRight = (timeMediaCruzRight + (time - lastTimeCruzRight)) / 2;
                 }
             }
-
-            // console.log(
-            //     timeToString(arraySegundosVerificarCruzRight[0]), timeToString(arraySegundosVerificarCruzRight[1]), timeToString(arraySegundosVerificarCruzRight[2]), timeToString(arraySegundosVerificarCruzRight[3]), timeToString(arraySegundosVerificarCruzRight[4]), timeToString(arraySegundosVerificarCruzRight[5]),
-            //     '-',
-            //     arrayVerificarCruzRight[0], arrayVerificarCruzRight[1], arrayVerificarCruzRight[2], arrayVerificarCruzRight[3], arrayVerificarCruzRight[4], arrayVerificarCruzRight[5]);
 
         }
     }

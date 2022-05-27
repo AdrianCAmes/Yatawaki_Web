@@ -1,11 +1,10 @@
-import { Box, Dialog, Divider, Grid, Typography } from "@mui/material";
+import { Box, Dialog, Divider, Typography } from "@mui/material";
 import React from "react";
-import { FacebookShareButton, WhatsappShareButton,TwitterShareButton } from "react-share";
-import { FacebookIcon, WhatsappIcon, TwitterIcon } from "react-share";
+import { FacebookShareButton, WhatsappShareButton, TwitterShareButton, FacebookIcon, WhatsappIcon, TwitterIcon } from "react-share";
 
 const SocialMediaShare = (props) => {
     const mountedRef = React.useRef(true)
-  
+
 
     React.useEffect(() => {
         return () => {
@@ -19,21 +18,21 @@ const SocialMediaShare = (props) => {
     return (
         <React.Fragment>
             <Dialog PaperProps={{ style: { borderRadius: '50px', backgroundColor: '#FFED66' } }} open={props.open} onClose={props.handleClose} fullWidth maxWidth="lg">
-                <div style={{ height: '500px', backgroundColor: '#FFED66', padding: '50px',alignContent: 'center' }}>
+                <div style={{ height: '500px', backgroundColor: '#FFED66', padding: '50px', alignContent: 'center' }}>
                     <Typography fontWeight={600} fontSize={50} style={{ textAlign: 'center' }}>
                         Redes Sociales
                     </Typography>
-                    <div style={{ height: '10%'}}></div>
+                    <div style={{ height: '10%' }}></div>
                     <Divider>
                         <FacebookShareButton url="localhost:3000" quote="Compartir mis resultados!">
-                            <FacebookIcon size={100} round={true}/>  
+                            <FacebookIcon size={100} round={true} />
                         </FacebookShareButton>
                         <WhatsappShareButton url="localhost:3000" quote="Compartir mis resultados!">
-                            <WhatsappIcon size={100} round={true}/>
+                            <WhatsappIcon size={100} round={true} />
                         </WhatsappShareButton>
 
                         <TwitterShareButton url="localhost:3000" quote="Compartir mis resultados!">
-                            <TwitterIcon size={100} round={true}/>
+                            <TwitterIcon size={100} round={true} />
                         </TwitterShareButton>
                     </Divider>
                     <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -41,7 +40,7 @@ const SocialMediaShare = (props) => {
                             <Typography style={{ fontSize: '30px', color: '#FFF' }}> Cancelar</Typography>
                         </Box>
                     </div>
-                 </div>   
+                </div>
             </Dialog>
 
         </React.Fragment >
