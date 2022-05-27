@@ -2,52 +2,76 @@ import { CircularProgress, Grid, InputAdornment, Paper, TextField, Typography } 
 import { ArrowBackIosRounded, Lock } from "@mui/icons-material";
 import React from "react";
 import SnackBarContext from "../context/snack-bar-context";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import logo_upc from '../assets/Logo UPC.png';
 import { Box } from "@mui/system";
 import ImageAutoSlider from "../components/ImageAutoSlider";
 import AuthApi from "../apis/auth-apis";
 import GameContext from "../context/game-context";
+import { useAuth } from "../context/auth-context";
 
 let buttonStyle = { width: '400px', height: '70px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '30px' };
 
-const Login = () => {
-    const [uniqueIdentifier, setUniqueIdentifier] = React.useState(null);
+function useQuery() {
+    return new URLSearchParams(useLocation().search)
+}
+
+const ResetPassword = () => {
     const [password, setPassword] = React.useState(null);
+    const [passwordError, setPasswordError] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
+    const { resetPassword } = useAuth();
+    const query = useQuery();
 
     const snackBarContext = React.useContext(SnackBarContext);
     const gameContext = React.useContext(GameContext);
     const navigate = useNavigate()
 
-    const toRegister = () => {
-        navigate('/register')
+    const toSplashscreen = () => {
+        navigate('/login')
     };
 
-    const authenticate = async () => {
-        setLoading(true);
-        AuthApi.authenticate(uniqueIdentifier, password)
-            .then(response => {
-                window.localStorage.setItem('jwt', response.data.jwt);
-                snackBarContext.onOpen({
-                    severity: "success",
-                    message: "Bienvenido!"
-                });
-                gameContext.updateUsername(uniqueIdentifier);
-                navigate('/menu')
-            })
-            .catch(err => {
-                snackBarContext.onOpen({
-                    severity: "error",
-                    message: "Por favor, ingresa las credenciales correctas"
-                });
-                console.log(err);
-            })
-            .finally(() => setLoading(false))
+    const submit = async () => {
+        if (!/[a-zA-Z]/.test(password)) {
+            setPasswordError(true);
+            snackBarContext.onOpen({
+                severity: "error",
+                message: "Tu contraseña no tiene letras"
+            });
+        } else if (!/\d/.test(password)) {
+            setPasswordError(true);
+            snackBarContext.onOpen({
+                severity: "error",
+                message: "Tu contraseña no tiene numeros"
+            });
+        } else if (password.length < 8) {
+            setPasswordError(true);
+            snackBarContext.onOpen({
+                severity: "error",
+                message: "Por favor ingresa mas de 8 caracteres"
+            });
+        } else {
+            resetPassword(query.get('oobCode'), password)
+                .then((response) => {
+                    console.log(response)
+                    snackBarContext.onOpen({
+                        severity: "success",
+                        message: "Contraseña actualizada con éxito  "
+                    });
+                    //llamar a back de adrian
+                    navigate('/login')
+                })
+                .catch((err) => {
+                    console.log(err)
+                    snackBarContext.onOpen({
+                        severity: "error",
+                        message: err.message
+                    });
+                })
+        }
+
+
     }
-    const toSplashscreen = () => {
-        navigate('/')
-    };
 
     return (
         <React.Fragment>
@@ -56,7 +80,7 @@ const Login = () => {
                     <ArrowBackIosRounded fontSize="medium" />
                     <Typography fontWeight={600} fontSize={24} sx={{ marginLeft: '10px' }}>Atrás</Typography>
                 </div>
-                <Typography textAlign='center' className="title-font title-login" >LOG IN</Typography>
+                <Typography textAlign='center' className="title-font title-login" >YATAWAKI</Typography>
 
                 <Grid container justifyContent='center' alignItems='center'>
                     <Grid item xs={5} >
@@ -67,8 +91,7 @@ const Login = () => {
                     </Grid>
 
                     <Grid item xs={7} container direction='column' justifyContent='center' alignItems='center'>
-
-                        <TextField placeholder="Escribe tu usuario" sx={{ width: '80%!important', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setUniqueIdentifier(event.target.value)}></TextField>
+                        <Typography fontWeight={600} fontSize={16}>Ingresa tu nueva Contraseña</Typography>
 
                         <TextField sx={{ width: '80%', mt: 4, backgroundColor: '#FFF' }}
                             type="password"
@@ -83,14 +106,10 @@ const Login = () => {
                             }}
 
                         />
-
                         {loading && <CircularProgress />}
-                        <div className="hover" onClick={() => { uniqueIdentifier == null || uniqueIdentifier == '' ? toRegister() : navigate('/forgot-password') }} style={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
-                            <Typography fontWeight={600} fontSize={24} sx={{ marginTop: '10px' }}>{uniqueIdentifier == null || uniqueIdentifier == '' ? '¿Aún no estás registrado?' : '¿Olvidaste tu contraseña?'}</Typography>
-                        </div>
 
-                        <Box className="hover" sx={buttonStyle} onClick={() => { authenticate() }}>
-                            <Typography className="title-button"> Iniciar</Typography>
+                        <Box className="hover" sx={buttonStyle} onClick={() => { submit() }}>
+                            <Typography className="title-button"> Actualizar </Typography>
                         </Box>
                     </Grid>
                 </Grid>
@@ -103,4 +122,4 @@ const Login = () => {
 
 }
 
-export default Login;
+export default ResetPassword;

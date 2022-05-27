@@ -14,3 +14,4 @@ npm install firebase
 
 5. Configuramos auth-context
 * Creamos las funciones necesarias en ese contexto y las agregamos en el App.js
+* Verificamos si los usuarios se estan creando correctamente

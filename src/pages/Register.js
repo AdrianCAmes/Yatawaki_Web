@@ -79,33 +79,45 @@ const Register = () => {
             });
         } else {
             setLoading(true);
-            // UserApi.register(nickname, password, firstname, lastname, mail)
-            //     .then(response => {
-            //         snackBarContext.onOpen({
-            //             severity: "success",
-            //             message: "Registrado correctamente"
-            //         });
-            //         navigate('/login');
-            //     })
-            //     .catch(err => {
-            //         snackBarContext.onOpen({
-            //             severity: "error",
-            //             message: err
-            //         });
-            //         console.log(err);
-            //     })
-            //     .finally(() => setLoading(false))
+
             register(mail, password)
                 .then((response) => {
                     console.log(response)
                 })
+                .then(() => {
+                    registerBack()
+                    //console.log('AYUDA')
+                })
                 .catch((error) => {
-                    console.log(error.message)
+                    snackBarContext.onOpen({
+                        severity: "Correo ya existe",
+                        message: error.mensaje
+                    });
                 })
                 .finally(() => setLoading(false))
         }
 
 
+    }
+
+    const registerBack = async () => {
+        UserApi.register(nickname, password, firstname, lastname, mail)
+            .then(response => {
+                snackBarContext.onOpen({
+                    severity: "success",
+                    message: "Registrado correctamente"
+                });
+                navigate('/login');
+            })
+            .catch(err => {
+                console.log(err)
+                snackBarContext.onOpen({
+                    severity: "error",
+                    message: err.mensaje
+                });
+                console.log(err);
+            })
+            .finally(() => setLoading(false))
     }
 
     const nextStep = () => {

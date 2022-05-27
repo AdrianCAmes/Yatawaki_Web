@@ -19,6 +19,8 @@ import Tutorial from './pages/Tutorial';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import TutorialResume from './pages/TutorialResume';
 import AuthContextProvider from './context/auth-context';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 
 
 function App() {
@@ -34,6 +36,8 @@ function App() {
                 <Routes>
                   <Route path="/" element={<Splashscreen />} />
                   <Route path="/login" element={<Login />} />
+                  <Route path="/forgot-password" element={<ForgotPassword />} />
+                  <Route path="/reset-password" element={<ResetPassword />} />
                   <Route path="/register" element={<Register />} />
                   <Route path="/menu" element={<YatawakiMenu />} />
                   <Route path="/perfil" element={<Perfil />} />
