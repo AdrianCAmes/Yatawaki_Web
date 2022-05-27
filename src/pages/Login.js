@@ -39,7 +39,7 @@ const Login = () => {
             .catch(err => {
                 snackBarContext.onOpen({
                     severity: "error",
-                    message: "Por favor, ingresa las credenciales correctas"
+                    message: err.mensaje
                 });
                 console.log(err);
             })
