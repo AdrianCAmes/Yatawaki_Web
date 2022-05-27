@@ -7,7 +7,6 @@ import logo_upc from '../assets/Logo UPC.png';
 import { Box } from "@mui/system";
 import ImageAutoSlider from "../components/ImageAutoSlider";
 import AuthApi from "../apis/auth-apis";
-import GameContext from "../context/game-context";
 import { useAuth } from "../context/auth-context";
 
 let buttonStyle = { width: '400px', height: '70px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '30px' };
@@ -18,13 +17,11 @@ function useQuery() {
 
 const ResetPassword = () => {
     const [password, setPassword] = React.useState(null);
-    const [passwordError, setPasswordError] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
     const { resetPassword } = useAuth();
     const query = useQuery();
 
     const snackBarContext = React.useContext(SnackBarContext);
-    const gameContext = React.useContext(GameContext);
     const navigate = useNavigate()
 
     const toSplashscreen = () => {
@@ -33,24 +30,22 @@ const ResetPassword = () => {
 
     const submit = async () => {
         if (!/[a-zA-Z]/.test(password)) {
-            setPasswordError(true);
             snackBarContext.onOpen({
                 severity: "error",
                 message: "Tu contraseña no tiene letras"
             });
         } else if (!/\d/.test(password)) {
-            setPasswordError(true);
             snackBarContext.onOpen({
                 severity: "error",
                 message: "Tu contraseña no tiene numeros"
             });
         } else if (password.length < 8) {
-            setPasswordError(true);
             snackBarContext.onOpen({
                 severity: "error",
                 message: "Por favor ingresa mas de 8 caracteres"
             });
         } else {
+            setLoading(true);
             resetPassword(query.get('oobCode'), password)
                 .then((response) => {
                     console.log(response)
@@ -58,7 +53,7 @@ const ResetPassword = () => {
                         severity: "success",
                         message: "Contraseña actualizada con éxito  "
                     });
-                    //llamar a back de adrian
+                    //TODO: llamar a back de adrian
                     navigate('/login')
                 })
                 .catch((err) => {
@@ -67,6 +62,9 @@ const ResetPassword = () => {
                         severity: "error",
                         message: err.message
                     });
+                })
+                .finally(() => {
+                    setLoading(false);
                 })
         }
 

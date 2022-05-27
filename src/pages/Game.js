@@ -10,15 +10,14 @@ import AudioController from "../context/audio-context-controller";
 import PoseContext from "../context/pose-controller";
 import PauseMenu from "./components/PauseMenu";
 import ConcertApis from "../apis/concert-apis";
-import SnackBarContext from "../context/snack-bar-context";
 import CameraDeniedDialog from "./components/CameraDenied";
 import violin1 from '../assets/songs/Mozart String Quartet No. 17, K.458, Movement 2 (Dry)-Violin-(Violin 2).mp3'
 import violin2 from '../assets/songs/Mozart String Quartet No. 17, K.458, Movement 2 (Dry)-Violin-(Violin 1).mp3'
 import cello from '../assets/songs/Mozart String Quartet No. 17, K.458, Movement 2 (Dry)-Cello-(Cello).mp3'
 import viola from '../assets/songs/Mozart String Quartet No. 17, K.458, Movement 2 (Dry)-Viola-(Viola).mp3'
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { MechanicalCounter } from "mechanical-counter";
-import { AnimatePresence } from 'framer-motion';
+import SnackBarContext from "../context/snack-bar-context";
 
 let buttonStyle = { width: '150px', height: '50px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '20px' };
 
@@ -73,10 +72,6 @@ const Game = () => {
         setAnimateChello(false);
     }
 
-    const toRegister = () => {
-        navigate('/login')
-    };
-
     const startGame = () => {
         setOpen(false);
         animateLeft();
@@ -89,61 +84,63 @@ const Game = () => {
     const { state } = useLocation();
 
     const startConcert = () => {
-        // let response2 = {
-        //     "idConcert": 1,
-        //     "name": "Nocturne Op 9 No 2",
-        //     "initialBpm": 122,
-        //     "duration": 230,
-        //     "instruments": [
-        //         {
-        //             "name": "Piano",
-        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Pianos/piano_casio.png",
-        //             "position": "L",
-        //             "track": violin2
-        //         },
-        //         {
-        //             "name": "Violin",
-        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Violins/violin_casio.png",
-        //             "position": "L",
-        //             "track": violin1
-        //         },
-        //         {
-        //             "name": "Cello",
-        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Cellos/cello_casio.png",
-        //             "position": "R",
-        //             "track": cello
-        //         },
-        //         {
-        //             "name": "Guitar",
-        //             "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Guitars/guitar_casio.png",
-        //             "position": "R",
-        //             "track": viola
-        //         }
-        //     ]
-        // }
-        // audioController.setSongs(response2.instruments);
-        // audioController.setInitialBpm(response2.initialBpm);
-        // setSongDuration(response2.duration)
-        // setCurrentBPM(response2.initialBpm);
-        // setResponse(response2);
-        ConcertApis.startConcert(state.symphonyId)
-            .then(response => {
-                //console.log(response.data);
-                //response = response.data;
-                setResponse(response.data);
-                console.log(response);
-                console.log("empezando el juego...");
+        let test = false;
+        if (test) {
+            let response2 = {
+                "idConcert": 1,
+                "name": "Nocturne Op 9 No 2",
+                "initialBpm": 122,
+                "duration": 230,
+                "instruments": [
+                    {
+                        "name": "Piano",
+                        "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Pianos/piano_casio.png",
+                        "position": "L",
+                        "track": violin2
+                    },
+                    {
+                        "name": "Violin",
+                        "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Violins/violin_casio.png",
+                        "position": "L",
+                        "track": violin1
+                    },
+                    {
+                        "name": "Cello",
+                        "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Cellos/cello_casio.png",
+                        "position": "R",
+                        "track": cello
+                    },
+                    {
+                        "name": "Guitar",
+                        "icon": "https://adriancames.github.io/Yatawaki_Files/Images/Instruments/Guitars/guitar_casio.png",
+                        "position": "R",
+                        "track": viola
+                    }
+                ]
+            }
+            audioController.setSongs(response2.instruments);
+            audioController.setInitialBpm(response2.initialBpm);
+            setSongDuration(response2.duration)
+            setCurrentBPM(response2.initialBpm);
+            setResponse(response2);
+        } else {
+            ConcertApis.startConcert(state.symphonyId)
+                .then((res) => {
+                    setResponse(res.data);
+                    console.log("empezando el juego...");
 
-                audioController.setSongs(response.data.instruments);
-                audioController.setInitialBpm(response.data.initialBpm);
-                setSongDuration(response.data.duration)
-                setCurrentBPM(response.data.initialBpm);
+                    audioController.setSongs(res.data.instruments);
+                    audioController.setInitialBpm(res.data.initialBpm);
+                    setSongDuration(res.data.duration)
+                    setCurrentBPM(res.data.initialBpm);
+                })
+                .catch(() => {
+                    snackBarContext.onOpen({ severity: "error", message: 'Algo salió mal, intenta nuevamente luego' });
+                    navigate('/menu')
+                })
+        }
 
-            })
-            .catch(err => {
-                //snackBarContext.onOpen({ severity: "error", message: 'error' });
-                console.log(err, 'startGame');
-            })
+
     }
 
 
@@ -166,8 +163,6 @@ const Game = () => {
     //Cuando el porcentaje sea 100%, dirigir a resumen
     React.useEffect(() => {
         if (Math.round((Math.floor((time / 1000)) / songDuration) * 100) > 100) {
-            //toRegister()
-            //alert('tiempo cumplido, por favor refrescar')
             audioController.stop();
             poseController.pauseController();
             navigate('/game-resume', {
@@ -183,12 +178,11 @@ const Game = () => {
         }
     }, [time]);
 
-
     const renderSwitch = (param) => {
         switch (param.name) {
             case 'Piano':
                 return <div>
-                    <img id="hola" style={{ position: 'absolute', left: '8%', top: '15%', height: '230px', }} src={param.icon} className={`piano ${animatePiano ? "pianoAnimation" : ""}`} ></img>
+                    <img style={{ position: 'absolute', left: '8%', top: '15%', height: '230px', }} src={param.icon} className={`piano ${animatePiano ? "pianoAnimation" : ""}`} ></img>
                 </div>
             case 'Guitar':
                 return <div>
@@ -224,14 +218,10 @@ const Game = () => {
     const URLRightPitch = "https://teachablemachine.withgoogle.com/models/sVIndV-v-/";
     const URLLeftPitch = "https://teachablemachine.withgoogle.com/models/kwhV8Vs4-/";
     const URLDetecJugador = "https://teachablemachine.withgoogle.com/models/-GnOXIlck/";
-    let modelRight, webcam, ctx, ctx2, labelContainerRight, maxPredictionsRight, modelLeft, labelContainerLeft, maxPredictionsLeft, modelTPose, maxPredictionsTPose, modelPitchLeft, maxPredictionsPitchLeft, modelPitchRight, maxPredictionsPitchRight, modelDetecJugador, maxPredictionsDetecJugador;
+    let modelRight, webcam, ctx, ctx2, maxPredictionsRight, modelLeft, maxPredictionsLeft, modelTPose, maxPredictionsTPose, modelPitchLeft, maxPredictionsPitchLeft, modelPitchRight, maxPredictionsPitchRight, modelDetecJugador, maxPredictionsDetecJugador;
     const [open, setOpen] = React.useState(true);
     const [loading, setLoading] = React.useState(true);
     const [openDialog, setOpenDialog] = React.useState(false);
-
-    const handleCloseDialog = () => {
-        setOpenDialog(false);
-    };
 
     const init = async () => {
         const modelURLRight = URLRight + "model.json";
@@ -287,10 +277,7 @@ const Game = () => {
         canvas[0].width = size; canvas[0].height = size;
         ctx = canvas[0].getContext("2d");
         ctx2 = canvas[1].getContext("2d");
-        //labelContainerRight = document.getElementById("label-container");
-        // for (let i = 0; i < maxPredictionsRight + maxPredictionsLeft + 1; i++) { // and class labels
-        //    labelContainerRight.appendChild(document.createElement("div"));
-        //}
+
         setLoading(false);
 
     }
@@ -319,11 +306,6 @@ const Game = () => {
         // Prediction 2: run input through teachable machine classification model
         const prediction = await modelRight.predict(posenetOutput);
         poseDecoderRight(prediction);
-        // for (let i = 0; i < maxPredictionsRight; i++) {
-        //     const classPrediction =
-        //         prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-        //     labelContainerRight.childNodes[i].innerHTML = classPrediction;
-        // }
 
         drawPose(pose);
     }
@@ -335,11 +317,6 @@ const Game = () => {
         const { pose, posenetOutput } = await modelLeft.estimatePose(webcam.canvas);
         const predictionLeft = await modelLeft.predict(posenetOutput);
         poseDecoderLeft(predictionLeft);
-        // for (let i = 5; i < maxPredictionsLeft + 5; i++) {
-        //     const classPredictionLeft =
-        //         predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
-        //     labelContainerRight.childNodes[i].innerHTML = classPredictionLeft;
-        // }
 
         // finally draw the poses
         drawPose(pose);
@@ -352,11 +329,6 @@ const Game = () => {
         const { pose, posenetOutput } = await modelTPose.estimatePose(webcam.canvas);
         const predictionTPose = await modelTPose.predict(posenetOutput);
         poseDecoderTPose(predictionTPose);
-        // for (let i = 5; i < maxPredictionsLeft + 5; i++) {
-        //     const classPredictionLeft =
-        //         predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
-        //     labelContainerRight.childNodes[i].innerHTML = classPredictionLeft;
-        // }
 
         // finally draw the poses
         drawPose(pose);
@@ -369,11 +341,6 @@ const Game = () => {
         const { pose, posenetOutput } = await modelPitchLeft.estimatePose(webcam.canvas);
         const predictionPitchLeft = await modelPitchLeft.predict(posenetOutput);
         poseDecoderPitchLeft(predictionPitchLeft);
-        // for (let i = 5; i < maxPredictionsLeft + 5; i++) {
-        //     const classPredictionLeft =
-        //         predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
-        //     labelContainerRight.childNodes[i].innerHTML = classPredictionLeft;
-        // }
 
         // finally draw the poses
         drawPose(pose);
@@ -386,11 +353,6 @@ const Game = () => {
         const { pose, posenetOutput } = await modelPitchRight.estimatePose(webcam.canvas);
         const predictionPitchRight = await modelPitchRight.predict(posenetOutput);
         poseDecoderPitchRight(predictionPitchRight);
-        // for (let i = 5; i < maxPredictionsLeft + 5; i++) {
-        //     const classPredictionLeft =
-        //         predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
-        //     labelContainerRight.childNodes[i].innerHTML = classPredictionLeft;
-        // }
 
         // finally draw the poses
         drawPose(pose);
@@ -403,11 +365,6 @@ const Game = () => {
         const { pose, posenetOutput } = await modelDetecJugador.estimatePose(webcam.canvas);
         const predictionDetecJugador = await modelDetecJugador.predict(posenetOutput);
         poseDecoderDetecJugador(predictionDetecJugador);
-        // for (let i = 5; i < maxPredictionsLeft + 5; i++) {
-        //     const classPredictionLeft =
-        //         predictionLeft[i - 5].className + ": " + predictionLeft[i - 5].probability.toFixed(2);
-        //     labelContainerRight.childNodes[i].innerHTML = classPredictionLeft;
-        // }
 
         // finally draw the poses
         drawPose(pose);
@@ -450,9 +407,6 @@ const Game = () => {
                         calcularPuntajeBpm(punzadaBpm);
                         setNewBPM(punzadaBpm);
                         calcularVolumen(poseController.getVolume() / 1000, "left")
-                        //hacer algo con el volumen
-                        //console.log(poseController.getVolume() / 1000, 'volumen')
-                        //setCurrentVolume(poseController.getVolume())
                     }
                     if (trianguloBpm) {
                         setPosesCount((prevCount) => prevCount + 1);
@@ -460,7 +414,6 @@ const Game = () => {
                         calcularPuntajeBpm(trianguloBpm);
                         setNewBPM(trianguloBpm)
                         calcularVolumen(poseController.getVolume() / 1000, "left")
-                        //setCurrentVolume(poseController.getVolume())
                     }
                     if (cruzBpm) {
                         setPosesCount((prevCount) => prevCount + 1);
@@ -469,7 +422,6 @@ const Game = () => {
                         setNewBPM(cruzBpm);
                         calcularVolumen(poseController.getVolume() / 1000, "left")
                     }
-
 
                 }
 
@@ -844,7 +796,6 @@ const Game = () => {
 
     //seteo variables iniciales de juego
     React.useEffect(() => {
-        //setVariablesGame();
         startConcert();
     }, []);
 
@@ -853,16 +804,6 @@ const Game = () => {
             init()
         }
     }, [response]);
-
-    const [openSnack, setOpenSnack] = React.useState(false);
-    const [newPoint, setNewPoints] = React.useState(0);
-    const [addPoint, setAddPoint] = React.useState(false);
-
-
-
-    const handleCloseSnack = () => {
-        setOpenSnack(false);
-    };
 
     const [timeCountdown, setTimeCountdown] = React.useState(3500);
     const [timerOnCountDown, setTimerOnCountDown] = React.useState(false);
@@ -927,8 +868,8 @@ const Game = () => {
 
     React.useEffect(() => {
         const interval = setInterval(() => {
-            setStack((stack) =>
-                stack.map((st) => {
+            setStack((stackRes) =>
+                stackRes.map((st) => {
                     return new Date(st.expirationTime) > new Date()
                         ? st
                         : { ...st, visibility: false };
@@ -982,8 +923,6 @@ const Game = () => {
                     <Box sx={{ width: '30%' }}>
                         <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {Math.round((Math.floor((time / 1000)) / songDuration) * 100)}%</Typography>
                         {/* <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {("0" + Math.floor((time / 60000) % 60)).slice(-2)}:{("0" + Math.floor((time / 1000) % 60)).slice(-2)}</Typography> */}
-                        {/* <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {Math.floor((time / 1000))}-</Typography> */}
-                        {/* <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {Math.floor((time / 1000))} segundos</Typography> */}
                         <LinearProgress variant="determinate" value={(Math.floor((time / 1000)) / songDuration) * 100} style={{ height: '10px', borderRadius: 5 }} />
                     </Box>
                     <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
@@ -1045,8 +984,6 @@ const Game = () => {
                     </div>
                     <MechanicalCounter height={30} text={`${Math.round(currentBPM, 0)} bpm`} />
                 </div>
-                {/* <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> BPM: {Math.round(currentBPM, 0)}</Typography> */}
-                {/* <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '16%' }}> Volume: {currentVolume}%</Typography> */}
                 <div className="container-control2">
                     <div className="container-svg2">
                         <motion.svg
@@ -1070,8 +1007,6 @@ const Game = () => {
                     <span>{currentVolume}%</span>
                 </div>
 
-                {/* <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> Media Volumen: {currentVolume}</Typography> */}
-                {/* <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', right: '2%' }}> Puntaje: {puntaje}</Typography> */}
                 <div className="container-control-points">
                     <div className="container-points-svg">
                         <motion.svg
@@ -1116,19 +1051,6 @@ const Game = () => {
                 <span style={{ position: 'absolute', left: '43%', bottom: '40%', fontSize: '200px', visibility: dos ? 'visible' : 'hidden' }} className={`${dos ? 'canvasAnimation' : ''}`}>2</span>
                 <span style={{ position: 'absolute', left: '43%', bottom: '40%', fontSize: '200px', visibility: uno ? 'visible' : 'hidden' }} className={`${uno ? 'canvasAnimation' : ''}`}>1</span>
                 <span style={{ position: 'absolute', left: '33%', bottom: '40%', fontSize: '150px', visibility: comienza ? 'visible' : 'hidden' }} className={`${comienza ? 'canvasAnimation' : ''}`}>Comienza!</span>
-                {/* <button style={{ position: 'absolute', left: '40%', top: '62%', borderRadius: '30px' }} onClick={() => { stopAnimationLeft() }}>stop left</button>
-                <button style={{ position: 'absolute', left: '40%', top: '66%', borderRadius: '30px' }} onClick={() => { animateLeft() }}>start Left</button>
-                <button style={{ position: 'absolute', left: '45%', top: '62%', borderRadius: '30px' }} onClick={() => { stopAnimationRight() }}>stop Right</button>
-                <button style={{ position: 'absolute', left: '45%', top: '66%', borderRadius: '30px' }} onClick={() => { animateRight() }}>start right</button>
-                <button style={{ position: 'absolute', left: '50%', top: '66%', borderRadius: '30px' }} onClick={() => { changeSpeed(200) }}>hightBPM</button>
-                <button style={{ position: 'absolute', left: '50%', top: '62%', borderRadius: '30px' }} onClick={() => { changeSpeed(response.initialBpm) }}>restartBPM</button>
-                <button style={{ position: 'absolute', left: '50%', top: '70%', borderRadius: '30px' }} onClick={() => { changeSpeed(80) }}>lowBPM</button> */}
-                {/* <button style={{ position: 'absolute', left: '45%', top: '70%', borderRadius: '30px' }} onClick={() => { pause() }}>pause</button>
-                <button style={{ position: 'absolute', left: '40%', top: '70%', borderRadius: '30px' }} onClick={() => { resume() }}>resume</button> */}
-                {/* <button style={{ position: 'absolute', left: '40%', top: '70%', borderRadius: '30px' }} onClick={() => { audioController.increasePitch() }}>pitch</button>
-                <button style={{ position: 'absolute', left: '45%', top: '70%', borderRadius: '30px' }} onClick={() => { audioController.resetPitch() }}>reset pitch</button>
-                <button style={{ position: 'absolute', left: '45%', top: '73%', borderRadius: '30px' }} onClick={() => { audioController.decreasePitch() }}>menos pitch</button> */}
-
 
             </Paper>
         </React.Fragment>

@@ -102,7 +102,7 @@ const Register = () => {
 
     const registerBack = async () => {
         UserApi.register(nickname, password, firstname, lastname, mail)
-            .then(response => {
+            .then(() => {
                 snackBarContext.onOpen({
                     severity: "success",
                     message: "Registrado correctamente"

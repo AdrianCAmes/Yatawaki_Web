@@ -1,13 +1,11 @@
-import { CircularProgress, Grid, InputAdornment, Paper, TextField, Typography } from "@mui/material";
-import { ArrowBackIosRounded, Lock } from "@mui/icons-material";
+import { CircularProgress, Grid, Paper, TextField, Typography } from "@mui/material";
+import { ArrowBackIosRounded } from "@mui/icons-material";
 import React from "react";
 import SnackBarContext from "../context/snack-bar-context";
 import { useNavigate } from "react-router-dom";
 import logo_upc from '../assets/Logo UPC.png';
 import { Box } from "@mui/system";
 import ImageAutoSlider from "../components/ImageAutoSlider";
-import AuthApi from "../apis/auth-apis";
-import GameContext from "../context/game-context";
 import { useAuth } from "../context/auth-context";
 
 let buttonStyle = { width: '400px', height: '70px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '30px' };
@@ -18,7 +16,6 @@ const ForgotPassword = () => {
     const { forgotPassword } = useAuth()
 
     const snackBarContext = React.useContext(SnackBarContext);
-    const gameContext = React.useContext(GameContext);
     const navigate = useNavigate()
 
     const toSplashscreen = () => {
@@ -26,6 +23,7 @@ const ForgotPassword = () => {
     };
 
     const submit = async () => {
+        setLoading(true);
         forgotPassword(email)
             .then((response) => {
                 console.log(response)
