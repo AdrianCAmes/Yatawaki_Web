@@ -8,6 +8,7 @@ import ImageAutoSlider from "../components/ImageAutoSlider";
 import logo_upc from '../assets/Logo UPC.png';
 import { GoogleLogin } from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
+import { useAuth } from "../context/auth-context";
 
 let buttonStyle = { width: ['300px', '300px', '400px'], height: '70px', borderRadius: '15px', mx: 'auto', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '30px' };
 
@@ -30,9 +31,11 @@ const Register = () => {
     const snackBarContext = React.useContext(SnackBarContext);
     const navigate = useNavigate()
 
+    const { register } = useAuth()
 
 
-    const register = async () => {
+
+    const submit = async () => {
 
         let errorExist = false;
 
@@ -76,25 +79,45 @@ const Register = () => {
             });
         } else {
             setLoading(true);
-            UserApi.register(nickname, password, firstname, lastname, mail)
-                .then(response => {
-                    snackBarContext.onOpen({
-                        severity: "success",
-                        message: "Registrado correctamente"
-                    });
-                    navigate('/login');
+
+            register(mail, password)
+                .then((response) => {
+                    console.log(response)
                 })
-                .catch(err => {
+                .then(() => {
+                    registerBack()
+                    //console.log('AYUDA')
+                })
+                .catch((error) => {
                     snackBarContext.onOpen({
-                        severity: "error",
-                        message: err
+                        severity: "Correo ya existe",
+                        message: error.mensaje
                     });
-                    console.log(err);
                 })
                 .finally(() => setLoading(false))
         }
 
 
+    }
+
+    const registerBack = async () => {
+        UserApi.register(nickname, password, firstname, lastname, mail)
+            .then(response => {
+                snackBarContext.onOpen({
+                    severity: "success",
+                    message: "Registrado correctamente"
+                });
+                navigate('/login');
+            })
+            .catch(err => {
+                console.log(err)
+                snackBarContext.onOpen({
+                    severity: "error",
+                    message: err.mensaje
+                });
+                console.log(err);
+            })
+            .finally(() => setLoading(false))
     }
 
     const nextStep = () => {
@@ -210,7 +233,7 @@ const Register = () => {
 
                                 </div>
                                 {loading && <CircularProgress />}
-                                <Box className="hover" sx={buttonStyle} onClick={() => { register() }}>
+                                <Box className="hover" sx={buttonStyle} onClick={() => { submit() }}>
                                     <Typography className="title-button"> Registrarme</Typography>
                                 </Box>
                             </div>

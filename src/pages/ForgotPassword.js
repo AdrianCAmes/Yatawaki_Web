@@ -8,46 +8,40 @@ import { Box } from "@mui/system";
 import ImageAutoSlider from "../components/ImageAutoSlider";
 import AuthApi from "../apis/auth-apis";
 import GameContext from "../context/game-context";
+import { useAuth } from "../context/auth-context";
 
 let buttonStyle = { width: '400px', height: '70px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '30px' };
 
-const Login = () => {
-    const [uniqueIdentifier, setUniqueIdentifier] = React.useState(null);
-    const [password, setPassword] = React.useState(null);
+const ForgotPassword = () => {
+    const [email, setEmail] = React.useState(null);
     const [loading, setLoading] = React.useState(false);
+    const { forgotPassword } = useAuth()
 
     const snackBarContext = React.useContext(SnackBarContext);
     const gameContext = React.useContext(GameContext);
     const navigate = useNavigate()
 
-    const toRegister = () => {
-        navigate('/register')
+    const toSplashscreen = () => {
+        navigate('/login')
     };
 
-    const authenticate = async () => {
-        setLoading(true);
-        AuthApi.authenticate(uniqueIdentifier, password)
-            .then(response => {
-                window.localStorage.setItem('jwt', response.data.jwt);
+    const submit = async () => {
+        forgotPassword(email)
+            .then((response) => {
+                console.log(response)
                 snackBarContext.onOpen({
                     severity: "success",
-                    message: "Bienvenido!"
+                    message: "Email enviado con éxito. Sigue las instrucciones"
                 });
-                gameContext.updateUsername(uniqueIdentifier);
-                navigate('/menu')
             })
-            .catch(err => {
+            .catch((err) => {
+                console.log(err)
                 snackBarContext.onOpen({
                     severity: "error",
-                    message: "Por favor, ingresa las credenciales correctas"
+                    message: err.message
                 });
-                console.log(err);
             })
-            .finally(() => setLoading(false))
     }
-    const toSplashscreen = () => {
-        navigate('/')
-    };
 
     return (
         <React.Fragment>
@@ -56,7 +50,7 @@ const Login = () => {
                     <ArrowBackIosRounded fontSize="medium" />
                     <Typography fontWeight={600} fontSize={24} sx={{ marginLeft: '10px' }}>Atrás</Typography>
                 </div>
-                <Typography textAlign='center' className="title-font title-login" >LOG IN</Typography>
+                <Typography textAlign='center' className="title-font title-login" >YATAWAKI</Typography>
 
                 <Grid container justifyContent='center' alignItems='center'>
                     <Grid item xs={5} >
@@ -67,30 +61,14 @@ const Login = () => {
                     </Grid>
 
                     <Grid item xs={7} container direction='column' justifyContent='center' alignItems='center'>
+                        <Typography fontWeight={600} fontSize={16}>Te enviaremos un correo para reestablecer tu contraseña</Typography>
 
-                        <TextField placeholder="Escribe tu usuario" sx={{ width: '80%!important', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setUniqueIdentifier(event.target.value)}></TextField>
-
-                        <TextField sx={{ width: '80%', mt: 4, backgroundColor: '#FFF' }}
-                            type="password"
-                            label="Contraseña"
-                            onChange={(event) => setPassword(event.target.value)}
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <Lock />
-                                    </InputAdornment>
-                                ),
-                            }}
-
-                        />
+                        <TextField placeholder="Escribe tu email" sx={{ width: '80%!important', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setEmail(event.target.value)}></TextField>
 
                         {loading && <CircularProgress />}
-                        <div className="hover" onClick={() => { uniqueIdentifier == null || uniqueIdentifier == '' ? toRegister() : navigate('/forgot-password') }} style={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
-                            <Typography fontWeight={600} fontSize={24} sx={{ marginTop: '10px' }}>{uniqueIdentifier == null || uniqueIdentifier == '' ? '¿Aún no estás registrado?' : '¿Olvidaste tu contraseña?'}</Typography>
-                        </div>
 
-                        <Box className="hover" sx={buttonStyle} onClick={() => { authenticate() }}>
-                            <Typography className="title-button"> Iniciar</Typography>
+                        <Box className="hover" sx={buttonStyle} onClick={() => { submit() }}>
+                            <Typography className="title-button"> Enviar </Typography>
                         </Box>
                     </Grid>
                 </Grid>
@@ -103,4 +81,4 @@ const Login = () => {
 
 }
 
-export default Login;
+export default ForgotPassword;
