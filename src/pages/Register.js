@@ -90,8 +90,8 @@ const Register = () => {
                 })
                 .catch((error) => {
                     snackBarContext.onOpen({
-                        severity: "Correo ya existe",
-                        message: error.mensaje
+                        severity: "error",
+                        message: "Correo ya existe"
                     });
                 })
                 .finally(() => setLoading(false))

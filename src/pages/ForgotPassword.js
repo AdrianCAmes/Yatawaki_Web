@@ -42,6 +42,9 @@ const ForgotPassword = () => {
                     message: err.message
                 });
             })
+            .finally(() => {
+                setLoading(false)
+            })
     }
 
     return (
