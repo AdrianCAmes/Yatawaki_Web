@@ -10,7 +10,7 @@ import AudioController from "../context/audio-context-controller";
 import PoseContext from "../context/pose-controller";
 import PauseMenu from "./components/PauseMenu";
 import ConcertApis from "../apis/concert-apis";
-import CameraDeniedDialog from "./components/CameraDenied";
+import CameraDeniedDialog from "./components/CameraDeniedDialog";
 import violin1 from '../assets/songs/Mozart String Quartet No. 17, K.458, Movement 2 (Dry)-Violin-(Violin 2).mp3'
 import violin2 from '../assets/songs/Mozart String Quartet No. 17, K.458, Movement 2 (Dry)-Violin-(Violin 1).mp3'
 import cello from '../assets/songs/Mozart String Quartet No. 17, K.458, Movement 2 (Dry)-Cello-(Cello).mp3'

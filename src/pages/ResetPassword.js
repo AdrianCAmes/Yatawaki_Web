@@ -6,8 +6,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import logo_upc from '../assets/Logo UPC.png';
 import { Box } from "@mui/system";
 import ImageAutoSlider from "../components/ImageAutoSlider";
-import AuthApi from "../apis/auth-apis";
 import { useAuth } from "../context/auth-context";
+import UserApi from "../apis/user-apis";
+import GameContext from "../context/game-context";
 
 let buttonStyle = { width: '400px', height: '70px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '30px' };
 
@@ -27,6 +28,9 @@ const ResetPassword = () => {
     const toSplashscreen = () => {
         navigate('/login')
     };
+
+    const gameContext = React.useContext(GameContext)
+
 
     const submit = async () => {
         if (!/[a-zA-Z]/.test(password)) {
@@ -53,7 +57,7 @@ const ResetPassword = () => {
                         severity: "success",
                         message: "Contraseña actualizada con éxito  "
                     });
-                    //TODO: llamar a back de adrian
+                    resetBack()
                     navigate('/login')
                 })
                 .catch((err) => {
@@ -68,6 +72,11 @@ const ResetPassword = () => {
                 })
         }
 
+
+    }
+
+    const resetBack = async () => {
+        UserApi.updatePassword(gameContext.emailToUpdate, password)
 
     }
 

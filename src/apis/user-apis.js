@@ -18,17 +18,21 @@ const UserApi = {
     }),
     resume: (username) => apiInstance.get(`${uri}${username}/resume`, getHeaderToken()),
     getUserProfileById: (userId) => apiInstance.get(`${uri}${userId}/profile`, getHeaderToken()),
-    updateuser: (idUser, firstname, lastname, nickname, mail) => apiInstance.patch(`${uri}`,{
+    updateuser: (idUser, firstname, lastname, nickname, mail) => apiInstance.patch(`${uri}`, {
         idUser: idUser,
         firstname: firstname,
         lastname: lastname,
         nickname: nickname,
         mail: mail,
     }, getHeaderToken()),
-    updateShowTutorial: (idUser) => apiInstance.patch(`${uri}`,{
+    updateShowTutorial: (idUser) => apiInstance.patch(`${uri}`, {
         idUser: idUser,
         showTutorials: false
     }, getHeaderToken()),
+    updatePassword: (email, password) => apiInstance.patch(`${uri}mail`, {
+        mail: email,
+        password: password
+    })
 }
 
 export default UserApi;

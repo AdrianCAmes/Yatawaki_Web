@@ -87,7 +87,6 @@ const Register = () => {
                 })
                 .then(() => {
                     registerBack()
-                    //console.log('AYUDA')
                 })
                 .catch((error) => {
                     snackBarContext.onOpen({

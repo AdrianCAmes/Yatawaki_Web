@@ -11,7 +11,9 @@ const GameContext = createContext({
     logout: null,
     instruments: [],
     updateInstruments: null,
-    updateInstrumentsByIndex: null
+    updateInstrumentsByIndex: null,
+    emailToUpdate: '',
+    setEmailToUpdate: null
 })
 
 export default GameContext;
@@ -21,6 +23,7 @@ export const GameContextProvider = (props) => {
     const [showTutorials, setShowTutorials] = useState(true);
     const [username, setUsername] = useState('');
     const [instruments, setInstruments] = useState([]);
+    const [emailToUpdate, setEmailToUpdate] = useState(null);
 
     const updateUserId = (userIdRequest) => {
         setUserId(userIdRequest);
@@ -56,6 +59,9 @@ export const GameContextProvider = (props) => {
         if (localStorage.getItem('username')) {
             setUsername(localStorage.getItem('username'));
         }
+        if (localStorage.getItem('emailToUpdate')) {
+            setEmailToUpdate(localStorage.getItem('emailToUpdate'));
+        }
     }, []);
 
     useEffect(() => {
@@ -70,6 +76,10 @@ export const GameContextProvider = (props) => {
         localStorage.setItem('showTutorials', showTutorials);
     }, [showTutorials]);
 
+    useEffect(() => {
+        localStorage.setItem('emailToUpdate', emailToUpdate);
+    }, [emailToUpdate]);
+
     return (
         <GameContext.Provider value={{
             userId: userId,
@@ -81,7 +91,9 @@ export const GameContextProvider = (props) => {
             logout: logout,
             instruments: instruments,
             updateInstruments: updateInstruments,
-            updateInstrumentsByIndex: updateInstrumentsByIndex
+            updateInstrumentsByIndex: updateInstrumentsByIndex,
+            emailToUpdate: emailToUpdate,
+            setEmailToUpdate: setEmailToUpdate
         }}>
             {props.children}
         </GameContext.Provider>

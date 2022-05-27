@@ -1,4 +1,4 @@
-import { Divider, Grid, Paper, Typography } from "@mui/material";
+import { Divider, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import sinfonia from '../assets/sinfonia-ejemplo.png'
@@ -73,7 +73,7 @@ const TutorialResume = () => {
 
     const updateTutorial = async () => {
         UserApi.updateShowTutorial(gameContext.userId)
-            .then(response => {
+            .then(_response => {
                 navigate('/menu')
             })
             .catch(err => {

@@ -2,17 +2,11 @@ import { Box, Paper, Typography } from "@mui/material";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ConcertApis from "../apis/concert-apis";
-import GameContext from "../context/game-context";
-import SnackBarContext from "../context/snack-bar-context";
 import GameResults from "./components/GameResults";
 import NewUnlockable from "./components/NewUnlockable";
 
 
 const GameResume = () => {
-
-    const mountedRef = React.useRef(true);
-    const gameContext = React.useContext(GameContext);
-    const snackBarContext = React.useContext(SnackBarContext);
 
     const [showFinal, setShowFinal] = React.useState(false);
     const [unlockables, setUnlockables] = React.useState([]);
@@ -45,25 +39,29 @@ const GameResume = () => {
 
     const concertComplete = async () => {
 
-        const aresults = {
-            "idConcert": state.idConcert,
-            "gainedExperience": (state.points * state.gesturesCompleted) / 20,
-            "points": state.points > 0 ? state.point : 0,
-            "accuracyRate": state.accuracyRate,
-            "gesturesCompleted": state.gesturesCompleted,
-            "gainedCoins": (state.points * state.gesturesCompleted) / 150,
-            "symphonyName": state.symphonyName
+        let test = false;
+        let aresults = {}
+        if (test) {
+            aresults = {
+                "idConcert": 1,
+                "gainedExperience": 324,
+                "points": 234,
+                "accuracyRate": 234,
+                "gesturesCompleted": 23,
+                "gainedCoins": 2341,
+                "symphonyName": "Symphony No9"
+            }
+        } else {
+            aresults = {
+                "idConcert": state.idConcert,
+                "gainedExperience": (state.points * state.gesturesCompleted) / 20,
+                "points": state.points > 0 ? state.point : 0,
+                "accuracyRate": state.accuracyRate,
+                "gesturesCompleted": state.gesturesCompleted,
+                "gainedCoins": (state.points * state.gesturesCompleted) / 150,
+                "symphonyName": state.symphonyName
+            }
         }
-
-        // const aresults = {
-        //     "idConcert": 1,
-        //     "gainedExperience": 324,
-        //     "points": 234,
-        //     "accuracyRate": 234,
-        //     "gesturesCompleted": 23,
-        //     "gainedCoins": 2341,
-        //     "symphonyName": "Symphony No9"
-        // }
 
         setResultsFinal(aresults);
 

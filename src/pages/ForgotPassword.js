@@ -7,6 +7,7 @@ import logo_upc from '../assets/Logo UPC.png';
 import { Box } from "@mui/system";
 import ImageAutoSlider from "../components/ImageAutoSlider";
 import { useAuth } from "../context/auth-context";
+import GameContext from "../context/game-context";
 
 let buttonStyle = { width: '400px', height: '70px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '30px' };
 
@@ -17,6 +18,7 @@ const ForgotPassword = () => {
 
     const snackBarContext = React.useContext(SnackBarContext);
     const navigate = useNavigate()
+    const gameContext = React.useContext(GameContext)
 
     const toSplashscreen = () => {
         navigate('/login')
@@ -31,6 +33,7 @@ const ForgotPassword = () => {
                     severity: "success",
                     message: "Email enviado con éxito. Sigue las instrucciones"
                 });
+                gameContext.setEmailToUpdate(email)
             })
             .catch((err) => {
                 console.log(err)

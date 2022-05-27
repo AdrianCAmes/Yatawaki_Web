@@ -114,7 +114,7 @@ const Perfil = () => {
     const gameContext = React.useContext(GameContext);
 
 
-    const handleChange = (event, newValue) => {
+    const handleChange = (_event, newValue) => {
         setValue(newValue);
     };
 
@@ -132,7 +132,7 @@ const Perfil = () => {
         let finalLastName = lastname === '' ? profile.lastname : lastname;
         let finalMail = mail === '' ? profile.mail : mail;
         let finalNickname = nickname === '' ? profile.nickname : nickname;
-        
+
         updateUser(finalFirstName, finalLastName, finalNickname, finalMail);
     };
 
@@ -206,7 +206,7 @@ const Perfil = () => {
                             <Typography fontWeight={600} className="title-font subtitle-perfil" sx={{ marginBottom: '30px' }}>DATOS PERSONALES</Typography>
                             <div style={{ width: '90%', backgroundColor: '#E8E8E0', borderRadius: '20px', padding: '30px' }}>
                                 <Grid container>
-                                    {isEditing ?
+                                    {isEditing &&
                                         <>
                                             <Grid item xs={4} sx={{ marginBottom: '10px' }}>
                                                 <Typography fontWeight={600} fontSize="20px">Nombres:</Typography>
@@ -244,7 +244,8 @@ const Perfil = () => {
                                                     sx={{ width: '80%', backgroundColor: '#FFF', }} defaultValue={profile ? profile.nickname : '--'}></TextField>
                                             </Grid>
                                         </>
-                                        :
+                                    }
+                                    {!isEditing &&
                                         <>
                                             <DataTwoColumns label='Nombres' value={profile ? profile.firstname : '--'}></DataTwoColumns>
                                             <DataTwoColumns label='Apellidos' value={profile ? profile.lastname : '--'}></DataTwoColumns>
@@ -258,7 +259,7 @@ const Perfil = () => {
                     </Grid>
 
                     <div style={{ display: 'flex', justifyContent: 'end' }}>
-                        {isEditing ?
+                        {isEditing &&
                             <>
                                 <Box className="hover" onClick={() => { setIsEditing(false) }} sx={buttonStyleSecondary}>
                                     <Typography className="button-perfil2"> Cancelar</Typography>
@@ -267,7 +268,8 @@ const Perfil = () => {
                                     <Typography className="button-perfil"> Aceptar</Typography>
                                 </Box>
                             </>
-                            :
+                        }
+                        {!isEditing &&
                             <Box className="hover" onClick={() => { setIsEditing(true) }} sx={buttonStyle}>
                                 <Typography className="button-perfil"> Editar</Typography>
                             </Box>
