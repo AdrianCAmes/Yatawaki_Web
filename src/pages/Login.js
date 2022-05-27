@@ -9,7 +9,7 @@ import ImageAutoSlider from "../components/ImageAutoSlider";
 import AuthApi from "../apis/auth-apis";
 import GameContext from "../context/game-context";
 
-let buttonStyle = { width: '400px', height: '70px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '30px' };
+let buttonStyle = { width: '300px', height: '60px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '30px' };
 
 const Login = () => {
     const [uniqueIdentifier, setUniqueIdentifier] = React.useState(null);
