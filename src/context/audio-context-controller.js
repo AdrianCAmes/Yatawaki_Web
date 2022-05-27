@@ -14,7 +14,8 @@ const AudioContext = createContext({
     increasePitch: null,
     resetPitch: null,
     decreasePitch: null,
-    setVolume: null
+    setVolume: null,
+    state: null
 })
 
 export default AudioContext;
@@ -29,6 +30,7 @@ export const AudioContextProvider = (props) => {
     players.playbackRate = 1;
     let initialBpm = 100;
     let pitchChanged = false;
+    let started = false;
 
     const setSongs = (songs) => {
         songsArray = songs;
@@ -44,12 +46,14 @@ export const AudioContextProvider = (props) => {
     }
 
     const start = () => {
-
+        console.log(players.state, 'state')
         if (players.loaded) {
             for (let song of songsArray) {
                 players.player(song.name).start();
             }
             console.log('started!');
+            console.log(players.state, 'statee')
+            started = true;
 
         } else {
             console.log('loading buffer!');
@@ -61,6 +65,7 @@ export const AudioContextProvider = (props) => {
     const stop = () => {
         players.stopAll();
         console.log('stopped');
+        console.log(players.state)
     }
 
     const increaseVolume = () => {
@@ -139,6 +144,15 @@ export const AudioContextProvider = (props) => {
         }
     }
 
+    const getState = () => {
+        if (started) {
+            return players.state;
+
+        } else {
+            return 'not started'
+        }
+    }
+
     return (
         <AudioContext.Provider value={{
             start: start,
@@ -153,7 +167,8 @@ export const AudioContextProvider = (props) => {
             increasePitch: increasePitch,
             resetPitch: resetPitch,
             decreasePitch: decreasePitch,
-            setVolume: setVolume
+            setVolume: setVolume,
+            state: getState
         }}>
             {props.children}
         </AudioContext.Provider>

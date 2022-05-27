@@ -1,4 +1,4 @@
-import { CircularProgress, Dialog, LinearProgress, Paper, Typography } from "@mui/material";
+import { CircularProgress, Dialog, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
 import calibracion from '../assets/calibracion.png';
 import { PauseRounded } from "@mui/icons-material";
@@ -158,25 +158,6 @@ const Game = () => {
 
         return () => clearInterval(interval);
     }, [timerOn, speed]);
-
-
-    //Cuando el porcentaje sea 100%, dirigir a resumen
-    React.useEffect(() => {
-        if (Math.round((Math.floor((time / 1000)) / songDuration) * 100) > 100) {
-            audioController.stop();
-            poseController.pauseController();
-            navigate('/game-resume', {
-                state: {
-                    points: puntaje,
-                    gesturesCompleted: posesCount,
-                    accuracyRate: precision,
-                    idConcert: response.idConcert,
-                    symphonyName: response.name
-                },
-                replace: true
-            })
-        }
-    }, [time]);
 
     const renderSwitch = (param) => {
         switch (param.name) {
@@ -396,7 +377,20 @@ const Game = () => {
                     }
                 }
 
-                //console.log(aux, 'predic left');
+                if (audioController.state() === 'stopped') {
+                    audioController.stop();
+                    poseController.pauseController();
+                    navigate('/game-resume', {
+                        state: {
+                            points: puntaje,
+                            gesturesCompleted: posesCount,
+                            accuracyRate: precision,
+                            idConcert: response.idConcert,
+                            symphonyName: response.name
+                        },
+                        replace: true
+                    })
+                }
                 if (aux.length > 0) {
                     let punzadaBpm = poseController.checkPunzada(aux[0]);
                     let trianguloBpm = poseController.checkTriangulo(aux[0]);
@@ -441,7 +435,7 @@ const Game = () => {
                     }
                 }
 
-                console.log(aux, 'predict right');
+                //console.log(aux, 'predict right');
                 if (aux.length > 0) {
                     let punzadaBpmRight = poseController.checkPunzadaRight(aux[0]);
                     let trianguloBpmRight = poseController.checkTrianguloRight(aux[0]);
@@ -921,9 +915,9 @@ const Game = () => {
 
 
                     <Box sx={{ width: '30%' }}>
-                        <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {Math.round((Math.floor((time / 1000)) / songDuration) * 100)}%</Typography>
+                        {/* <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {Math.round((Math.floor((time / 1000)) / songDuration) * 100)}%</Typography> */}
                         {/* <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {("0" + Math.floor((time / 60000) % 60)).slice(-2)}:{("0" + Math.floor((time / 1000) % 60)).slice(-2)}</Typography> */}
-                        <LinearProgress variant="determinate" value={(Math.floor((time / 1000)) / songDuration) * 100} style={{ height: '10px', borderRadius: 5 }} />
+                        {/* <LinearProgress variant="determinate" value={(Math.floor((time / 1000)) / songDuration) * 100} style={{ height: '10px', borderRadius: 5 }} /> */}
                     </Box>
                     <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
                         <Box className="hover" onClick={() => { pause(false) }} style={{ backgroundColor: '#FF5E5B', borderRadius: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50px', width: '50px' }}>
