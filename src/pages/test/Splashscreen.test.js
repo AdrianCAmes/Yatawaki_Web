@@ -3,7 +3,6 @@ import '@testing-library/jest-dom/extend-expect'
 import { fireEvent, render } from '@testing-library/react'
 import Splashscreen from '../Splashscreen'
 import { BrowserRouter } from 'react-router-dom'
-import { createMemoryHistory } from 'history'
 test('render splashscreen content', () => {
     const component = render(
         <BrowserRouter>

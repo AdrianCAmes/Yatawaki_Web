@@ -212,7 +212,7 @@ const Tutorial = () => {
 
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '10%', top: '20%', zIndex: `${paso === 1 ? '3' : '1'}`, visibility: paso === 1 ? 'visible' : 'hidden', backgroundColor: '#FFFFEA', height: '60vh', width: '80vw', borderRadius: '30px', padding: '20px' }} className={`${paso === 1 ? 'canvasAnimation' : ''}`}>
                 <Typography textAlign='center' className="title-font title-dialog-tutorial">¡Bienvenido a Yatawaki! Un espacio virtual creado especialmente para que desarrolles tus habilidades de dirección orquestal</Typography>
-                <Box className="hover" sx={buttonStyle} onClick={() => { nextPaso() }}>
+                <Box data-testid="nextStepButton" className="hover" sx={buttonStyle} onClick={() => { nextPaso() }}>
                     <Typography className="title-button" fontSize='40px!important'> Siguiente</Typography>
                 </Box>
             </div>
