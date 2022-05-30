@@ -79,7 +79,7 @@ test("successfull login", async () => {
 
 })
 
-test("atras button", () => {
+test("atras button ", () => {
 
     const component = render(
         <BrowserRouter>
@@ -87,9 +87,12 @@ test("atras button", () => {
         </BrowserRouter>
     )
 
-    const loginButton = component.getByText('Atrás').parentNode
+    const backButton = component.getByText('Atrás').parentNode
 
     // fill out and submit form
-    fireEvent.click(loginButton);
+    fireEvent.click(backButton);
+
+
+    expect(window.location.pathname).toEqual('/');
 
 })
