@@ -48,3 +48,48 @@
 
 //     });
 // })
+
+import React from 'react'
+import '@testing-library/jest-dom/extend-expect'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { BrowserRouter } from 'react-router-dom'
+import Login from '../Login'
+import userEvent from '@testing-library/user-event'
+
+
+
+
+
+test("successfull login", async () => {
+
+    const component = render(
+        <BrowserRouter>
+            <Login></Login>
+        </BrowserRouter>
+    )
+
+    const emailField = component.getByTestId("username");
+    const passwordField = screen.getByTestId("password");
+    const loginButton = component.getByText('Iniciar').parentNode
+
+    // fill out and submit form
+    userEvent.type(emailField, "test@mail.com");
+    userEvent.type(passwordField, "112343asdc");
+    fireEvent.click(loginButton);
+
+})
+
+test("atras button", () => {
+
+    const component = render(
+        <BrowserRouter>
+            <Login></Login>
+        </BrowserRouter>
+    )
+
+    const loginButton = component.getByText('Atrás').parentNode
+
+    // fill out and submit form
+    fireEvent.click(loginButton);
+
+})
