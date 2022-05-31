@@ -2,7 +2,9 @@
 
 import { ArrowBackIosRounded, ArrowForwardIosRounded, MusicNote, VolumeOff } from "@mui/icons-material";
 import { Avatar } from "@mui/material";
+import { logEvent } from "firebase/analytics";
 import React, { useEffect, useState } from "react";
+import { analytics } from "../../config/init-firebase";
 
 const SymphonySlider = (props) => {
     const [current, setCurrent] = useState(0);
@@ -25,12 +27,13 @@ const SymphonySlider = (props) => {
     const nextSlide = () => {
         setAudioElement(new Audio(props.slides[current === length - 1 ? 0 : current + 1].previewTrack));
         setCurrent(current === length - 1 ? 0 : current + 1);
-
+        logEvent(analytics, { category: 'Button Click', action: 'Right Arrow Clicked',label: 'Symphony Slider'})
     }
 
     const prevSlide = () => {
         setAudioElement(new Audio(props.slides[current === 0 ? length - 1 : current - 1].previewTrack));
         setCurrent(current === 0 ? length - 1 : current - 1);
+        logEvent(analytics, { category: 'Button Click', action: 'Left Arrow Clicked',label: 'Symphony Slider'})
     }
 
     useEffect(() => {
@@ -49,7 +52,7 @@ const SymphonySlider = (props) => {
                 return (
                     <div className={index === current ? 'slide active' : 'slide'} key={index}>
 
-                        {index === current && (<img className="image hover" onClick={() => { props.selectSlider(current) }} src={slide.icon} alt="ha" />)}
+                        {index === current && (<img className="image hover" onClick={() => { props.selectSlider(current); logEvent(analytics, { category: 'Button Click', action: 'Symphony Button Clicked',label: 'Symphony Slider'}) }} src={slide.icon} alt="ha" />)}
                         {play ?
                             <Avatar className="hover" style={{ position: 'absolute', top: '10px', left: '10px' }}>
                                 <VolumeOff onClick={() => { pause() }} />

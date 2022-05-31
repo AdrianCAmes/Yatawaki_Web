@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import UserStats from "./UserStats";
 import avatar from '../../assets/Logo UPC.png';
 import GameContext from "../../context/game-context";
+import { logEvent } from "firebase/analytics";
+import { analytics } from "../../config/init-firebase";
 
 const AppBarYatawaki = (props) => {
 
@@ -28,6 +30,7 @@ const AppBarYatawaki = (props) => {
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
+        logEvent(analytics, { category: 'Button Click', action: 'Profile Icon Clicked',label: 'App Bar'})
     };
 
 
@@ -45,7 +48,7 @@ const AppBarYatawaki = (props) => {
                         <UserStats resume={props.resume}></UserStats>
                     </Grid>
                     <Grid item xs={2} align="center">
-                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                        <IconButton onClick={handleOpenUserMenu}  sx={{ p: 0 }}>
                             <Avatar sx={{ height: '80px', width: '80px' }} alt="Remy Sharp" src={props.resume ? props.resume.icon : avatar} />
                         </IconButton>
                         <Menu

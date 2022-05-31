@@ -1,5 +1,7 @@
 import { Dialog, Typography } from "@mui/material";
+import { logEvent } from "firebase/analytics";
 import React from "react";
+import { analytics } from "../../config/init-firebase";
 import GameContext from "../../context/game-context";
 import SnackBarContext from "../../context/snack-bar-context";
 import InstrumentCard from "./InstrumentCard";
@@ -35,7 +37,9 @@ const SelectInstrumentsDialog = (props) => {
                     </Typography>
                     <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap' }}>
                         {props.instruments.map((instrument, idx) => (
-                            <InstrumentCard key={idx} instrument={instrument} onClick={() => { selectInstrument(instrument) }}></InstrumentCard>
+                            <InstrumentCard key={idx} instrument={instrument} onClick={() => { selectInstrument(instrument); 
+                                logEvent(analytics, { category: 'Button Click', action: 'Select Instrument Button Clicked',label: 'Select Instrument Dialog'});
+                            }}></InstrumentCard>
                         ))}
                     </div>
 

@@ -24,14 +24,14 @@ const SocialMediaShare = (props) => {
                     </Typography>
                     <div style={{ height: '10%' }}></div>
                     <Divider>
-                        <FacebookShareButton url="localhost:3000" quote="Compartir mis resultados!">
+                        <FacebookShareButton onClick={logEvent(analytics, { category: 'Button Click', action: 'Facebook Button Clicked',label: 'Social Media Share'})} url="localhost:3000" quote="Compartir mis resultados!">
                             <FacebookIcon size={100} round={true} />
                         </FacebookShareButton>
-                        <WhatsappShareButton url="localhost:3000" quote="Compartir mis resultados!">
+                        <WhatsappShareButton onClick={logEvent(analytics, { category: 'Button Click', action: 'Whatsapp Button Clicked',label: 'Social Media Share'})} url="localhost:3000" quote="Compartir mis resultados!">
                             <WhatsappIcon size={100} round={true} />
                         </WhatsappShareButton>
 
-                        <TwitterShareButton url="localhost:3000" quote="Compartir mis resultados!">
+                        <TwitterShareButton onClick={logEvent(analytics, { category: 'Button Click', action: 'Twitter Button Clicked',label: 'Social Media Share'})} url="localhost:3000" quote="Compartir mis resultados!">
                             <TwitterIcon size={100} round={true} />
                         </TwitterShareButton>
                     </Divider>

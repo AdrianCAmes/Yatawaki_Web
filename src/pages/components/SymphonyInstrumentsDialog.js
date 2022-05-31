@@ -1,7 +1,9 @@
 import { Box, CircularProgress, Dialog, Typography } from "@mui/material";
+import { logEvent } from "firebase/analytics";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import InstrumentApis from "../../apis/instrument-apis";
+import { analytics } from "../../config/init-firebase";
 import GameContext from "../../context/game-context";
 import InstrumentCard from "./InstrumentCard";
 import SelectInstrumentsDialog from "./SelectInstrumentsDialog";
@@ -67,7 +69,8 @@ const SymphonyInstrumentsDialog = (props) => {
                                 state: {
                                     symphonyId: props.symphony.idUnlockable,
                                 },
-                            })
+                            }); 
+                            logEvent(analytics, { category: 'Button Click', action: 'Continue Button Clicked',label: 'Symphony Instrument Dialog'});
                         }}>
                             <Typography style={{ fontSize: '30px', color: '#FFF' }}> Continuar</Typography>
                         </Box>

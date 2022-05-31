@@ -18,6 +18,8 @@ import viola from '../assets/songs/Mozart String Quartet No. 17, K.458, Movement
 import { motion, AnimatePresence } from 'framer-motion';
 import { MechanicalCounter } from "mechanical-counter";
 import SnackBarContext from "../context/snack-bar-context";
+import { logEvent } from "firebase/analytics";
+import { analytics } from "../config/init-firebase";
 
 let buttonStyle = { width: '150px', height: '50px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '20px' };
 
@@ -920,7 +922,7 @@ const Game = () => {
                         {/* <LinearProgress variant="determinate" value={(Math.floor((time / 1000)) / songDuration) * 100} style={{ height: '10px', borderRadius: 5 }} /> */}
                     </Box>
                     <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-                        <Box className="hover" onClick={() => { pause(false) }} style={{ backgroundColor: '#FF5E5B', borderRadius: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50px', width: '50px' }}>
+                        <Box className="hover" onClick={() => { pause(false); logEvent(analytics, { category: 'Button Click', action: 'Pause Button Clicked',label: 'Game Page'}) }} style={{ backgroundColor: '#FF5E5B', borderRadius: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50px', width: '50px' }}>
                             <PauseRounded style={{ color: '#FFF', fontSize: '50px' }} />
                         </Box>
                         <PauseMenu open={openDialog} resume={newCalibration} exit={navigate2Menu}></PauseMenu>

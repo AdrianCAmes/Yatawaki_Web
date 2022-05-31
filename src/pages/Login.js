@@ -8,6 +8,8 @@ import { Box } from "@mui/system";
 import ImageAutoSlider from "../components/ImageAutoSlider";
 import AuthApi from "../apis/auth-apis";
 import GameContext from "../context/game-context";
+import { logEvent } from "firebase/analytics"
+import { analytics } from "../config/init-firebase";
 
 let buttonStyle = { width: '300px', height: '60px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '30px' };
 
@@ -52,7 +54,7 @@ const Login = () => {
     return (
         <React.Fragment>
             <Paper square={true} sx={{ backgroundColor: 'primary.light', height: '100vh' }} elevation={0}>
-                <div className="hover" onClick={() => { toSplashscreen() }} style={{ display: 'flex', justifyContent: 'start', alignItems: 'center', margin: '20px', position: 'absolute' }}>
+                <div className="hover" onClick={() => { toSplashscreen(); logEvent(analytics, { category: 'Button Click', action: 'Back From Login',label: 'Login Page'}); }} style={{ display: 'flex', justifyContent: 'start', alignItems: 'center', margin: '20px', position: 'absolute' }}>
                     <ArrowBackIosRounded fontSize="medium" />
                     <Typography fontWeight={600} fontSize={24} sx={{ marginLeft: '10px' }}>Atrás</Typography>
                 </div>
@@ -68,12 +70,14 @@ const Login = () => {
 
                     <Grid item xs={7} container direction='column' justifyContent='center' alignItems='center'>
 
-                        <TextField placeholder="Escribe tu usuario" sx={{ width: '80%!important', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setUniqueIdentifier(event.target.value)}></TextField>
+                        <TextField placeholder="Escribe tu usuario" sx={{ width: '80%!important', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => { setUniqueIdentifier(event.target.value); }}></TextField>
 
                         <TextField sx={{ width: '80%', mt: 4, backgroundColor: '#FFF' }}
                             type="password"
                             label="Contraseña"
                             onChange={(event) => setPassword(event.target.value)}
+                            onKeyUp={() => logEvent(analytics, { category: 'Typing On Field', action: 'Typing Text On Password Field',label: 'Login Page'}) }
+                            onClick={() => logEvent(analytics, { category: 'Field Click', action: 'Password Field Clicked',label: 'Login Page'}) }
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
@@ -85,11 +89,12 @@ const Login = () => {
                         />
 
                         {loading && <CircularProgress />}
-                        <div className="hover" onClick={() => { uniqueIdentifier == null || uniqueIdentifier == '' ? toRegister() : navigate('/forgot-password') }} style={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
+                        <div className="hover" onClick={() => { uniqueIdentifier == null || uniqueIdentifier == '' ? toRegister() : (function() { navigate('/forgot-password'); logEvent(analytics, { category: 'Button Click', action: 'Forgot Password clicked',label: 'Login Page'});})()
+                                }} style={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
                             <Typography fontWeight={600} fontSize={24} sx={{ marginTop: '10px' }}>{uniqueIdentifier == null || uniqueIdentifier == '' ? '¿Aún no estás registrado?' : '¿Olvidaste tu contraseña?'}</Typography>
                         </div>
 
-                        <Box className="hover" sx={buttonStyle} onClick={() => { authenticate() }}>
+                        <Box className="hover" sx={buttonStyle} onClick={() => { authenticate(); logEvent(analytics, { category: 'Button Click', action: 'Login Button Clicked',label: 'Login Page'})}}>
                             <Typography className="title-button"> Iniciar</Typography>
                         </Box>
                     </Grid>
