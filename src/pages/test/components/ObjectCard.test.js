@@ -1,8 +1,8 @@
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
-import { render } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
-import { AchievementCard, AvatarCard, ItemCard, SymphonyCard } from '../../components/ObjectCard'
+import { AchievementCard, AvatarCard, ItemCard, ItemToTradeCard, SymphonyCard } from '../../components/ObjectCard'
 
 test('render Object Symphony Card', () => {
     const symphony = {
@@ -67,5 +67,45 @@ test('render Object Item Card', () => {
 
     expect(component.container).toHaveTextContent(item.description)
     expect(component.container).toHaveTextContent(item.coinsCost)
+
+})
+
+test('render Object Item to Trade Card', () => {
+    const item = {
+        description: 'Esta es la prueba de descripcion',
+        name: 'Esta es la prueba de name'
+    }
+
+    const component = render(
+        <BrowserRouter>
+            <ItemToTradeCard item={item}></ItemToTradeCard>
+        </BrowserRouter>
+    )
+
+    expect(component.container).toHaveTextContent(item.description)
+    expect(component.container).toHaveTextContent(item.name)
+
+})
+
+test('call Item Card', () => {
+    const item = {
+        description: 'Esta es la prueba de descripcion',
+        coinsCost: 203
+    }
+
+    const mockHandler = jest.fn()
+
+    const component = render(
+        <BrowserRouter>
+            <ItemCard item={item} onClickTrade={mockHandler}></ItemCard>
+        </BrowserRouter>
+    )
+
+    const buttonCoins = component.getByText(item.coinsCost).parentNode
+    fireEvent.click(buttonCoins)
+
+    expect(mockHandler.mock.calls).toHaveLength(1)
+
+
 
 })

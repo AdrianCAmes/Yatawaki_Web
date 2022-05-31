@@ -21,7 +21,7 @@ test('test Pause Calls', () => {
 
     const buttonExit = component.getByText('Salir')
     fireEvent.click(buttonExit)
-2
+
     expect(mockHandler.mock.calls).toHaveLength(2)
 
 })
