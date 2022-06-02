@@ -1,0 +1,587 @@
+ /* Shared */
+ html, body, #app, #app>div, #root {
+     height: 100vh;
+ }
+
+ @font-face {
+     font-family: 'Kubots';
+     src: url(./fonts/KubotsExtraLight-EaE1z.ttf);
+ }
+
+ @font-face {
+     font-family: 'SFP';
+     src: url(./fonts/SFPRODISPLAYREGULAR.OTF);
+ }
+
+ html * {
+     font-family: 'SFP', sans-serif !important;
+ }
+
+ .title-font {
+     font-family: 'Kubots', sans-serif !important;
+     font-weight: 1000 !important;
+ }
+
+ .hover {
+     cursor: pointer;
+ }
+
+ .hover:hover {
+     opacity: 0.9;
+     transform: scale(1.01);
+ }
+
+ /* end Shared */
+
+ /* SliderImg */
+ @keyframes fade {
+     0%, 100% {
+         opacity: 0
+     }
+
+     90% {
+         opacity: 1
+     }
+ }
+
+ .img-slider {
+     height: 100%;
+     max-height: 400px;
+     width: auto;
+     object-fit: contain;
+     animation: fade 4s infinite;
+ }
+
+ /* end SliderImg */
+
+ /* SymphonySlider */
+
+ .slider {
+     position: relative;
+     top: 30px;
+     height: 50vh;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+ }
+
+ .image {
+     height: 45vh;
+     max-width: 700px;
+     border-radius: 10px;
+ }
+
+ .right-arrow {
+     position: absolute;
+     top: 50%;
+     right: 200px;
+     font-size: 4rem !important;
+     color: #FFB5B4;
+     z-index: 10;
+     cursor: pointer;
+     user-select: none;
+ }
+
+ .left-arrow {
+     position: absolute;
+     top: 50%;
+     left: 200px;
+     font-size: 4rem !important;
+     color: #FFB5B4;
+     z-index: 10;
+     cursor: pointer;
+     user-select: none;
+ }
+
+ .slide {
+     opacity: 0;
+     transition-duration: 2s ease;
+ }
+
+ .slide.active {
+     opacity: 1;
+     transition-duration: 2s;
+     transform: scale(1.08);
+ }
+
+ .container-height {
+     max-height: 250px;
+     margin-bottom: 20px;
+ }
+
+ @media only screen and (max-height: 800px) {
+     .container-height {
+         max-height: 200px;
+     }
+ }
+
+ @media only screen and (max-height: 700px) {
+     .container-height {
+         margin-top: 65px !important;
+         max-height: 150px;
+     }
+ }
+
+ @media only screen and (max-width: 1200px) {
+
+     .image {
+         max-height: 300px;
+     }
+
+     .right-arrow {
+         right: 50px;
+     }
+
+     .left-arrow {
+         left: 50px;
+     }
+
+ }
+
+
+ /* end SymphonySlider */
+
+
+
+ /* SplashScreen */
+
+ .title-logo {
+     font-size: 240px !important;
+     color: #FF5E5B;
+     line-height: 200px !important;
+ }
+
+ .title-button {
+     font-size: 40px !important;
+     color: #FFF;
+ }
+
+ .image-upc {
+     position: absolute;
+     right: 30px;
+     bottom: 30px;
+     height: 100px;
+     width: 100px;
+ }
+
+ /* end SplashScreen */
+
+ /* Login */
+
+ .title-login {
+     font-size: 180px !important;
+     color: #FF5E5B;
+     line-height: 200px !important;
+     padding-top: 50px !important;
+ }
+
+ /* end Login */
+
+ /* AppBar */
+ .title-appbar {
+     font-size: 7vw !important;
+     color: #FF5E5B;
+     line-height: 10px !important;
+ }
+
+ .star-five {
+     margin: 50px 0;
+     position: relative;
+     display: block;
+     color: #4285F4;
+     width: 0px;
+     height: 0px;
+     border-right: 100px solid transparent;
+     border-bottom: 70px solid #4285F4;
+     border-left: 100px solid transparent;
+     transform: rotate(35deg);
+ }
+
+ .star-five:before {
+     border-bottom: 80px solid #4285F4;
+     border-left: 30px solid transparent;
+     border-right: 30px solid transparent;
+     position: absolute;
+     height: 0;
+     width: 0;
+     top: -45px;
+     left: -65px;
+     display: block;
+     content: '';
+     transform: rotate(-35deg);
+ }
+
+ .star-five:after {
+     position: absolute;
+     display: block;
+     color: #4285F4;
+     top: 3px;
+     left: -105px;
+     width: 0px;
+     height: 0px;
+     border-right: 100px solid transparent;
+     border-bottom: 70px solid #4285F4;
+     border-left: 100px solid transparent;
+     transform: rotate(-70deg);
+     content: '';
+ }
+
+ /* end AppBar */
+
+
+ /* Perfil */
+ .title-perfil {
+     font-size: 80px !important;
+     color: #FF5E5B;
+     text-align: center;
+     margin-top: 20px !important;
+     margin-bottom: 50px !important;
+ }
+
+ .subtitle-perfil {
+     font-size: 30px !important;
+     color: #FF5E5B;
+ }
+
+ .button-perfil {
+     font-size: 25px !important;
+     color: #FFF;
+ }
+
+ .button-perfil2 {
+     font-size: 25px !important;
+     color: #000;
+ }
+
+ /* end Perfil */
+
+ /* Game Resume */
+ .height-size {
+     font-size: 9vw !important;
+ }
+
+ .height-size2 {
+     font-size: 2.8vw !important;
+ }
+
+ @media only screen and (max-height: 800px) {
+     .height-size {
+         font-size: 100px !important;
+         line-height: 60px !important;
+     }
+
+     .height-size2 {
+         font-size: 50px !important;
+     }
+ }
+
+ @media only screen and (max-width: 1300px) {
+     .height-size {
+         font-size: 11vw !important;
+     }
+
+     .height-size2 {
+         font-size: 4vw !important;
+     }
+ }
+
+ /* end Game Resume */
+
+ /* Game animation */
+
+ .piano {
+     transform: rotate(0deg);
+     animation: fadePiano2 1s;
+ }
+
+ .pianoAnimation {
+     animation: fadePiano 3s infinite;
+ }
+
+
+ @keyframes fadePiano {
+     0% {
+         transform: rotate(0deg) scale(1)
+     }
+
+     40% {
+         transform: rotate(-5deg) scale(1.2)
+     }
+
+     60% {
+         transform: rotate(5deg) scale(1.2)
+     }
+
+     100% {
+         transform: rotate(0deg) scale(1)
+     }
+ }
+
+ @keyframes fadePiano2 {
+     from {
+         transform: rotate(-5deg) scale(1.2)
+     }
+
+     to {
+         transform: rotate(0deg) scale(1)
+     }
+ }
+
+ .violin {
+     transform: rotate(0deg) scaleX(-1);
+     animation: fadeViolin2 1s;
+
+ }
+
+ .violinAnimation {
+     animation: fadeViolin 1.8s infinite;
+ }
+
+
+ @keyframes fadeViolin {
+     0% {
+         transform: rotate(0deg) scale(1) scaleX(-1)
+     }
+
+     40% {
+         transform: rotate(10deg) scale(1.1) scaleX(-1)
+     }
+
+     60% {
+         transform: rotate(-10deg) scale(1.1) scaleX(-1)
+     }
+
+     100% {
+         transform: rotate(0deg) scale(1) scaleX(-1)
+     }
+ }
+
+ @keyframes fadeViolin2 {
+     from {
+         transform: rotate(5deg) scale(1.2) scaleX(-1)
+     }
+
+     to {
+         transform: rotate(0deg) scale(1) scaleX(-1)
+     }
+ }
+
+ .guitar {
+     transform: rotate(-20deg);
+     animation: fadeGuitar2 1s;
+
+ }
+
+ .guitarAnimation {
+     animation: fadeGuitar 1.8s infinite;
+ }
+
+
+ @keyframes fadeGuitar {
+     0% {
+         transform: rotate(-20deg) scale(1)
+     }
+
+     40% {
+         transform: rotate(-30deg) scale(1.1)
+     }
+
+     60% {
+         transform: rotate(-10deg) scale(1.1)
+     }
+
+     100% {
+         transform: rotate(-20deg) scale(1)
+     }
+ }
+
+ @keyframes fadeGuitar2 {
+     from {
+         transform: rotate(-25deg) scale(1.1);
+     }
+
+     to {
+         transform: rotate(-20deg) scale(1);
+     }
+ }
+
+ .chello {
+     transform: rotate(40deg);
+     animation: fadeChello2 1s;
+ }
+
+ .chelloAnimation {
+     animation: fadeChello 1.8s infinite;
+ }
+
+
+ @keyframes fadeChello {
+     0% {
+         transform: rotate(40deg) scale(1)
+     }
+
+     40% {
+         transform: rotate(50deg) scale(1.1)
+     }
+
+     60% {
+         transform: rotate(30deg) scale(1.1)
+     }
+
+     100% {
+         transform: rotate(40deg) scale(1)
+     }
+ }
+
+ @keyframes fadeChello2 {
+     from {
+         transform: rotate(45deg) scale(1);
+     }
+
+     to {
+         transform: rotate(40deg) scale(1);
+     }
+ }
+
+
+
+ .canvasAnimation {
+     animation: canvas 2s;
+ }
+
+ @keyframes canvas {
+     0% {
+         opacity: 0.5;
+         transform: scale(0)
+     }
+
+     100% {
+         opacity: 1;
+         transform: scale(1)
+     }
+ }
+
+ .add {
+     color: 'green'
+ }
+
+ .remove {
+     color: 'red'
+ }
+
+ /* end Game animations */
+
+
+ .title-dialog-tutorial {
+     font-size: 40px !important;
+ }
+
+ .container-control {
+     position: absolute;
+     bottom: 3%;
+     left: 3%;
+     width: 180px;
+     background-color: #9381ff;
+     padding: 10px 20px;
+     border-radius: 50px;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+ }
+
+ .container-control span {
+     color: white;
+     font-family: 'Kubots';
+     font-weight: bold;
+     font-size: 25px;
+ }
+
+ .container-svg {
+     background-color: rgb(255, 255, 255, 0.15);
+     border-radius: 30px;
+     padding: 10px;
+     color: white;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     margin-right: 10px;
+     width: 30px;
+     height: 30px;
+ }
+
+ .point {
+     font-size: 30px;
+     font-family: 'Kubots';
+     font-weight: bold;
+     color: #9381ff;
+     text-shadow: 0 0 10px #b8b8ff;
+ }
+
+ .container-control-points {
+     position: absolute;
+     bottom: 3%;
+     right: 2%;
+     width: 220px;
+     background-color: #ffeedd;
+     padding: 10px 20px;
+     border-radius: 50px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     margin-right: 10px;
+ }
+
+ .container-control-points span {
+     color: black;
+     font-family: 'Kubots';
+     font-weight: bold;
+     font-size: 25px;
+ }
+
+ .container-points-svg {
+     background-color: rgb(0, 0, 0, 0.15);
+     border-radius: 30px;
+     padding: 10px;
+     color: black;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     margin-right: 10px;
+     width: 30px;
+     height: 30px;
+ }
+
+ .container-control2 {
+     position: absolute;
+     bottom: 3%;
+     left: 20%;
+     height: 50px;
+     width: 180px;
+     background-color: #9381ff;
+     padding: 10px 20px;
+     border-radius: 50px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     margin-right: 10px;
+ }
+
+ .container-control2 span {
+     color: white;
+     font-family: 'Kubots';
+     font-weight: bold;
+     font-size: 25px;
+ }
+
+ .container-svg2 {
+     background-color: rgb(255, 255, 255, 0.15);
+     border-radius: 30px;
+     padding: 10px;
+     color: white;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     margin-right: 10px;
+     width: 30px;
+     height: 30px;
+ }
