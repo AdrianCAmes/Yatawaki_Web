@@ -2,7 +2,7 @@ import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
 import { render } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
-import InstrumentCard from '../../components/InstrumentCard'
+import InstrumentCard from '../../../pages/components/InstrumentCard'
 
 test('render Instrument Card', () => {
     const instrument = {

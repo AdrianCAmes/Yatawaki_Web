@@ -2,7 +2,7 @@ import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
 import { render } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
-import AppBarYatawaki from '../../components/AppBarYatawaki'
+import AppBarYatawaki from '../../../pages/components/AppBarYatawaki'
 
 test('render GameResults', () => {
     const resume = {

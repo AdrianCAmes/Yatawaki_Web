@@ -2,7 +2,7 @@ import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
 import { fireEvent, render } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
-import { AchievementCard, AvatarCard, ItemCard, ItemToTradeCard, SymphonyCard } from '../../components/ObjectCard'
+import { AchievementCard, AvatarCard, ItemCard, ItemToTradeCard, SymphonyCard } from '../../../pages/components/ObjectCard'
 
 test('render Object Symphony Card', () => {
     const symphony = {
