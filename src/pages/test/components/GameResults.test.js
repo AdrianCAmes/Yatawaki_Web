@@ -25,6 +25,4 @@ test('render AppBarYatawaki', () => {
     expect(component.container).toHaveTextContent(results.gainedCoins)
     expect(component.container).toHaveTextContent(results.gainedExperience)
 
-    component.debug()
-
 })
