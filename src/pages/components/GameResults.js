@@ -76,14 +76,13 @@ const GameResults = (props) => {
                         </Grid>
                     </Box>
                     <Divider style={{ width: '90%', marginTop: '30px' }}>
-                        <FacebookShareButton windowWidth={1000} windowHeight={1000} url={window.location.href} title={`He conseguido ${props.results ? props.results.points : '--'} puntos y ${props.results ? Math.round(props.results.accuracyRate, 2) : '--'}% de precisión en ${props.results ? props.results.symphonyName : '--'}.\nPrueba YATAWAKI en:`}>
+                        <FacebookShareButton windowWidth={1000} windowHeight={1000} url={window.location.hostname} quote={`He conseguido ${props.results ? props.results.points : '--'} puntos y ${props.results ? Math.round(props.results.accuracyRate, 2) : '--'}% de precisión en ${props.results ? props.results.symphonyName : '--'}.\nPrueba YATAWAKI en:`}>
                             <FacebookIcon size={50} round={true} />
                         </FacebookShareButton>
-                        <WhatsappShareButton windowWidth={1000} windowHeight={1000} url={window.location.href} quote={`He conseguido ${props.results ? props.results.points : '--'} puntos y ${props.results ? Math.round(props.results.accuracyRate, 2) : '--'}% de precisión en ${props.results ? props.results.symphonyName : '--'}.\nPrueba YATAWAKI en:`}>
+                        <WhatsappShareButton windowWidth={1000} windowHeight={1000} url={window.location.hostname} title={`He conseguido ${props.results ? props.results.points : '--'} puntos y ${props.results ? Math.round(props.results.accuracyRate, 2) : '--'}% de precisión en ${props.results ? props.results.symphonyName : '--'}.\nPrueba YATAWAKI en:`}>
                             <WhatsappIcon size={50} round={true} />
                         </WhatsappShareButton>
-
-                        <TwitterShareButton windowWidth={1000} windowHeight={1000} url={window.location.href} title={`He conseguido ${props.results ? props.results.points : '--'} puntos y ${props.results ? Math.round(props.results.accuracyRate, 2) : '--'}% de precisión en ${props.results ? props.results.symphonyName : '--'}.\nPrueba  YATAWAKI en:`}>
+                        <TwitterShareButton windowWidth={1000} windowHeight={1000} url={window.location.hostname} title={`He conseguido ${props.results ? props.results.points : '--'} puntos y ${props.results ? Math.round(props.results.accuracyRate, 2) : '--'}% de precisión en ${props.results ? props.results.symphonyName : '--'}.\nPrueba  YATAWAKI en:`}>
                             <TwitterIcon size={50} round={true} />
                         </TwitterShareButton>
                     </Divider>
