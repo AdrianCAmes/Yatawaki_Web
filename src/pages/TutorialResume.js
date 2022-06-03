@@ -58,10 +58,10 @@ const TutorialResume = () => {
         const aresults = {
             "idConcert": 1,
             "gainedExperience": 324,
-            "points": 234,
-            "accuracyRate": 234,
-            "gesturesCompleted": 23,
-            "gainedCoins": 2341,
+            "points": '234',
+            "accuracyRate": '234',
+            "gesturesCompleted": '23',
+            "gainedCoins": '2341',
             "symphonyName": "Symphony No9"
         }
         setResultsFinal(aresults)
@@ -145,7 +145,7 @@ const TutorialResume = () => {
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '20%', top: '25%', zIndex: `${paso === 1 ? '3' : '1'}`, visibility: paso === 1 ? 'visible' : 'hidden', backgroundColor: '#FFFFEA', width: '60vw', borderRadius: '30px', padding: '30px' }} className={`${paso === 1 ? 'canvasAnimation' : ''}`}>
                 <Typography textAlign='center' className="title-font title-dialog-tutorial">FELICIDADES!</Typography>
                 <Typography textAlign='center' className="title-font title-dialog-tutorial">Has culminado tu primera partida</Typography>
-                <Box className="hover" sx={buttonStyle2} onClick={() => { nextPaso() }}>
+                <Box data-testid="nextStepButton" className="hover" sx={buttonStyle2} onClick={() => { nextPaso() }}>
                     <Typography className="title-button" fontSize='40px!important'> Siguiente</Typography>
                 </Box>
             </div>

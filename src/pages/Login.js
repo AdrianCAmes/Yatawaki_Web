@@ -68,9 +68,9 @@ const Login = () => {
 
                     <Grid item xs={7} container direction='column' justifyContent='center' alignItems='center'>
 
-                        <TextField placeholder="Escribe tu usuario" sx={{ width: '80%!important', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setUniqueIdentifier(event.target.value)}></TextField>
+                        <TextField data-testid="username" placeholder="Escribe tu usuario" sx={{ width: '80%!important', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setUniqueIdentifier(event.target.value)}></TextField>
 
-                        <TextField sx={{ width: '80%', mt: 4, backgroundColor: '#FFF' }}
+                        <TextField data-testid="password" sx={{ width: '80%', mt: 4, backgroundColor: '#FFF' }}
                             type="password"
                             label="Contraseña"
                             onChange={(event) => setPassword(event.target.value)}
