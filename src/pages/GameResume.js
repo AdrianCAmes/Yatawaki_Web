@@ -52,13 +52,14 @@ const GameResume = () => {
                 "symphonyName": "Symphony No9"
             }
         } else {
+            let points = state.points > 0 ? state.point : 0
             aresults = {
                 "idConcert": state.idConcert,
-                "gainedExperience": (state.points * state.gesturesCompleted) / 20,
-                "points": state.points > 0 ? state.point : 0,
+                "gainedExperience": (points * state.gesturesCompleted) / 20,
+                "points": points,
                 "accuracyRate": state.accuracyRate,
                 "gesturesCompleted": state.gesturesCompleted,
-                "gainedCoins": (state.points * state.gesturesCompleted) / 150,
+                "gainedCoins": (points * state.gesturesCompleted) / 150,
                 "symphonyName": state.symphonyName
             }
         }

@@ -366,6 +366,26 @@ const Game = () => {
         }
     }
 
+    const [finished, setFinished] = React.useState(false);
+
+
+    React.useEffect(() => {
+        if (finished) {
+            audioController.stop();
+            poseController.pauseController();
+            navigate('/game-resume', {
+                state: {
+                    points: puntaje,
+                    gesturesCompleted: posesCount,
+                    accuracyRate: precision,
+                    idConcert: response.idConcert,
+                    symphonyName: response.name
+                },
+                replace: true
+            })
+        }
+    }, [finished]);
+
     const poseDecoderLeft = async (predictionLeft) => {
         if (predictionLeft) {
             const aux = [];
@@ -378,18 +398,7 @@ const Game = () => {
                 }
 
                 if (audioController.state() === 'stopped') {
-                    audioController.stop();
-                    poseController.pauseController();
-                    navigate('/game-resume', {
-                        state: {
-                            points: puntaje,
-                            gesturesCompleted: posesCount,
-                            accuracyRate: precision,
-                            idConcert: response.idConcert,
-                            symphonyName: response.name
-                        },
-                        replace: true
-                    })
+                    setFinished(true);
                 }
                 if (aux.length > 0) {
                     let punzadaBpm = poseController.checkPunzada(aux[0]);
