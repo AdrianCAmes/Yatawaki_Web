@@ -120,9 +120,19 @@ const Register = () => {
             .finally(() => setLoading(false))
     }
 
-    const nextStep = () => {
+    const reset = () => {
+        setNicknameError(false);
+        setFirstnameError(false);
+        setLastnameError(false);
+        setMailError(false);
+        setPasswordError(false);
+    }
 
+    const nextStep = () => {
+        reset();
         let errorExist = false;
+        let mailNoValido = false;
+        let datoInvalido = false;
 
         if (firstname === "" || firstname === null) {
             setFirstnameError(true);
@@ -132,15 +142,42 @@ const Register = () => {
             setLastnameError(true);
             errorExist = true;
         }
+        console.log(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail), mail)
+
         if (mail === "" || mail === null) {
             setMailError(true);
             errorExist = true;
+        }
+
+        if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+            setMailError(true);
+            mailNoValido = true;
+        }
+
+        if (firstname.length < 3) {
+            setFirstnameError(true);
+            datoInvalido = true;
+        }
+
+        if (lastname.length < 3) {
+            setLastnameError(true);
+            datoInvalido = true;
         }
 
         if (errorExist) {
             snackBarContext.onOpen({
                 severity: "error",
                 message: "Completa todas los campos"
+            });
+        } else if (mailNoValido) {
+            snackBarContext.onOpen({
+                severity: "error",
+                message: "El email es inválido"
+            });
+        } else if (datoInvalido) {
+            snackBarContext.onOpen({
+                severity: "error",
+                message: "Ingresa datos de mas de 2 caracteres"
             });
         } else {
             setStep(step + 1);
