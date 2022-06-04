@@ -91,7 +91,7 @@ const Register = () => {
                 .catch((error) => {
                     snackBarContext.onOpen({
                         severity: "error",
-                        message: "Correo ya existe"
+                        message: "El usuario ya se encuentra registrado"
                     });
                 })
                 .finally(() => setLoading(false))
@@ -120,9 +120,19 @@ const Register = () => {
             .finally(() => setLoading(false))
     }
 
-    const nextStep = () => {
+    const reset = () => {
+        setNicknameError(false);
+        setFirstnameError(false);
+        setLastnameError(false);
+        setMailError(false);
+        setPasswordError(false);
+    }
 
+    const nextStep = () => {
+        reset();
         let errorExist = false;
+        let mailNoValido = false;
+        let datoInvalido = false;
 
         if (firstname === "" || firstname === null) {
             setFirstnameError(true);
@@ -132,15 +142,41 @@ const Register = () => {
             setLastnameError(true);
             errorExist = true;
         }
+
         if (mail === "" || mail === null) {
             setMailError(true);
             errorExist = true;
+        }
+
+        if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+            setMailError(true);
+            mailNoValido = true;
+        }
+
+        if (firstname.length < 3) {
+            setFirstnameError(true);
+            datoInvalido = true;
+        }
+
+        if (lastname.length < 3) {
+            setLastnameError(true);
+            datoInvalido = true;
         }
 
         if (errorExist) {
             snackBarContext.onOpen({
                 severity: "error",
                 message: "Completa todas los campos"
+            });
+        } else if (mailNoValido) {
+            snackBarContext.onOpen({
+                severity: "error",
+                message: "El email es inválido"
+            });
+        } else if (datoInvalido) {
+            snackBarContext.onOpen({
+                severity: "error",
+                message: "Ingresa datos de mas de 2 caracteres"
             });
         } else {
             setStep(step + 1);
@@ -199,9 +235,9 @@ const Register = () => {
 
                                 <Divider sx={{ width: '80%', mt: 2, }}>O</Divider>
 
-                                <TextField error={firstnameError} placeholder="Ingresa tu nombre" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setFirstname(event.target.value)} value={firstname}></TextField>
-                                <TextField error={lastnameError} placeholder="Ingresa tu apelido" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setLastname(event.target.value)} value={lastname}></TextField>
-                                <TextField error={mailError} placeholder="Ingresa tu correo electronico" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setMail(event.target.value)} value={mail}></TextField>
+                                <TextField label={"Nombres"} error={firstnameError} placeholder="Ej: Gonzalo Sebastian" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setFirstname(event.target.value)} value={firstname}></TextField>
+                                <TextField label={"Apellidos"} error={lastnameError} placeholder="Ej: Ames Rodriguez" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setLastname(event.target.value)} value={lastname}></TextField>
+                                <TextField label={"Correo electronico"} error={mailError} placeholder="Ej: nombre@email.com" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setMail(event.target.value)} value={mail}></TextField>
 
                                 <Box className="hover" sx={buttonStyle} onClick={() => { nextStep() }}>
                                     <Typography className="title-button"> Siguiente</Typography>
@@ -215,9 +251,9 @@ const Register = () => {
                                     <ArrowBackIosRounded fontSize="small" />
                                     <Typography fontWeight={600} fontSize={20} sx={{ marginLeft: '10px' }}>Regresar a datos personales</Typography>
                                 </div>
-                                <TextField error={nicknameError} placeholder="Ingresa tu usuario" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setNickname(event.target.value)}></TextField>
+                                <TextField label={"Nickname"} error={nicknameError} placeholder="Ej: Doppelgangerr" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setNickname(event.target.value)}></TextField>
 
-                                <TextField sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} type="password" error={passwordError} label="Contraseña" onChange={(event) => setPassword(event.target.value)}
+                                <TextField sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} type="password" error={passwordError} label="Contraseña" placeholder="Debe contener letras y números" onChange={(event) => setPassword(event.target.value)}
                                     InputProps={{
                                         startAdornment: (
                                             <InputAdornment position="start">

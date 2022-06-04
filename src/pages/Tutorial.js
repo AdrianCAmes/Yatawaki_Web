@@ -1,4 +1,4 @@
-import { LinearProgress, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import React, { useState } from "react";
 import { PauseRounded } from "@mui/icons-material";
 import { Box } from "@mui/system";
@@ -11,7 +11,8 @@ import cruz from '../assets/Cruz.gif';
 import triangulo from '../assets/Triangulo.gif';
 import pitchR from '../assets/Pitch Grave.gif';
 import pitchL from '../assets/Pitch Agudo.gif';
-
+import { motion } from 'framer-motion';
+import { MechanicalCounter } from "mechanical-counter";
 
 let buttonStyle = { width: '300px', height: '50px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '30px' };
 
@@ -168,6 +169,8 @@ const Tutorial = () => {
 
     }, [play]);
 
+    const transition = { duration: 0.3, yoyo: Infinity, ease: 'easeInOut' };
+    const transition2 = { duration: 1.5, yoyo: Infinity, ease: 'easeInOut' };
 
 
 
@@ -182,8 +185,7 @@ const Tutorial = () => {
 
 
                 <Box sx={{ width: '50%', marginLeft: '40px' }}>
-                    <Typography color='secondary' fontSize="30px" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}> {2}%</Typography>
-                    <LinearProgress variant="determinate" value={20} style={{ height: '10px', borderRadius: 5 }} />
+
                 </Box>
 
             </div>
@@ -200,11 +202,91 @@ const Tutorial = () => {
                     <div key={idx}>{renderSwitch(instrument)}</div>
                 ))}
 
-                <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '2%' }}> BPM: 122</Typography>
-                <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', left: '16%' }}> Volume: {70}%</Typography>
-
-                <Typography fontWeight='600' fontSize='30px' className="canvasAnimation" style={{ position: 'absolute', bottom: '3%', right: '2%', zIndex: '9999' }}> Puntaje: {3}</Typography>
-
+                <div className="container-control">
+                    <div className="container-svg">
+                        <motion.svg
+                            width="24"
+                            height="24"
+                            strokeWidth="1.5"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            initial={{ scale: 1 }}
+                            animate={{ scale: 1.1 }}
+                            transition={transition}
+                        >
+                            <motion.path
+                                d="M22 8.86222C22 10.4087 21.4062 11.8941 20.3458 12.9929C17.9049 15.523 15.5374 18.1613 13.0053 20.5997C12.4249 21.1505 11.5042 21.1304 10.9488 20.5547L3.65376 12.9929C1.44875 10.7072 1.44875 7.01723 3.65376 4.73157C5.88044 2.42345 9.50794 2.42345 11.7346 4.73157L11.9998 5.00642L12.2648 4.73173C13.3324 3.6245 14.7864 3 16.3053 3C17.8242 3 19.2781 3.62444 20.3458 4.73157C21.4063 5.83045 22 7.31577 22 8.86222Z"
+                                stroke="currentColor"
+                                initial={{ width: 24, height: 24 }}
+                                animate={{ width: 34, height: 34 }}
+                                strokeLinejoin="round"
+                                transition={transition}
+                            />
+                        </motion.svg>
+                    </div>
+                    <MechanicalCounter height={30} text={`${Math.round(122, 0)} bpm`} />
+                </div>
+                <div className="container-control2">
+                    <div className="container-svg2">
+                        <motion.svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            initial={{ scale: 1 }}
+                            animate={{ scale: 1.1 }}
+                            transition={transition}
+                        >
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                        </motion.svg>
+                    </div>
+                    <span>{70}%</span>
+                </div>
+                <div className="container-control-points">
+                    <div className="container-points-svg">
+                        <motion.svg
+                            width="28"
+                            height="28"
+                            stroke-width="1.5"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <motion.path
+                                d="M1.5 12.5L5.57574 16.5757C5.81005 16.8101 6.18995 16.8101 6.42426 16.5757L9 14"
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                initial={{ pathLength: 0 }}
+                                animate={{ pathLength: 1 }}
+                                transition={transition2}
+                            />
+                            <motion.path
+                                d="M16 7L12 11"
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                initial={{ pathLength: 0 }}
+                                animate={{ pathLength: 1 }}
+                                transition={transition2}
+                            />
+                            <motion.path
+                                d="M7 12L11.5757 16.5757C11.8101 16.8101 12.1899 16.8101 12.4243 16.5757L22 7"
+                                stroke="currentColor"
+                                strokeLinejoin="round"
+                                initial={{ pathLength: 0 }}
+                                animate={{ pathLength: 1 }}
+                                transition={transition2}
+                            />
+                        </motion.svg>
+                    </div>
+                    <span>{129} puntos</span>
+                </div>
 
             </div>
 

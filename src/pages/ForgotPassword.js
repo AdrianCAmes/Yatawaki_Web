@@ -37,9 +37,17 @@ const ForgotPassword = () => {
             })
             .catch((err) => {
                 console.log(err)
+                let mensaje = ""
+                if (err.message == "Firebase: Error (auth/user-not-found).") {
+                    mensaje = "Usuario no encontrado";
+                } else if (err.message == "Firebase: Error (auth/invalid-email).") {
+                    mensaje = "El email invalido";
+                } else {
+                    mensaje = "Ha ocurrido un error, intente nuevamente luego";
+                }
                 snackBarContext.onOpen({
                     severity: "error",
-                    message: err.message
+                    message: mensaje
                 });
             })
             .finally(() => {
