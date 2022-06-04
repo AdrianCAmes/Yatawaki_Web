@@ -443,6 +443,23 @@
      }
  }
 
+ @media only screen and (max-width: 1450px) {
+     .piano {
+         height: 180px !important;
+     }
+
+     .guitar {
+         height: 120px !important;
+     }
+
+     .violin {
+         height: 130px !important;
+     }
+
+     .chello {
+         height: 170px !important;
+     }
+ }
 
 
  .canvasAnimation {
