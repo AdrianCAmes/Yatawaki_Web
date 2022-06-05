@@ -65,13 +65,13 @@ const Register = () => {
             setPasswordError(true);
             snackBarContext.onOpen({
                 severity: "error",
-                message: "Tu contraseña no tiene numeros"
+                message: "Tu contraseña no tiene números"
             });
         } else if (password.length < 8) {
             setPasswordError(true);
             snackBarContext.onOpen({
                 severity: "error",
-                message: "Por favor ingresa mas de 8 caracteres"
+                message: "Por favor ingresa más de 8 caracteres"
             });
         } else if (terms === false) {
             snackBarContext.onOpen({
@@ -192,7 +192,7 @@ const Register = () => {
 
         snackBarContext.onOpen({
             severity: "success",
-            message: "Datos obtenidos de google"
+            message: "Datos obtenidos de Google"
         });
 
         setFirstname(decoded.given_name);
@@ -237,7 +237,7 @@ const Register = () => {
 
                                 <TextField label={"Nombres"} error={firstnameError} placeholder="Ej: Gonzalo Sebastian" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setFirstname(event.target.value)} value={firstname}></TextField>
                                 <TextField label={"Apellidos"} error={lastnameError} placeholder="Ej: Ames Rodriguez" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setLastname(event.target.value)} value={lastname}></TextField>
-                                <TextField label={"Correo electronico"} error={mailError} placeholder="Ej: nombre@email.com" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setMail(event.target.value)} value={mail}></TextField>
+                                <TextField label={"Correo electrónico"} error={mailError} placeholder="Ej: nombre@email.com" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setMail(event.target.value)} value={mail}></TextField>
 
                                 <Box className="hover" sx={buttonStyle} onClick={() => { nextStep() }}>
                                     <Typography className="title-button"> Siguiente</Typography>
