@@ -103,6 +103,7 @@ const ResetPassword = () => {
                         <TextField sx={{ width: '80%', mt: 4, backgroundColor: '#FFF' }}
                             type="password"
                             label="Contraseña"
+                            inputProps={{ "data-testid": "password" }}
                             onChange={(event) => setPassword(event.target.value)}
                             InputProps={{
                                 startAdornment: (
