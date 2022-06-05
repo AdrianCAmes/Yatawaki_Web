@@ -41,7 +41,7 @@ const ForgotPassword = () => {
                 if (err.message == "Firebase: Error (auth/user-not-found).") {
                     mensaje = "Usuario no encontrado";
                 } else if (err.message == "Firebase: Error (auth/invalid-email).") {
-                    mensaje = "El email invalido";
+                    mensaje = "El email es inválido";
                 } else {
                     mensaje = "Ha ocurrido un error, intente nuevamente luego";
                 }
