@@ -4,7 +4,7 @@ import { render } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import GameResults from '../../../pages/components/GameResults'
 
-test('render AppBarYatawaki', () => {
+test('render GameResults', () => {
     const results = {
         symphonyName: 'Symphony N.09',
         points: 100,
