@@ -59,9 +59,9 @@ const TutorialResume = () => {
             "idConcert": 1,
             "gainedExperience": 324,
             "points": '234',
-            "accuracyRate": '234',
+            "accuracyRate": '84',
             "gesturesCompleted": '23',
-            "gainedCoins": '2341',
+            "gainedCoins": '128',
             "symphonyName": "Symphony No9"
         }
         setResultsFinal(aresults)
@@ -122,14 +122,14 @@ const TutorialResume = () => {
                             </Grid>
                         </Box>
                         <Divider style={{ width: '90%', marginTop: '30px' }}>
-                            <FacebookShareButton url={window.location.href} title={`He conseguido ${results ? results.points : '--'} puntos y ${results ? Math.round(results.accuracyRate, 2) : '--'}% de precisión en ${results ? results.symphonyName : '--'}.\nPrueba YATAWAKI en:`}>
+                            <FacebookShareButton url={window.location.href} title={`He conseguido ${results ? results.points : '--'} puntos y ${results ? Math.round(results.accuracyRate, 2) : '--'}% de precisión en ${results ? results.symphonyName : '--'}.\n YATAWAKI en:`}>
                                 <FacebookIcon size={50} round={true} />
                             </FacebookShareButton>
-                            <WhatsappShareButton url={window.location.href} title={`He conseguido ${results ? results.points : '--'} puntos y ${results ? Math.round(results.accuracyRate, 2) : '--'}% de precisión en ${results ? results.symphonyName : '--'}.\nPrueba YATAWAKI en:`}>
+                            <WhatsappShareButton url={window.location.href} title={`He conseguido ${results ? results.points : '--'} puntos y ${results ? Math.round(results.accuracyRate, 2) : '--'}% de precisión en ${results ? results.symphonyName : '--'}.\n YATAWAKI en:`}>
                                 <WhatsappIcon size={50} round={true} />
                             </WhatsappShareButton>
 
-                            <TwitterShareButton url={window.location.href} title={`He conseguido ${results ? results.points : '--'} puntos y ${results ? Math.round(results.accuracyRate, 2) : '--'}% de precisión en ${results ? results.symphonyName : '--'}.\nPrueba  YATAWAKI en:`}>
+                            <TwitterShareButton url={window.location.href} title={`He conseguido ${results ? results.points : '--'} puntos y ${results ? Math.round(results.accuracyRate, 2) : '--'}% de precisión en ${results ? results.symphonyName : '--'}.\n  YATAWAKI en:`}>
                                 <TwitterIcon size={50} round={true} />
                             </TwitterShareButton>
                         </Divider>
