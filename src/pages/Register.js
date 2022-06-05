@@ -93,6 +93,7 @@ const Register = () => {
                         severity: "error",
                         message: "El usuario ya se encuentra registrado"
                     });
+                    console.log(error)
                 })
                 .finally(() => setLoading(false))
         }
@@ -235,9 +236,9 @@ const Register = () => {
 
                                 <Divider sx={{ width: '80%', mt: 2, }}>O</Divider>
 
-                                <TextField label={"Nombres"} error={firstnameError} placeholder="Ej: Gonzalo Sebastian" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setFirstname(event.target.value)} value={firstname}></TextField>
-                                <TextField label={"Apellidos"} error={lastnameError} placeholder="Ej: Ames Rodriguez" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setLastname(event.target.value)} value={lastname}></TextField>
-                                <TextField label={"Correo electrónico"} error={mailError} placeholder="Ej: nombre@email.com" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setMail(event.target.value)} value={mail}></TextField>
+                                <TextField inputProps={{ "data-testid": "nombres" }} label={"Nombres"} error={firstnameError} placeholder="Ej: Gonzalo Sebastian" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setFirstname(event.target.value)} value={firstname}></TextField>
+                                <TextField inputProps={{ "data-testid": "apellidos" }} label={"Apellidos"} error={lastnameError} placeholder="Ej: Ames Rodriguez" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setLastname(event.target.value)} value={lastname}></TextField>
+                                <TextField inputProps={{ "data-testid": "email" }} label={"Correo electronico"} error={mailError} placeholder="Ej: nombre@email.com" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setMail(event.target.value)} value={mail}></TextField>
 
                                 <Box className="hover" sx={buttonStyle} onClick={() => { nextStep() }}>
                                     <Typography className="title-button"> Siguiente</Typography>
@@ -251,9 +252,9 @@ const Register = () => {
                                     <ArrowBackIosRounded fontSize="small" />
                                     <Typography fontWeight={600} fontSize={20} sx={{ marginLeft: '10px' }}>Regresar a datos personales</Typography>
                                 </div>
-                                <TextField label={"Nickname"} error={nicknameError} placeholder="Ej: Doppelgangerr" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setNickname(event.target.value)}></TextField>
+                                <TextField inputProps={{ "data-testid": "nickname" }} label={"Nickname"} error={nicknameError} placeholder="Ej: Doppelgangerr" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setNickname(event.target.value)}></TextField>
 
-                                <TextField sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} type="password" error={passwordError} label="Contraseña" placeholder="Debe contener letras y números" onChange={(event) => setPassword(event.target.value)}
+                                <TextField inputProps={{ "data-testid": "password" }} sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} type="password" error={passwordError} label="Contraseña" placeholder="Debe contener letras y números" onChange={(event) => setPassword(event.target.value)}
                                     InputProps={{
                                         startAdornment: (
                                             <InputAdornment position="start">
@@ -265,7 +266,7 @@ const Register = () => {
                                 />
 
                                 <div style={{ width: '80%' }}>
-                                    <FormControlLabel display={'inline'} sx={{ alignSelf: 'self-start' }} control={<Checkbox checked={terms} onClick={() => { setTerms(!terms) }} />} label={"Estoy de acuerdo con los términos y condiciones"} />
+                                    <FormControlLabel display={'inline'} sx={{ alignSelf: 'self-start' }} control={<Checkbox inputProps={{ "data-testid": "terminos" }} checked={terms} onClick={() => { setTerms(!terms) }} />} label={"Estoy de acuerdo con los términos y condiciones"} />
                                     <Typography onClick={() => { setOpenTerminos(true) }} fontWeight='600' className="hover" display={'inline'}>Ver aquí</Typography>
                                 </div>
 
