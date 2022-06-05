@@ -62,7 +62,9 @@
       "App.js",
       "index.js",
       "reportWebVitals",
-      "src/context"
+      "src/context",
+      "Game.js",
+      "Tutorial.js"
     ]
   }
 }
