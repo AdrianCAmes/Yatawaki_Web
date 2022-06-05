@@ -922,7 +922,7 @@ const Game = () => {
                         {/* <LinearProgress variant="determinate" value={(Math.floor((time / 1000)) / songDuration) * 100} style={{ height: '10px', borderRadius: 5 }} /> */}
                     </Box>
                     <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-                        <Box className="hover" onClick={() => { pause(false); logEvent(analytics, { category: 'Button Click', action: 'Pause Button Clicked',label: 'Game Page'}) }} style={{ backgroundColor: '#FF5E5B', borderRadius: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50px', width: '50px' }}>
+                        <Box className="hover" onClick={() => { pause(false); logEvent(analytics, 'pause_button_game'); }} style={{ backgroundColor: '#FF5E5B', borderRadius: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50px', width: '50px' }}>
                             <PauseRounded style={{ color: '#FFF', fontSize: '50px' }} />
                         </Box>
                         <PauseMenu open={openDialog} resume={newCalibration} exit={navigate2Menu}></PauseMenu>

@@ -9,7 +9,7 @@ import logo_upc from '../assets/Logo UPC.png';
 import { GoogleLogin } from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
 import { useAuth } from "../context/auth-context";
-import { logEvent } from "firebase/analytics";
+import { getAnalytics, logEvent } from "firebase/analytics";
 import { analytics } from "../config/init-firebase";
 
 let buttonStyle = { width: ['200px', '200px', '300px'], height: '60px', borderRadius: '15px', mx: 'auto', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '30px' };
@@ -150,7 +150,8 @@ const Register = () => {
 
     }
     const toSplashscreen = () => {
-        navigate('/')
+        navigate('/');
+        logEvent(analytics, 'back_button_from_register_page');
     };
 
     const fillFields = (response) => {
@@ -169,7 +170,7 @@ const Register = () => {
     return (
         <React.Fragment>
             <Paper square={true} sx={{ backgroundColor: 'primary.light', height: '100%' }} elevation={0}>
-                <div className="hover" onClick={() => { toSplashscreen(); logEvent(analytics, { category: 'Button Click', action: 'Back Button from Register Clicked',label: 'Register Page'}) }} style={{ display: 'flex', justifyContent: 'start', alignItems: 'center', margin: '20px', position: 'absolute' }}>
+                <div className="hover" onClick={() => { toSplashscreen();}} style={{ display: 'flex', justifyContent: 'start', alignItems: 'center', margin: '20px', position: 'absolute' }}>
                     <ArrowBackIosRounded fontSize="medium" />
                     <Typography fontWeight={600} fontSize={24} sx={{ marginLeft: '10px' }}>Atrás</Typography>
                 </div>
@@ -186,7 +187,7 @@ const Register = () => {
                     <Grid item xs={7}>
 
                         {step === 1 ? ( <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                                <GoogleLogin onSuccess={(response) => { fillFields(response);  logEvent(analytics, { category: 'Event Sucess', action: 'Google Registration Completed Success',label: 'Register Page'})}}
+                                <GoogleLogin onSuccess={(response) => { fillFields(response);  logEvent(analytics, 'google_registration_completed')}}
                                     onError={() => {
                                         console.log('Login Failed');
                                     }}>
@@ -202,9 +203,9 @@ const Register = () => {
 
                                 <TextField error={firstnameError} placeholder="Ingresa tu nombre" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setFirstname(event.target.value)} value={firstname}></TextField>
                                 <TextField error={lastnameError} placeholder="Ingresa tu apelido" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setLastname(event.target.value)} value={lastname}></TextField>
-                                <TextField error={mailError} placeholder="Ingresa tu correo electronico" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setMail(event.target.value)}  onClick={() =>logEvent(analytics, { category: 'Field Click', action: 'Email Field Clicked',label: 'Register Page'}) }value={mail}></TextField>
+                                <TextField error={mailError} placeholder="Ingresa tu correo electronico" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setMail(event.target.value)}  onClick={() =>logEvent(analytics, 'email_field_register_page') }value={mail}></TextField>
 
-                                <Box className="hover" sx={buttonStyle} onClick={() => { nextStep(); logEvent(analytics, { category: 'Button Click', action: 'Next Button Clicked',label: 'Register Page'}) }}>
+                                <Box className="hover" sx={buttonStyle} onClick={() => { nextStep(); logEvent(analytics,'next_button_register_page', {value: 1} )}}>
                                     <Typography className="title-button"> Siguiente</Typography>
                                 </Box>
                             </div>
@@ -216,7 +217,7 @@ const Register = () => {
                                     <ArrowBackIosRounded fontSize="small" />
                                     <Typography fontWeight={600} fontSize={20} sx={{ marginLeft: '10px' }}>Regresar a datos personales</Typography>
                                 </div>
-                                <TextField error={nicknameError} placeholder="Ingresa tu usuario" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setNickname(event.target.value)} onClick={() => logEvent(analytics, { category: 'Field Click', action: 'User Field Clicked',label: 'Register Page'})}></TextField>
+                                <TextField error={nicknameError} placeholder="Ingresa tu usuario" sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setNickname(event.target.value)} onClick={() => logEvent(analytics, 'username_field_register_page')}></TextField>
 
                                 <TextField sx={{ width: '80%', mt: 2, backgroundColor: '#FFF' }} type="password" error={passwordError} label="Contraseña" onChange={(event) => setPassword(event.target.value)}
                                     InputProps={{
@@ -231,7 +232,7 @@ const Register = () => {
 
                                 <div style={{ width: '80%' }}>
                                     <FormControlLabel display={'inline'} sx={{ alignSelf: 'self-start' }} control={<Checkbox checked={terms} onClick={() => { setTerms(!terms) }} />} label={"Estoy de acuerdo con los términos y condiciones"} />
-                                    <Typography onClick={() => { setOpenTerminos(true); logEvent(analytics, { category: 'Button Click', action: 'View Terms And Conditions Clicked',label: 'Register Page'}) }} fontWeight='600' className="hover" display={'inline'}>Ver aquí</Typography>
+                                    <Typography onClick={() => { setOpenTerminos(true); logEvent(analytics,'view_terms_and_conditions_register_page') }} fontWeight='600' className="hover" display={'inline'}>Ver aquí</Typography>
                                 </div>
 
                                 <Dialog PaperProps={{ style: { borderRadius: '50px', backgroundColor: '#FFED66' } }} open={openTerminos} onClose={() => { setOpenTerminos(false) }} scroll={'body'} maxWidth={'md'}>
@@ -265,7 +266,7 @@ const Register = () => {
                                 </Dialog>
 
                                 {loading && <CircularProgress />}
-                                <Box className="hover" sx={buttonStyle} onClick={() => { submit(); logEvent(analytics, { category: 'Button Click', action: 'Register Button Clicked',label: 'Register Page'}) }}>
+                                <Box className="hover" sx={buttonStyle} onClick={() => { submit(); logEvent(analytics,'register_button_register_page') }}>
                                     <Typography className="title-button"> Registrarme</Typography>
                                 </Box>
                             </div>

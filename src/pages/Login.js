@@ -54,7 +54,7 @@ const Login = () => {
     return (
         <React.Fragment>
             <Paper square={true} sx={{ backgroundColor: 'primary.light', height: '100vh' }} elevation={0}>
-                <div className="hover" onClick={() => { toSplashscreen(); logEvent(analytics, { category: 'Button Click', action: 'Back From Login',label: 'Login Page'}); }} style={{ display: 'flex', justifyContent: 'start', alignItems: 'center', margin: '20px', position: 'absolute' }}>
+                <div className="hover" onClick={() => { toSplashscreen(); logEvent(analytics,'back_button_login_page')}}>
                     <ArrowBackIosRounded fontSize="medium" />
                     <Typography fontWeight={600} fontSize={24} sx={{ marginLeft: '10px' }}>Atrás</Typography>
                 </div>
@@ -76,8 +76,7 @@ const Login = () => {
                             type="password"
                             label="Contraseña"
                             onChange={(event) => setPassword(event.target.value)}
-                            onKeyUp={() => logEvent(analytics, { category: 'Typing On Field', action: 'Typing Text On Password Field',label: 'Login Page'}) }
-                            onClick={() => logEvent(analytics, { category: 'Field Click', action: 'Password Field Clicked',label: 'Login Page'}) }
+                            onClick={() => logEvent(analytics, 'password_field_login_page') }
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
@@ -89,12 +88,12 @@ const Login = () => {
                         />
 
                         {loading && <CircularProgress />}
-                        <div className="hover" onClick={() => { uniqueIdentifier == null || uniqueIdentifier == '' ? toRegister() : (function() { navigate('/forgot-password'); logEvent(analytics, { category: 'Button Click', action: 'Forgot Password clicked',label: 'Login Page'});})()
+                        <div className="hover" onClick={() => { uniqueIdentifier == null || uniqueIdentifier == '' ? toRegister() : (function() { navigate('/forgot-password'); logEvent(analytics, 'forgot_password_button_login_page');})()
                                 }} style={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
                             <Typography fontWeight={600} fontSize={24} sx={{ marginTop: '10px' }}>{uniqueIdentifier == null || uniqueIdentifier == '' ? '¿Aún no estás registrado?' : '¿Olvidaste tu contraseña?'}</Typography>
                         </div>
 
-                        <Box className="hover" sx={buttonStyle} onClick={() => { authenticate(); logEvent(analytics, { category: 'Button Click', action: 'Login Button Clicked',label: 'Login Page'})}}>
+                        <Box className="hover" sx={buttonStyle} onClick={() => { authenticate(); logEvent(analytics, 'login_button_login_page')}}>
                             <Typography className="title-button"> Iniciar</Typography>
                         </Box>
                     </Grid>

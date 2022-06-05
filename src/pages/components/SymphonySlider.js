@@ -27,13 +27,13 @@ const SymphonySlider = (props) => {
     const nextSlide = () => {
         setAudioElement(new Audio(props.slides[current === length - 1 ? 0 : current + 1].previewTrack));
         setCurrent(current === length - 1 ? 0 : current + 1);
-        logEvent(analytics, { category: 'Button Click', action: 'Right Arrow Clicked',label: 'Symphony Slider'})
+        logEvent(analytics, 'right_arrow_symphony_slider');
     }
 
     const prevSlide = () => {
         setAudioElement(new Audio(props.slides[current === 0 ? length - 1 : current - 1].previewTrack));
         setCurrent(current === 0 ? length - 1 : current - 1);
-        logEvent(analytics, { category: 'Button Click', action: 'Left Arrow Clicked',label: 'Symphony Slider'})
+        logEvent(analytics, 'left_arrow_symphony_slider');
     }
 
     useEffect(() => {
@@ -52,7 +52,7 @@ const SymphonySlider = (props) => {
                 return (
                     <div className={index === current ? 'slide active' : 'slide'} key={index}>
 
-                        {index === current && (<img className="image hover" onClick={() => { props.selectSlider(current); logEvent(analytics, { category: 'Button Click', action: 'Symphony Button Clicked',label: 'Symphony Slider'}) }} src={slide.icon} alt="ha" />)}
+                        {index === current && (<img className="image hover" onClick={() => { props.selectSlider(current); logEvent(analytics, 'symphony_button_symphony_slider') }} src={slide.icon} alt="ha" />)}
                         {play ?
                             <Avatar className="hover" style={{ position: 'absolute', top: '10px', left: '10px' }}>
                                 <VolumeOff onClick={() => { pause() }} />

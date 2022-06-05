@@ -38,7 +38,7 @@ const SelectInstrumentsDialog = (props) => {
                     <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap' }}>
                         {props.instruments.map((instrument, idx) => (
                             <InstrumentCard key={idx} instrument={instrument} onClick={() => { selectInstrument(instrument); 
-                                logEvent(analytics, { category: 'Button Click', action: 'Select Instrument Button Clicked',label: 'Select Instrument Dialog'});
+                                logEvent(analytics,'select_instrument_button_select_instrument_dialog');
                             }}></InstrumentCard>
                         ))}
                     </div>

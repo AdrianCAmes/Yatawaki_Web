@@ -70,7 +70,7 @@ const SymphonyInstrumentsDialog = (props) => {
                                     symphonyId: props.symphony.idUnlockable,
                                 },
                             }); 
-                            logEvent(analytics, { category: 'Button Click', action: 'Continue Button Clicked',label: 'Symphony Instrument Dialog'});
+                            logEvent(analytics,'continue_button_symphony_instrument_dialog');
                         }}>
                             <Typography style={{ fontSize: '30px', color: '#FFF' }}> Continuar</Typography>
                         </Box>

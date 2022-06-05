@@ -30,7 +30,7 @@ const AppBarYatawaki = (props) => {
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
-        logEvent(analytics, { category: 'Button Click', action: 'Profile Icon Clicked',label: 'App Bar'})
+        logEvent(analytics, 'profile_icon_app_bar');
     };
 
 

@@ -1,7 +1,9 @@
 import { Box, Paper, Typography } from "@mui/material";
+import { logEvent } from "firebase/analytics";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ConcertApis from "../apis/concert-apis";
+import { analytics } from "../config/init-firebase";
 import GameResults from "./components/GameResults";
 import NewUnlockable from "./components/NewUnlockable";
 
@@ -106,7 +108,7 @@ const GameResume = () => {
                 {showFinal ? <GameResults results={resultsFinal}></GameResults>
                     : <NewUnlockable unlockable={currentUnlockable}></NewUnlockable>}
 
-                {showFinal ? <Box className="hover" sx={buttonStyle} onClick={() => { toMenu() }}>
+                {showFinal ? <Box className="hover" sx={buttonStyle} onClick={() => { toMenu(); logEvent(analytics, 'accept_button_game_resume') }}>
                     <Typography className="title-button" fontSize='40px!important'> Aceptar</Typography>
                 </Box>
                     : <Box className="hover" sx={buttonStyle} onClick={() => { nextItem() }}>
