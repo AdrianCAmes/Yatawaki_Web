@@ -2,6 +2,7 @@ import { Box, Paper, Typography } from "@mui/material";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ConcertApis from "../apis/concert-apis";
+import { TEST } from "../utils/consts";
 import GameResults from "./components/GameResults";
 import NewUnlockable from "./components/NewUnlockable";
 
@@ -39,7 +40,7 @@ const GameResume = () => {
 
     const concertComplete = async () => {
 
-        let test = false;
+        let test = TEST;
         let aresults = {}
         if (test) {
             aresults = {

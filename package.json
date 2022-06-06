@@ -58,7 +58,16 @@
       "src/apis",
       "src/config",
       "src/themes",
-      "src/utils"
+      "src/utils",
+      "App.js",
+      "index.js",
+      "reportWebVitals",
+      "src/context",
+      "Game.js",
+      "Tutorial.js", 
+      "SymphonySlider.js", 
+      "SymphonyInstrumentsDialog.js",
+      "SelectInstrumentsDialog.js"
     ]
   }
 }
