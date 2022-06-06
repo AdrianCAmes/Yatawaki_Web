@@ -45,7 +45,7 @@ const ConfirmTradeDialog = (props) => {
             <Dialog PaperProps={{ style: { borderRadius: '50px', backgroundColor: '#FFED66' } }} open={props.open} onClose={() => { props.handleClose() }} fullWidth maxWidth="lg">
                 <div style={{ height: '500px', backgroundColor: '#FFED66', padding: '50px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Typography fontWeight={600} fontSize={40} style={{ textAlign: 'center' }}>
-                        ¿Estás seguro que deseas canjear el siguiente objecto?
+                        ¿Estás seguro que deseas canjear el siguiente objeto?
                     </Typography>
                     <ItemToTradeCard item={props.unlockable}></ItemToTradeCard>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
