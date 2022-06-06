@@ -93,7 +93,7 @@ const YatawakiMenu = () => {
                 <SymphonyInstrumentsDialog open={openDialog} handleClose={handleCloseDialog} symphony={selectedSymphony}></SymphonyInstrumentsDialog>
 
 
-                <SymphonySlider slides={symphonies} passToParent={childCallback} selectSlider={selectSlider} />
+                <SymphonySlider data-testid="slide" slides={symphonies} passToParent={childCallback} selectSlider={selectSlider} />
                 <Box className="container-height" sx={{ backgroundColor: '#E8E8E0', px: '30px', paddingTop: '20px', mx: '30px', marginTop: '50px', height: '100%', borderRadius: '13px;' }}>
                     {symphonies.map((symphony, idx) => (
                         <h1 key={idx} >{idx === index ?
