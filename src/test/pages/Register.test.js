@@ -201,7 +201,7 @@ describe("Testing second step errors", () => {
         // fill out and submit form
         fireEvent.click(registerbutton);
 
-        component.getByText('Tu contraseña no tiene numeros')
+        component.getByText('Tu contraseña no tiene números')
     });
 
     test("password no letters", () => {
@@ -279,7 +279,7 @@ describe("Testing second step errors", () => {
         // fill out and submit form
         fireEvent.click(registerbutton);
 
-        component.getByText('Por favor ingresa mas de 8 caracteres')
+        component.getByText('Por favor ingresa más de 8 caracteres')
     });
 
     test("terminos y condiciones not checked", () => {
