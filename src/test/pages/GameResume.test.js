@@ -44,7 +44,7 @@ test("test component render", async () => {
 
     await promise;
 
-    component.getByText('234%')
+    component.getByText('100%')
 
 })
 
@@ -183,7 +183,7 @@ test("test redirect to menu", async () => {
 
     await promise;
 
-    component.getByText('234%')
+    component.getByText('100%')
 
     const toMenuButton = component.getByText('Aceptar').parentNode
 
