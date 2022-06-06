@@ -1,3 +1,3 @@
 export const ADMIN = 'ADMIN';
 export const PLAYER = 'PLAYER';
-export const TEST = true;
+export const TEST = false;

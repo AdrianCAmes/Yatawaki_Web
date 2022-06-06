@@ -64,7 +64,10 @@
       "reportWebVitals",
       "src/context",
       "Game.js",
-      "Tutorial.js"
+      "Tutorial.js", 
+      "SymphonySlider.js", 
+      "SymphonyInstrumentsDialog.js",
+      "SelectInstrumentsDialog.js"
     ]
   }
 }
