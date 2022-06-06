@@ -53,7 +53,7 @@ const GameResume = () => {
                 "symphonyName": "Symphony No9"
             }
         } else {
-            let points = state.points > 0 ? state.point : 0
+            let points = state.points > 0 ? state.points : 0
             aresults = {
                 "idConcert": state.idConcert,
                 "gainedExperience": (points * state.gesturesCompleted) / 20,

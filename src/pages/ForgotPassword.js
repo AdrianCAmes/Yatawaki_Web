@@ -75,7 +75,7 @@ const ForgotPassword = () => {
                     <Grid item xs={7} container direction='column' justifyContent='center' alignItems='center'>
                         <Typography fontWeight={600} fontSize={16}>Te enviaremos un correo para reestablecer tu contraseña</Typography>
 
-                        <TextField id="input" placeholder="Escribe tu email" sx={{ width: '80%!important', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setEmail(event.target.value)}>Escribe tu email</TextField>
+                        <TextField id="input" inputProps={{ "data-testid": "email" }} placeholder="Escribe tu email" sx={{ width: '80%!important', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setEmail(event.target.value)}>Escribe tu email</TextField>
 
                         {loading && <CircularProgress />}
 
