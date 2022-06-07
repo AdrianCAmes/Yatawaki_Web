@@ -39,7 +39,7 @@ const Login = () => {
             .catch(err => {
                 snackBarContext.onOpen({
                     severity: "error",
-                    message: err.mensaje
+                    message: "El usuario no se encuentra registrado"
                 });
                 console.log(err);
             })
