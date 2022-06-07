@@ -2,7 +2,7 @@ import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
 import { fireEvent, render } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
-import { AchievementCard, AvatarCard, ItemCard, ItemToTradeCard, SymphonyCard } from '../../../pages/components/ObjectCard'
+import { AchievementCard, AvatarCard, ItemCard, ItemToTradeCard, SymphonyCard, TutorialCard } from '../../../pages/components/ObjectCard'
 
 test('render Object Symphony Card', () => {
     const symphony = {
@@ -107,5 +107,22 @@ test('call Item Card', () => {
     expect(mockHandler.mock.calls).toHaveLength(1)
 
 
+
+})
+
+test('render Object Item to Tutorial Card', () => {
+    const item = {
+        description: 'Esta es la prueba de descripcion',
+        name: 'Esta es la prueba de name'
+    }
+
+    const component = render(
+        <BrowserRouter>
+            <TutorialCard item={item}></TutorialCard>
+        </BrowserRouter>
+    )
+
+    expect(component.container).toHaveTextContent(item.description)
+    expect(component.container).toHaveTextContent(item.name)
 
 })

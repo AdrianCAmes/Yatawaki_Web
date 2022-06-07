@@ -47,18 +47,20 @@ const GameResume = () => {
                 "idConcert": 1,
                 "gainedExperience": 324,
                 "points": 234,
-                "accuracyRate": 234,
+                "accuracyRate": 100,
                 "gesturesCompleted": 23,
                 "gainedCoins": 2341,
                 "symphonyName": "Symphony No9"
             }
         } else {
-            let points = state.points > 0 ? state.point : 0
+            let points = state.points > 0 ? state.points : 0
+            let accuracy = state.accuracyRate > 1 ? 100 : (state.accuracyRate * 100);
+
             aresults = {
                 "idConcert": state.idConcert,
                 "gainedExperience": (points * state.gesturesCompleted) / 20,
                 "points": points,
-                "accuracyRate": state.accuracyRate,
+                "accuracyRate": accuracy,
                 "gesturesCompleted": state.gesturesCompleted,
                 "gainedCoins": (points * state.gesturesCompleted) / 150,
                 "symphonyName": state.symphonyName

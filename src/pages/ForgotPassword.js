@@ -62,7 +62,7 @@ const ForgotPassword = () => {
                     <ArrowBackIosRounded fontSize="medium" />
                     <Typography fontWeight={600} fontSize={24} sx={{ marginLeft: '10px' }}>Atrás</Typography>
                 </div>
-                <Typography textAlign='center' className="title-font title-login" >YATAWAKI</Typography>
+                <Typography data-testid="custom-element" textAlign='center' className="title-font title-login" >YATAWAKI</Typography>
 
                 <Grid container justifyContent='center' alignItems='center'>
                     <Grid item xs={5} >
@@ -75,7 +75,7 @@ const ForgotPassword = () => {
                     <Grid item xs={7} container direction='column' justifyContent='center' alignItems='center'>
                         <Typography fontWeight={600} fontSize={16}>Te enviaremos un correo para reestablecer tu contraseña</Typography>
 
-                        <TextField placeholder="Escribe tu email" sx={{ width: '80%!important', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setEmail(event.target.value)}></TextField>
+                        <TextField id="input" inputProps={{ "data-testid": "email" }} placeholder="Escribe tu email" sx={{ width: '80%!important', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setEmail(event.target.value)}>Escribe tu email</TextField>
 
                         {loading && <CircularProgress />}
 

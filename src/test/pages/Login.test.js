@@ -1,15 +1,13 @@
 
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import Login from '../../pages/Login'
 import AuthApi from '../../apis/auth-apis'
 import userEvent from '@testing-library/user-event'
-import SnackBarContext, { SnackBarContextProvider } from '../../context/snack-bar-context'
+import { SnackBarContextProvider } from '../../context/snack-bar-context'
 import { GameContextProvider } from '../../context/game-context'
-import { Snackbar } from '@mui/material'
-import { act } from 'react-dom/test-utils'
 
 jest.mock("axios", () => {
     return {
