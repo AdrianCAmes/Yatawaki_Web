@@ -26,6 +26,7 @@ jobs:
           
   run_test_suites:
     name: Running Tests & Code Coverage
+    runs-on: ubuntu-latest
     needs: setup_enviroment
     steps:
       - name: Run Test Suite & Generating Code Coverage Report
