@@ -1,0 +1,40 @@
+name: Continous Integration
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  setup_enviroment:
+    name: Setting up Enviroment 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Installing dependencies
+        run: 
+          npm install
+          
+      - name: Build Project
+        run: 
+          npm run build
+          
+  run_test_suites:
+    name: Running Tests & Code Coverage
+    needs: setup_enviroment
+    steps:
+      - name: Run Test Suite & Generating Code Coverage Report
+        run: 
+          npm run test -- --coverage --watchAll
+          
+      - name: Upload Code Coverage Report to GitHub
+        uses: actions/upload-artifact@v3
+        with:
+          name: Yatawaki Web Code Coverage Report
+          path: coverage/lcov-report/*
+  
