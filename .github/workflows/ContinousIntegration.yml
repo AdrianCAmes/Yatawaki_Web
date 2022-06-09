@@ -29,6 +29,7 @@ jobs:
                  
       - name: Run Test Suite & Generating Code Coverage Report
         run: |
+          npm --unhandled-rejections=strict
           npm run test -- --coverage --watchAll --forceExit --detectOpenHandles
            
           
