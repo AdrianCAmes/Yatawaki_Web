@@ -19,7 +19,11 @@ jobs:
       - name: Installing dependencies
         run: 
           npm install      
-
+          
+      - name: Config Test Enviroment
+        run: 
+          npm run test 
+          
       - name: Run Test Suite & Generating Code Coverage Report
         run: 
           npm run test -- --coverage --watchAll
