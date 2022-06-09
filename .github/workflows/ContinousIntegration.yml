@@ -28,9 +28,10 @@ jobs:
           npm install      
                  
       - name: Run Test Suite & Generating Code Coverage Report
-        run: 
-          npm run test -- --coverage 
-        timeout-minutes: 3   
+        run: |
+          npm run test -- --coverage --watchAll
+          npm build
+           
           
       - name: Upload Code Coverage Report to GitHub
         uses: actions/upload-artifact@v3
