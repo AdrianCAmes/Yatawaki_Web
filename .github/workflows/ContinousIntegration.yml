@@ -29,7 +29,7 @@ jobs:
                  
       - name: Run Test Suite & Generating Code Coverage Report
         run: |
-          npm run test -- --coverage --watchAll=false
+          npm run test -- --coverage --watchAll --forceExit --detectOpenHandles
            
           
       - name: Upload Code Coverage Report to GitHub
