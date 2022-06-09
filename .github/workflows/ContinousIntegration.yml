@@ -13,17 +13,18 @@ jobs:
     name: Continous Integration Pipeline 
     runs-on: ubuntu-latest
     steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@1
+        with:
+          node-version: 12
+          
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Installing dependencies
         run: 
           npm install      
-          
-      - name: Config Test Enviroment
-        run: 
-          npm run test 
-          
+                 
       - name: Run Test Suite & Generating Code Coverage Report
         run: 
           npm run test -- --coverage --watchAll
