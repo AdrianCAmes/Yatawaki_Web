@@ -11,12 +11,18 @@ on:
 jobs:
   CI_Pipeline:
     name: Continous Integration Pipeline 
+    
     runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x, 15.x]
+        
     steps:
-      - name: Setup Node.js
-        uses: actions/setup-node@1
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
         with:
-          node-version: 12
+          node-version: ${{ matrix.node-version }}
           
       - name: Checkout
         uses: actions/checkout@v2
