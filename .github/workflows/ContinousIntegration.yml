@@ -18,7 +18,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 16
+          node-version: 14
           
       - name: Checkout
         uses: actions/checkout@v2
@@ -30,7 +30,8 @@ jobs:
       - name: Run Test Suite & Generating Code Coverage Report
         run: |
 
-          npm run test -- --coverage --watchAll --forceExit --detectOpenHandles
+          npm run test -- --coverage --watchAll 
+          npx jest --forceExit --detectOpenHandles
            
           
       - name: Upload Code Coverage Report to GitHub
