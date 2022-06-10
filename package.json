@@ -13,7 +13,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.26.1",
     "firebase": "^9.8.1",
-    "framer-motion": "^6.3.3",
+    "framer-motion": "^4.1.17",
     "jest-watch-typeahead": "^0.6.5",
     "jwt-decode": "^3.1.2",
     "mechanical-counter": "^1.0.12",
@@ -64,8 +64,8 @@
       "reportWebVitals",
       "src/context",
       "Game.js",
-      "Tutorial.js", 
-      "SymphonySlider.js", 
+      "Tutorial.js",
+      "SymphonySlider.js",
       "SymphonyInstrumentsDialog.js",
       "SelectInstrumentsDialog.js"
     ]

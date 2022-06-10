@@ -5,7 +5,6 @@ import { fireEvent, getByText, render, screen } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import { SnackBarContextProvider } from '../../context/snack-bar-context';
 import AuthContextProvider, { useAuth } from '../../context/auth-context';
-import { renderHook } from '@testing-library/react-hooks';
 import { GameContextProvider } from '../../context/game-context';
 
 test("render title", () => {
