@@ -4,6 +4,7 @@ import { fireEvent, render } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import ConfirmTradeDialog from '../../../pages/components/ConfirmTradeDialog'
 import UserUnlockableApi from '../../../apis/user-unlockable-apis'
+import { SnackBarContextProvider } from '../../../context/snack-bar-context'
 
 jest.mock("axios", () => {
     return {
@@ -18,9 +19,9 @@ jest.mock("axios", () => {
 test('test trade', async () => {
 
     const spy = jest.spyOn(UserUnlockableApi, 'trade')
-    .mockResolvedValue({
-        status: 200
-    })
+        .mockResolvedValue({
+            status: 200
+        })
 
     const unlockable = {
         description: 'Esta es la prueba de descripcion',
@@ -29,7 +30,10 @@ test('test trade', async () => {
 
     const component = render(
         <BrowserRouter>
-            <ConfirmTradeDialog open={true} unlockable={unlockable}></ConfirmTradeDialog>
+            <SnackBarContextProvider>
+                <ConfirmTradeDialog open={true} unlockable={unlockable} handleClose={() => { }}></ConfirmTradeDialog>
+
+            </SnackBarContextProvider>
         </BrowserRouter>
     )
 

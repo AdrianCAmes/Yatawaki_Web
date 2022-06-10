@@ -6,6 +6,7 @@ import Register from '../../pages/Register';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { SnackBarContextProvider } from '../../context/snack-bar-context';
 import UserApi from '../../apis/user-apis';
+import AuthContextProvider from '../../context/auth-context';
 
 jest.mock("axios", () => {
     return {
@@ -16,6 +17,10 @@ jest.mock("axios", () => {
         }))
     }
 });
+
+
+
+
 
 test("test atras button ", () => {
 
@@ -366,9 +371,11 @@ test("test register", () => {
     const component = render(
         <BrowserRouter>
             <SnackBarContextProvider>
-                <GoogleOAuthProvider clientId="501234886159-njo2973km2fh50fqge2r28upd3568b67.apps.googleusercontent.com">
-                    <Register></Register>
-                </GoogleOAuthProvider>
+                <AuthContextProvider>
+                    <GoogleOAuthProvider clientId="501234886159-njo2973km2fh50fqge2r28upd3568b67.apps.googleusercontent.com">
+                        <Register></Register>
+                    </GoogleOAuthProvider>
+                </AuthContextProvider>
             </SnackBarContextProvider>
         </BrowserRouter>
     )

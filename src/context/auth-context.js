@@ -3,7 +3,7 @@ import React, { createContext, useContext } from 'react'
 import { auth } from '../config/init-firebase'
 
 const AuthContext = createContext({
-    register: () => Promise,
+    registerF: () => Promise,
     forgotPassword: () => Promise,
     resetPassword: () => Promise
 })
@@ -12,7 +12,7 @@ export const useAuth = () => useContext(AuthContext)
 
 export default function AuthContextProvider({ children }) {
 
-    function register(email, password) {
+    function registerF(email, password) {
         return createUserWithEmailAndPassword(auth, email, password);
     }
 
@@ -25,7 +25,7 @@ export default function AuthContextProvider({ children }) {
     }
 
     const value = {
-        register,
+        registerF: registerF,
         forgotPassword,
         resetPassword
     }
