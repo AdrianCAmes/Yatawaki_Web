@@ -3,6 +3,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import axios from "axios";
 import { BrowserRouter } from "react-router-dom";
 import UserApi from "../../apis/user-apis";
+import AuthContextProvider from "../../context/auth-context";
 import { SnackBarContextProvider } from "../../context/snack-bar-context";
 import ResetPassword from '../../pages/ResetPassword';
 
@@ -117,9 +118,11 @@ test("test successful updatePassword", () => {
     const component = render(
         <BrowserRouter>
             <SnackBarContextProvider>
-                <GoogleOAuthProvider clientId="501234886159-njo2973km2fh50fqge2r28upd3568b67.apps.googleusercontent.com">
-                    <ResetPassword></ResetPassword>
-                </GoogleOAuthProvider>
+                <AuthContextProvider>
+                    <GoogleOAuthProvider clientId="501234886159-njo2973km2fh50fqge2r28upd3568b67.apps.googleusercontent.com">
+                        <ResetPassword></ResetPassword>
+                    </GoogleOAuthProvider>
+                </AuthContextProvider>
             </SnackBarContextProvider>
         </BrowserRouter>
     )
