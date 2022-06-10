@@ -32,7 +32,7 @@ const Register = () => {
     const snackBarContext = React.useContext(SnackBarContext);
     const navigate = useNavigate()
 
-    const { register } = useAuth()
+    const { registerF } = useAuth()
 
 
 
@@ -81,7 +81,7 @@ const Register = () => {
         } else {
             setLoading(true);
 
-            register(mail, password)
+            registerF(mail, password)
                 .then((response) => {
                     console.log(response)
                 })

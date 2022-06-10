@@ -6,16 +6,6 @@ import { SnackBarContextProvider } from "../../context/snack-bar-context";
 import Perfil from "../../pages/Perfil";
 import { ThemeProvider } from '@mui/system';
 import theme from '../../themes/Theme'
-jest.mock("axios", () => {
-    return {
-        create: jest.fn(() => ({
-            interceptors: {
-                response: { use: jest.fn(), eject: jest.fn() }
-            },
-        }))
-    }
-});
-
 
 
 test("test render", async () => {
@@ -206,8 +196,6 @@ test("test render", async () => {
 
     await promise;
     
-    component.debug()
-
 })
 
 test("Atrás button", async () => {
@@ -398,7 +386,6 @@ test("Atrás button", async () => {
 
     await promise;
     
-    component.debug()
 
     const boton = component.getByText('Atrás').parentNode;
 
@@ -597,7 +584,6 @@ test("Tienda button", async () => {
 
     await promise;
     
-    component.debug()
 
     const boton = component.getByText('Ir a Tienda').parentNode;
 
@@ -796,7 +782,6 @@ test("Editar button", async () => {
 
     await promise;
     
-    component.debug()
 
     
     const boton = component.getByText('Editar').parentNode;
