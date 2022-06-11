@@ -37,4 +37,9 @@ jobs:
         with:
           name: Yatawaki Web Code Coverage Report
           path: coverage/lcov-report/*
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: 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
+          SONAR_TOKEN: 305beadc43986d799ebe063edbec9f72ca080b4b
   
