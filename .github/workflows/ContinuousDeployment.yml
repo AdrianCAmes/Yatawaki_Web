@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Continuous Deployment with Docker
 
 on:
   push:

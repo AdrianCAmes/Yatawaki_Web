@@ -195,7 +195,7 @@ const Perfil = () => {
                         <Typography fontWeight={600} fontSize={24} sx={{ marginLeft: '10px' }}>Atrás</Typography>
                     </div>
 
-                    <Typography className="title-font title-perfil">PERFIL DE JUGADOR</Typography>
+                    <Typography data-testid="hola" className="title-font title-perfil">PERFIL DE JUGADOR</Typography>
 
                     <Grid container>
                         <Grid item xs={4} align="center">

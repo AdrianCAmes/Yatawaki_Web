@@ -18,6 +18,7 @@ import viola from '../assets/songs/Mozart String Quartet No. 17, K.458, Movement
 import { motion, AnimatePresence } from 'framer-motion';
 import { MechanicalCounter } from "mechanical-counter";
 import SnackBarContext from "../context/snack-bar-context";
+import { TEST } from "../utils/consts";
 
 let buttonStyle = { width: '150px', height: '50px', borderRadius: '15px', mx: '40px', backgroundColor: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', mt: '20px' };
 
@@ -84,7 +85,7 @@ const Game = () => {
     const { state } = useLocation();
 
     const startConcert = () => {
-        let test = false;
+        let test = TEST;
         if (test) {
             let response2 = {
                 "idConcert": 1,

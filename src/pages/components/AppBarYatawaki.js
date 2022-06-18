@@ -45,7 +45,7 @@ const AppBarYatawaki = (props) => {
                         <UserStats resume={props.resume}></UserStats>
                     </Grid>
                     <Grid item xs={2} align="center">
-                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                        <IconButton data-testid={'iconopen'} onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                             <Avatar sx={{ height: '80px', width: '80px' }} alt="Remy Sharp" src={props.resume ? props.resume.icon : avatar} />
                         </IconButton>
                         <Menu

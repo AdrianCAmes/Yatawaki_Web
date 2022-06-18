@@ -39,7 +39,7 @@ const Login = () => {
             .catch(err => {
                 snackBarContext.onOpen({
                     severity: "error",
-                    message: err.mensaje
+                    message: "El usuario no se encuentra registrado"
                 });
                 console.log(err);
             })
@@ -68,7 +68,7 @@ const Login = () => {
 
                     <Grid item xs={7} container direction='column' justifyContent='center' alignItems='center'>
 
-                        <TextField data-testid="username" placeholder="Escribe tu usuario" sx={{ width: '80%!important', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setUniqueIdentifier(event.target.value)}></TextField>
+                        <TextField data-testid="username" inputProps={{ "data-testid": "content-input" }} placeholder="Escribe tu usuario" sx={{ width: '80%!important', mt: 2, backgroundColor: '#FFF' }} onChange={(event) => setUniqueIdentifier(event.target.value)}></TextField>
 
                         <TextField data-testid="password" sx={{ width: '80%', mt: 4, backgroundColor: '#FFF' }}
                             type="password"

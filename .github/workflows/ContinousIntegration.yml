@@ -1,0 +1,40 @@
+name: Continous Integration
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  CI_Pipeline:
+    name: Continous Integration Pipeline 
+    
+    runs-on: ubuntu-latest
+          
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+          
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Installing dependencies
+        run: 
+          npm install      
+                 
+      - name: Run Test Suite & Generating Code Coverage Report
+        run: 
+          npm run test -- --coverage --watchAll=false --forceExit
+           
+          
+      - name: Upload Code Coverage Report to GitHub
+        uses: actions/upload-artifact@v3
+        with:
+          name: Yatawaki Web Code Coverage Report
+          path: coverage/lcov-report/*
+  
