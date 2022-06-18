@@ -2,7 +2,9 @@
 [![Continous Integration](https://github.com/AdrianCAmes/Yatawaki_Web/actions/workflows/ContinousIntegration.yml/badge.svg)](https://github.com/AdrianCAmes/Yatawaki_Web/actions/workflows/ContinousIntegration.yml)
 [![Continuous Deployment with Docker](https://github.com/AdrianCAmes/Yatawaki_Web/actions/workflows/ContinuousDeployment.yml/badge.svg)](https://github.com/AdrianCAmes/Yatawaki_Web/actions/workflows/ContinuousDeployment.yml)
 
-# Yatawaki ORQUESTA CON DETECCIÓN DE MOVIMIENTOS DEL CUERPO MEDIANTE BODY TRACKING
+# Yatawaki 
+PRY2021268 - Orquesta Con Detección De Movimientos Del Cuerpo Mediante Body Tracking
+
 
 1. Clonar Proyecto
 
