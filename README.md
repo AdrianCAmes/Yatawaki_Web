@@ -1,22 +1,21 @@
-# Firebase
-1. Crear proyecto Firebase Console
+# Status del Proyecto 
+[![Continous Integration](https://github.com/AdrianCAmes/Yatawaki_Web/actions/workflows/ContinousIntegration.yml/badge.svg)](https://github.com/AdrianCAmes/Yatawaki_Web/actions/workflows/ContinousIntegration.yml)
+[![Continuous Deployment with Docker](https://github.com/AdrianCAmes/Yatawaki_Web/actions/workflows/ContinuousDeployment.yml/badge.svg)](https://github.com/AdrianCAmes/Yatawaki_Web/actions/workflows/ContinuousDeployment.yml)
 
-2. Agregar firebase a web app
+# Yatawaki ORQUESTA CON DETECCIÓN DE MOVIMIENTOS DEL CUERPO MEDIANTE BODY TRACKING
+
+1. Clonar Proyecto
+
+2. Agregar dependencias de la aplicación
 ```
-npm install firebase
+npm install 
 ```
 
-3. Configurar firebase en proyecto
-* Creamos el archivo init-firebase.js y .env.local para completar los campos (revisar settings de firebase)
-
-4. Agregamos metodos de autenticacion en firebase
-* Nos dirigimos a Authentication, luego agregamos los servicios de email y de google
-
-5. Configuramos auth-context
-* Creamos las funciones necesarias en ese contexto y las agregamos en el App.js
-* Verificamos si los usuarios se estan creando correctamente
-
-# Testing libraries
+3. Ejecutar el proyecto
 ```
-npm i --save-dev @testing-library/react @testing-library/jest-dom
+npm run start 
+```
+4. Para ejecutar la test suite
+```
+npm run test -- --coverage --watchAll=false --forceExit
 ```
